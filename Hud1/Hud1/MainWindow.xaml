@@ -5,8 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Hud1"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800"
+        AllowsTransparency="True"
+        WindowStyle="None"
+        Background="Transparent">
     <Grid>
+        <Canvas Height="300" Width="300">
 
+            <!-- Draws a diagonal line from (10,10) to (50,50). -->
+            <Line
+    X1="10" Y1="10"
+    X2="50" Y2="50"
+    Stroke="Black"
+    StrokeThickness="4" />
+
+
+        </Canvas>
     </Grid>
 </Window>
