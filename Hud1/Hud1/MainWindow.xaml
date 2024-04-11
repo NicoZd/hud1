@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:converters="clr-namespace:Hud1.converters"
         xmlns:local="clr-namespace:Hud1"
         mc:Ignorable="d"
         Title="MainWindow"
@@ -11,19 +12,22 @@
         Topmost="True"
         Width="640"
         Height="400"
-        Loaded="OnWindowLoaded"
-        GotFocus="OnWindowGotFocus"
-        LostFocus="OnWindowLostFocus"
         Activated="OnWindowActivated"
         Deactivated="OnWindowDeactivated">
+    <Window.Resources>
+        <converters:ActiveToVisibility x:Key="ActiveToVisibility"/>
+    </Window.Resources>
     <Window.Background>
-        <SolidColorBrush Color="#FFB0B0B0" Opacity="0.1" />
+        <SolidColorBrush Color="#00000000"/>
     </Window.Background>
     <Grid>
         <Canvas Width="50" Height="50">
-            <Line X1="0" Y1="0" X2="50" Y2="50" Stroke="Red" StrokeThickness="{Binding Path=ddd, Mode=OneWay}" />
-            <Line X1="50" Y1="0" X2="0" Y2="50" Stroke="Red" StrokeThickness="1" />
-            <Line X1="0" Y1="0" X2="0" Y2="50" Stroke="Red" StrokeThickness="4" />
+            <Line X1="0" Y1="0" X2="50" Y2="50" Stroke="Green" StrokeThickness="1" />
+            <Line X1="50" Y1="0" X2="0" Y2="50" Stroke="Green" StrokeThickness="1" />
         </Canvas>
+        <Grid Visibility="{Binding Path=active, Mode=OneWay, Converter={StaticResource ActiveToVisibility}}" Width="200" Height="300" HorizontalAlignment="Right" VerticalAlignment="Top">
+            <Border Background="#66005500" BorderBrush="Green" BorderThickness="1" CornerRadius="10" />
+        </Grid>
+
     </Grid>
 </Window>
