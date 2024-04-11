@@ -17,13 +17,13 @@
         Activated="OnWindowActivated"
         Deactivated="OnWindowDeactivated">
     <Window.Background>
-        <SolidColorBrush Color="#FFB0B0B0"
-                         Opacity="0.05" />
+        <SolidColorBrush Color="#FFB0B0B0" Opacity="0.1" />
     </Window.Background>
     <Grid>
         <Canvas Width="50" Height="50">
-            <Line X1="0" Y1="0" X2="50" Y2="50" Stroke="Red" StrokeThickness="1" />
+            <Line X1="0" Y1="0" X2="50" Y2="50" Stroke="Red" StrokeThickness="{Binding Path=ddd, Mode=OneWay}" />
             <Line X1="50" Y1="0" X2="0" Y2="50" Stroke="Red" StrokeThickness="1" />
+            <Line X1="0" Y1="0" X2="0" Y2="50" Stroke="Red" StrokeThickness="4" />
         </Canvas>
     </Grid>
 </Window>

@@ -1,4 +1,6 @@
-﻿using System.Diagnostics;
+﻿using System.ComponentModel;
+using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -14,8 +16,35 @@ using System.Windows.Shapes;
 
 namespace Hud1
 {
-    public partial class MainWindow : Window
+    public partial class MainWindow: INotifyPropertyChanged
+
     {
+        public double _ddd;
+        public double ddd
+        {
+            get {
+                return _ddd;
+            }
+            
+            set {
+                _ddd = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public MainWindow()
+        {
+            InitializeComponent();
+            this.DataContext = this;
+        }
+
+        public void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         protected override void OnSourceInitialized(EventArgs e)
         {
             base.OnSourceInitialized(e);
@@ -49,10 +78,12 @@ namespace Hud1
         private void OnWindowActivated(object sender, EventArgs e)
         {
             Debug.WriteLine("OnWindowActivated");
+            ddd = 4;
         }
         private void OnWindowDeactivated(object sender, EventArgs e)
         {
             Debug.WriteLine("OnWindowDeactivated");
+            ddd = 1;
         }
 
     }
