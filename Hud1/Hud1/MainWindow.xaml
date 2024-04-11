@@ -5,21 +5,25 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Hud1"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800"
+        Title="MainWindow"
         AllowsTransparency="True"
         WindowStyle="None"
-        Background="Transparent">
+        Topmost="True"
+        Width="640"
+        Height="400"
+        Loaded="OnWindowLoaded"
+        GotFocus="OnWindowGotFocus"
+        LostFocus="OnWindowLostFocus"
+        Activated="OnWindowActivated"
+        Deactivated="OnWindowDeactivated">
+    <Window.Background>
+        <SolidColorBrush Color="#FFB0B0B0"
+                         Opacity="0.05" />
+    </Window.Background>
     <Grid>
-        <Canvas Height="300" Width="300">
-
-            <!-- Draws a diagonal line from (10,10) to (50,50). -->
-            <Line
-    X1="10" Y1="10"
-    X2="50" Y2="50"
-    Stroke="Black"
-    StrokeThickness="4" />
-
-
+        <Canvas Width="50" Height="50">
+            <Line X1="0" Y1="0" X2="50" Y2="50" Stroke="Red" StrokeThickness="1" />
+            <Line X1="50" Y1="0" X2="0" Y2="50" Stroke="Red" StrokeThickness="1" />
         </Canvas>
     </Grid>
 </Window>
