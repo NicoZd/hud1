@@ -64,7 +64,9 @@
 
             <StackPanel Margin="15,15,15,15">
                 <Label Foreground="White" FontWeight="Bold" Margin="0,0,0,10">Audio</Label>
+                <controls:CustomControl1 Label="AA4A"/>
                 <controls:CustomControl1 />
+                <controls:CustomControl1 Label="BBB"/>
                 <Slider/>
                 <Button>Realteck</Button>
                 <Button>ProX</Button>

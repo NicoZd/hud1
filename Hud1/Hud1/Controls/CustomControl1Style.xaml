@@ -9,11 +9,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:CustomControl1}">
                     <Grid>
-                        <Border Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}">
-                        </Border>
-                        <Label>dfsdf</Label>
+                        <Label x:Name="PART_Label">dfsdf</Label>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
