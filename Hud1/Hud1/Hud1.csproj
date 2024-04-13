@@ -8,4 +8,10 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Reference Include="Stateless">
+      <HintPath>..\..\..\stateless\src\Stateless\bin\Release\net8.0\Stateless.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

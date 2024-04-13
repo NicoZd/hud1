@@ -13,21 +13,82 @@
         Width="640"
         Height="400"
         Activated="OnWindowActivated"
-        Deactivated="OnWindowDeactivated">
+        Deactivated="OnWindowDeactivated"
+        Loaded="OnWindowLoaded"
+        Unloaded="OnWindowUnloaded">
     <Window.Resources>
         <converters:ActiveToVisibility x:Key="ActiveToVisibility"/>
     </Window.Resources>
     <Window.Background>
-        <SolidColorBrush Color="#00000000"/>
+        <SolidColorBrush Color="Transparent"/>
     </Window.Background>
     <Grid>
-        <Canvas Width="50" Height="50">
-            <Line X1="0" Y1="0" X2="50" Y2="50" Stroke="Green" StrokeThickness="1" />
+        <Canvas Visibility="{Binding Path=active, Mode=OneWay, Converter={StaticResource ActiveToVisibility}}" Margin="0,-300,0,-300">
+            <Canvas.Background>
+                <RadialGradientBrush>
+                    <GradientStop Color="#99003300" Offset="1"/>
+                    <GradientStop Color="#00000000" Offset="0.7"/>
+                </RadialGradientBrush>
+            </Canvas.Background>
+        </Canvas>
+        <Canvas Width="50" Height="50" IsHitTestVisible="false" Background="#00000000">
+            <Line X1="0" Y1="0" X2="50" Y2="50" Stroke="Green" StrokeThickness="1"/>
             <Line X1="50" Y1="0" X2="0" Y2="50" Stroke="Green" StrokeThickness="1" />
         </Canvas>
-        <Grid Visibility="{Binding Path=active, Mode=OneWay, Converter={StaticResource ActiveToVisibility}}" Width="200" Height="300" HorizontalAlignment="Right" VerticalAlignment="Top">
-            <Border Background="#66005500" BorderBrush="Green" BorderThickness="1" CornerRadius="10" />
+        <Grid Visibility="{Binding Path=active, Mode=OneWay, Converter={StaticResource ActiveToVisibility}}" HorizontalAlignment="Right" Margin="0,0,0,0">
+            <Border Background="#dd003300" BorderBrush="Green" BorderThickness="1" CornerRadius="10" Padding="20"/>
+            <StackPanel Margin="15,15,15,15">
+                <Label Foreground="White" Content="Mouse Macro" FontWeight="Bold"/>
+                <CheckBox Foreground="White" Checked="CheckBox_Checked">Hold Left</CheckBox>
+                <CheckBox Foreground="White" Checked="CheckBox_Checked">Repeat Left</CheckBox>
+                <Label Content=""/>
+                <Label Foreground="White" Content="Key Macro" FontWeight="Bold"/>
+                <CheckBox Foreground="White" Checked="CheckBox_Checked">Hold W</CheckBox>
+            </StackPanel>
         </Grid>
+        <Grid Visibility="{Binding Path=active, Mode=OneWay, Converter={StaticResource ActiveToVisibility}}" HorizontalAlignment="Left" Margin="0,0,0,0">
+            <Border Background="#dd003300" BorderBrush="Green" BorderThickness="1" CornerRadius="10" Padding="20"/>
 
+            <StackPanel Margin="15,15,15,15">
+                <Label Foreground="White" FontWeight="Bold" Margin="0,0,0,10">Audio</Label>
+                <Slider/>
+                <Button>Realteck</Button>
+                <Button>ProX</Button>
+                <Button>Bluetooth</Button>
+                <Label/>
+            </StackPanel>
+        </Grid>
+        <Grid Visibility="{Binding Path=active, Mode=OneWay, Converter={StaticResource ActiveToVisibility}}" VerticalAlignment="Top" Margin="0,0,0,0" HorizontalAlignment="Center">
+            <Border Background="#dd003300" BorderBrush="Green" BorderThickness="1" CornerRadius="10" Padding="20"/>
+            <StackPanel Margin="15,15,15,15" Grid.ColumnSpan="2" Orientation="Horizontal">
+                <StackPanel.Resources>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Margin" Value="5,0,5,0"/>
+                    </Style>
+                </StackPanel.Resources>
+                <Label Foreground="White" Content="Crosshair" FontWeight="Bold"/>
+                <Button>ON/OFF</Button>
+                <Button>2</Button>
+                <Button>3</Button>
+                <Button>4</Button>
+            </StackPanel>
+        </Grid>
+        <Grid Visibility="{Binding Path=active, Mode=OneWay, Converter={StaticResource ActiveToVisibility}}" VerticalAlignment="Bottom" Margin="0,0,0,0" HorizontalAlignment="Center">
+            <Border Background="#dd003300" BorderBrush="Green" BorderThickness="1" CornerRadius="10" Padding="20"/>
+            <StackPanel Margin="15,15,15,15" Grid.ColumnSpan="2" Orientation="Horizontal">
+                <StackPanel.Resources>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Margin" Value="5,0,5,0"/>
+                    </Style>
+                </StackPanel.Resources>
+                <Label Foreground="White" Content="Gamma" FontWeight="Bold"/>
+                <Button>1.0</Button>
+                <Button>1.1</Button>
+                <Button>1.25</Button>
+                <Button>1.5</Button>
+                <Button>3</Button>
+                <Button>4</Button>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Window>

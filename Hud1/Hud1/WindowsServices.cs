@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 public static class WindowsServices
 {
@@ -13,7 +14,15 @@ public static class WindowsServices
 
     public static void SetWindowExTransparent(IntPtr hwnd)
     {
+        Debug.Print("Set WS_EX_TRANSPARENT");
         var extendedStyle = GetWindowLong(hwnd, GWL_EXSTYLE);
         SetWindowLong(hwnd, GWL_EXSTYLE, extendedStyle | WS_EX_TRANSPARENT);
+    }
+
+    public static void RemoveWindowExTransparent(IntPtr hwnd)
+    {
+        Debug.Print("Remove WS_EX_TRANSPARENT");
+        var extendedStyle = GetWindowLong(hwnd, GWL_EXSTYLE);
+        SetWindowLong(hwnd, GWL_EXSTYLE, extendedStyle ^ WS_EX_TRANSPARENT);
     }
 }
