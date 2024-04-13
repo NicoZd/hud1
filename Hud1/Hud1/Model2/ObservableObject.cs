@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hud1.model
+namespace Hud1.Model
 {
     class ObservableObject: INotifyPropertyChanged
     {

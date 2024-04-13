@@ -1,9 +1,10 @@
-﻿using Hud1.model;
+﻿using Hud1.Model;
 using Stateless;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
 
@@ -37,12 +38,12 @@ namespace Hud1
             if (windowModel.active)
             {
                 Debug.Print("Remove");
-                // WindowsServices.RemoveWindowExTransparent(hwnd);
+                //WindowsServices.RemoveWindowExTransparent(hwnd);
             }
             else
             {
                 Debug.Print("Add");
-                // WindowsServices.SetWindowExTransparent(hwnd);
+                //WindowsServices.SetWindowExTransparent(hwnd);
             }
         }
        
@@ -84,8 +85,55 @@ namespace Hud1
             // TYPE YOUR CODE HERE
             Debug.WriteLine("xxx {0}", e.Key);
 
-            if (e.Key == Key.F2) {
+            if (e.Key == Key.F2) {  
                 windowModel.active = !windowModel.active;
+                if (windowModel.active)
+                {
+                    this.windowModel.active2 = false;
+                    this.windowModel.active1 = true;
+                    //this.Activate();
+
+                    //TraversalRequest request = new TraversalRequest(FocusNavigationDirection.First);
+                    //request.Wrapped = true;
+                    //var x = this.MoveFocus(request);
+                    //this.Focus();
+                    //Debug.Print("X {0}", x);
+                }
+            }
+
+            if (e.Key == Key.Up)
+            {
+                // this.Focus();
+                //TraversalRequest request = new TraversalRequest(FocusNavigationDirection.Up);
+                //request.Wrapped = true;
+                //this.MoveFocus(request);
+                this.windowModel.active2 = false;
+                this.windowModel.active1 = true;
+            }
+            if (e.Key == Key.Down)
+            {
+                // this.Focus();
+                //TraversalRequest request = new TraversalRequest(FocusNavigationDirection.Down);
+                //request.Wrapped = true;
+                //var x = this.MoveFocus(request);
+                //Debug.Print("X {0}", x);
+                this.windowModel.active1 = false;
+                this.windowModel.active2 = true;
+
+            }
+            if (e.Key == Key.Left)
+            {
+                // this.Focus();
+                TraversalRequest request = new TraversalRequest(FocusNavigationDirection.Left);
+                request.Wrapped = true;
+                this.MoveFocus(request);
+            }
+            if (e.Key == Key.Right)
+            {
+                // this.Focus();
+                TraversalRequest request = new TraversalRequest(FocusNavigationDirection.Right);
+                request.Wrapped = true;
+                this.MoveFocus(request);
             }
         }
 

@@ -15,7 +15,11 @@ namespace Hud1
         //Here you can put those keys that you want to capture
         private readonly List<KeyState> numericKeys = new List<KeyState>
         {
-            new KeyState(Key.F2)
+            new KeyState(Key.F2),
+            new KeyState(Key.Up),
+            new KeyState(Key.Down),
+            new KeyState(Key.Left),
+            new KeyState(Key.Right),
         };
 
         private bool isRunning = true;

@@ -8,7 +8,7 @@ using System.Windows.Data;
 using System.Windows;
 using System.Diagnostics;
 
-namespace Hud1.converters
+namespace Hud1.Converters
 {
     [ValueConversion(typeof(Boolean), typeof(Visibility))]
     class ActiveToVisibility : IValueConverter
