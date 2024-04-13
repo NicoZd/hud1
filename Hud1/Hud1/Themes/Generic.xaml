@@ -4,6 +4,6 @@
     xmlns:controls="clr-namespace:Hud1.Controls"
     >
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/Controls/CustomControl1Style.xaml"/>
+        <ResourceDictionary Source="/Controls/CustomControl1Style.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

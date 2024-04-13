@@ -1,5 +1,7 @@
-﻿using Hud1.Model;
+﻿using Hud1.Controls;
+using Hud1.Model;
 using Stateless;
+using Stateless.Graph;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
@@ -10,27 +12,39 @@ using System.Windows.Interop;
 
 namespace Hud1
 {
-    public partial class MainWindow: Window
+    public partial class MainWindow : Window
     {
         WindowModel windowModel = new WindowModel();
+
+        StateMachine<string, string> nav;
+
         KeyboardListener listener;
 
         nint hwnd;
+
         public MainWindow()
         {
             windowModel.PropertyChanged += WindowProp;
             this.DataContext = windowModel;
 
-            const string on = "On";
-            const string off = "Off";
-            const char space = ' ';
+            nav = new StateMachine<string, string>("center");
 
-            // Instantiate a new state machine in the 'off' state
-            var onOffSwitch = new StateMachine<string, char>(off);
+            nav.Configure("left-panel")
+                .Permit("reset", "center")
+                .OnEntry(() => { Debug.Print("enter left panel"); })
+                .OnExit(() => { Debug.Print("exit left panel"); });
 
-            // Configure state machine with the Configure method, supplying the state to be configured as a parameter
-            onOffSwitch.Configure(off).Permit(space, on);
-            onOffSwitch.Configure(on).Permit(space, off);
+            nav.Configure("center").Permit("left", "left-a");
+
+            nav.Configure("left-a").Permit("right", "center");
+            nav.Configure("left-a").Permit("down", "left-b");
+            nav.Configure("left-a").SubstateOf("left-panel");
+
+            nav.Configure("left-b").Permit("right", "center");
+            nav.Configure("left-b").Permit("up", "left-a");
+            nav.Configure("left-b").SubstateOf("left-panel");
+
+
         }
 
         private void WindowProp(object sender, PropertyChangedEventArgs e)
@@ -46,7 +60,7 @@ namespace Hud1
                 //WindowsServices.SetWindowExTransparent(hwnd);
             }
         }
-       
+
 
         private void OnWindowActivated(object sender, EventArgs e)
         {
@@ -78,6 +92,15 @@ namespace Hud1
 
             listener = new KeyboardListener();
             listener.KeyboardDownEvent += ListenerOnKeyPressed;
+
+            var x = this.FindName("PART_Conti") as StackPanel;
+
+
+            var y = new CustomControl1();
+            y.Label = "ADD";
+
+            x.Children.Add(y);
+            Debug.Print("XX {0}", x);
         }
 
         private void ListenerOnKeyPressed(object sender, KeyEventArgs e)
@@ -85,8 +108,13 @@ namespace Hud1
             // TYPE YOUR CODE HERE
             Debug.WriteLine("xxx {0}", e.Key);
 
-            if (e.Key == Key.F2) {  
+            if (e.Key == Key.F2)
+            {
                 windowModel.active = !windowModel.active;
+
+                nav.Fire("reset");
+                Debug.Print("nav: {0}", nav.State);
+
                 if (windowModel.active)
                 {
                     this.windowModel.active2 = false;
@@ -109,6 +137,12 @@ namespace Hud1
                 //this.MoveFocus(request);
                 this.windowModel.active2 = false;
                 this.windowModel.active1 = true;
+
+                if (nav.CanFire("up"))
+                {
+                    nav.Fire("up");
+                    Debug.Print("nav: {0}", nav.State);
+                }
             }
             if (e.Key == Key.Down)
             {
@@ -120,9 +154,21 @@ namespace Hud1
                 this.windowModel.active1 = false;
                 this.windowModel.active2 = true;
 
+                if (nav.CanFire("down"))
+                {
+                    nav.Fire("down");
+                    Debug.Print("nav: {0}", nav.State);
+                }
+
             }
             if (e.Key == Key.Left)
             {
+                if (nav.CanFire("left"))
+                {
+                    nav.Fire("left");
+                    Debug.Print("nav: {0}, {1}", nav.State, nav.IsInState("left-panel"));
+                }
+
                 // this.Focus();
                 TraversalRequest request = new TraversalRequest(FocusNavigationDirection.Left);
                 request.Wrapped = true;
@@ -130,6 +176,12 @@ namespace Hud1
             }
             if (e.Key == Key.Right)
             {
+                if (nav.CanFire("right"))
+                {
+                    nav.Fire("right");
+                    Debug.Print("nav: {0}", nav.State);
+                }
+
                 // this.Focus();
                 TraversalRequest request = new TraversalRequest(FocusNavigationDirection.Right);
                 request.Wrapped = true;
@@ -146,5 +198,6 @@ namespace Hud1
         {
 
         }
+       
     }
 }

@@ -18,7 +18,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Hud1.Controls
-{   
+{
     public class CustomControl1 : Control
     {
         public Label LabelControl;
