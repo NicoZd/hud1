@@ -29,20 +29,28 @@ namespace Hud1
 
             nav = new StateMachine<string, string>("center");
 
+            nav.Configure("all")
+                .Permit("reset", "center");
+
+            nav.Configure("center")
+                .SubstateOf("all")
+                .Permit("left", "left-a");
+
             nav.Configure("left-panel")
-                .Permit("reset", "center")
+                .SubstateOf("all")
                 .OnEntry(() => { Debug.Print("enter left panel"); })
                 .OnExit(() => { Debug.Print("exit left panel"); });
 
-            nav.Configure("center").Permit("left", "left-a");
 
-            nav.Configure("left-a").Permit("right", "center");
-            nav.Configure("left-a").Permit("down", "left-b");
-            nav.Configure("left-a").SubstateOf("left-panel");
+            nav.Configure("left-a")
+                .SubstateOf("left-panel")
+                .Permit("right", "center")
+                .Permit("down", "left-b");
 
-            nav.Configure("left-b").Permit("right", "center");
-            nav.Configure("left-b").Permit("up", "left-a");
-            nav.Configure("left-b").SubstateOf("left-panel");
+            nav.Configure("left-b")
+                .SubstateOf("left-panel")
+                .Permit("right", "center")
+                .Permit("up", "left-a");
 
 
         }
@@ -70,7 +78,7 @@ namespace Hud1
         private void OnWindowDeactivated(object sender, EventArgs e)
         {
             Debug.WriteLine("OnWindowDeactivated");
-            windowModel.active = false;
+            //windowModel.active = false;
         }
 
         private void OnWindowLoaded(object sender, RoutedEventArgs e)
@@ -93,14 +101,18 @@ namespace Hud1
             listener = new KeyboardListener();
             listener.KeyboardDownEvent += ListenerOnKeyPressed;
 
-            var x = this.FindName("PART_Conti") as StackPanel;
+            var container = this.FindName("PART_Conti") as StackPanel;
 
 
-            var y = new CustomControl1();
-            y.Label = "ADD";
+            var y = new CustomControl2();
+            y.Label = "Realtek";            
+            container.Children.Add(y);
 
-            x.Children.Add(y);
-            Debug.Print("XX {0}", x);
+            y = new CustomControl2();
+            y.Label = "Pro X";
+            container.Children.Add(y);
+
+            Debug.Print("XX {0}", container);
         }
 
         private void ListenerOnKeyPressed(object sender, KeyEventArgs e)

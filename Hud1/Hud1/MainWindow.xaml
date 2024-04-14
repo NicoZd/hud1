@@ -64,14 +64,13 @@
 
             <StackPanel x:Name="PART_Conti" Margin="15,15,15,15">
                 <Label Foreground="White" FontWeight="Bold" Margin="0,0,0,10">Audio</Label>
-                <controls:CustomControl1 Label="AA4A5"/>
-                <controls:CustomControl1 />
-                <controls:CustomControl1 Label="BBB"/>
+
+                <controls:CustomControl2 Label="AA4A5" Height="20"/>
+                <controls:CustomControl2 />
+                <controls:CustomControl2 Label="BBB" Selected="True"/>
+
                 <Slider/>
-                <Button>Realteck</Button>
-                <Button>ProX</Button>
-                <Button>Bluetooth</Button>
-                <Label/>
+
             </StackPanel>
         </Grid>
         <Grid Visibility="{Binding Path=active, Mode=OneWay, Converter={StaticResource ActiveToVisibility}}" VerticalAlignment="Top" Margin="0,0,0,0" HorizontalAlignment="Center">
