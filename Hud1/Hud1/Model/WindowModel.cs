@@ -14,17 +14,20 @@ namespace Hud1.Model
             get { return _active; }
             set { _active = value; OnPropertyChanged(); }
         }
-        public Boolean _active1 = false;
-        public Boolean active1
+
+        public String _state = "";
+        public String State
         {
-            get { return _active1; }
-            set { _active1 = value; OnPropertyChanged(); }
+            get { return _state; }
+            set { _state = value; OnPropertyChanged(); }
         }
-        public Boolean _active2 = false;
-        public Boolean active2
+
+        //panel-left, panel-right, panel-top, panel-bottom
+        public String _panel = "";
+        public String Panel
         {
-            get { return _active2; }
-            set { _active2 = value; OnPropertyChanged(); }
+            get { return _panel; }
+            set { _panel = value; OnPropertyChanged(); }
         }
     }
 }

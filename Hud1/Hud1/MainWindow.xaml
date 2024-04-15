@@ -14,7 +14,6 @@
         Width="640"
         Height="400"
         Activated="OnWindowActivated"
-        Deactivated="OnWindowDeactivated"
         Loaded="OnWindowLoaded"
         Unloaded="OnWindowUnloaded">
     <Window.Resources>
@@ -52,11 +51,11 @@
                     </Style>
                 </StackPanel.Style>
                 <Label Foreground="White" Content="Mouse Macro" FontWeight="Bold"/>
-                <CheckBox Foreground="White" Checked="CheckBox_Checked">Hold Left</CheckBox>
-                <CheckBox Name="PropertySearch1" Foreground="White" Checked="CheckBox_Checked">Repeat Left</CheckBox>
+                <CheckBox Foreground="White">Hold Left</CheckBox>
+                <CheckBox Name="PropertySearch1" Foreground="White">Repeat Left</CheckBox>
                 <Label Content=""/>
                 <Label Foreground="White" Content="Key Macro" FontWeight="Bold"/>
-                <CheckBox Name="PropertySearch2" Foreground="White" Checked="CheckBox_Checked">Hold W</CheckBox>
+                <CheckBox Name="PropertySearch2" Foreground="White">Hold W</CheckBox>
             </StackPanel>
         </Grid>
         <Grid Visibility="{Binding Path=active, Mode=OneWay, Converter={StaticResource ActiveToVisibility}}" HorizontalAlignment="Left" Margin="0,0,0,0">

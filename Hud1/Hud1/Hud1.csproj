@@ -9,6 +9,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AudioSwitcher.AudioApi" Version="3.0.0" />
+    <PackageReference Include="AudioSwitcher.AudioApi.CoreAudio" Version="3.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="Stateless">
       <HintPath>..\..\..\stateless\src\Stateless\bin\Release\net8.0\Stateless.dll</HintPath>
     </Reference>

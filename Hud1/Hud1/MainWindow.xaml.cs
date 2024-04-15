@@ -1,4 +1,7 @@
-﻿using Hud1.Controls;
+﻿using AudioSwitcher.AudioApi;
+using AudioSwitcher.AudioApi.CoreAudio;
+using AudioSwitcher.AudioApi.Observables;
+using Hud1.Controls;
 using Hud1.Model;
 using Stateless;
 using Stateless.Graph;
@@ -20,11 +23,13 @@ namespace Hud1
 
         KeyboardListener listener;
 
+        CoreAudioController audioController;
+
+
         nint hwnd;
 
         public MainWindow()
         {
-            windowModel.PropertyChanged += WindowProp;
             this.DataContext = windowModel;
 
             nav = new StateMachine<string, string>("center");
@@ -41,7 +46,6 @@ namespace Hud1
                 .OnEntry(() => { Debug.Print("enter left panel"); })
                 .OnExit(() => { Debug.Print("exit left panel"); });
 
-
             nav.Configure("left-a")
                 .SubstateOf("left-panel")
                 .Permit("right", "center")
@@ -52,39 +56,32 @@ namespace Hud1
                 .Permit("right", "center")
                 .Permit("up", "left-a");
 
-
+            audioController = new CoreAudioController();
+            audioController.AudioDeviceChanged.Subscribe(OnDeviceChanged);
         }
 
-        private void WindowProp(object sender, PropertyChangedEventArgs e)
+        private void OnDeviceChanged(DeviceChangedArgs x)
         {
-            if (windowModel.active)
-            {
-                Debug.Print("Remove");
-                //WindowsServices.RemoveWindowExTransparent(hwnd);
-            }
-            else
-            {
-                Debug.Print("Add");
-                //WindowsServices.SetWindowExTransparent(hwnd);
-            }
-        }
+            Debug.Print("soso {0}", x.Device);
 
+            var devices = audioController.GetPlaybackDevices(DeviceState.Active);
+            foreach (var d in devices.OrderBy(x => x.Name))
+            {
+                Debug.Print("Device 0:{0} ", d.FullName) ;
+            }
+
+        }
 
         private void OnWindowActivated(object sender, EventArgs e)
         {
             Debug.WriteLine("OnWindowActivated");
             windowModel.active = true;
-        }
-        private void OnWindowDeactivated(object sender, EventArgs e)
-        {
-            Debug.WriteLine("OnWindowDeactivated");
-            //windowModel.active = false;
-        }
+        }       
 
         private void OnWindowLoaded(object sender, RoutedEventArgs e)
         {
             hwnd = new WindowInteropHelper(this).Handle;
-            Debug.WriteLine("OnSourceInitialized {0}", hwnd);
+            Debug.WriteLine("OnWindowLoaded {0}", hwnd);
 
             WindowsServices.SetWindowExTransparent(hwnd);
 
@@ -103,7 +100,6 @@ namespace Hud1
 
             var container = this.FindName("PART_Conti") as StackPanel;
 
-
             var y = new CustomControl2();
             y.Label = "Realtek";            
             container.Children.Add(y);
@@ -111,8 +107,6 @@ namespace Hud1
             y = new CustomControl2();
             y.Label = "Pro X";
             container.Children.Add(y);
-
-            Debug.Print("XX {0}", container);
         }
 
         private void ListenerOnKeyPressed(object sender, KeyEventArgs e)
@@ -123,33 +117,11 @@ namespace Hud1
             if (e.Key == Key.F2)
             {
                 windowModel.active = !windowModel.active;
-
-                nav.Fire("reset");
-                Debug.Print("nav: {0}", nav.State);
-
-                if (windowModel.active)
-                {
-                    this.windowModel.active2 = false;
-                    this.windowModel.active1 = true;
-                    //this.Activate();
-
-                    //TraversalRequest request = new TraversalRequest(FocusNavigationDirection.First);
-                    //request.Wrapped = true;
-                    //var x = this.MoveFocus(request);
-                    //this.Focus();
-                    //Debug.Print("X {0}", x);
-                }
+                nav.Fire("reset");               
             }
 
             if (e.Key == Key.Up)
             {
-                // this.Focus();
-                //TraversalRequest request = new TraversalRequest(FocusNavigationDirection.Up);
-                //request.Wrapped = true;
-                //this.MoveFocus(request);
-                this.windowModel.active2 = false;
-                this.windowModel.active1 = true;
-
                 if (nav.CanFire("up"))
                 {
                     nav.Fire("up");
@@ -157,21 +129,12 @@ namespace Hud1
                 }
             }
             if (e.Key == Key.Down)
-            {
-                // this.Focus();
-                //TraversalRequest request = new TraversalRequest(FocusNavigationDirection.Down);
-                //request.Wrapped = true;
-                //var x = this.MoveFocus(request);
-                //Debug.Print("X {0}", x);
-                this.windowModel.active1 = false;
-                this.windowModel.active2 = true;
-
+            {                
                 if (nav.CanFire("down"))
                 {
                     nav.Fire("down");
                     Debug.Print("nav: {0}", nav.State);
                 }
-
             }
             if (e.Key == Key.Left)
             {
@@ -180,11 +143,6 @@ namespace Hud1
                     nav.Fire("left");
                     Debug.Print("nav: {0}, {1}", nav.State, nav.IsInState("left-panel"));
                 }
-
-                // this.Focus();
-                TraversalRequest request = new TraversalRequest(FocusNavigationDirection.Left);
-                request.Wrapped = true;
-                this.MoveFocus(request);
             }
             if (e.Key == Key.Right)
             {
@@ -193,23 +151,12 @@ namespace Hud1
                     nav.Fire("right");
                     Debug.Print("nav: {0}", nav.State);
                 }
-
-                // this.Focus();
-                TraversalRequest request = new TraversalRequest(FocusNavigationDirection.Right);
-                request.Wrapped = true;
-                this.MoveFocus(request);
             }
         }
 
         private void OnWindowUnloaded(object sender, RoutedEventArgs e)
         {
             listener.KeyboardDownEvent -= ListenerOnKeyPressed;
-        }
-
-        private void CheckBox_Checked(object sender, RoutedEventArgs e)
-        {
-
-        }
-       
+        }       
     }
 }
