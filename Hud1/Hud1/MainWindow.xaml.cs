@@ -33,6 +33,7 @@ namespace Hud1
             this.DataContext = windowModel;
 
             nav = new StateMachine<string, string>("center");
+            nav.OnTransitionCompleted(a => UpdateModelFromStateless());
 
             nav.Configure("all")
                 .Permit("reset", "center");
@@ -58,6 +59,35 @@ namespace Hud1
 
             audioController = new CoreAudioController();
             audioController.AudioDeviceChanged.Subscribe(OnDeviceChanged);
+
+            UpdateModelFromStateless();
+        }
+
+        private void UpdateModelFromStateless()
+        {
+            Debug.Print("UpdateModelFromStateless {0} ", nav.State);
+
+            windowModel.State = nav.State;
+
+            if (nav.IsInState("left-panel"))
+                windowModel.Panel = "left-panel";
+
+            if (nav.IsInState("right-panel"))
+                windowModel.Panel = "right-panel";
+
+            if (nav.IsInState("top-panel"))
+                windowModel.Panel = "top-panel";
+
+            if (nav.IsInState("bottom-panel"))
+                windowModel.Panel = "bottom-panel";
+
+            if (nav.IsInState("center"))
+                windowModel.Panel = "center";
+        }
+
+        private void OnTransitionCompleted(object sender, EventArgs e)
+        {
+            Debug.Print("OnTransitionCompleted {0}", e);
         }
 
         private void OnDeviceChanged(DeviceChangedArgs x)

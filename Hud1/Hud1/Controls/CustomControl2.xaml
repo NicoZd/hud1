@@ -7,6 +7,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <StackPanel Background="Green">
-        <Label Name="label1" Content="XXX"/>
+        <Label Name="PART_Label" Content=""/>
     </StackPanel>
 </UserControl>

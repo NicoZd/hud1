@@ -25,8 +25,8 @@ namespace Hud1.Controls
 
         public string Label
         {
-            get => (string)label1.Content;
-            set => label1.Content = value;
+            get => (string)PART_Label.Content;
+            set => PART_Label.Content = value;
         }
 
         private bool _selected = false;
