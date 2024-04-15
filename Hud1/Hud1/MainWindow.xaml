@@ -23,7 +23,7 @@
         <SolidColorBrush Color="Transparent"/>
     </Window.Background>
     <Grid>
-        <Canvas Visibility="{Binding Path=active, Mode=OneWay, Converter={StaticResource ActiveToVisibility}}" Margin="0,-300,0,-300">
+        <Canvas Visibility="{Binding Path=Active, Mode=OneWay, Converter={StaticResource ActiveToVisibility}}" Margin="0,-300,0,-300">
             <Canvas.Background>
                 <RadialGradientBrush>
                     <GradientStop Color="#99003300" Offset="1"/>
@@ -35,7 +35,7 @@
             <Line X1="0" Y1="0" X2="50" Y2="50" Stroke="Green" StrokeThickness="1"/>
             <Line X1="50" Y1="0" X2="0" Y2="50" Stroke="Green" StrokeThickness="1" />
         </Canvas>
-        <Grid Visibility="{Binding Path=active, Mode=OneWay, Converter={StaticResource ActiveToVisibility}}" HorizontalAlignment="Right" Margin="0,0,0,0">
+        <Grid Visibility="{Binding Path=Active, Mode=OneWay, Converter={StaticResource ActiveToVisibility}}" HorizontalAlignment="Right" Margin="0,0,0,0">
             <Border Background="#dd003300" BorderBrush="Green" BorderThickness="1" CornerRadius="10" Padding="20"/>
             <StackPanel Margin="15,15,15,15">
                 <StackPanel.Style>
@@ -58,21 +58,23 @@
                 <CheckBox Name="PropertySearch2" Foreground="White">Hold W</CheckBox>
             </StackPanel>
         </Grid>
-        <Grid Visibility="{Binding Path=active, Mode=OneWay, Converter={StaticResource ActiveToVisibility}}" HorizontalAlignment="Left" Margin="0,0,0,0">
+        <Grid Visibility="{Binding Path=Active, Mode=OneWay, Converter={StaticResource ActiveToVisibility}}" HorizontalAlignment="Left" Margin="0,0,0,0">
             <Border Background="#dd003300" BorderBrush="Green" BorderThickness="1" CornerRadius="10" Padding="20"/>
-
-            <StackPanel x:Name="PART_Conti" Margin="15,15,15,15">
-                <Label Foreground="White" FontWeight="Bold" Margin="0,0,0,10">Audio</Label>
-
-                <controls:CustomControl2 Label="AA4A5" Height="20"/>
-                <controls:CustomControl2 />
-                <controls:CustomControl2 Label="BBB" Selected="True"/>
-
-                <Slider/>
-
+            <StackPanel>
+                <StackPanel Margin="15,15,15,15">
+                    <Label Foreground="White" Content="{Binding Path=State, Mode=OneWay}"/>
+                    <Label Foreground="White" Content="{Binding Path=Panel, Mode=OneWay}"/>
+                    <Label Foreground="White" FontWeight="Bold" Margin="0,0,0,10">Audio</Label>
+                    <Slider/>
+                </StackPanel>
+                <StackPanel x:Name="PART_Conti" Margin="15,15,15,15">
+                    <controls:CustomControl2 Label="AA4A5" Height="20"/>
+                    <controls:CustomControl2 />
+                    <controls:CustomControl2 Label="BBB" Selected="True"/>
+                </StackPanel>
             </StackPanel>
         </Grid>
-        <Grid Visibility="{Binding Path=active, Mode=OneWay, Converter={StaticResource ActiveToVisibility}}" VerticalAlignment="Top" Margin="0,0,0,0" HorizontalAlignment="Center">
+        <Grid Visibility="{Binding Path=Active, Mode=OneWay, Converter={StaticResource ActiveToVisibility}}" VerticalAlignment="Top" Margin="0,0,0,0" HorizontalAlignment="Center">
             <Border Background="#dd003300" BorderBrush="Green" BorderThickness="1" CornerRadius="10" Padding="20"/>
             <StackPanel Margin="15,15,15,15" Grid.ColumnSpan="2" Orientation="Horizontal">
                 <StackPanel.Resources>
@@ -87,7 +89,7 @@
                 <Button>4</Button>
             </StackPanel>
         </Grid>
-        <Grid Visibility="{Binding Path=active, Mode=OneWay, Converter={StaticResource ActiveToVisibility}}" VerticalAlignment="Bottom" Margin="0,0,0,0" HorizontalAlignment="Center">
+        <Grid Visibility="{Binding Path=Active, Mode=OneWay, Converter={StaticResource ActiveToVisibility}}" VerticalAlignment="Bottom" Margin="0,0,0,0" HorizontalAlignment="Center">
             <Border Background="#dd003300" BorderBrush="Green" BorderThickness="1" CornerRadius="10" Padding="20"/>
             <StackPanel Margin="15,15,15,15" Grid.ColumnSpan="2" Orientation="Horizontal">
                 <StackPanel.Resources>

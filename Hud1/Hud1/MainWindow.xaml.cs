@@ -75,7 +75,7 @@ namespace Hud1
         private void OnWindowActivated(object sender, EventArgs e)
         {
             Debug.WriteLine("OnWindowActivated");
-            windowModel.active = true;
+            windowModel.Active = true;
         }       
 
         private void OnWindowLoaded(object sender, RoutedEventArgs e)
@@ -100,8 +100,10 @@ namespace Hud1
 
             var container = this.FindName("PART_Conti") as StackPanel;
 
+            container.Children.Clear();
+
             var y = new CustomControl2();
-            y.Label = "Realtek";            
+            y.Label = "Realtek";           
             container.Children.Add(y);
 
             y = new CustomControl2();
@@ -116,7 +118,7 @@ namespace Hud1
 
             if (e.Key == Key.F2)
             {
-                windowModel.active = !windowModel.active;
+                windowModel.Active = !windowModel.Active;
                 nav.Fire("reset");               
             }
 

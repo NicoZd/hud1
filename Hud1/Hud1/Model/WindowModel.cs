@@ -9,13 +9,13 @@ namespace Hud1.Model
     class WindowModel: ObservableObject
     {
         public Boolean _active = false;
-        public Boolean active
+        public Boolean Active
         {
             get { return _active; }
             set { _active = value; OnPropertyChanged(); }
         }
 
-        public String _state = "";
+        public String _state = "State";
         public String State
         {
             get { return _state; }
@@ -23,7 +23,7 @@ namespace Hud1.Model
         }
 
         //panel-left, panel-right, panel-top, panel-bottom
-        public String _panel = "";
+        public String _panel = "Panel";
         public String Panel
         {
             get { return _panel; }
