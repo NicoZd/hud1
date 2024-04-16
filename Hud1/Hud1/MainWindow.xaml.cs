@@ -2,6 +2,7 @@
 using AudioSwitcher.AudioApi.CoreAudio;
 using AudioSwitcher.AudioApi.Observables;
 using Hud1.Controls;
+using Hud1.Converters;
 using Hud1.Model;
 using Stateless;
 using Stateless.Graph;
@@ -10,6 +11,7 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Interop;
 
@@ -32,35 +34,8 @@ namespace Hud1
         {
             this.DataContext = windowModel;
 
-            nav = new StateMachine<string, string>("center");
-            nav.OnTransitionCompleted(a => UpdateModelFromStateless());
-
-            nav.Configure("all")
-                .Permit("reset", "center");
-
-            nav.Configure("center")
-                .SubstateOf("all")
-                .Permit("left", "left-a");
-
-            nav.Configure("left-panel")
-                .SubstateOf("all")
-                .OnEntry(() => { Debug.Print("enter left panel"); })
-                .OnExit(() => { Debug.Print("exit left panel"); });
-
-            nav.Configure("left-a")
-                .SubstateOf("left-panel")
-                .Permit("right", "center")
-                .Permit("down", "left-b");
-
-            nav.Configure("left-b")
-                .SubstateOf("left-panel")
-                .Permit("right", "center")
-                .Permit("up", "left-a");
-
             audioController = new CoreAudioController();
             audioController.AudioDeviceChanged.Subscribe(OnDeviceChanged);
-
-            UpdateModelFromStateless();
         }
 
         private void UpdateModelFromStateless()
@@ -92,21 +67,14 @@ namespace Hud1
 
         private void OnDeviceChanged(DeviceChangedArgs x)
         {
-            Debug.Print("soso {0}", x.Device);
-
-            var devices = audioController.GetPlaybackDevices(DeviceState.Active);
-            foreach (var d in devices.OrderBy(x => x.Name))
-            {
-                Debug.Print("Device 0:{0} ", d.FullName) ;
-            }
-
+            Application.Current.Dispatcher.Invoke(new Action(() => RebuildUI()));
         }
 
         private void OnWindowActivated(object sender, EventArgs e)
         {
             Debug.WriteLine("OnWindowActivated");
             windowModel.Active = true;
-        }       
+        }
 
         private void OnWindowLoaded(object sender, RoutedEventArgs e)
         {
@@ -128,17 +96,67 @@ namespace Hud1
             listener = new KeyboardListener();
             listener.KeyboardDownEvent += ListenerOnKeyPressed;
 
-            var container = this.FindName("PART_Conti") as StackPanel;
+            RebuildUI();
+        }
 
-            container.Children.Clear();
+        private void RebuildUI()
+        {
+            Debug.Print("RebuildUI");
 
-            var y = new CustomControl2();
-            y.Label = "Realtek";           
-            container.Children.Add(y);
+            nav = new StateMachine<string, string>("center");
+            nav.OnTransitionCompleted(a => UpdateModelFromStateless());
 
-            y = new CustomControl2();
-            y.Label = "Pro X";
-            container.Children.Add(y);
+            nav.Configure("all")
+                .Permit("reset", "center");
+
+            nav.Configure("center")
+                .SubstateOf("all");
+
+            nav.Configure("left-panel")
+                .SubstateOf("all")
+                .Permit("right", "center")
+                .OnEntry(() => { Debug.Print("enter left panel"); })
+                .OnExit(() => { Debug.Print("exit left panel"); });
+
+            var playbackContainer = this.FindName("PART_Conti") as StackPanel;
+            playbackContainer.Children.Clear();
+
+            Random rnd = new Random();
+
+            Debug.Print("XXX-------");
+
+            var devices = audioController.GetPlaybackDevices(DeviceState.Active).ToArray();
+
+            if (devices.Length > 0)
+            {
+                nav.Configure("center")
+                    .Permit("left", devices[0].Id.ToString());
+            }
+
+            for (var i = 0; i < devices.Length; i++)
+            {
+                var device = devices[i];
+                var state = nav.Configure(device.Id.ToString()).SubstateOf("left-panel");
+                if (i > 0)
+                    state.Permit("up", devices[i - 1].Id.ToString());
+
+                if (i < devices.Length - 1)
+                    state.Permit("down", devices[i + 1].Id.ToString());
+
+
+                var playbackDeviceButton = new CustomControl2();
+                playbackDeviceButton.Label = device.FullName;
+                Debug.Print("XXX {0}", playbackDeviceButton.Selected);
+
+                Binding selectedBinding = new Binding("State");
+                selectedBinding.Source = windowModel;
+                selectedBinding.Converter = new StateToSelected(devices[i].Id.ToString());
+                playbackDeviceButton.SetBinding(CustomControl2.SelectedProperty, selectedBinding);
+
+                playbackContainer.Children.Add(playbackDeviceButton);
+            }
+
+            UpdateModelFromStateless();
         }
 
         private void ListenerOnKeyPressed(object sender, KeyEventArgs e)
@@ -149,7 +167,7 @@ namespace Hud1
             if (e.Key == Key.F2)
             {
                 windowModel.Active = !windowModel.Active;
-                nav.Fire("reset");               
+                nav.Fire("reset");
             }
 
             if (e.Key == Key.Up)
@@ -161,7 +179,7 @@ namespace Hud1
                 }
             }
             if (e.Key == Key.Down)
-            {                
+            {
                 if (nav.CanFire("down"))
                 {
                     nav.Fire("down");
@@ -189,6 +207,6 @@ namespace Hud1
         private void OnWindowUnloaded(object sender, RoutedEventArgs e)
         {
             listener.KeyboardDownEvent -= ListenerOnKeyPressed;
-        }       
+        }
     }
 }

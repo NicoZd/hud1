@@ -3,10 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:converters="clr-namespace:Hud1.Converters"
              xmlns:local="clr-namespace:Hud1.Controls"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <StackPanel Background="Green">
-        <Label Name="PART_Label" Content=""/>
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <converters:SelectedToBackground x:Key="SelectedToBackground"/>
+    </UserControl.Resources>
+    <StackPanel Background="{Binding Path=Selected, Mode=OneWay, Converter={StaticResource SelectedToBackground}}">
+        <Label Name="PART_Label" Content="{Binding Path=Label, Mode=OneWay}"/>
     </StackPanel>
 </UserControl>

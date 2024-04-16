@@ -1,6 +1,7 @@
 ﻿using Hud1.Model;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,25 +17,44 @@ using System.Windows.Shapes;
 
 namespace Hud1.Controls
 {
-    /// <summary>
-    /// Interaction logic for UserControl1.xaml
-    /// </summary>
     public partial class CustomControl2 : UserControl
     {
         CustomControl2Model model = new CustomControl2Model();
 
-        public string Label
+        public static readonly DependencyProperty LabelProperty = DependencyProperty.Register(
+          "Label",
+          typeof(String),
+          typeof(CustomControl2),
+          new PropertyMetadata("", new PropertyChangedCallback(OnLabelChanged))
+        );
+
+        public static readonly DependencyProperty SelectedProperty = DependencyProperty.Register(
+          "Selected",
+          typeof(bool),
+          typeof(CustomControl2),
+          new PropertyMetadata(false, new PropertyChangedCallback(OnSelectedChanged))
+        );
+
+        public static void OnLabelChanged(DependencyObject send, DependencyPropertyChangedEventArgs args)
         {
-            get => (string)PART_Label.Content;
-            set => PART_Label.Content = value;
+            (send as CustomControl2).model.Label = (string)args.NewValue;
         }
 
-        private bool _selected = false;
+        public static void OnSelectedChanged(DependencyObject send, DependencyPropertyChangedEventArgs args)
+        {
+            (send as CustomControl2).model.Selected = (bool)args.NewValue;
+        }
+
+        public String Label
+        {
+            get => (String)GetValue(LabelProperty);
+            set => SetValue(LabelProperty, value);
+        }
+
         public bool Selected
         {
-            get => model.Selected;
-            set => model.Selected = value;
-
+            get => (bool)GetValue(SelectedProperty);
+            set => SetValue(SelectedProperty, value);
         }
 
         public CustomControl2()
@@ -42,6 +62,8 @@ namespace Hud1.Controls
             InitializeComponent();
             this.DataContext = model;
         }
+
+
 
     }
 }
