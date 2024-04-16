@@ -22,11 +22,14 @@
     <Window.Background>
         <SolidColorBrush Color="Transparent"/>
     </Window.Background>
+    <Window.Effect>
+        <DropShadowEffect ShadowDepth="0" Color="#003300" Opacity="0.3" BlurRadius="50" Direction="0" />
+    </Window.Effect>
     <Grid>
         <Canvas Visibility="{Binding Path=Active, Mode=OneWay, Converter={StaticResource ActiveToVisibility}}" Margin="0,-300,0,-300">
             <Canvas.Background>
                 <RadialGradientBrush>
-                    <GradientStop Color="#99003300" Offset="1"/>
+                    <GradientStop Color="#40003300" Offset="1"/>
                     <GradientStop Color="#00003300" Offset="0.7"/>
                 </RadialGradientBrush>
             </Canvas.Background>
@@ -38,18 +41,6 @@
         <Grid Visibility="{Binding Path=Active, Mode=OneWay, Converter={StaticResource ActiveToVisibility}}" HorizontalAlignment="Right" Margin="0,0,0,0">
             <Border Background="#dd003300" BorderBrush="Green" BorderThickness="1" CornerRadius="10" Padding="20"/>
             <StackPanel Margin="15,15,15,15">
-                <StackPanel.Style>
-                    <Style>
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding active1}" Value="True">
-                                <Setter Property="FocusManager.FocusedElement" Value="{Binding ElementName=PropertySearch1}"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding active2}" Value="True">
-                                <Setter Property="FocusManager.FocusedElement" Value="{Binding ElementName=PropertySearch2}"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </StackPanel.Style>
                 <Label Foreground="White" Content="Mouse Macro" FontWeight="Bold"/>
                 <CheckBox Foreground="White">Hold Left</CheckBox>
                 <CheckBox Name="PropertySearch1" Foreground="White">Repeat Left</CheckBox>
@@ -59,7 +50,11 @@
             </StackPanel>
         </Grid>
         <Grid Visibility="{Binding Path=Active, Mode=OneWay, Converter={StaticResource ActiveToVisibility}}" HorizontalAlignment="Left" Margin="0,0,0,0">
-            <Border Background="#dd003300" BorderBrush="Green" BorderThickness="1" CornerRadius="10" Padding="20"/>
+            <Border Background="#d0003300" BorderBrush="#d0006600" BorderThickness="1" CornerRadius="20" Padding="20">
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="50" Color="#d0003300" Direction="0"/>
+                </Border.Effect>
+            </Border>
             <StackPanel>
                 <StackPanel Margin="15,15,15,15">
                     <Label Foreground="White" Content="{Binding Path=State, Mode=OneWay}"/>
@@ -68,6 +63,11 @@
                     <Slider/>
                 </StackPanel>
                 <StackPanel x:Name="PART_Conti" Margin="15,15,15,15">
+                    <StackPanel.Resources>
+                        <Style TargetType="{x:Type controls:CustomControl2}">
+                            <Setter Property="Margin" Value="0,1,0,1"/>
+                        </Style>
+                    </StackPanel.Resources>
                     <controls:CustomControl2 />
                     <controls:CustomControl2 Label="AA4A5"/>
                     <controls:CustomControl2 Label="BBB" Selected="True"/>

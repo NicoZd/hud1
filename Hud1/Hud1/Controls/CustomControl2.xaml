@@ -10,6 +10,10 @@
         <converters:SelectedToBackground x:Key="SelectedToBackground"/>
     </UserControl.Resources>
     <StackPanel Background="{Binding Path=Selected, Mode=OneWay, Converter={StaticResource SelectedToBackground}}">
-        <Label Name="PART_Label" Content="{Binding Path=Label, Mode=OneWay}"/>
+        <Label Foreground="#ff99ff66" Name="PART_Label" Content="{Binding Path=Label, Mode=OneWay}" Padding="20,5,20,5">
+            <Label.Effect>
+                <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />
+            </Label.Effect>
+        </Label>
     </StackPanel>
 </UserControl>
