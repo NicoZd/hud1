@@ -18,6 +18,7 @@ using System.Windows.Media;
 
 
 using DependencyObjectExtensions;
+using System.Text.RegularExpressions;
 
 namespace Hud1
 {
@@ -152,7 +153,8 @@ namespace Hud1
 
 
                 var playbackDeviceButton = new CustomControl2();
-                playbackDeviceButton.Label = device.FullName;
+                playbackDeviceButton.Label = device.InterfaceName;
+                playbackDeviceButton.Label = Regex.Replace(playbackDeviceButton.Label, "[0-9]- ", "");
                 Debug.Print("XXX {0}", playbackDeviceButton.Selected);
 
                 Binding selectedBinding = new Binding("State");

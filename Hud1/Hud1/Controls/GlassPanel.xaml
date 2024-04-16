@@ -11,32 +11,33 @@
             <Grid>
                 <Grid.Background>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                        <GradientStop Color="#aa77ff00" Offset="0.0"/>
-                        <GradientStop Color="#aa00ff00" Offset="0.01"/>
-                        <GradientStop Color="#dd007700" Offset="0.01"/>
-                        <GradientStop Color="#cc004400" Offset="0.3"/>
+                        <GradientStop Color="#ee77ff00" Offset="0.0"/>
+                        <GradientStop Color="#ee00ff00" Offset="0.01"/>
+                        <GradientStop Color="#f5009900" Offset="0.01"/>
+                        <GradientStop Color="#dd005500" Offset="0.2"/>
+                        <GradientStop Color="#99006600" Offset="0.3"/>
                         <GradientStop Color="#33003300" Offset="0.6"/>
-                        <GradientStop Color="#00003300" Offset="1"/>
+                        <GradientStop Color="#1100ff66" Offset="1"/>
                     </LinearGradientBrush>
                 </Grid.Background>
-                <Border CornerRadius="0" Padding="20" BorderThickness="1,1,1,1">
-                    <Border.BorderBrush>
-                        <DrawingBrush Viewport="0,0,5,5" ViewportUnits="Absolute" TileMode="Tile">
-                            <DrawingBrush.Drawing>
-                                <DrawingGroup>
-                                    <GeometryDrawing Brush="#3300ff00">
-                                        <GeometryDrawing.Geometry>
-                                            <GeometryGroup>
-                                                <RectangleGeometry Rect="0,0,50,50" />
-                                                <RectangleGeometry Rect="50,50,50,50" />
-                                            </GeometryGroup>
-                                        </GeometryDrawing.Geometry>
-                                    </GeometryDrawing>
-                                </DrawingGroup>
-                            </DrawingBrush.Drawing>
-                        </DrawingBrush>
-                    </Border.BorderBrush>
-                </Border>
+                 <Border CornerRadius="0" Padding="20" BorderThickness="1,1,1,1">
+     <Border.BorderBrush>
+         <DrawingBrush Viewport="0,0,5,5" ViewportUnits="Absolute" TileMode="Tile">
+             <DrawingBrush.Drawing>
+                 <DrawingGroup>
+                     <GeometryDrawing Brush="#3300ff00">
+                         <GeometryDrawing.Geometry>
+                             <GeometryGroup>
+                                 <RectangleGeometry Rect="0,0,50,50" />
+                                 <RectangleGeometry Rect="50,50,50,50" />
+                             </GeometryGroup>
+                         </GeometryDrawing.Geometry>
+                     </GeometryDrawing>
+                 </DrawingGroup>
+             </DrawingBrush.Drawing>
+         </DrawingBrush>
+     </Border.BorderBrush>
+ </Border>
                 <ContentPresenter Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content}" />
             </Grid>
         </ControlTemplate>

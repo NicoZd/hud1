@@ -23,43 +23,40 @@
         <SolidColorBrush Color="Transparent"/>
     </Window.Background>
     <Window.Effect>
-        <DropShadowEffect ShadowDepth="3" Color="#000000" Opacity="0.3" BlurRadius="20" Direction="0" />
+        <DropShadowEffect ShadowDepth="3" Color="#008800" Opacity="0.3" BlurRadius="20" Direction="0" />
     </Window.Effect>
     <Grid>
+
         <Canvas Visibility="{Binding Path=Active, Mode=OneWay, Converter={StaticResource ActiveToVisibility}}" Margin="0,0,0,0">
             <Canvas.Background>
-                <LinearGradientBrush StartPoint="0,0" EndPoint="0.0,1">
-                    <GradientStop Color="#25009900" Offset="0.0"/>
-                    <GradientStop Color="#00009900" Offset="0.2"/>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="#44009900" Offset="0.0"/>
+                    <GradientStop Color="#22006600" Offset="0.05"/>
+                    <GradientStop Color="#00000000" Offset="0.2"/>
+                    <GradientStop Color="#00000000" Offset="0.8"/>
+                    <GradientStop Color="#22006600" Offset="0.95"/>
+                    <GradientStop Color="#44009900" Offset="1.0"/>
                 </LinearGradientBrush>
             </Canvas.Background>
         </Canvas>
+
         <Canvas Width="50" Height="50" IsHitTestVisible="false" Background="#00000000">
             <Line X1="0" Y1="0" X2="50" Y2="50" Stroke="Green" StrokeThickness="1"/>
             <Line X1="50" Y1="0" X2="0" Y2="50" Stroke="Green" StrokeThickness="1" />
         </Canvas>
-        <Grid Visibility="{Binding Path=Active, Mode=OneWay, Converter={StaticResource ActiveToVisibility}}" HorizontalAlignment="Right">
-            <controls:GlassPanel>
-                <StackPanel Margin="15,15,15,15">
-                    <Label Foreground="White" Content="Mouse Macro" FontWeight="Bold"/>
-                    <CheckBox Foreground="White">Hold Left</CheckBox>
-                    <CheckBox Foreground="White">Repeat Left</CheckBox>
-                    <Label Content=""/>
-                    <Label Foreground="White" Content="Key Macro" FontWeight="Bold"/>
-                    <CheckBox Foreground="White">Hold W</CheckBox>
-                </StackPanel>
-            </controls:GlassPanel>
-        </Grid>
+
         <Grid Visibility="{Binding Path=Active, Mode=OneWay, Converter={StaticResource ActiveToVisibility}}" HorizontalAlignment="Left" Margin="0,0,0,0">
             <controls:GlassPanel>
                 <StackPanel>
                     <StackPanel Margin="15,15,15,15">
-                        <Label Foreground="White" Content="{Binding Path=State, Mode=OneWay}"/>
-                        <Label Foreground="White" Content="{Binding Path=Panel, Mode=OneWay}"/>
-                        <Label Foreground="White" FontWeight="Bold" Margin="0,0,0,10">Audio</Label>
+                        <Label Foreground="#ffbbffbb" Content="AUDIO" Padding="0,10,0,10" FontFamily="Cascadia Code" FontSize="20">
+                            <Label.Effect>
+                                <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />
+                            </Label.Effect>
+                        </Label>
                         <Slider/>
                     </StackPanel>
-                    <StackPanel Uid="PlaybackContainer" Margin="15,15,15,15">
+                    <StackPanel Uid="PlaybackContainer" Margin="15,0,15,0">
                         <StackPanel.Resources>
                             <Style TargetType="{x:Type controls:CustomControl2}">
                                 <Setter Property="Margin" Value="0,3,0,3"/>
@@ -72,37 +69,77 @@
                 </StackPanel>
             </controls:GlassPanel>
         </Grid>
+
         <Grid Visibility="{Binding Path=Active, Mode=OneWay, Converter={StaticResource ActiveToVisibility}}" VerticalAlignment="Top" Margin="0,0,0,0" HorizontalAlignment="Center">
-            <Border Background="#dd003300" BorderBrush="Green" BorderThickness="1" CornerRadius="10" Padding="20"/>
-            <StackPanel Margin="15,15,15,15" Grid.ColumnSpan="2" Orientation="Horizontal">
-                <StackPanel.Resources>
-                    <Style TargetType="{x:Type Button}">
-                        <Setter Property="Margin" Value="5,0,5,0"/>
-                    </Style>
-                </StackPanel.Resources>
-                <Label Foreground="White" Content="Crosshair" FontWeight="Bold"/>
-                <Button>ON/OFF</Button>
-                <Button>2</Button>
-                <Button>3</Button>
-                <Button>4</Button>
-            </StackPanel>
+            <controls:CenterPanel>
+                <StackPanel Margin="30,20,30,12" Grid.ColumnSpan="2" Orientation="Horizontal">
+                    <StackPanel.Resources>
+                        <Style TargetType="{x:Type controls:CustomControl2}">
+                            <Setter Property="Margin" Value="2,0,2,0"/>
+                        </Style>
+                    </StackPanel.Resources>
+                    <Label Foreground="#ffbbffbb" Content="Crosshair" Padding="0,0,20,0" FontFamily="Cascadia Code" FontSize="20">
+                        <Label.Effect>
+                            <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />
+                        </Label.Effect>
+                    </Label>
+                    <controls:CustomControl2 Label="ON/OFF"/>
+                    <controls:CustomControl2 Label="C"/>
+                    <controls:CustomControl2 Label="F"/>
+                    <controls:CustomControl2 Label="S"/>
+                </StackPanel>
+            </controls:CenterPanel>
         </Grid>
+
+        <Grid Visibility="{Binding Path=Active, Mode=OneWay, Converter={StaticResource ActiveToVisibility}}" HorizontalAlignment="Right">
+            <controls:GlassPanel>
+                <StackPanel Margin="15,15,15,15">
+                    <StackPanel.Resources>
+                        <Style TargetType="{x:Type controls:CustomControl2}">
+                            <Setter Property="Margin" Value="0,2,0,2"/>
+                        </Style>
+                    </StackPanel.Resources>
+                    <Label Foreground="#ffbbffbb" Content="Mouse Macro" Padding="0,10,20,10" FontFamily="Cascadia Code" FontSize="20">
+                        <Label.Effect>
+                            <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />
+                        </Label.Effect>
+                    </Label>
+                    <controls:CustomControl2 Label="Hold Left"/>
+                    <controls:CustomControl2 Label="Repeat Left"/>
+                    <Label Content=""/>
+                    <Label Foreground="#ffbbffbb" Content="Key Macro" Padding="0,0,20,10" FontFamily="Cascadia Code" FontSize="20">
+                        <Label.Effect>
+                            <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />
+                        </Label.Effect>
+                    </Label>
+                    <controls:CustomControl2 Label="Hold W"/>
+                </StackPanel>
+            </controls:GlassPanel>
+        </Grid>
+
         <Grid Visibility="{Binding Path=Active, Mode=OneWay, Converter={StaticResource ActiveToVisibility}}" VerticalAlignment="Bottom" Margin="0,0,0,0" HorizontalAlignment="Center">
-            <Border Background="#dd003300" BorderBrush="Green" BorderThickness="1" CornerRadius="10" Padding="20"/>
-            <StackPanel Margin="15,15,15,15" Grid.ColumnSpan="2" Orientation="Horizontal">
-                <StackPanel.Resources>
-                    <Style TargetType="{x:Type Button}">
-                        <Setter Property="Margin" Value="5,0,5,0"/>
-                    </Style>
-                </StackPanel.Resources>
-                <Label Foreground="White" Content="Gamma" FontWeight="Bold"/>
-                <Button>1.0</Button>
-                <Button>1.1</Button>
-                <Button>1.25</Button>
-                <Button>1.5</Button>
-                <Button>3</Button>
-                <Button>4</Button>
-            </StackPanel>
+            <controls:CenterPanel>
+                <StackPanel Margin="30,20,30,12" Grid.ColumnSpan="2" Orientation="Horizontal">
+                    <StackPanel.Resources>
+                        <Style TargetType="{x:Type controls:CustomControl2}">
+                            <Setter Property="Margin" Value="3,0,3,0"/>
+                        </Style>
+                    </StackPanel.Resources>
+                    <Label Foreground="#ffbbffbb" Content="Gamma" Padding="0,0,20,0" FontFamily="Cascadia Code" FontSize="20">
+                        <Label.Effect>
+                            <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />
+                        </Label.Effect>
+                    </Label>
+                    <controls:CustomControl2 Label="AUTO"/>
+                    <controls:CustomControl2 Label="1.0"/>
+                    <controls:CustomControl2 Label="1.1"/>
+                    <controls:CustomControl2 Label="1.25"/>
+                    <controls:CustomControl2 Label="1.5"/>
+                    <controls:CustomControl2 Label="2.0"/>
+                    <controls:CustomControl2 Label="3.0"/>
+                    <controls:CustomControl2 Label="4.0"/>
+                </StackPanel>
+            </controls:CenterPanel>
         </Grid>
     </Grid>
 </Window>
