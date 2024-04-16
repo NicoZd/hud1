@@ -17,25 +17,21 @@ namespace Hud1.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            var colHig = (Color)ColorConverter.ConvertFromString("#ff55bb22");
+            var colLow = (Color)ColorConverter.ConvertFromString("#ff005500");
             LinearGradientBrush myLinearGradientBrush = new LinearGradientBrush();
             myLinearGradientBrush.StartPoint = new Point(0, 0);
             myLinearGradientBrush.EndPoint = new Point(1, 0);
-            myLinearGradientBrush.GradientStops.Add(
-                new GradientStop((Color)ColorConverter.ConvertFromString("#ff007700"), 0.0));
-            myLinearGradientBrush.GradientStops.Add(
-                new GradientStop((Color)ColorConverter.ConvertFromString("#ff007700"), 0.03));
-            myLinearGradientBrush.GradientStops.Add(
-                new GradientStop((Color)ColorConverter.ConvertFromString("#ff005500"), 0.03));
-            myLinearGradientBrush.GradientStops.Add(
-                new GradientStop((Color)ColorConverter.ConvertFromString("#ff005500"), 0.97));
-            myLinearGradientBrush.GradientStops.Add(
-                new GradientStop((Color)ColorConverter.ConvertFromString("#ff007700"), 0.97));
-            myLinearGradientBrush.GradientStops.Add(
-                 new GradientStop((Color)ColorConverter.ConvertFromString("#ff007700"), 1.0));
+            myLinearGradientBrush.GradientStops.Add(new GradientStop(colHig, 0.0));
+            myLinearGradientBrush.GradientStops.Add(new GradientStop(colHig, 0.03));
+            myLinearGradientBrush.GradientStops.Add(new GradientStop(colLow, 0.03));
+            myLinearGradientBrush.GradientStops.Add(new GradientStop(colLow, 0.97));
+            myLinearGradientBrush.GradientStops.Add(new GradientStop(colHig, 0.97));
+            myLinearGradientBrush.GradientStops.Add(new GradientStop(colHig, 1.0));
 
             Boolean selected = (Boolean)value;
             return selected ?
-                myLinearGradientBrush : 
+                myLinearGradientBrush :
                 new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ff004400"));
         }
 
@@ -43,6 +39,6 @@ namespace Hud1.Converters
         {
             return DependencyProperty.UnsetValue;
         }
-        
+
     }
 }

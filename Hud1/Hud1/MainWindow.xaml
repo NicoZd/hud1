@@ -26,12 +26,12 @@
         <DropShadowEffect ShadowDepth="0" Color="#003300" Opacity="0.3" BlurRadius="50" Direction="0" />
     </Window.Effect>
     <Grid>
-        <Canvas Visibility="{Binding Path=Active, Mode=OneWay, Converter={StaticResource ActiveToVisibility}}" Margin="0,-300,0,-300">
+        <Canvas Visibility="{Binding Path=Active, Mode=OneWay, Converter={StaticResource ActiveToVisibility}}" Margin="0,0,0,0">
             <Canvas.Background>
-                <RadialGradientBrush>
-                    <GradientStop Color="#40003300" Offset="1"/>
-                    <GradientStop Color="#00003300" Offset="0.7"/>
-                </RadialGradientBrush>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0.0,1">
+                    <GradientStop Color="#25009900" Offset="0.0"/>
+                    <GradientStop Color="#00009900" Offset="0.2"/>
+                </LinearGradientBrush>
             </Canvas.Background>
         </Canvas>
         <Canvas Width="50" Height="50" IsHitTestVisible="false" Background="#00000000">
@@ -50,11 +50,34 @@
             </StackPanel>
         </Grid>
         <Grid Visibility="{Binding Path=Active, Mode=OneWay, Converter={StaticResource ActiveToVisibility}}" HorizontalAlignment="Left" Margin="0,0,0,0">
-            <Border Background="#d0003300" BorderBrush="#d0006600" BorderThickness="1" CornerRadius="20" Padding="20">
-                <Border.Effect>
-                    <DropShadowEffect BlurRadius="50" Color="#d0003300" Direction="0"/>
-                </Border.Effect>
+            <Border CornerRadius="0" Padding="20" BorderThickness="1,1,1,1">
+                <Border.BorderBrush>
+                    <DrawingBrush Viewport="0,0,3,3" ViewportUnits="Absolute" TileMode="Tile">
+                        <DrawingBrush.Drawing>
+                            <DrawingGroup>
+                                <GeometryDrawing Brush="#6600ff00">
+                                    <GeometryDrawing.Geometry>
+                                        <GeometryGroup>
+                                            <RectangleGeometry Rect="0,0,50,50" />
+                                            <RectangleGeometry Rect="50,50,50,50" />
+                                        </GeometryGroup>
+                                    </GeometryDrawing.Geometry>
+                                </GeometryDrawing>
+                            </DrawingGroup>
+                        </DrawingBrush.Drawing>
+                    </DrawingBrush>
+                </Border.BorderBrush>
             </Border>
+            <Grid.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0.0,1">
+                    <GradientStop Color="#dd00ff00" Offset="0.0"/>
+                    <GradientStop Color="#dd00ff00" Offset="0.01"/>
+                    <GradientStop Color="#dd005500" Offset="0.01"/>
+                    <GradientStop Color="#dd005500" Offset="0.3"/>
+                    <GradientStop Color="#44003300" Offset="0.6"/>
+                    <GradientStop Color="#00000000" Offset="1"/>
+                </LinearGradientBrush>
+            </Grid.Background>
             <StackPanel>
                 <StackPanel Margin="15,15,15,15">
                     <Label Foreground="White" Content="{Binding Path=State, Mode=OneWay}"/>
