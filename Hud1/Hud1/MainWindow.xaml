@@ -23,7 +23,7 @@
         <SolidColorBrush Color="Transparent"/>
     </Window.Background>
     <Window.Effect>
-        <DropShadowEffect ShadowDepth="3" Color="#004400" Opacity="0.8" BlurRadius="20" Direction="0" />
+        <DropShadowEffect ShadowDepth="3" Color="#000000" Opacity="0.5" BlurRadius="20" Direction="0" />
     </Window.Effect>
     <Grid>
         <Canvas Visibility="{Binding Path=Active, Mode=OneWay, Converter={StaticResource ActiveToVisibility}}" Margin="0,0,0,0">
@@ -56,8 +56,8 @@
                     <GradientStop Color="#dd00ff00" Offset="0.01"/>
                     <GradientStop Color="#dd005500" Offset="0.01"/>
                     <GradientStop Color="#dd005500" Offset="0.3"/>
-                    <GradientStop Color="#44003300" Offset="0.6"/>
-                    <GradientStop Color="#05000000" Offset="1"/>
+                    <GradientStop Color="#22003300" Offset="0.6"/>
+                    <GradientStop Color="#11003300" Offset="1"/>
                 </LinearGradientBrush>
             </Grid.Background>
             <Border CornerRadius="0" Padding="20" BorderThickness="1,1,1,1">
