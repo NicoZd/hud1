@@ -14,11 +14,17 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Interop;
+using System.Windows.Media;
+
+
+using DependencyObjectExtensions;
 
 namespace Hud1
 {
+
     public partial class MainWindow : Window
     {
+
         WindowModel windowModel = new WindowModel();
 
         StateMachine<string, string> nav;
@@ -98,6 +104,7 @@ namespace Hud1
 
             RebuildUI();
         }
+        
 
         private void RebuildUI()
         {
@@ -118,7 +125,7 @@ namespace Hud1
                 .OnEntry(() => { Debug.Print("enter left panel"); })
                 .OnExit(() => { Debug.Print("exit left panel"); });
 
-            var playbackContainer = this.FindName("PART_Conti") as StackPanel;
+            var playbackContainer = this.FindUid("PlaybackContainer") as StackPanel;
             playbackContainer.Children.Clear();
 
             Random rnd = new Random();
