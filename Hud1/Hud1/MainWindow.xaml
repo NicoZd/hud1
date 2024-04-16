@@ -23,7 +23,7 @@
         <SolidColorBrush Color="Transparent"/>
     </Window.Background>
     <Window.Effect>
-        <DropShadowEffect ShadowDepth="0" Color="#003300" Opacity="0.3" BlurRadius="50" Direction="0" />
+        <DropShadowEffect ShadowDepth="10" Color="#114411" Opacity="0.9" BlurRadius="15" Direction="0" />
     </Window.Effect>
     <Grid>
         <Canvas Visibility="{Binding Path=Active, Mode=OneWay, Converter={StaticResource ActiveToVisibility}}" Margin="0,0,0,0">
