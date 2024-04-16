@@ -18,7 +18,7 @@ namespace Hud1.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var colHig = (Color)ColorConverter.ConvertFromString("#ff55bb22");
-            var colLow = (Color)ColorConverter.ConvertFromString("#ff005500");
+            var colLow = (Color)ColorConverter.ConvertFromString("#5500ff00");
             LinearGradientBrush myLinearGradientBrush = new LinearGradientBrush();
             myLinearGradientBrush.StartPoint = new Point(0, 0);
             myLinearGradientBrush.EndPoint = new Point(1, 0);
@@ -32,7 +32,7 @@ namespace Hud1.Converters
             Boolean selected = (Boolean)value;
             return selected ?
                 myLinearGradientBrush :
-                new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ff004400"));
+                new SolidColorBrush((Color)ColorConverter.ConvertFromString("#1100ff00"));
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
