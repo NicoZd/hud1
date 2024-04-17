@@ -12,10 +12,22 @@
                 <Grid.Background>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                         <GradientStop Color="#f5009900" Offset="0.0"/>
-                        <GradientStop Color="#dd005500" Offset="0.2"/>
-                        <GradientStop Color="#00005500" Offset="1"/>
+                        <GradientStop Color="#dd005500" Offset="0.25"/>
+                        <GradientStop Color="#11005500" Offset="0.7"/>
                     </LinearGradientBrush>
                 </Grid.Background>
+                <Grid>
+                    <Grid.Background>
+                        <ImageBrush                            
+                            Opacity="0.04"
+                            ImageSource="/Images/BlueNoise470.png" 
+                            ViewportUnits="Absolute"
+                            Viewport="0,0,200,200"
+                            TileMode="Tile"
+                            Stretch="None"
+                            />
+                    </Grid.Background>
+                </Grid>
                 <Border Padding="0" BorderThickness="1,1,1,1">
                     <Border.BorderBrush>
                         <DrawingBrush Viewport="0,0,5,5" ViewportUnits="Absolute" TileMode="Tile">

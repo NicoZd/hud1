@@ -9,6 +9,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\512x512_Dissolve_Noise_Texture.png" />
+    <None Remove="Images\BlueNoise470.png" />
+    <None Remove="Images\WhiteNoiseDitheringBlurred.png" />
+    <None Remove="Images\WhiteNoiseFFT.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AudioSwitcher.AudioApi" Version="3.0.0" />
     <PackageReference Include="AudioSwitcher.AudioApi.CoreAudio" Version="3.0.3" />
   </ItemGroup>
@@ -17,6 +24,17 @@
     <Reference Include="Stateless">
       <HintPath>..\..\..\stateless\src\Stateless\bin\Release\net8.0\Stateless.dll</HintPath>
     </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\512x512_Dissolve_Noise_Texture.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\BlueNoise470.png" />
+    <Resource Include="Images\WhiteNoiseDitheringBlurred.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\WhiteNoiseFFT.png" />
   </ItemGroup>
 
 </Project>
