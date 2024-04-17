@@ -9,12 +9,17 @@
     <UserControl.Resources>
         <converters:SelectedToBackground x:Key="SelectedToBackground"/>
     </UserControl.Resources>
-    <Grid Background="{Binding Path=Selected, Mode=OneWay, Converter={StaticResource SelectedToBackground}}">
+    <Grid x:Name="LayoutRoot">
+    <Grid 
+        
+        Background="{Binding Path=Selected, Mode=OneWay, Converter={StaticResource SelectedToBackground}}"
+        >
         <Border BorderBrush="#6600ff00" BorderThickness="1" />
         <Label Foreground="#ffbbffbb" Name="PART_Label" Content="{Binding Path=Label, Mode=OneWay}" Padding="15,5,15,5" FontFamily="Cascadia Code" FontSize="12">
             <Label.Effect>
                 <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />
             </Label.Effect>
         </Label>
+    </Grid>
     </Grid>
 </UserControl>

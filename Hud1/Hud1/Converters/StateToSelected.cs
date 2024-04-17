@@ -15,16 +15,15 @@ namespace Hud1.Converters
     [ValueConversion(typeof(String), typeof(bool))]
     class StateToSelected : IValueConverter
     {
-        private String SelectedState;
-
-        public StateToSelected(String selectedState) {
-            SelectedState = selectedState;
+        public StateToSelected()
+        {
+            Debug.Print("------------------------------------");
         }
-
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            Debug.Print("Convert {0} {1}", value, parameter);
             String state = (String)value;
-            return state.Equals(SelectedState);
+            return state.Equals(parameter);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

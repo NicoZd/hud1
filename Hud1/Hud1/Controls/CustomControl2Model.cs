@@ -8,7 +8,7 @@ using Hud1.Model;
 
 namespace Hud1.Controls
 {
-    class CustomControl2Model: ObservableObject
+    public class CustomControl2Model: ObservableObject
     {
         public Boolean _selected = false;
         public Boolean Selected

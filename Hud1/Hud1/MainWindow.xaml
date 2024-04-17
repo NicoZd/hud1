@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:converters="clr-namespace:Hud1.Converters"
         xmlns:controls="clr-namespace:Hud1.Controls"
+        xmlns:model="clr-namespace:Hud1.Model"
         xmlns:local="clr-namespace:Hud1"        
         mc:Ignorable="d"
         Title="MainWindow"
@@ -19,6 +20,7 @@
         >
     <Window.Resources>
         <converters:ActiveToVisibility x:Key="ActiveToVisibility"/>
+        <converters:StateToSelected x:Key="StateToSelected"/>
     </Window.Resources>
     <Window.Background>
         <SolidColorBrush Color="Transparent"/>
@@ -70,27 +72,6 @@
             </controls:GlassPanel>
         </Grid>
 
-        <Grid Visibility="{Binding Path=Active, Mode=OneWay, Converter={StaticResource ActiveToVisibility}}" VerticalAlignment="Top" Margin="0,0,0,0" HorizontalAlignment="Center">
-            <controls:CenterPanel>
-                <StackPanel Margin="30,15,30,15" Grid.ColumnSpan="2" Orientation="Horizontal">
-                    <StackPanel.Resources>
-                        <Style TargetType="{x:Type controls:CustomControl2}">
-                            <Setter Property="Margin" Value="2,0,2,0"/>
-                        </Style>
-                    </StackPanel.Resources>
-                    <Label Foreground="#ffbbffbb" Content="CROSSHAIR" Padding="0,0,30,0" FontFamily="Cascadia Code" FontSize="18">
-                        <Label.Effect>
-                            <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />
-                        </Label.Effect>
-                    </Label>
-                    <controls:CustomControl2 Label="ON/OFF"/>
-                    <controls:CustomControl2 Label="C"/>
-                    <controls:CustomControl2 Label="F"/>
-                    <controls:CustomControl2 Label="S"/>
-                </StackPanel>
-            </controls:CenterPanel>
-        </Grid>
-
         <Grid Visibility="{Binding Path=Active, Mode=OneWay, Converter={StaticResource ActiveToVisibility}}" HorizontalAlignment="Right">
             <controls:GlassPanel>
                 <StackPanel Margin="15,15,15,15">
@@ -115,6 +96,27 @@
                     <controls:CustomControl2 Label="Hold W"/>
                 </StackPanel>
             </controls:GlassPanel>
+        </Grid>
+
+        <Grid Visibility="{Binding Path=Active, Mode=OneWay, Converter={StaticResource ActiveToVisibility}}" VerticalAlignment="Top" Margin="0,0,0,0" HorizontalAlignment="Center">
+            <controls:CenterPanel>
+                <StackPanel Margin="30,15,30,15" Grid.ColumnSpan="2" Orientation="Horizontal">
+                    <StackPanel.Resources>
+                        <Style TargetType="{x:Type controls:CustomControl2}">
+                            <Setter Property="Margin" Value="2,0,2,0"/>
+                        </Style>
+                    </StackPanel.Resources>
+                    <Label Foreground="#ffbbffbb" Content="CROSSHAIR" Padding="0,0,30,0" FontFamily="Cascadia Code" FontSize="18">
+                        <Label.Effect>
+                            <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />
+                        </Label.Effect>
+                    </Label>
+                <controls:CustomControl2 Label="ON/OFF" Selected="{Binding Path=State, Mode=OneWay, Converter={StaticResource StateToSelected}, ConverterParameter='cross-visible'}" />
+                    <controls:CustomControl2 Label="C" Selected="True"/>
+                    <controls:CustomControl2 Label="F"/>
+                    <controls:CustomControl2 Label="S"/>
+                </StackPanel>
+            </controls:CenterPanel>
         </Grid>
 
         <Grid Visibility="{Binding Path=Active, Mode=OneWay, Converter={StaticResource ActiveToVisibility}}" VerticalAlignment="Bottom" Margin="0,0,0,0" HorizontalAlignment="Center">

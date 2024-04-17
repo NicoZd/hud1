@@ -35,9 +35,7 @@
     <Resource Include="Images\512x512_Dissolve_Noise_Texture.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Images\BlueNoise470.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
+    <Resource Include="Images\BlueNoise470.png" />
     <Resource Include="Images\WhiteNoiseDitheringBlurred.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>

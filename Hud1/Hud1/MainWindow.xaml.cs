@@ -141,19 +141,39 @@ namespace Hud1
 
             nav.Configure("left-panel")
                 .SubstateOf("all")
-                .Permit("right", "center")
-                .OnEntry(() => { Debug.Print("enter left panel"); })
-                .OnExit(() => { Debug.Print("exit left panel"); });
+                .Permit("right", "center");
+
+            nav.Configure("top-panel")
+                .SubstateOf("all")
+                .Permit("down", "center");
+
+            nav.Configure("center")
+                .Permit("up", "cross-visible");
+
+            // top panel
+            nav.Configure("cross-visible")
+                .SubstateOf("top-panel")
+                .Permit("right", "cross-color");
+
+            nav.Configure("cross-color")
+                .SubstateOf("top-panel")
+                .Permit("left", "cross-visible")
+                .Permit("right", "cross-form");
+
+            nav.Configure("cross-form")
+                .SubstateOf("top-panel")
+                .Permit("left", "cross-color")
+                .Permit("right", "cross-size");
+
+            nav.Configure("cross-size")
+                .SubstateOf("top-panel")
+                .Permit("left", "cross-form");
+
 
             var playbackContainer = this.FindUid("PlaybackContainer") as StackPanel;
             playbackContainer.Children.Clear();
 
-            Random rnd = new Random();
-
-            Debug.Print("XXX-------");
-
             var devices = audioController.GetPlaybackDevices(DeviceState.Active).ToArray();
-
             if (devices.Length > 0)
             {
                 nav.Configure("center")
@@ -178,7 +198,8 @@ namespace Hud1
 
                 Binding selectedBinding = new Binding("State");
                 selectedBinding.Source = windowModel;
-                selectedBinding.Converter = new StateToSelected(devices[i].Id.ToString());
+                selectedBinding.Converter = new StateToSelected();
+                selectedBinding.ConverterParameter = devices[i].Id.ToString();
                 playbackDeviceButton.SetBinding(CustomControl2.SelectedProperty, selectedBinding);
 
                 playbackContainer.Children.Add(playbackDeviceButton);

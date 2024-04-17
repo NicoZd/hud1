@@ -19,7 +19,7 @@ namespace Hud1.Controls
 {
     public partial class CustomControl2 : UserControl
     {
-        CustomControl2Model model = new CustomControl2Model();
+        public CustomControl2Model Model = new CustomControl2Model();
 
         public static readonly DependencyProperty LabelProperty = DependencyProperty.Register(
           "Label",
@@ -37,12 +37,12 @@ namespace Hud1.Controls
 
         public static void OnLabelChanged(DependencyObject send, DependencyPropertyChangedEventArgs args)
         {
-            (send as CustomControl2).model.Label = (string)args.NewValue;
+            (send as CustomControl2).Model.Label = (string)args.NewValue;
         }
 
         public static void OnSelectedChanged(DependencyObject send, DependencyPropertyChangedEventArgs args)
         {
-            (send as CustomControl2).model.Selected = (bool)args.NewValue;
+            (send as CustomControl2).Model.Selected = (bool)args.NewValue;
         }
 
         public String Label
@@ -60,7 +60,8 @@ namespace Hud1.Controls
         public CustomControl2()
         {
             InitializeComponent();
-            this.DataContext = model;
+            this.LayoutRoot.DataContext = this.Model;
+            //this.DataContext = model;
         }
 
 
