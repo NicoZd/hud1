@@ -17,22 +17,22 @@ namespace Hud1.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var colHig = (Color)ColorConverter.ConvertFromString("#ff55bb22");
-            var colLow = (Color)ColorConverter.ConvertFromString("#5500ff00");
+            var colHig = (Color)ColorConverter.ConvertFromString("#ff55ee22");
+            var colLow = (Color)ColorConverter.ConvertFromString("#ee009900");
             LinearGradientBrush myLinearGradientBrush = new LinearGradientBrush();
             myLinearGradientBrush.StartPoint = new Point(0, 0);
             myLinearGradientBrush.EndPoint = new Point(1, 0);
             myLinearGradientBrush.GradientStops.Add(new GradientStop(colHig, 0.0));
-            myLinearGradientBrush.GradientStops.Add(new GradientStop(colHig, 0.03));
-            myLinearGradientBrush.GradientStops.Add(new GradientStop(colLow, 0.03));
-            myLinearGradientBrush.GradientStops.Add(new GradientStop(colLow, 0.97));
-            myLinearGradientBrush.GradientStops.Add(new GradientStop(colHig, 0.97));
+            myLinearGradientBrush.GradientStops.Add(new GradientStop(colHig, 0.035));
+            myLinearGradientBrush.GradientStops.Add(new GradientStop(colLow, 0.035));
+            myLinearGradientBrush.GradientStops.Add(new GradientStop(colLow, 0.965));
+            myLinearGradientBrush.GradientStops.Add(new GradientStop(colHig, 0.965));
             myLinearGradientBrush.GradientStops.Add(new GradientStop(colHig, 1.0));
 
             Boolean selected = (Boolean)value;
             return selected ?
                 myLinearGradientBrush :
-                new SolidColorBrush((Color)ColorConverter.ConvertFromString("#1100ff00"));
+                new SolidColorBrush((Color)ColorConverter.ConvertFromString("#aa007700"));
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

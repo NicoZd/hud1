@@ -26,7 +26,6 @@
         <DropShadowEffect ShadowDepth="3" Color="#008800" Opacity="0.3" BlurRadius="20" Direction="0" />
     </Window.Effect>
     <Grid>
-
         <Canvas Visibility="{Binding Path=Active, Mode=OneWay, Converter={StaticResource ActiveToVisibility}}" Margin="0,0,0,0">
             <Canvas.Background>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
@@ -40,23 +39,23 @@
             </Canvas.Background>
         </Canvas>
 
-        <Canvas Width="50" Height="50" IsHitTestVisible="false" Background="#00000000">
-            <Line X1="0" Y1="0" X2="50" Y2="50" Stroke="Green" StrokeThickness="1"/>
-            <Line X1="50" Y1="0" X2="0" Y2="50" Stroke="Green" StrokeThickness="1" />
+        <Canvas Width="20" Height="20" IsHitTestVisible="false" Background="#00000000">
+            <Line X1="0" Y1="0" X2="20" Y2="20" Stroke="Green" StrokeThickness="1"/>
+            <Line X1="20" Y1="0" X2="0" Y2="20" Stroke="Green" StrokeThickness="1" />
         </Canvas>
 
         <Grid Visibility="{Binding Path=Active, Mode=OneWay, Converter={StaticResource ActiveToVisibility}}" HorizontalAlignment="Left" Margin="0,0,0,0">
             <controls:GlassPanel>
-                <StackPanel>
-                    <StackPanel Margin="15,15,15,15">
-                        <Label Foreground="#ffbbffbb" Content="AUDIO" Padding="0,10,0,10" FontFamily="Cascadia Code" FontSize="20">
+                <StackPanel Margin="15,15,15,15">
+                    <StackPanel >
+                        <Label Foreground="#ffbbffbb" Content="AUDIO" Padding="0,0,0,15" FontFamily="Cascadia Code" FontSize="18">
                             <Label.Effect>
                                 <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />
                             </Label.Effect>
                         </Label>
-                        <Slider/>
+                        <Slider Margin="0,0,0,5"/>
                     </StackPanel>
-                    <StackPanel Uid="PlaybackContainer" Margin="15,0,15,0">
+                    <StackPanel Uid="PlaybackContainer">
                         <StackPanel.Resources>
                             <Style TargetType="{x:Type controls:CustomControl2}">
                                 <Setter Property="Margin" Value="0,3,0,3"/>
@@ -72,13 +71,13 @@
 
         <Grid Visibility="{Binding Path=Active, Mode=OneWay, Converter={StaticResource ActiveToVisibility}}" VerticalAlignment="Top" Margin="0,0,0,0" HorizontalAlignment="Center">
             <controls:CenterPanel>
-                <StackPanel Margin="30,20,30,12" Grid.ColumnSpan="2" Orientation="Horizontal">
+                <StackPanel Margin="30,15,30,15" Grid.ColumnSpan="2" Orientation="Horizontal">
                     <StackPanel.Resources>
                         <Style TargetType="{x:Type controls:CustomControl2}">
                             <Setter Property="Margin" Value="2,0,2,0"/>
                         </Style>
                     </StackPanel.Resources>
-                    <Label Foreground="#ffbbffbb" Content="Crosshair" Padding="0,0,20,0" FontFamily="Cascadia Code" FontSize="20">
+                    <Label Foreground="#ffbbffbb" Content="CROSSHAIR" Padding="0,0,30,0" FontFamily="Cascadia Code" FontSize="18">
                         <Label.Effect>
                             <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />
                         </Label.Effect>
@@ -96,10 +95,10 @@
                 <StackPanel Margin="15,15,15,15">
                     <StackPanel.Resources>
                         <Style TargetType="{x:Type controls:CustomControl2}">
-                            <Setter Property="Margin" Value="0,2,0,2"/>
+                            <Setter Property="Margin" Value="0,3,0,3"/>
                         </Style>
                     </StackPanel.Resources>
-                    <Label Foreground="#ffbbffbb" Content="Mouse Macro" Padding="0,10,20,10" FontFamily="Cascadia Code" FontSize="20">
+                    <Label Foreground="#ffbbffbb" Content="MOUSE MACRO" Padding="0,0,0,15" FontFamily="Cascadia Code" FontSize="18">
                         <Label.Effect>
                             <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />
                         </Label.Effect>
@@ -107,7 +106,7 @@
                     <controls:CustomControl2 Label="Hold Left"/>
                     <controls:CustomControl2 Label="Repeat Left"/>
                     <Label Content=""/>
-                    <Label Foreground="#ffbbffbb" Content="Key Macro" Padding="0,0,20,10" FontFamily="Cascadia Code" FontSize="20">
+                    <Label Foreground="#ffbbffbb" Content="KEY MACRO" Padding="0,0,0,15" FontFamily="Cascadia Code" FontSize="18">
                         <Label.Effect>
                             <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />
                         </Label.Effect>
@@ -119,13 +118,13 @@
 
         <Grid Visibility="{Binding Path=Active, Mode=OneWay, Converter={StaticResource ActiveToVisibility}}" VerticalAlignment="Bottom" Margin="0,0,0,0" HorizontalAlignment="Center">
             <controls:CenterPanel>
-                <StackPanel Margin="30,20,30,12" Grid.ColumnSpan="2" Orientation="Horizontal">
+                <StackPanel Margin="30,15,30,15" Orientation="Horizontal">
                     <StackPanel.Resources>
                         <Style TargetType="{x:Type controls:CustomControl2}">
                             <Setter Property="Margin" Value="3,0,3,0"/>
                         </Style>
                     </StackPanel.Resources>
-                    <Label Foreground="#ffbbffbb" Content="Gamma" Padding="0,0,20,0" FontFamily="Cascadia Code" FontSize="20">
+                    <Label Foreground="#ffbbffbb" Content="GAMMA" Padding="0,0,20,0" FontFamily="Cascadia Code" FontSize="18">
                         <Label.Effect>
                             <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />
                         </Label.Effect>

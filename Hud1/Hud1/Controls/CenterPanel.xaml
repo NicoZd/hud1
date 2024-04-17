@@ -11,9 +11,7 @@
             <Grid>
                 <Grid.Background>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                        <GradientStop Color="#ee77ff00" Offset="0.0"/>
-                        <GradientStop Color="#ee00ff00" Offset="0.13"/>
-                        <GradientStop Color="#dd007700" Offset="0.16"/>
+                        <GradientStop Color="#dd007700" Offset="0.0"/>
                         <GradientStop Color="#dd007700" Offset="0.4"/>
                         <GradientStop Color="#cc004400" Offset="1"/>
                     </LinearGradientBrush>
@@ -36,7 +34,10 @@
                         </DrawingBrush>
                     </Border.BorderBrush>
                 </Border>
-                <ContentPresenter Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content}" />
+                <StackPanel>
+                    <local:PanelTopBar />
+                    <ContentPresenter Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content}" />
+                </StackPanel>
             </Grid>
         </ControlTemplate>
     </UserControl.Template>
