@@ -43,6 +43,8 @@ namespace Hud1
 
             audioController = new CoreAudioController();
             audioController.AudioDeviceChanged.Subscribe(OnDeviceChanged);
+
+            Opacity = 0;
         }
 
         private void UpdateModelFromStateless()
@@ -104,6 +106,12 @@ namespace Hud1
             listener.KeyboardDownEvent += ListenerOnKeyPressed;
 
             RebuildUI();
+
+            var self = this;
+            Task.Delay(500).ContinueWith(_ =>
+            {
+                Application.Current?.Dispatcher.Invoke(new Action(() => { self.Opacity = 1; }));
+            });
         }
         
 

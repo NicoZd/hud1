@@ -15,7 +15,8 @@
         Height="400"
         Activated="OnWindowActivated"
         Loaded="OnWindowLoaded"
-        Unloaded="OnWindowUnloaded">
+        Unloaded="OnWindowUnloaded"
+        >
     <Window.Resources>
         <converters:ActiveToVisibility x:Key="ActiveToVisibility"/>
     </Window.Resources>
