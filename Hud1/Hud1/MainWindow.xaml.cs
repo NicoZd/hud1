@@ -20,6 +20,7 @@ using System.Windows.Media;
 using DependencyObjectExtensions;
 using System.Text.RegularExpressions;
 using System.Windows.Media.Animation;
+using Stateless.Reflection;
 
 namespace Hud1
 {
@@ -68,6 +69,15 @@ namespace Hud1
 
             if (nav.IsInState("center"))
                 windowModel.Panel = "center";
+
+            var info = nav.GetInfo();
+            foreach (StateInfo stateInfo in info.States)
+            {
+                string name = stateInfo.ToString();
+                Debug.Print("XXX {0}", stateInfo.ToString());
+                windowModel.States[name] = new { State = nav.State, Selected = nav.State.Equals(name) };
+            }
+            windowModel.OnPropertyChanged("States");
         }
 
         private void OnTransitionCompleted(object sender, EventArgs e)
@@ -192,14 +202,9 @@ namespace Hud1
 
 
                 var playbackDeviceButton = new CustomControl2();
-                playbackDeviceButton.Label = device.InterfaceName;
-                playbackDeviceButton.Label = Regex.Replace(playbackDeviceButton.Label, "[0-9]- ", "");
-                Debug.Print("XXX {0}", playbackDeviceButton.Selected);
+                playbackDeviceButton.Label = Regex.Replace(device.InterfaceName, "[0-9]- ", "");
 
-                Binding selectedBinding = new Binding("State");
-                selectedBinding.Source = windowModel;
-                selectedBinding.Converter = new StateToSelected();
-                selectedBinding.ConverterParameter = devices[i].Id.ToString();
+                Binding selectedBinding = new Binding("States[" + devices[i].Id.ToString() + "].Selected");
                 playbackDeviceButton.SetBinding(CustomControl2.SelectedProperty, selectedBinding);
 
                 playbackContainer.Children.Add(playbackDeviceButton);

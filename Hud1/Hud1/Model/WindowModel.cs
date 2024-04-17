@@ -29,5 +29,12 @@ namespace Hud1.Model
             get { return _panel; }
             set { _panel = value; OnPropertyChanged(); }
         }
+
+        public Dictionary<string, object> _states = new Dictionary<string, object> { };
+        public Dictionary<string, object> States
+        {
+            get { return _states; }
+            set { _states = value; OnPropertyChanged(); }
+        }
     }
 }

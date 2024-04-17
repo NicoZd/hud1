@@ -20,7 +20,6 @@
         >
     <Window.Resources>
         <converters:ActiveToVisibility x:Key="ActiveToVisibility"/>
-        <converters:StateToSelected x:Key="StateToSelected"/>
     </Window.Resources>
     <Window.Background>
         <SolidColorBrush Color="Transparent"/>
@@ -111,11 +110,11 @@
                             <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />
                         </Label.Effect>
                     </Label>
-                <controls:CustomControl2 Label="ON/OFF" Selected="{Binding Path=State, Mode=OneWay, Converter={StaticResource StateToSelected}, ConverterParameter='cross-visible'}" />
+                    <controls:CustomControl2 Label="ON/OFF" Selected="{Binding Path=States[cross-visible].Selected}" />
                     <controls:CustomControl2 Label="C" Selected="True"/>
-                    <controls:CustomControl2 Label="F"/>
-                    <controls:CustomControl2 Label="S"/>
-                </StackPanel>
+                    <controls:CustomControl2 Label="F" />
+                    <controls:CustomControl2 Label="{Binding Path=CrossVisibleSelected}" />
+            </StackPanel>
             </controls:CenterPanel>
         </Grid>
 
