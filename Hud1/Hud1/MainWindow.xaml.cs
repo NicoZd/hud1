@@ -19,6 +19,7 @@ using System.Windows.Media;
 
 using DependencyObjectExtensions;
 using System.Text.RegularExpressions;
+using System.Windows.Media.Animation;
 
 namespace Hud1
 {
@@ -107,13 +108,23 @@ namespace Hud1
 
             RebuildUI();
 
-            var self = this;
-            Task.Delay(500).ContinueWith(_ =>
-            {
-                Application.Current?.Dispatcher.Invoke(new Action(() => { self.Opacity = 1; }));
+            Task.Delay(0).ContinueWith(_ => {
+                Application.Current?.Dispatcher.Invoke(new Action(() => { ShowApp(); }));
             });
         }
-        
+
+        private void ShowApp()
+        {
+            var animation = new DoubleAnimation
+            {
+                To = 1,
+                BeginTime = TimeSpan.FromSeconds(0),
+                Duration = TimeSpan.FromSeconds(0.15),
+                FillBehavior = FillBehavior.Stop
+            };
+            animation.Completed += (s, a) => this.Opacity = 1;
+            this.BeginAnimation(UIElement.OpacityProperty, animation);
+        }
 
         private void RebuildUI()
         {
