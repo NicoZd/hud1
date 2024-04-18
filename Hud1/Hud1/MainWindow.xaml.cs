@@ -82,17 +82,6 @@ namespace Hud1
                 };
             }
             windowModel.OnPropertyChanged("States");
-
-            if (windowModel.Active)
-            {
-                Debug.Print("windowModel.Active");
-                this.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                Debug.Print("NOT windowModel.Active");
-                this.Visibility = Visibility.Hidden;
-            }
         }
 
         private void OnDeviceChanged(DeviceChangedArgs x)
@@ -118,7 +107,7 @@ namespace Hud1
 
             Debug.WriteLine("Window_Loaded {0} {1}", width, height);
 
-            this.Width = 400;
+            this.Width = width;
             this.Height = height;
             this.Left = 0;
             this.Top = 0;
