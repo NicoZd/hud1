@@ -111,14 +111,17 @@
                         </Label.Effect>
                     </Label>
                     <controls:CustomControl2 Label="ON/OFF" Selected="{Binding Path=States[cross-visible].Selected}" />
-                    <controls:CustomControl2 Label="C" Selected="True"/>
-                    <controls:CustomControl2 Label="F" />
-                    <controls:CustomControl2 Label="{Binding Path=CrossVisibleSelected}" />
-            </StackPanel>
+                    <controls:CustomControl2 Label="C" Selected="{Binding Path=States[cross-color].Selected}"/>
+                    <controls:CustomControl2 Label="F" Selected="{Binding Path=States[cross-form].Selected}"/>
+                    <controls:CustomControl2 Label="S" Selected="{Binding Path=States[cross-size].Selected}"/>
+                </StackPanel>
             </controls:CenterPanel>
         </Grid>
 
         <Grid Visibility="{Binding Path=Active, Mode=OneWay, Converter={StaticResource ActiveToVisibility}}" VerticalAlignment="Bottom" Margin="0,0,0,0" HorizontalAlignment="Center">
+            <Grid.Effect>
+                <DropShadowEffect ShadowDepth="3" Color="#000000" Opacity="1" BlurRadius="20" Direction="0" />
+            </Grid.Effect>
             <controls:CenterPanel>
                 <StackPanel Margin="30,15,30,15" Orientation="Horizontal">
                     <StackPanel.Resources>
@@ -131,14 +134,15 @@
                             <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />
                         </Label.Effect>
                     </Label>
-                    <controls:CustomControl2 Label="AUTO"/>
-                    <controls:CustomControl2 Label="1.0"/>
-                    <controls:CustomControl2 Label="1.1"/>
-                    <controls:CustomControl2 Label="1.25"/>
-                    <controls:CustomControl2 Label="1.5"/>
-                    <controls:CustomControl2 Label="2.0"/>
-                    <controls:CustomControl2 Label="3.0"/>
-                    <controls:CustomControl2 Label="4.0"/>
+                    <StackPanel Uid="GammaContainer" Orientation="Horizontal">
+                        <controls:CustomControl2 Label="1.0" Selected="{Binding Path=States[gamma-1.0].Selected}" />
+                        <controls:CustomControl2 Label="1.1" Selected="{Binding Path=States[gamma-1.1].Selected}"/>
+                        <controls:CustomControl2 Label="1.25"/>
+                        <controls:CustomControl2 Label="1.5"/>
+                        <controls:CustomControl2 Label="2.0"/>
+                        <controls:CustomControl2 Label="3.0"/>
+                        <controls:CustomControl2 Label="4.0"/>
+                    </StackPanel>
                 </StackPanel>
             </controls:CenterPanel>
         </Grid>

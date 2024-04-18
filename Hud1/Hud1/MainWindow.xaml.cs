@@ -75,7 +75,11 @@ namespace Hud1
             {
                 string name = stateInfo.ToString();
                 Debug.Print("XXX {0}", stateInfo.ToString());
-                windowModel.States[name] = new { State = nav.State, Selected = nav.State.Equals(name) };
+                windowModel.States[name] = new { 
+                    State = nav.State,
+                    Selected = nav.State.Equals(name),
+                    Visibility = nav.State.Equals(name) ? Visibility.Visible : Visibility.Hidden,
+                };
             }
             windowModel.OnPropertyChanged("States");
         }
@@ -157,8 +161,13 @@ namespace Hud1
                 .SubstateOf("all")
                 .Permit("down", "center");
 
+            nav.Configure("bottom-panel")
+                .SubstateOf("all")
+                .Permit("up", "center");
+
             nav.Configure("center")
-                .Permit("up", "cross-visible");
+                .Permit("up", "cross-visible")
+                .Permit("down", "gamma-1.0");
 
             // top panel
             nav.Configure("cross-visible")
@@ -178,6 +187,15 @@ namespace Hud1
             nav.Configure("cross-size")
                 .SubstateOf("top-panel")
                 .Permit("left", "cross-form");
+
+            nav.Configure("gamma-1.0")
+                .SubstateOf("bottom-panel")
+                .Permit("right", "gamma-1.1");
+
+            nav.Configure("gamma-1.1")
+                .SubstateOf("bottom-panel")
+                .Permit("left", "gamma-1.0");
+
 
 
             var playbackContainer = this.FindUid("PlaybackContainer") as StackPanel;
@@ -216,7 +234,7 @@ namespace Hud1
         private void ListenerOnKeyPressed(object sender, KeyEventArgs e)
         {
             // TYPE YOUR CODE HERE
-            Debug.WriteLine("xxx {0}", e.Key);
+            Debug.WriteLine("ListenerOnKeyPressed {0}", e.Key);
 
             if (e.Key == Key.F2)
             {
