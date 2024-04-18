@@ -21,13 +21,13 @@ using DependencyObjectExtensions;
 using System.Text.RegularExpressions;
 using System.Windows.Media.Animation;
 using Stateless.Reflection;
+using System.Runtime.InteropServices;
+using System.Diagnostics.Eventing.Reader;
 
 namespace Hud1
 {
-
     public partial class MainWindow : Window
     {
-
         WindowModel windowModel = new WindowModel();
 
         StateMachine<string, string> nav;
@@ -82,11 +82,17 @@ namespace Hud1
                 };
             }
             windowModel.OnPropertyChanged("States");
-        }
 
-        private void OnTransitionCompleted(object sender, EventArgs e)
-        {
-            Debug.Print("OnTransitionCompleted {0}", e);
+            if (windowModel.Active)
+            {
+                Debug.Print("windowModel.Active");
+                this.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                Debug.Print("NOT windowModel.Active");
+                this.Visibility = Visibility.Hidden;
+            }
         }
 
         private void OnDeviceChanged(DeviceChangedArgs x)
@@ -112,7 +118,7 @@ namespace Hud1
 
             Debug.WriteLine("Window_Loaded {0} {1}", width, height);
 
-            this.Width = width;
+            this.Width = 400;
             this.Height = height;
             this.Left = 0;
             this.Top = 0;
@@ -144,28 +150,31 @@ namespace Hud1
         {
             Debug.Print("RebuildUI");
 
-            nav = new StateMachine<string, string>("center");
+            nav = new StateMachine<string, string>("menu");
             nav.OnTransitionCompleted(a => UpdateModelFromStateless());
 
-            nav.Configure("all")
-                .Permit("reset", "center");
+            nav.Configure("plain")
+                .Permit("menu-on", "menu");
+
+            nav.Configure("menu")
+                .Permit("menu-off", "plain");
 
             nav.Configure("center")
-                .SubstateOf("all");
+                .SubstateOf("menu-off");
 
             nav.Configure("left-panel")
-                .SubstateOf("all")
-                .Permit("right", "center");
+                .SubstateOf("menu")
+                .Permit("right", "menu");
 
             nav.Configure("top-panel")
-                .SubstateOf("all")
-                .Permit("down", "center");
+                .SubstateOf("menu")
+                .Permit("down", "menu");
 
             nav.Configure("bottom-panel")
-                .SubstateOf("all")
-                .Permit("up", "center");
+                .SubstateOf("menu")
+                .Permit("up", "menu");
 
-            nav.Configure("center")
+            nav.Configure("menu")
                 .Permit("up", "cross-visible")
                 .Permit("down", "gamma-1.0");
 
@@ -204,7 +213,7 @@ namespace Hud1
             var devices = audioController.GetPlaybackDevices(DeviceState.Active).ToArray();
             if (devices.Length > 0)
             {
-                nav.Configure("center")
+                nav.Configure("menu")
                     .Permit("left", devices[0].Id.ToString());
             }
 
@@ -238,8 +247,16 @@ namespace Hud1
 
             if (e.Key == Key.F2)
             {
-                windowModel.Active = !windowModel.Active;
-                nav.Fire("reset");
+                if (windowModel.Active) {
+
+                    windowModel.Active = false;
+                    nav.Fire("menu-off");
+                } 
+                else
+                {
+                   windowModel.Active = true;
+                   nav.Fire("menu-on");
+                }
             }
 
             if (e.Key == Key.Up)
