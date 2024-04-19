@@ -45,6 +45,9 @@ namespace Hud1
             audioController.AudioDeviceChanged.Subscribe(OnDeviceChanged);
 
             Opacity = 0;
+
+            RebuildNav();
+            UpdateModelFromStateless();
         }
 
         private void UpdateModelFromStateless()
@@ -53,26 +56,26 @@ namespace Hud1
 
             windowModel.State = nav.State;
 
-            if (nav.IsInState("left-panel"))
-                windowModel.Panel = "left-panel";
+            //if (nav.IsInState("left-panel"))
+            //    windowModel.Panel = "left-panel";
 
-            if (nav.IsInState("right-panel"))
-                windowModel.Panel = "right-panel";
+            //if (nav.IsInState("right-panel"))
+            //    windowModel.Panel = "right-panel";
 
-            if (nav.IsInState("top-panel"))
-                windowModel.Panel = "top-panel";
+            //if (nav.IsInState("top-panel"))
+            //    windowModel.Panel = "top-panel";
 
-            if (nav.IsInState("bottom-panel"))
-                windowModel.Panel = "bottom-panel";
+            //if (nav.IsInState("bottom-panel"))
+            //    windowModel.Panel = "bottom-panel";
 
-            if (nav.IsInState("center"))
-                windowModel.Panel = "center";
+            //if (nav.IsInState("center"))
+            //    windowModel.Panel = "center";
 
             var info = nav.GetInfo();
             foreach (StateInfo stateInfo in info.States)
             {
                 string name = stateInfo.ToString();
-                Debug.Print("XXX {0}", stateInfo.ToString());
+                Debug.Print("Add State {0}", stateInfo.ToString());
                 windowModel.States[name] = new { 
                     State = nav.State,
                     Selected = nav.State.Equals(name),
@@ -115,7 +118,7 @@ namespace Hud1
 
             RebuildUI();
 
-            Task.Delay(0).ContinueWith(_ => {
+            Task.Delay(500).ContinueWith(_ => {
                 Application.Current?.Dispatcher.Invoke(new Action(() => { ShowApp(); }));
             });
 
@@ -167,14 +170,13 @@ namespace Hud1
             this.BeginAnimation(UIElement.OpacityProperty, animation);
         }
 
-        private void RebuildUI()
+        private void RebuildNav()
         {
-            Debug.Print("RebuildUI");
-
             nav = new StateMachine<string, string>("menu-gamma");
             nav.OnTransitionCompleted(a => UpdateModelFromStateless());
 
             nav.Configure("menu-gamma")
+                .SubstateOf("gamma-visible")
                 .Permit("right", "menu-audio")
                 .Permit("left", "menu-crosshair");
 
@@ -220,6 +222,14 @@ namespace Hud1
             nav.Configure("gamma-1.1")
                 .SubstateOf("bottom-panel")
                 .Permit("left", "gamma-1.0");
+        }
+
+        private void RebuildUI()
+        {
+            Debug.Print("RebuildUI");
+
+            RebuildNav();
+           
 
 
 
