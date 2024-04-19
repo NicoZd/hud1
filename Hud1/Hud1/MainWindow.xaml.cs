@@ -131,9 +131,10 @@ namespace Hud1
 
             if (alt)
             {
-                if (key == GlobalKey.VK_S)
+                if (key == GlobalKey.VK_S || key == GlobalKey.VK_F || key == GlobalKey.VK_L)
                 {
                     windowModel.Active = !windowModel.Active;
+                    return true;
                 }
             }
             else

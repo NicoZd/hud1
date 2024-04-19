@@ -24,6 +24,8 @@ namespace Hud1.Service
 
         VK_F2 = 0x71,
 
+        VK_F = 0x46,
+        VK_L = 0x4C,
         VK_S = 0x53
     }
 

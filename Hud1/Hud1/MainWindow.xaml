@@ -48,10 +48,13 @@
 
         <Grid Visibility="{Binding Path=Active, Mode=OneWay, Converter={StaticResource ActiveToVisibility}}" HorizontalAlignment="Left" Margin="0,0,0,0">
             <controls:GlassPanel>
-                <StackPanel Margin="15,15,15,15">
-                    <Label Content="Press ALT-S to open and close this window."/>
-                    <Label Content="Use cursors to navigate."/>
-                    <Label Content="Time: 8:23 PM"/>
+                <StackPanel Margin="15,1,15,15">
+
+                    <StackPanel Orientation="Vertical" Margin="-3,0,0,10">
+                        <Label Content="Time: 8:23 PM" Foreground="#ffbbffbb"/>
+                        <Label Content="Press ALT-F or F2 to open and close this window." Foreground="#ffbbffbb"/>
+                        <Label Content="Use cursor keys to navigate and select." Foreground="#ffbbffbb"/>
+                    </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="-2,0,-2,0">
                         <StackPanel.Resources>
                             <Style TargetType="{x:Type controls:CustomControl2}">
@@ -64,9 +67,9 @@
                         <controls:CustomControl2 Label="CROSSHAIR" Selected="{Binding Path=States[menu-crosshair].Selected}"/>
                     </StackPanel>
                     <Grid Visibility="{Binding Path=Active, Mode=OneWay, Converter={StaticResource ActiveToVisibility}}" HorizontalAlignment="Stretch" Margin="0,0,0,0">
-                            <StackPanel Margin="0,30,0,0">
-                                <StackPanel >
-                                    <Label Foreground="#ffbbffbb" Content="AUDIO" Padding="0,0,0,15" FontFamily="Cascadia Code" FontSize="18">
+                        <StackPanel Margin="0,30,0,0">
+                            <StackPanel >
+                                <Label Foreground="#ffbbffbb" Content="AUDIO" Padding="0,0,0,15" FontFamily="Cascadia Code" FontSize="18">
                                         <Label.Effect>
                                             <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />
                                         </Label.Effect>
