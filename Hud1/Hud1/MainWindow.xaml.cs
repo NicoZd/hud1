@@ -52,7 +52,7 @@ namespace Hud1
 
         private void UpdateModelFromStateless()
         {
-            Debug.Print("UpdateModelFromStateless {0} ", nav.State);
+            // Debug.Print("UpdateModelFromStateless {0} ", nav.State);
 
             windowModel.State = nav.State;
 
@@ -75,12 +75,12 @@ namespace Hud1
             foreach (StateInfo stateInfo in info.States)
             {
                 string name = stateInfo.ToString();
-                Debug.Print("Add State {0}", stateInfo.ToString());
+                // Debug.Print("Add State {0} {1} {2}", name, nav.State, nav.State.Equals(name));
                 windowModel.States[name] = new
                 {
                     State = nav.State,
-                    Selected = nav.State.Equals(name),
-                    Visibility = nav.State.Equals(name) ? Visibility.Visible : Visibility.Hidden,
+                    Selected = nav.IsInState(name),
+                    Visibility = nav.IsInState(name) ? Visibility.Visible : Visibility.Hidden,
                 };
             }
             windowModel.OnPropertyChanged("States");
@@ -176,20 +176,24 @@ namespace Hud1
                 .Permit("left", "menu-crosshair");
 
             nav.Configure("menu-audio")
+                .SubstateOf("audio-visible")
                 .Permit("right", "menu-macro")
                 .Permit("left", "menu-gamma");
 
             nav.Configure("menu-macro")
+                .SubstateOf("macro-visible")
                 .Permit("right", "menu-crosshair")
                 .Permit("left", "menu-audio");
 
             nav.Configure("menu-crosshair")
-                .Permit("right", "menu-gamma")
+                .SubstateOf("crosshair-visible")
+                .Permit("right", "menu-help")
                 .Permit("left", "menu-macro");
 
-            nav.Configure("menu")
-                .Permit("up", "cross-visible")
-                .Permit("down", "gamma-1.0");
+            nav.Configure("menu-help")
+                .SubstateOf("menu-visible")
+                .Permit("right", "menu-gamma")
+                .Permit("left", "menu-crosshair");
 
             // cross
             nav.Configure("cross-visible")
@@ -262,14 +266,13 @@ namespace Hud1
 
         private bool ListenerOnKeyPressed(GlobalKey key)
         {
-            Debug.WriteLine("ListenerOnKeyPressed {0}", key);
+            // Debug.WriteLine("ListenerOnKeyPressed {0}", key);
 
             if (key == GlobalKey.VK_UP)
             {
                 if (nav.CanFire("up"))
                 {
                     nav.Fire("up");
-                    Debug.Print("nav: {0}", nav.State);
                 }
                 return false;
             }
@@ -278,7 +281,6 @@ namespace Hud1
                 if (nav.CanFire("down"))
                 {
                     nav.Fire("down");
-                    Debug.Print("nav: {0}", nav.State);
                 }
                 return false;
             }
@@ -287,7 +289,6 @@ namespace Hud1
                 if (nav.CanFire("left"))
                 {
                     nav.Fire("left");
-                    Debug.Print("nav: {0}, {1}", nav.State, nav.IsInState("left-panel"));
                 }
                 return false;
             }
@@ -296,7 +297,6 @@ namespace Hud1
                 if (nav.CanFire("right"))
                 {
                     nav.Fire("right");
-                    Debug.Print("nav: {0}", nav.State);
                 }
                 return false;
             }
