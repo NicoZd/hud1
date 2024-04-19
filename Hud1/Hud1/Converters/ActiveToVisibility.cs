@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Diagnostics;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Data;
 using System.Windows;
-using System.Diagnostics;
+using System.Windows.Data;
 
 namespace Hud1.Converters
 {
@@ -24,6 +19,6 @@ namespace Hud1.Converters
         {
             return DependencyProperty.UnsetValue;
         }
-        
+
     }
 }

@@ -1,29 +1,19 @@
 ﻿using AudioSwitcher.AudioApi;
 using AudioSwitcher.AudioApi.CoreAudio;
 using AudioSwitcher.AudioApi.Observables;
+using DependencyObjectExtensions;
 using Hud1.Controls;
-using Hud1.Converters;
 using Hud1.Model;
+using Hud1.Service;
 using Stateless;
-using Stateless.Graph;
-using System.ComponentModel;
+using Stateless.Reflection;
 using System.Diagnostics;
-using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Input;
 using System.Windows.Interop;
-using System.Windows.Media;
-
-
-using DependencyObjectExtensions;
-using System.Text.RegularExpressions;
 using System.Windows.Media.Animation;
-using Stateless.Reflection;
-using System.Runtime.InteropServices;
-using System.Diagnostics.Eventing.Reader;
-using Hud1.Service;
 
 namespace Hud1
 {

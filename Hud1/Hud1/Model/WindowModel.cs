@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Hud1.Model
+﻿namespace Hud1.Model
 {
-    class WindowModel: ObservableObject
+    class WindowModel : ObservableObject
     {
         public Boolean _active = false;
         public Boolean Active

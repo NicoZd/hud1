@@ -2,7 +2,7 @@
 {
     using System;
     using System.Reflection;
-    using WPF=System.Windows;
+    using WPF = System.Windows;
 
     internal static class SplashScreenExtensions
     {
