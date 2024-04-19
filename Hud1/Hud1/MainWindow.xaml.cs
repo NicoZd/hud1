@@ -23,6 +23,7 @@ using System.Windows.Media.Animation;
 using Stateless.Reflection;
 using System.Runtime.InteropServices;
 using System.Diagnostics.Eventing.Reader;
+using Hud1.Service;
 
 namespace Hud1
 {
@@ -32,10 +33,7 @@ namespace Hud1
 
         StateMachine<string, string> nav;
 
-        KeyboardListener listener;
-
         CoreAudioController audioController;
-
 
         nint hwnd;
 
@@ -112,14 +110,50 @@ namespace Hud1
             this.Left = 0;
             this.Top = 0;
 
-            listener = new KeyboardListener();
-            listener.KeyboardDownEvent += ListenerOnKeyPressed;
+            //listener = new KeyboardListener();
+            //listener.KeyboardDownEvent += ListenerOnKeyPressed;
 
             RebuildUI();
 
             Task.Delay(0).ContinueWith(_ => {
                 Application.Current?.Dispatcher.Invoke(new Action(() => { ShowApp(); }));
             });
+
+            GlobalKeyboardManager.HandleKeyDown = HandleKeyDown;
+            GlobalKeyboardManager.SetupSystemHook();
+       }
+
+        private bool HandleKeyDown(GlobalKey key, bool alt)
+        {
+            Debug.Print("HandleKeyDown {0} {1}", key, alt);
+
+            if (alt)
+            {
+                if (key == GlobalKey.VK_S)
+                {
+                    if (windowModel.Active)
+                    {
+
+                        windowModel.Active = false;
+                        nav.Fire("menu-off");
+                        return true;
+                    }
+                    else
+                    {
+                        windowModel.Active = true;
+                        nav.Fire("menu-on");
+                        return true;
+                    }
+                }
+            } else
+            {
+                if (windowModel.Active)
+                {                    
+                    return ListenerOnKeyPressed(key); 
+                }
+
+            }
+            return false;
         }
 
         private void ShowApp()
@@ -229,62 +263,52 @@ namespace Hud1
             UpdateModelFromStateless();
         }
 
-        private void ListenerOnKeyPressed(object sender, KeyEventArgs e)
+        private bool ListenerOnKeyPressed(GlobalKey key)
         {
-            // TYPE YOUR CODE HERE
-            Debug.WriteLine("ListenerOnKeyPressed {0}", e.Key);
+            Debug.WriteLine("ListenerOnKeyPressed {0}", key);
 
-            if (e.Key == Key.F2)
-            {
-                if (windowModel.Active) {
-
-                    windowModel.Active = false;
-                    nav.Fire("menu-off");
-                } 
-                else
-                {
-                   windowModel.Active = true;
-                   nav.Fire("menu-on");
-                }
-            }
-
-            if (e.Key == Key.Up)
+            if (key == GlobalKey.VK_UP)
             {
                 if (nav.CanFire("up"))
                 {
                     nav.Fire("up");
                     Debug.Print("nav: {0}", nav.State);
                 }
+                return true;
             }
-            if (e.Key == Key.Down)
+            if (key == GlobalKey.VK_DOWN)
             {
                 if (nav.CanFire("down"))
                 {
                     nav.Fire("down");
                     Debug.Print("nav: {0}", nav.State);
                 }
+                return true;
             }
-            if (e.Key == Key.Left)
+            if (key == GlobalKey.VK_LEFT)
             {
                 if (nav.CanFire("left"))
                 {
                     nav.Fire("left");
                     Debug.Print("nav: {0}, {1}", nav.State, nav.IsInState("left-panel"));
                 }
+                return true;
             }
-            if (e.Key == Key.Right)
+            if (key == GlobalKey.VK_RIGHT)
             {
                 if (nav.CanFire("right"))
                 {
                     nav.Fire("right");
                     Debug.Print("nav: {0}", nav.State);
                 }
+                return true;
             }
+            return false;
         }
 
         private void OnWindowUnloaded(object sender, RoutedEventArgs e)
         {
-            listener.KeyboardDownEvent -= ListenerOnKeyPressed;
+           GlobalKeyboardManager.ShutdownSystemHook();
         }
     }
 }
