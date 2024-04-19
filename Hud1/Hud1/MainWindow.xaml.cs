@@ -80,7 +80,7 @@ namespace Hud1
                 {
                     State = nav.State,
                     Selected = nav.IsInState(name),
-                    Visibility = nav.IsInState(name) ? Visibility.Visible : Visibility.Hidden,
+                    Visibility = nav.IsInState(name) ? Visibility.Visible : Visibility.Collapsed,
                 };
             }
             windowModel.OnPropertyChanged("States");
@@ -191,7 +191,7 @@ namespace Hud1
                 .Permit("left", "menu-macro");
 
             nav.Configure("menu-help")
-                .SubstateOf("menu-visible")
+                .SubstateOf("help-visible")
                 .Permit("right", "menu-gamma")
                 .Permit("left", "menu-crosshair");
 
