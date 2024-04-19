@@ -16,10 +16,13 @@ namespace Hud1.Service
     public enum GlobalKey : int
     {
         VK_LMENU = 0xA4,
+
         VK_LEFT = 0x25,
         VK_UP = 0x26,
         VK_RIGHT = 0x27,
         VK_DOWN = 0x28,
+
+        VK_F2 = 0x71,
 
         VK_S = 0x53
     }
@@ -80,7 +83,7 @@ namespace Hud1.Service
             const int WM_SYSKEYDOWN = 0x0104;
             const int WM_SYSKEYUP = 0x0105;
 
-            Debug.Print("nCode {0} {1} {2}", code, wParam, lParam);
+            // Debug.Print("nCode {0} {1} {2}", code, wParam, lParam);
 
             if (code >= 0)
             {
@@ -90,7 +93,7 @@ namespace Hud1.Service
                         {
                             int vkCode = Marshal.ReadInt32(lParam);
                             var blocked = HandleKeyDown((GlobalKey)vkCode, false);
-                            Debug.Print("WM_KEYDOWN vkCode:{0} blocked:{1}", vkCode, blocked);
+                            // Debug.Print("WM_KEYDOWN vkCode:{0} blocked:{1}", vkCode, blocked);
                             if (blocked)
                             {
                                 return (IntPtr)1;
@@ -100,19 +103,19 @@ namespace Hud1.Service
                     case WM_KEYUP:
                         {
                             int vkCode = Marshal.ReadInt32(lParam);
-                            Debug.Print("WM_KEYUP vkCode:{0}", vkCode);
+                            // Debug.Print("WM_KEYUP vkCode:{0}", vkCode);
                             break;
                         }
                     case WM_SYSKEYDOWN:
                         {
                             int vkCode = Marshal.ReadInt32(lParam);
-                            Debug.Print("WM_SYSKEYDOWN vkCode:{0}", vkCode);
+                            // Debug.Print("WM_SYSKEYDOWN vkCode:{0}", vkCode);
                             if (vkCode == (int)GlobalKey.VK_LMENU)
                             {
                                 IsDown[GlobalKey.VK_LMENU] = true;
                             }
                             var blocked = HandleKeyDown((GlobalKey)vkCode, IsDown[GlobalKey.VK_LMENU]);
-                            Debug.Print("WM_KEYDOWN vkCode:{0} blocked:{1}", vkCode, blocked);
+                            // Debug.Print("WM_KEYDOWN vkCode:{0} blocked:{1}", vkCode, blocked);
                             if (blocked)
                             {
                                 return (IntPtr)1;
@@ -122,7 +125,7 @@ namespace Hud1.Service
                     case WM_SYSKEYUP:
                         {
                             int vkCode = Marshal.ReadInt32(lParam);
-                            Debug.Print("WM_SYSKEYUP vkCode:{0}", vkCode);
+                            // Debug.Print("WM_SYSKEYUP vkCode:{0}", vkCode);
                             if (vkCode == (int)GlobalKey.VK_LMENU)
                             {
                                 IsDown[GlobalKey.VK_LMENU] = false;

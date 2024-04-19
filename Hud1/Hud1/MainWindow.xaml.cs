@@ -76,7 +76,8 @@ namespace Hud1
             {
                 string name = stateInfo.ToString();
                 Debug.Print("Add State {0}", stateInfo.ToString());
-                windowModel.States[name] = new { 
+                windowModel.States[name] = new
+                {
                     State = nav.State,
                     Selected = nav.State.Equals(name),
                     Visibility = nav.State.Equals(name) ? Visibility.Visible : Visibility.Hidden,
@@ -113,44 +114,37 @@ namespace Hud1
             this.Left = 0;
             this.Top = 0;
 
-            //listener = new KeyboardListener();
-            //listener.KeyboardDownEvent += ListenerOnKeyPressed;
-
             RebuildUI();
 
-            Task.Delay(500).ContinueWith(_ => {
+            Task.Delay(500).ContinueWith(_ =>
+            {
                 Application.Current?.Dispatcher.Invoke(new Action(() => { ShowApp(); }));
             });
 
             GlobalKeyboardManager.HandleKeyDown = HandleKeyDown;
             GlobalKeyboardManager.SetupSystemHook();
-       }
+        }
 
         private bool HandleKeyDown(GlobalKey key, bool alt)
         {
-            Debug.Print("HandleKeyDown {0} {1}", key, alt);
+            // Debug.Print("HandleKeyDown {0} {1}", key, alt);
 
             if (alt)
             {
                 if (key == GlobalKey.VK_S)
                 {
-                    if (windowModel.Active)
-                    {
-
-                        windowModel.Active = false;
-                        return true;
-                    }
-                    else
-                    {
-                        windowModel.Active = true;
-                        return true;
-                    }
+                    windowModel.Active = !windowModel.Active;
                 }
-            } else
+            }
+            else
             {
-                if (windowModel.Active)
-                {                    
-                    return ListenerOnKeyPressed(key); 
+                if (key == GlobalKey.VK_F2)
+                {
+                    windowModel.Active = !windowModel.Active;
+                }
+                else if (windowModel.Active)
+                {
+                    return ListenerOnKeyPressed(key);
                 }
 
             }
@@ -196,7 +190,7 @@ namespace Hud1
                 .Permit("up", "cross-visible")
                 .Permit("down", "gamma-1.0");
 
-            // top panel
+            // cross
             nav.Configure("cross-visible")
                 .SubstateOf("top-panel")
                 .Permit("right", "cross-color");
@@ -215,6 +209,8 @@ namespace Hud1
                 .SubstateOf("top-panel")
                 .Permit("left", "cross-form");
 
+            // gamma
+
             nav.Configure("gamma-1.0")
                 .SubstateOf("bottom-panel")
                 .Permit("right", "gamma-1.1");
@@ -229,9 +225,6 @@ namespace Hud1
             Debug.Print("RebuildUI");
 
             RebuildNav();
-           
-
-
 
             var playbackContainer = this.FindUid("PlaybackContainer") as StackPanel;
             playbackContainer.Children.Clear();
@@ -311,7 +304,7 @@ namespace Hud1
 
         private void OnWindowUnloaded(object sender, RoutedEventArgs e)
         {
-           GlobalKeyboardManager.ShutdownSystemHook();
+            GlobalKeyboardManager.ShutdownSystemHook();
         }
     }
 }
