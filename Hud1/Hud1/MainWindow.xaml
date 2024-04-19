@@ -49,7 +49,7 @@
         <Grid Visibility="{Binding Path=Active, Mode=OneWay, Converter={StaticResource ActiveToVisibility}}" HorizontalAlignment="Left" Margin="0,0,0,0">
             <controls:GlassPanel>
                 <StackPanel Margin="15,15,15,15">
-                    <Label Content="Time: 8:23 PM"/>]
+                    <Label Content="Time: 8:23 PM"/>
                     <StackPanel Orientation="Horizontal" Margin="-2,0,-2,0">
                         <StackPanel.Resources>
                             <Style TargetType="{x:Type controls:CustomControl2}">
