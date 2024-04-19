@@ -49,27 +49,45 @@
         <Grid Visibility="{Binding Path=Active, Mode=OneWay, Converter={StaticResource ActiveToVisibility}}" HorizontalAlignment="Left" Margin="0,0,0,0">
             <controls:GlassPanel>
                 <StackPanel Margin="15,15,15,15">
-                    <StackPanel >
-                        <Label Foreground="#ffbbffbb" Content="AUDIO" Padding="0,0,0,15" FontFamily="Cascadia Code" FontSize="18">
-                            <Label.Effect>
-                                <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />
-                            </Label.Effect>
-                        </Label>
-                        <Slider Margin="0,0,0,5"/>
-                    </StackPanel>
-                    <StackPanel Uid="PlaybackContainer">
+                    <StackPanel Orientation="Horizontal" Margin="-2,0,-2,0">
                         <StackPanel.Resources>
                             <Style TargetType="{x:Type controls:CustomControl2}">
-                                <Setter Property="Margin" Value="0,3,0,3"/>
+                                <Setter Property="Margin" Value="2,0,2,0"/>
                             </Style>
                         </StackPanel.Resources>
-                        <controls:CustomControl2 />
-                        <controls:CustomControl2 Label="AA4A5"/>
-                        <controls:CustomControl2 Label="BBB" Selected="True"/>
+                        <controls:CustomControl2 Label="GAMMA" Selected="{Binding Path=States[menu-gamma].Selected}"/>
+                        <controls:CustomControl2 Label="AUDIO" Selected="{Binding Path=States[menu-audio].Selected}"/>
+                        <controls:CustomControl2 Label="MACRO" Selected="{Binding Path=States[menu-macro].Selected}"/>
+                        <controls:CustomControl2 Label="CROSSHAIR" Selected="{Binding Path=States[menu-crosshair].Selected}"/>
                     </StackPanel>
+                    <Grid Visibility="{Binding Path=Active, Mode=OneWay, Converter={StaticResource ActiveToVisibility}}" HorizontalAlignment="Stretch" Margin="0,0,0,0">
+                            <StackPanel Margin="0,30,0,0">
+                                <StackPanel >
+                                    <Label Foreground="#ffbbffbb" Content="AUDIO" Padding="0,0,0,15" FontFamily="Cascadia Code" FontSize="18">
+                                        <Label.Effect>
+                                            <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />
+                                        </Label.Effect>
+                                    </Label>
+                                    <Slider Margin="0,0,0,5"/>
+                                </StackPanel>
+                                <StackPanel Uid="PlaybackContainer">
+                                    <StackPanel.Resources>
+                                        <Style TargetType="{x:Type controls:CustomControl2}">
+                                            <Setter Property="Margin" Value="0,3,0,3"/>
+                                        </Style>
+                                    </StackPanel.Resources>
+                                    <controls:CustomControl2 />
+                                    <controls:CustomControl2 Label="AA4A5"/>
+                                    <controls:CustomControl2 Label="BBB" Selected="True"/>
+                                </StackPanel>
+                            </StackPanel>
+                    </Grid>
                 </StackPanel>
             </controls:GlassPanel>
         </Grid>
+
+
+        
 
         <Grid Visibility="{Binding Path=Active, Mode=OneWay, Converter={StaticResource ActiveToVisibility}}" HorizontalAlignment="Right">
             <controls:GlassPanel>

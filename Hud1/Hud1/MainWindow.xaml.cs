@@ -135,13 +135,11 @@ namespace Hud1
                     {
 
                         windowModel.Active = false;
-                        nav.Fire("menu-off");
                         return true;
                     }
                     else
                     {
                         windowModel.Active = true;
-                        nav.Fire("menu-on");
                         return true;
                     }
                 }
@@ -173,29 +171,24 @@ namespace Hud1
         {
             Debug.Print("RebuildUI");
 
-            nav = new StateMachine<string, string>("menu");
+            nav = new StateMachine<string, string>("menu-gamma");
             nav.OnTransitionCompleted(a => UpdateModelFromStateless());
 
-            nav.Configure("plain")
-                .Permit("menu-on", "menu");
+            nav.Configure("menu-gamma")
+                .Permit("right", "menu-audio")
+                .Permit("left", "menu-crosshair");
 
-            nav.Configure("menu")
-                .Permit("menu-off", "plain");
+            nav.Configure("menu-audio")
+                .Permit("right", "menu-macro")
+                .Permit("left", "menu-gamma");
 
-            nav.Configure("center")
-                .SubstateOf("menu-off");
+            nav.Configure("menu-macro")
+                .Permit("right", "menu-crosshair")
+                .Permit("left", "menu-audio");
 
-            nav.Configure("left-panel")
-                .SubstateOf("menu")
-                .Permit("right", "menu");
-
-            nav.Configure("top-panel")
-                .SubstateOf("menu")
-                .Permit("down", "menu");
-
-            nav.Configure("bottom-panel")
-                .SubstateOf("menu")
-                .Permit("up", "menu");
+            nav.Configure("menu-crosshair")
+                .Permit("right", "menu-gamma")
+                .Permit("left", "menu-macro");
 
             nav.Configure("menu")
                 .Permit("up", "cross-visible")
@@ -274,7 +267,7 @@ namespace Hud1
                     nav.Fire("up");
                     Debug.Print("nav: {0}", nav.State);
                 }
-                return true;
+                return false;
             }
             if (key == GlobalKey.VK_DOWN)
             {
@@ -283,7 +276,7 @@ namespace Hud1
                     nav.Fire("down");
                     Debug.Print("nav: {0}", nav.State);
                 }
-                return true;
+                return false;
             }
             if (key == GlobalKey.VK_LEFT)
             {
@@ -292,7 +285,7 @@ namespace Hud1
                     nav.Fire("left");
                     Debug.Print("nav: {0}, {1}", nav.State, nav.IsInState("left-panel"));
                 }
-                return true;
+                return false;
             }
             if (key == GlobalKey.VK_RIGHT)
             {
@@ -301,7 +294,7 @@ namespace Hud1
                     nav.Fire("right");
                     Debug.Print("nav: {0}", nav.State);
                 }
-                return true;
+                return false;
             }
             return false;
         }
