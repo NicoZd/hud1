@@ -88,7 +88,7 @@ namespace Hud1.Service
                             // Debug.Print("WM_KEYDOWN vkCode:{0} blocked:{1}", vkCode, blocked);
                             if (blocked)
                             {
-                                return (IntPtr)1;
+                                return 1;
                             }
                             break;
                         }
@@ -110,7 +110,7 @@ namespace Hud1.Service
                             // Debug.Print("WM_KEYDOWN vkCode:{0} blocked:{1}", vkCode, blocked);
                             if (blocked)
                             {
-                                return (IntPtr)1;
+                                return 1;
                             }
                             break;
                         }
