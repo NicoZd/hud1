@@ -21,32 +21,21 @@
     <Window.Resources>
         <converters:ActiveToVisibility x:Key="ActiveToVisibility"/>
     </Window.Resources>
+
     <Window.Background>
         <SolidColorBrush Color="Transparent"/>
     </Window.Background>
-    <Window.Effect>
-        <DropShadowEffect ShadowDepth="3" Color="#008800" Opacity="0.3" BlurRadius="20" Direction="0" />
-    </Window.Effect>
-    <Grid>
-        <Canvas Visibility="{Binding Path=Active, Mode=OneWay, Converter={StaticResource ActiveToVisibility}}" Margin="0,0,0,0">
-            <Canvas.Background>
-                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                    <GradientStop Color="#44009900" Offset="0.0"/>
-                    <GradientStop Color="#22006600" Offset="0.05"/>
-                    <GradientStop Color="#00006600" Offset="0.1"/>
-                    <GradientStop Color="#00006600" Offset="0.9"/>
-                    <GradientStop Color="#22006600" Offset="0.95"/>
-                    <GradientStop Color="#44009900" Offset="1.0"/>
-                </LinearGradientBrush>
-            </Canvas.Background>
-        </Canvas>
 
+    <Grid>
         <Canvas Width="20" Height="20" IsHitTestVisible="false" Background="#00000000">
             <Line X1="0" Y1="0" X2="20" Y2="20" Stroke="Green" StrokeThickness="1"/>
             <Line X1="20" Y1="0" X2="0" Y2="20" Stroke="Green" StrokeThickness="1" />
         </Canvas>
 
         <Grid Visibility="{Binding Path=Active, Mode=OneWay, Converter={StaticResource ActiveToVisibility}}" HorizontalAlignment="Left" Margin="0,0,0,0">
+            <Grid.Effect>
+                <DropShadowEffect ShadowDepth="3" Color="#008800" Opacity="0.5" BlurRadius="20" Direction="0" />
+            </Grid.Effect>
             <controls:GlassPanel>
                 <StackPanel Margin="15,1,15,15">
 
@@ -177,14 +166,5 @@
                 </StackPanel>
             </controls:GlassPanel>
         </Grid>
-
-
-
-
-
-
-
-
-
     </Grid>
 </Window>

@@ -9,9 +9,6 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="Controls\CenterPanel.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Update="Controls\CustomControl2.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -20,9 +17,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Controls\CenterPanel.xaml">
-      <SubType>Designer</SubType>
-    </Page>
     <Page Update="Controls\CustomControl2.xaml">
       <SubType>Designer</SubType>
     </Page>
