@@ -26,7 +26,7 @@
     <Window.Resources>
         <converters:ActiveToVisibility x:Key="ActiveToVisibility"/>
     </Window.Resources>
-    
+
     <Grid>
         <Canvas Width="20" Height="20" IsHitTestVisible="false" Background="#00000000">
             <Line X1="0" Y1="0" X2="20" Y2="20" Stroke="Green" StrokeThickness="1"/>

@@ -13,6 +13,12 @@
         </Grid.Effect>
         <controls:GlassPanel>
             <StackPanel Margin="15,1,15,15">
+                <Label Foreground="#ffbbffbb" Content="GUD - Gamer HUD" Padding="0,10,0,5" FontFamily="Cascadia Code" FontSize="22">
+                    <Label.Effect>
+                        <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />
+                    </Label.Effect>
+                </Label>
+
                 <StackPanel Orientation="Vertical" Margin="-3,0,0,10">
                     <Label Content="Time: 8:23 PM" Foreground="#ffbbffbb"/>
                     <Label Content="Press F2 to open and close this window." Foreground="#ffbbffbb"/>
@@ -34,7 +40,7 @@
                 <Grid Visibility="{Binding Path=States[gamma-visible].Visibility}" Margin="0,50,0,0">
                     <StackPanel Margin="0,0,0,0" Orientation="Vertical">
 
-                        <Label Foreground="#ffbbffbb" Content="GAMMA" Padding="0,0,0,5" FontFamily="Cascadia Code" FontSize="18">
+                        <Label Foreground="#ffbbffbb" Content="GAMMA" Padding="0,0,0,5" FontFamily="Cascadia Code" FontSize="16">
                             <Label.Effect>
                                 <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />
                             </Label.Effect>
@@ -61,7 +67,7 @@
                 <Grid Visibility="{Binding Path=States[audio-visible].Visibility}" Margin="0,0,0,0">
                     <StackPanel Margin="0,50,0,0">
                         <StackPanel >
-                            <Label Foreground="#ffbbffbb" Content="AUDIO" Padding="0,0,0,5" FontFamily="Cascadia Code" FontSize="18">
+                            <Label Foreground="#ffbbffbb" Content="AUDIO" Padding="0,0,0,5" FontFamily="Cascadia Code" FontSize="16">
                                 <Label.Effect>
                                     <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />
                                 </Label.Effect>
@@ -87,14 +93,14 @@
                                 <Setter Property="Margin" Value="0,2,0,2"/>
                             </Style>
                         </StackPanel.Resources>
-                        <Label Foreground="#ffbbffbb" Content="MOUSE MACRO" Padding="0,0,0,5" FontFamily="Cascadia Code" FontSize="18">
+                        <Label Foreground="#ffbbffbb" Content="MOUSE MACRO" Padding="0,0,0,5" FontFamily="Cascadia Code" FontSize="16">
                             <Label.Effect>
                                 <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />
                             </Label.Effect>
                         </Label>
                         <controls:CustomControl2 Label="Hold Left"/>
                         <controls:CustomControl2 Label="Repeat Left"/>
-                        <Label Foreground="#ffbbffbb" Content="KEY MACRO" Padding="0,20,0,5" FontFamily="Cascadia Code" FontSize="18">
+                        <Label Foreground="#ffbbffbb" Content="KEY MACRO" Padding="0,20,0,5" FontFamily="Cascadia Code" FontSize="16">
                             <Label.Effect>
                                 <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />
                             </Label.Effect>
@@ -110,7 +116,7 @@
                                 <Setter Property="Margin" Value="0,2,0,2"/>
                             </Style>
                         </StackPanel.Resources>
-                        <Label Foreground="#ffbbffbb" Content="CROSSHAIR" Padding="0,0,0,5" FontFamily="Cascadia Code" FontSize="18">
+                        <Label Foreground="#ffbbffbb" Content="CROSSHAIR" Padding="0,0,0,5" FontFamily="Cascadia Code" FontSize="16">
                             <Label.Effect>
                                 <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />
                             </Label.Effect>
@@ -125,7 +131,7 @@
                 <Grid Visibility="{Binding Path=States[help-visible].Visibility}" Margin="0,0,0,0">
                     <StackPanel Margin="0,50,0,0">
 
-                        <Label Foreground="#ffbbffbb" Content="FUNCTIONS" Padding="0,0,0,5" FontFamily="Cascadia Code" FontSize="18">
+                        <Label Foreground="#ffbbffbb" Content="FUNCTIONS" Padding="0,0,0,5" FontFamily="Cascadia Code" FontSize="16">
                             <Label.Effect>
                                 <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />
                             </Label.Effect>
@@ -143,7 +149,7 @@
                             </StackPanel>
                         </StackPanel>
 
-                        <Label Foreground="#ffbbffbb" Content="HELP" Padding="0,15,0,5" FontFamily="Cascadia Code" FontSize="18">
+                        <Label Foreground="#ffbbffbb" Content="HELP" Padding="0,15,0,5" FontFamily="Cascadia Code" FontSize="16">
                             <Label.Effect>
                                 <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />
                             </Label.Effect>
