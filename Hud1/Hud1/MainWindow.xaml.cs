@@ -68,13 +68,13 @@ namespace Hud1
                 Application.Current?.Dispatcher.Invoke(new Action(() => { ShowApp(); }));
             });
 
-            GlobalKeyboardManager.KeyDown += HandleKeyDown2;
+            GlobalKeyboardManager.KeyDown += HandleKeyDown;
             GlobalKeyboardManager.SetupSystemHook();
         }
 
-        private void HandleKeyDown2(KeyEvent keyEvent)
+        private void HandleKeyDown(KeyEvent keyEvent)
         {
-            Debug.Print("HandleKeyDown2 {0} {1}", keyEvent.key, keyEvent.alt);
+            //Debug.Print("HandleKeyDown2 {0} {1}", keyEvent.key, keyEvent.alt);
 
             if (keyEvent.alt)
             {
