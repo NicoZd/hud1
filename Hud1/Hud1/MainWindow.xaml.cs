@@ -14,6 +14,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Interop;
 using System.Windows.Media.Animation;
+using System.Windows.Threading;
 
 namespace Hud1
 {
@@ -29,6 +30,7 @@ namespace Hud1
 
         public MainWindow()
         {
+            Thread.CurrentThread.Name = "MainWindow";
             this.DataContext = windowModel;
 
             audioController = new CoreAudioController();
@@ -38,6 +40,28 @@ namespace Hud1
 
             RebuildNav();
             UpdateModelFromStateless();
+
+            this.StateChanged += OnStateChanged;
+        }
+
+        private void OnStateChanged(object? sender, EventArgs e)
+        {
+            Debug.WriteLine("OnStateChanged {0}", this.WindowState);
+
+            if (this.WindowState != WindowState.Normal)
+            {
+                this.WindowState = WindowState.Normal;
+                this.ShowInTaskbar = false;
+                this.Topmost = true;
+            }
+        }
+
+        public static void Wait(int milliseconds, Action action)
+        {
+            Task.Delay(milliseconds).ContinueWith(_ =>
+            {
+                Application.Current.Dispatcher.Invoke(action);
+            });
         }
 
         private void UpdateModelFromStateless()
@@ -46,20 +70,16 @@ namespace Hud1
 
             windowModel.State = nav.State;
 
-            //if (nav.IsInState("left-panel"))
-            //    windowModel.Panel = "left-panel";
+            if (nav.State == "exit-right")
+            {
+                Debug.Print("Some Action1");
+                Debug.Print("Some Action2 {0}", Thread.CurrentThread.Name);
+                Wait(100, () => { 
+                    nav.Fire("return"); 
+                    Wait(100, () => { Application.Current.Shutdown(); });
+                });
 
-            //if (nav.IsInState("right-panel"))
-            //    windowModel.Panel = "right-panel";
-
-            //if (nav.IsInState("top-panel"))
-            //    windowModel.Panel = "top-panel";
-
-            //if (nav.IsInState("bottom-panel"))
-            //    windowModel.Panel = "bottom-panel";
-
-            //if (nav.IsInState("center"))
-            //    windowModel.Panel = "center";
+            }
 
             var info = nav.GetInfo();
             foreach (StateInfo stateInfo in info.States)
@@ -163,7 +183,7 @@ namespace Hud1
             nav.Configure("menu-gamma")
                 .SubstateOf("gamma-visible")
                 .Permit("right", "menu-audio")
-                .Permit("left", "menu-crosshair");
+                .Permit("left", "menu-more");
 
             nav.Configure("menu-audio")
                 .SubstateOf("audio-visible")
@@ -177,13 +197,23 @@ namespace Hud1
 
             nav.Configure("menu-crosshair")
                 .SubstateOf("crosshair-visible")
-                .Permit("right", "menu-help")
+                .Permit("right", "menu-more")
                 .Permit("left", "menu-macro");
 
-            nav.Configure("menu-help")
+            nav.Configure("menu-more")
                 .SubstateOf("help-visible")
                 .Permit("right", "menu-gamma")
-                .Permit("left", "menu-crosshair");
+                .Permit("left", "menu-crosshair")
+                .Permit("down", "exit");
+
+            nav.Configure("exit")
+                .SubstateOf("help-visible")
+                .Permit("right", "exit-right")
+                .Permit("up", "menu-more");
+
+            nav.Configure("exit-right")
+                .SubstateOf("help-visible")
+                .Permit("return", "exit");
 
             // cross
             nav.Configure("cross-visible")
