@@ -14,7 +14,6 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Interop;
 using System.Windows.Media.Animation;
-using System.Windows.Threading;
 
 namespace Hud1
 {
@@ -74,8 +73,9 @@ namespace Hud1
             {
                 Debug.Print("Some Action1");
                 Debug.Print("Some Action2 {0}", Thread.CurrentThread.Name);
-                Wait(100, () => { 
-                    nav.Fire("return"); 
+                Wait(100, () =>
+                {
+                    nav.Fire("return");
                     Wait(100, () => { Application.Current.Shutdown(); });
                 });
 
