@@ -19,170 +19,20 @@
         Loaded="OnWindowLoaded"
         Unloaded="OnWindowUnloaded"
         >
-    <Window.Resources>
-        <converters:ActiveToVisibility x:Key="ActiveToVisibility"/>
-    </Window.Resources>
-
     <Window.Background>
         <SolidColorBrush Color="Transparent"/>
     </Window.Background>
 
+    <Window.Resources>
+        <converters:ActiveToVisibility x:Key="ActiveToVisibility"/>
+    </Window.Resources>
+    
     <Grid>
         <Canvas Width="20" Height="20" IsHitTestVisible="false" Background="#00000000">
             <Line X1="0" Y1="0" X2="20" Y2="20" Stroke="Green" StrokeThickness="1"/>
             <Line X1="20" Y1="0" X2="0" Y2="20" Stroke="Green" StrokeThickness="1" />
         </Canvas>
 
-        <Grid Visibility="{Binding Path=Active, Mode=OneWay, Converter={StaticResource ActiveToVisibility}}" HorizontalAlignment="Left" Margin="0,0,0,0">
-            <Grid.Effect>
-                <DropShadowEffect ShadowDepth="3" Color="#008800" Opacity="0.5" BlurRadius="20" Direction="0" />
-            </Grid.Effect>
-            <controls:GlassPanel>
-                <StackPanel Margin="15,1,15,15">
-                    <StackPanel Orientation="Vertical" Margin="-3,0,0,10">
-                        <Label Content="Time: 8:23 PM" Foreground="#ffbbffbb"/>
-                        <Label Content="Press F2 to open and close this window." Foreground="#ffbbffbb"/>
-                        <Label Content="Use cursor keys to navigate and select." Foreground="#ffbbffbb"/>
-                    </StackPanel>
-                    <WrapPanel Orientation="Horizontal" Margin="-2,0,-2,0">
-                        <WrapPanel.Resources>
-                            <Style TargetType="{x:Type controls:CustomControl2}">
-                                <Setter Property="Margin" Value="2,0,2,0"/>
-                            </Style>
-                        </WrapPanel.Resources>
-                        <controls:CustomControl2 Label="GAMMA" Selected="{Binding Path=States[menu-gamma].Selected}"/>
-                        <controls:CustomControl2 Label="AUDIO" Selected="{Binding Path=States[menu-audio].Selected}"/>
-                        <controls:CustomControl2 Label="MACRO" Selected="{Binding Path=States[menu-macro].Selected}"/>
-                        <controls:CustomControl2 Label="CROSSHAIR" Selected="{Binding Path=States[menu-crosshair].Selected}"/>
-                        <controls:CustomControl2 Label="MORE" Selected="{Binding Path=States[menu-more].Selected}"/>
-                    </WrapPanel>
-
-                    <Grid Visibility="{Binding Path=States[gamma-visible].Visibility}" Margin="0,50,0,0">
-                        <StackPanel Margin="0,0,0,0" Orientation="Vertical">
-                            
-                            <Label Foreground="#ffbbffbb" Content="GAMMA" Padding="0,0,0,5" FontFamily="Cascadia Code" FontSize="18">
-                                <Label.Effect>
-                                    <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />
-                                </Label.Effect>
-                            </Label>
-                            
-                            <StackPanel Uid="GammaContainer" Orientation="Horizontal" Margin="-2,2,0,0">
-                                <StackPanel.Resources>
-                                    <Style TargetType="{x:Type controls:CustomControl2}">
-                                        <Setter Property="Margin" Value="2,0,2,0"/>
-                                    </Style>
-                                </StackPanel.Resources>
-
-                                <controls:CustomControl2 Label="1.0" Selected="{Binding Path=States[gamma-1.0].Selected}" />
-                                <controls:CustomControl2 Label="1.1" Selected="{Binding Path=States[gamma-1.1].Selected}"/>
-                                <controls:CustomControl2 Label="1.25"/>
-                                <controls:CustomControl2 Label="1.5"/>
-                                <controls:CustomControl2 Label="2.0"/>
-                                <controls:CustomControl2 Label="3.0"/>
-                            </StackPanel>
-                        </StackPanel>
-
-                    </Grid>
-
-                    <Grid Visibility="{Binding Path=States[audio-visible].Visibility}" Margin="0,0,0,0">
-                        <StackPanel Margin="0,50,0,0">
-                            <StackPanel >
-                                <Label Foreground="#ffbbffbb" Content="AUDIO" Padding="0,0,0,5" FontFamily="Cascadia Code" FontSize="18">
-                                    <Label.Effect>
-                                        <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />
-                                    </Label.Effect>
-                                </Label>
-                            </StackPanel>
-                            <StackPanel Uid="PlaybackContainer">
-                                <StackPanel.Resources>
-                                    <Style TargetType="{x:Type controls:CustomControl2}">
-                                        <Setter Property="Margin" Value="0,2,0,2"/>
-                                    </Style>
-                                </StackPanel.Resources>
-                                <controls:CustomControl2 />
-                                <controls:CustomControl2 Label="AA4A5"/>
-                                <controls:CustomControl2 Label="BBB" Selected="True"/>
-                            </StackPanel>
-                        </StackPanel>
-                    </Grid>
-
-                    <Grid Visibility="{Binding Path=States[macro-visible].Visibility}">
-                        <StackPanel Margin="0,50,0,0">
-                            <StackPanel.Resources>
-                                <Style TargetType="{x:Type controls:CustomControl2}">
-                                    <Setter Property="Margin" Value="0,2,0,2"/>
-                                </Style>
-                            </StackPanel.Resources>
-                            <Label Foreground="#ffbbffbb" Content="MOUSE MACRO" Padding="0,0,0,5" FontFamily="Cascadia Code" FontSize="18">
-                                <Label.Effect>
-                                    <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />
-                                </Label.Effect>
-                            </Label>
-                            <controls:CustomControl2 Label="Hold Left"/>
-                            <controls:CustomControl2 Label="Repeat Left"/>
-                            <Label Foreground="#ffbbffbb" Content="KEY MACRO" Padding="0,20,0,5" FontFamily="Cascadia Code" FontSize="18">
-                                <Label.Effect>
-                                    <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />
-                                </Label.Effect>
-                            </Label>
-                            <controls:CustomControl2 Label="Hold W"/>
-                        </StackPanel>
-                    </Grid>
-
-                    <Grid Visibility="{Binding Path=States[crosshair-visible].Visibility}">
-                        <StackPanel Margin="0,50,0,0" Orientation="Vertical">
-                            <StackPanel.Resources>
-                                <Style TargetType="{x:Type controls:CustomControl2}">
-                                    <Setter Property="Margin" Value="0,2,0,2"/>
-                                </Style>
-                            </StackPanel.Resources>
-                            <Label Foreground="#ffbbffbb" Content="CROSSHAIR" Padding="0,0,0,5" FontFamily="Cascadia Code" FontSize="18">
-                                <Label.Effect>
-                                    <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />
-                                </Label.Effect>
-                            </Label>
-                            <controls:CustomControl2 Label="ON/OFF" Selected="{Binding Path=States[cross-visible].Selected}" />
-                            <controls:CustomControl2 Label="C" Selected="{Binding Path=States[cross-color].Selected}"/>
-                            <controls:CustomControl2 Label="F" Selected="{Binding Path=States[cross-form].Selected}"/>
-                            <controls:CustomControl2 Label="S" Selected="{Binding Path=States[cross-size].Selected}"/>
-                        </StackPanel>
-                    </Grid>
-
-                    <Grid Visibility="{Binding Path=States[help-visible].Visibility}" Margin="0,0,0,0">
-                        <StackPanel Margin="0,50,0,0">
-                        
-                            <Label Foreground="#ffbbffbb" Content="FUNCTIONS" Padding="0,0,0,5" FontFamily="Cascadia Code" FontSize="18">
-                                <Label.Effect>
-                                    <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />
-                                </Label.Effect>
-                            </Label>
-
-                            <StackPanel Margin="0,0,0,0" Orientation="Vertical" >
-                                <StackPanel.Resources>
-                                    <Style TargetType="{x:Type controls:CustomControl2}">
-                                        <Setter Property="Margin" Value="0,2,0,2"/>
-                                    </Style>
-                                </StackPanel.Resources>
-                                <StackPanel Margin="0,0,0,0" Orientation="Horizontal">
-                                    <controls:CustomControl2 Label="EXIT" Selected="{Binding Path=States[exit].Selected}" />
-                                    <controls:CustomControl2 Label=">" Selected="{Binding Path=States[exit-right].Selected}"/>
-                                </StackPanel>
-                            </StackPanel>
-
-                            <Label Foreground="#ffbbffbb" Content="HELP" Padding="0,15,0,5" FontFamily="Cascadia Code" FontSize="18">
-                                <Label.Effect>
-                                    <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />
-                                </Label.Effect>
-                            </Label>
-                            
-                            <StackPanel Orientation="Vertical" Margin="-3,0,0,10">
-                                <Label Content="Press F2 or ALT-S, ALT-F or ALT-L to open and close this window." Foreground="#ffbbffbb"/>
-                                <Label Content="Use cursor keys to navigate and select." Foreground="#ffbbffbb"/>
-                            </StackPanel>
-                        </StackPanel>
-                    </Grid>
-                </StackPanel>
-            </controls:GlassPanel>
-        </Grid>
+        <controls:Hud Visibility="{Binding Path=Active, Mode=OneWay, Converter={StaticResource ActiveToVisibility}}"/>
     </Grid>
 </Window>
