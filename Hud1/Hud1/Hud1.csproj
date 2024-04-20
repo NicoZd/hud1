@@ -11,9 +11,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Images\**" />
+    <EmbeddedResource Remove="Images\**" />
+    <None Remove="Images\**" />
+    <Page Remove="Images\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Abstract-colorful-fluid-background-on-transparent-PNG.png" />
-    <None Remove="Images\BlueNoise470.png" />
-    <None Remove="Images\cordova-splashscreen.jpg" />
+    <None Remove="Resources\blue-noise.png" />
+    <None Remove="Resources\fluid-background-transparent.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,8 +35,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Images\fluid-background-transparent.png" />
-    <Resource Include="Images\BlueNoise470.png">
+    <Resource Include="Resources\blue-noise.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\fluid-background-transparent.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>

@@ -46,7 +46,7 @@
 
         private static void ShowSplashScreen()
         {
-            splashScreen = new SplashScreen(resourceName: "/Images/fluid-background-transparent.png");
+            splashScreen = new SplashScreen(resourceName: "/Resources/fluid-background-transparent.png");
             splashScreen.Show(autoClose: false);
         }
 
