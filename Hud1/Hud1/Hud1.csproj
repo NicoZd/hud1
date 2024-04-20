@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
-    <StartupObject>SplashTest.Entry</StartupObject>
+    <StartupObject>Hud1.Service.SplashScreen.Entry</StartupObject>
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
 

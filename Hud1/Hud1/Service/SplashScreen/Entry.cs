@@ -1,4 +1,4 @@
-﻿namespace SplashTest
+﻿namespace Hud1.Service.SplashScreen
 {
     using Hud1;
     using System;
@@ -8,8 +8,9 @@
 
     class Entry
     {
-        private static SplashScreen splashScreen;
-        private static App app;
+        private static readonly SplashScreen splashScreen = new(resourceName: "/Resources/fluid-background-transparent.png");
+
+        private static readonly App app = new();
 
         [STAThread]
         public static void Main(string[] args)
@@ -18,10 +19,10 @@
 
             if (showSplash)
             {
-                ShowSplashScreen();
+                splashScreen.Show(autoClose: false);
             }
 
-            CreateApp();
+            app.InitializeComponent();
 
             if (showSplash)
             {
@@ -36,36 +37,13 @@
                 splashTimer.Tick += (s, e) =>
                 {
                     splashTimer.Stop();
-                    CloseSplashScreen(fadeDuration: TimeSpan.FromMilliseconds(150));
+                    splashScreen.Close(TimeSpan.FromMilliseconds(150));
                 };
                 splashTimer.Start();
             }
 
-            RunApp();
-        }
-
-        private static void ShowSplashScreen()
-        {
-            splashScreen = new SplashScreen(resourceName: "/Resources/fluid-background-transparent.png");
-            splashScreen.Show(autoClose: false);
-        }
-
-        private static void CloseSplashScreen(TimeSpan fadeDuration)
-        {
-            splashScreen.Close(fadeDuration);
-        }
-
-        private static void CreateApp()
-        {
-            app = new App();
-            app.InitializeComponent();
-        }
-
-        private static void RunApp()
-        {
             app.Run();
         }
-
         private static void PumpDispatcherUntilPriority(DispatcherPriority dispatcherPriority)
         {
             var dispatcherFrame = new DispatcherFrame();
