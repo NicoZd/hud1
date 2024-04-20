@@ -12,11 +12,6 @@ namespace Hud1
     public partial class MainWindow : Window
     {
         WindowModel windowModel = new WindowModel();
-
-        StateMachine<string, string> nav;
-
-        CoreAudioController audioController;
-
         nint hwnd;
 
         public MainWindow()

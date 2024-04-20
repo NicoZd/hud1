@@ -46,10 +46,7 @@ namespace Hud1.Controls
         public CustomControl2()
         {
             InitializeComponent();
-            LayoutRoot.DataContext = this.Model;
+            LayoutRoot.DataContext = Model;
         }
-
-
-
     }
 }
