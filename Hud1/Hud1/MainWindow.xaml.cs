@@ -1,20 +1,11 @@
-﻿using AudioSwitcher.AudioApi;
-using AudioSwitcher.AudioApi.CoreAudio;
-using AudioSwitcher.AudioApi.Observables;
-using DependencyObjectExtensions;
-using Hud1.Controls;
+﻿using AudioSwitcher.AudioApi.CoreAudio;
 using Hud1.Model;
 using Hud1.Service;
 using Stateless;
-using Stateless.Reflection;
 using System.Diagnostics;
-using System.Text.RegularExpressions;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Interop;
 using System.Windows.Media.Animation;
-using System.Windows.Threading;
 
 namespace Hud1
 {
@@ -77,8 +68,30 @@ namespace Hud1
                 Application.Current?.Dispatcher.Invoke(new Action(() => { ShowApp(); }));
             });
 
-            GlobalKeyboardManager.HandleKeyDown = HandleKeyDown;
+            GlobalKeyboardManager.KeyDown += HandleKeyDown2;
             GlobalKeyboardManager.SetupSystemHook();
+        }
+
+        private void HandleKeyDown2(KeyEvent keyEvent)
+        {
+            Debug.Print("HandleKeyDown2 {0} {1}", keyEvent.key, keyEvent.alt);
+
+            if (keyEvent.alt)
+            {
+                if (keyEvent.key == GlobalKey.VK_S || keyEvent.key == GlobalKey.VK_F || keyEvent.key == GlobalKey.VK_L)
+                {
+                    windowModel.Active = !windowModel.Active;
+                    keyEvent.block = true;
+                }
+            }
+            else
+            {
+                if (keyEvent.key == GlobalKey.VK_F2)
+                {
+                    windowModel.Active = !windowModel.Active;
+                    keyEvent.block = true;
+                }
+            }
         }
 
         private bool HandleKeyDown(GlobalKey key, bool alt)
@@ -122,7 +135,7 @@ namespace Hud1
         }
 
 
-      
+
 
         private void OnWindowUnloaded(object sender, RoutedEventArgs e)
         {

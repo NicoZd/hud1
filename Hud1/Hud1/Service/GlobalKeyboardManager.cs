@@ -19,6 +19,19 @@ namespace Hud1.Service
         VK_S = 0x53
     }
 
+    public class KeyEvent
+    {
+        public bool alt = false;
+        public bool block = false;
+
+        public GlobalKey key;
+
+        public KeyEvent(GlobalKey key)
+        {
+            this.key = key;
+        }
+    }
+
     public static class GlobalKeyboardManager
     {
         // Callbacks
@@ -33,7 +46,11 @@ namespace Hud1.Service
 
         // The system hook ID (for storing this application's hook)
         private static IntPtr HookID = IntPtr.Zero;
-        internal static Func<GlobalKey, bool, bool> HandleKeyDown;
+        //        internal static Func<GlobalKey, bool, bool> HandleKeyDown;
+
+        public delegate void KeyDownHandler(KeyEvent keyEvent);
+        public static event KeyDownHandler KeyDown;
+
 
         /// <summary>
         /// Hooks/Sets up this application for receiving keydown callbacks
@@ -84,9 +101,11 @@ namespace Hud1.Service
                     case WM_KEYDOWN:
                         {
                             int vkCode = Marshal.ReadInt32(lParam);
-                            var blocked = HandleKeyDown((GlobalKey)vkCode, false);
+                            var keyEvent = new KeyEvent((GlobalKey)vkCode);
+                            KeyDown(keyEvent);
+
                             // Debug.Print("WM_KEYDOWN vkCode:{0} blocked:{1}", vkCode, blocked);
-                            if (blocked)
+                            if (keyEvent.block)
                             {
                                 return 1;
                             }
@@ -106,9 +125,11 @@ namespace Hud1.Service
                             {
                                 IsDown[GlobalKey.VK_LMENU] = true;
                             }
-                            var blocked = HandleKeyDown((GlobalKey)vkCode, IsDown[GlobalKey.VK_LMENU]);
+                            var keyEvent = new KeyEvent((GlobalKey)vkCode);
+                            keyEvent.alt = IsDown[GlobalKey.VK_LMENU];
+                            KeyDown(keyEvent);
                             // Debug.Print("WM_KEYDOWN vkCode:{0} blocked:{1}", vkCode, blocked);
-                            if (blocked)
+                            if (keyEvent.block)
                             {
                                 return 1;
                             }

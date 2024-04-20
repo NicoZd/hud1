@@ -1,32 +1,19 @@
-﻿using Hud1.Model;
+﻿using AudioSwitcher.AudioApi;
+using AudioSwitcher.AudioApi.CoreAudio;
+using AudioSwitcher.AudioApi.Observables;
+using DependencyObjectExtensions;
+using Hud1.Model;
 using Hud1.Service;
 using Stateless;
 using Stateless.Reflection;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using AudioSwitcher.AudioApi.CoreAudio;
-using AudioSwitcher.AudioApi;
-using DependencyObjectExtensions;
-using System.Windows.Interop;
-using System.Text.RegularExpressions;
 
 namespace Hud1.Controls
 {
-
-
     public partial class Hud : UserControl
     {
         HudModel Model = new();
@@ -40,7 +27,7 @@ namespace Hud1.Controls
             LayoutRoot.DataContext = this.Model;
 
             AudioController = new CoreAudioController();
-            //AudioController.AudioDeviceChanged.Subscribe(OnDeviceChanged);
+            AudioController.AudioDeviceChanged.Subscribe(OnDeviceChanged);
 
             RebuildNav();
             UpdateModelFromStateless();
@@ -92,7 +79,7 @@ namespace Hud1.Controls
 
         private void RebuildNav()
         {
-            Navigation = new StateMachine<string, string>("menu-gamma");
+            Navigation = new StateMachine<string, string>(Navigation != null ? Navigation.State : "menu-gamma");
             Navigation.OnTransitionCompleted(a => UpdateModelFromStateless());
 
             Navigation.Configure("menu-gamma")
@@ -199,26 +186,23 @@ namespace Hud1.Controls
         {
             RebuildUI();
 
-            //            GlobalKeyboardManager.HandleKeyDown = HandleKeyDown;
-            //            GlobalKeyboardManager.SetupSystemHook();
+            GlobalKeyboardManager.KeyDown += HandleKeyDown;
         }
 
-        private bool HandleKeyDown(GlobalKey key, bool alt)
+        private void HandleKeyDown(KeyEvent keyEvent)
         {
             // Debug.Print("HandleKeyDown {0} {1}", key, alt);
 
-            if (!alt)
+            if (!keyEvent.alt)
             {
                 if ((DataContext as WindowModel)!.Active)
                 {
-                    return ListenerOnKeyPressed(key);
+                    ListenerOnKeyPressed(keyEvent.key);
                 }
-
             }
-            return false;
         }
 
-        private bool ListenerOnKeyPressed(GlobalKey key)
+        private void ListenerOnKeyPressed(GlobalKey key)
         {
             // Debug.WriteLine("ListenerOnKeyPressed {0}", key);
 
@@ -228,7 +212,6 @@ namespace Hud1.Controls
                 {
                     Navigation.Fire("up");
                 }
-                return false;
             }
             if (key == GlobalKey.VK_DOWN)
             {
@@ -236,7 +219,6 @@ namespace Hud1.Controls
                 {
                     Navigation.Fire("down");
                 }
-                return false;
             }
             if (key == GlobalKey.VK_LEFT)
             {
@@ -244,7 +226,6 @@ namespace Hud1.Controls
                 {
                     Navigation.Fire("left");
                 }
-                return false;
             }
             if (key == GlobalKey.VK_RIGHT)
             {
@@ -252,9 +233,7 @@ namespace Hud1.Controls
                 {
                     Navigation.Fire("right");
                 }
-                return false;
             }
-            return false;
         }
 
     }

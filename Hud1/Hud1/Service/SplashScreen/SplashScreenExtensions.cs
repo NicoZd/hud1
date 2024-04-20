@@ -1,6 +1,5 @@
 ﻿namespace Hud1.Service.SplashScreen
 {
-    using System;
     using System.Reflection;
     using WPF = System.Windows;
 
