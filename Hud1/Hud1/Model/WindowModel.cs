@@ -1,4 +1,6 @@
-﻿namespace Hud1.Model
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+
+namespace Hud1.Model
 {
     class WindowModel : ObservableObject
     {

@@ -1,6 +1,8 @@
-﻿namespace Hud1.Model
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+
+namespace Hud1.Model
 {
-    public class HudModel : ObservableObject
+    public partial class HudModel : ObservableObject
     {
         public String _state = "State";
         public String State

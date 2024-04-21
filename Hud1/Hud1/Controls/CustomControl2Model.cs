@@ -1,11 +1,10 @@
-﻿using Hud1.Model;
-using System.Diagnostics;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System.Windows;
 using System.Windows.Media;
 
 namespace Hud1.Controls
 {
-    public class CustomControl2Model : ObservableObject
+    public partial class CustomControl2Model : ObservableObject
     {
         public Boolean _selected = false;
         public Boolean Selected
@@ -14,17 +13,14 @@ namespace Hud1.Controls
             set { _selected = value; OnPropertyChanged(); OnPropertyChanged("Background"); }
         }
 
-        public String _label = "";
-        public String Label
-        {
-            get { return _label; }
-            set { _label = value; OnPropertyChanged(); }
-        }
+        [ObservableProperty]
+        public String label = "";
 
         public Brush Background
         {
-            get {
-                Debug.Print("Background Get {0}", Selected);
+            get
+            {
+                //Debug.Print("Background Get {0}", Selected);
 
                 var colHig = (Color)ColorConverter.ConvertFromString("#ff55ee22");
                 var colLow = (Color)ColorConverter.ConvertFromString("#ee009900");
@@ -43,7 +39,7 @@ namespace Hud1.Controls
                     new SolidColorBrush((Color)ColorConverter.ConvertFromString("#aa007700"));
 
             }
-            set {}
+            set { }
         }
     }
 }

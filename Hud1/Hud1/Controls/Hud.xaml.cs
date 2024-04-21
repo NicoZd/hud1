@@ -179,7 +179,9 @@ namespace Hud1.Controls
                     Visibility = Navigation.IsInState(name) ? Visibility.Visible : Visibility.Collapsed,
                 };
             }
-            Model.OnPropertyChanged("States");
+
+            Model.States = Model.States;
+
         }
 
         private void OnWindowLoaded(object sender, RoutedEventArgs e)

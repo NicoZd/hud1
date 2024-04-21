@@ -26,6 +26,7 @@
   <ItemGroup>
     <PackageReference Include="AudioSwitcher.AudioApi" Version="3.0.0" />
     <PackageReference Include="AudioSwitcher.AudioApi.CoreAudio" Version="3.0.3" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
   </ItemGroup>
 
   <ItemGroup>

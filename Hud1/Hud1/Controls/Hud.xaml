@@ -54,7 +54,7 @@
                             </StackPanel.Resources>
 
                             <controls:CustomControl2 Label="1.0" Selected="{Binding Path=States[gamma-1.0].Selected}" />
-                            <controls:CustomControl2 Label="1.1" Selected="{Binding Path=States[gamma-1.1].Selected}"/>
+                            <controls:CustomControl2 Label="1.1" Selected="{Binding Path=States[gamma-1.1].Selected}" />
                             <controls:CustomControl2 Label="1.25"/>
                             <controls:CustomControl2 Label="1.5"/>
                             <controls:CustomControl2 Label="2.0"/>

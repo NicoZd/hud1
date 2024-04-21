@@ -1,8 +1,11 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace DependencyObjectExtensions
 {
+
+
     public static class DependencyObjectExtensions
     {
         public static UIElement FindUid(this DependencyObject parent, string uid)
