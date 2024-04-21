@@ -1,8 +1,7 @@
 ﻿using AudioSwitcher.AudioApi;
 using AudioSwitcher.AudioApi.CoreAudio;
 using AudioSwitcher.AudioApi.Observables;
-using DependencyObjectExtensions;
-using Hud1.Service;
+using Hud1.Helpers;
 using Hud1.ViewModels;
 using Stateless;
 using Stateless.Reflection;

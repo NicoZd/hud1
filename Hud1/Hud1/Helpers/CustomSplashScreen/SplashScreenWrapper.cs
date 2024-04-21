@@ -1,25 +1,24 @@
-﻿namespace Hud1.Service.SplashScreen
-{
-    using System;
-    using System.Reflection;
-    using System.Runtime.InteropServices;
-    using System.Windows.Threading;
-    using WPF = System.Windows;
+﻿using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Windows;
+using System.Windows.Threading;
 
-    public sealed class SplashScreen
+namespace Hud1.Helpers.CustomSplashScreen
+{
+    public sealed class SplashScreenWrapper
     {
-        private readonly WPF.SplashScreen splashScreen;
+        private readonly SplashScreen splashScreen;
         private readonly DispatcherTimer splashForegroundTimer;
         private SafeNativeMethods.BLENDFUNCTION blendFunction;
 
-        public SplashScreen(string resourceName)
+        public SplashScreenWrapper(string resourceName)
             : this(Assembly.GetEntryAssembly()!, resourceName)
         {
         }
 
-        public SplashScreen(Assembly resourceAssembly, string resourceName)
+        public SplashScreenWrapper(Assembly resourceAssembly, string resourceName)
         {
-            splashScreen = new WPF.SplashScreen(resourceAssembly, resourceName);
+            splashScreen = new SplashScreen(resourceAssembly, resourceName);
             splashForegroundTimer = new DispatcherTimer(DispatcherPriority.Normal)
             {
                 Interval = TimeSpan.FromMilliseconds(10)

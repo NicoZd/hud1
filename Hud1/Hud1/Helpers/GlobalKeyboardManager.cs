@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Runtime.InteropServices;
 
-namespace Hud1.Service
+namespace Hud1.Helpers
 {
     public enum GlobalKey : int
     {

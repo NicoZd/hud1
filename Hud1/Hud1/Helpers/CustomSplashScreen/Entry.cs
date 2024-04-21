@@ -1,14 +1,11 @@
-﻿namespace Hud1.Service.SplashScreen
+﻿using System.Windows.Threading;
+
+namespace Hud1.Helpers.CustomSplashScreen
 {
-    using Hud1;
-    using System;
-    using System.Linq;
-    using System.Threading;
-    using System.Windows.Threading;
 
     class Entry
     {
-        private static readonly SplashScreen splashScreen = new(resourceName: "/Assets/fluid-background-transparent.png");
+        private static readonly SplashScreenWrapper splashScreen = new(resourceName: "/Assets/fluid-background-transparent.png");
 
         private static readonly App app = new();
 

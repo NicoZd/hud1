@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace Hud1.Service
+namespace Hud1.Helpers
 {
     public class BindingHelper
     {
