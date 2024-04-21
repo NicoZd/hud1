@@ -1,7 +1,5 @@
-﻿using AudioSwitcher.AudioApi.CoreAudio;
-using Hud1.Model;
-using Hud1.Service;
-using Stateless;
+﻿using Hud1.Service;
+using Hud1.ViewModels;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Interop;
@@ -11,7 +9,7 @@ namespace Hud1
 {
     public partial class MainWindow : Window
     {
-        WindowModel windowModel = new WindowModel();
+        MainWindowViewModel windowModel = new MainWindowViewModel();
         nint hwnd;
 
         public MainWindow()

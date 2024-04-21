@@ -2,8 +2,8 @@
 using AudioSwitcher.AudioApi.CoreAudio;
 using AudioSwitcher.AudioApi.Observables;
 using DependencyObjectExtensions;
-using Hud1.Model;
 using Hud1.Service;
+using Hud1.ViewModels;
 using Stateless;
 using Stateless.Reflection;
 using System.Diagnostics;
@@ -16,7 +16,7 @@ namespace Hud1.Controls
 {
     public partial class Hud : UserControl
     {
-        HudModel Model = new();
+        HudViewModel Model = new();
         CoreAudioController AudioController = new();
 
         StateMachine<string, string> Navigation;
@@ -167,20 +167,21 @@ namespace Hud1.Controls
 
             }
 
+            var newStates = new Dictionary<string, object> { };
+
             var info = Navigation.GetInfo();
             foreach (StateInfo stateInfo in info.States)
             {
                 string name = stateInfo.ToString();
                 // Debug.Print("Add State {0} {1} {2}", name, nav.State, nav.State.Equals(name));
-                Model.States[name] = new
+                newStates[name] = new
                 {
-                    State = Navigation.State,
                     Selected = Navigation.IsInState(name),
                     Visibility = Navigation.IsInState(name) ? Visibility.Visible : Visibility.Collapsed,
                 };
             }
 
-            Model.States = Model.States;
+            Model.States = newStates;
 
         }
 
@@ -197,7 +198,7 @@ namespace Hud1.Controls
 
             if (!keyEvent.alt)
             {
-                if ((DataContext as WindowModel)!.Active)
+                if ((DataContext as MainWindowViewModel)!.Active)
                 {
                     ListenerOnKeyPressed(keyEvent.key);
                 }

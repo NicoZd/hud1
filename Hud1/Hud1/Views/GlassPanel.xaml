@@ -20,7 +20,7 @@
                     <Grid.Background>
                         <ImageBrush                            
                             Opacity="0.04"
-                            ImageSource="../Resources/blue-noise.png"
+                            ImageSource="../Assets/blue-noise.png"
                             ViewportUnits="Absolute"
                             Viewport="0,0,200,200"
                             TileMode="Tile"

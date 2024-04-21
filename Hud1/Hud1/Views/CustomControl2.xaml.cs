@@ -1,20 +1,19 @@
 ﻿using Hud1.Service;
-using System.Diagnostics.Eventing.Reader;
+using Hud1.ViewModels;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 
 namespace Hud1.Controls
 {
     public partial class CustomControl2 : UserControl
     {
-        public CustomControl2Model ViewModel = new CustomControl2Model();
+        public CustomControl2ViewModel ViewModel = new CustomControl2ViewModel();
 
         private static readonly DependencyProperty ModelProperty =
-            DependencyProperty.Register("Model", typeof(CustomControl2Model), typeof(CustomControl2));
+            DependencyProperty.Register("Model", typeof(CustomControl2ViewModel), typeof(CustomControl2));
 
-        public static readonly DependencyProperty LabelProperty = 
-            BindingHelper.CreateProperty<CustomControl2, string>("Label", "", 
+        public static readonly DependencyProperty LabelProperty =
+            BindingHelper.CreateProperty<CustomControl2, string>("Label", "",
                 (control, value) => control.ViewModel.Label = value);
 
 

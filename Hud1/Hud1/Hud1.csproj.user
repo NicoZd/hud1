@@ -9,24 +9,24 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="Controls\CustomControl2.xaml.cs">
+    <Compile Update="Views\CustomControl2.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Controls\Hud.xaml.cs">
+    <Compile Update="Views\Hud.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Controls\PanelTopBar.xaml.cs">
+    <Compile Update="Views\PanelTopBar.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Controls\CustomControl2.xaml">
+    <Page Update="Views\CustomControl2.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Controls\Hud.xaml">
+    <Page Update="Views\Hud.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Controls\PanelTopBar.xaml">
+    <Page Update="Views\PanelTopBar.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="MainWindow.xaml">

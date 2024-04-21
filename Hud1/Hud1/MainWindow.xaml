@@ -3,29 +3,21 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:converters="clr-namespace:Hud1.Converters"
         xmlns:controls="clr-namespace:Hud1.Controls"
-        xmlns:model="clr-namespace:Hud1.Model"
-        xmlns:local="clr-namespace:Hud1"        
         mc:Ignorable="d"
         Title="MainWindow"
         AllowsTransparency="True"
         WindowStyle="None"
         Topmost="True"
         ShowInTaskbar="false"
-        Width="640"
-        Height="400"
         Activated="OnWindowActivated"
         Loaded="OnWindowLoaded"
         Unloaded="OnWindowUnloaded"
         >
+    
     <Window.Background>
         <SolidColorBrush Color="Transparent"/>
     </Window.Background>
-
-    <Window.Resources>
-        <converters:ActiveToVisibility x:Key="ActiveToVisibility"/>
-    </Window.Resources>
 
     <Grid>
         <Canvas Width="20" Height="20" IsHitTestVisible="false" Background="#00000000">
@@ -41,6 +33,6 @@
             <Line X1="12" Y1="0" X2="0" Y2="12" Stroke="#99339900" StrokeThickness="1" />
         </Canvas>
 
-        <controls:Hud Visibility="{Binding Path=Active, Mode=OneWay, Converter={StaticResource ActiveToVisibility}}"/>
+        <controls:Hud Visibility="{Binding Path=HudVisibility}"/>
     </Grid>
 </Window>

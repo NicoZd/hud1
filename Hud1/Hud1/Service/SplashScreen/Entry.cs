@@ -8,7 +8,7 @@
 
     class Entry
     {
-        private static readonly SplashScreen splashScreen = new(resourceName: "/Resources/fluid-background-transparent.png");
+        private static readonly SplashScreen splashScreen = new(resourceName: "/Assets/fluid-background-transparent.png");
 
         private static readonly App app = new();
 

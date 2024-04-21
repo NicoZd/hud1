@@ -19,8 +19,8 @@
 
   <ItemGroup>
     <None Remove="Abstract-colorful-fluid-background-on-transparent-PNG.png" />
-    <None Remove="Resources\blue-noise.png" />
-    <None Remove="Resources\fluid-background-transparent.png" />
+    <None Remove="Assets\blue-noise.png" />
+    <None Remove="Assets\fluid-background-transparent.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -36,10 +36,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Resources\blue-noise.png">
+    <Resource Include="Assets\blue-noise.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Resources\fluid-background-transparent.png">
+    <Resource Include="Assets\fluid-background-transparent.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
