@@ -126,7 +126,7 @@ namespace Hud1.Helpers
                                 IsDown[GlobalKey.VK_LMENU] = true;
                             }
                             var keyEvent = new KeyEvent((GlobalKey)vkCode);
-                            keyEvent.alt = IsDown[GlobalKey.VK_LMENU];
+                            keyEvent.alt = IsDown.ContainsKey(GlobalKey.VK_LMENU) && IsDown[GlobalKey.VK_LMENU];
                             KeyDown(keyEvent);
                             // Debug.Print("WM_KEYDOWN vkCode:{0} blocked:{1}", vkCode, blocked);
                             if (keyEvent.block)
