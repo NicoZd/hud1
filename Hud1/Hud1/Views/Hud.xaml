@@ -1,13 +1,15 @@
 ﻿<UserControl x:Class="Hud1.Views.Hud"
+             x:Name="Self1"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:views="clr-namespace:Hud1.Views"
+             xmlns:local="clr-namespace:Hud1.Views"
              mc:Ignorable="d"
-             Loaded="OnWindowLoaded"
+             Loaded="OnWindowLoaded"             
              >
-    <Grid x:Name="LayoutRoot" HorizontalAlignment="Left" Margin="0,0,0,0">
+    <Grid DataContext="{Binding Path=ViewModel, RelativeSource={RelativeSource AncestorType=local:Hud}}" HorizontalAlignment="Left" Margin="0,0,0,0">
         <Grid.Effect>
             <DropShadowEffect ShadowDepth="3" Color="#008800" Opacity="0.5" BlurRadius="20" Direction="0" />
         </Grid.Effect>
@@ -20,6 +22,7 @@
                 </Label>
 
                 <StackPanel Orientation="Vertical" Margin="-3,0,0,10">
+                    <Label Content="{Binding Path=State}" Foreground="#ffbbffbb"/>
                     <Label Content="Time: 8:23 PM" Foreground="#ffbbffbb"/>
                     <Label Content="Press F2 to open and close this window." Foreground="#ffbbffbb"/>
                     <Label Content="Use cursor keys to navigate and select." Foreground="#ffbbffbb"/>
@@ -72,12 +75,14 @@
                                     <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />
                                 </Label.Effect>
                             </Label>
+                            <views:AudioDeviceSelector Label="AudioDeviceSelector" />
+                            <views:CustomControl2 Label="AA4A5"/>
                         </StackPanel>
                         <StackPanel Uid="PlaybackContainer">
                             <StackPanel.Resources>
                                 <Style TargetType="{x:Type views:CustomControl2}">
                                     <Setter Property="Margin" Value="0,2,0,2"/>
-                                </Style>
+                                 </Style>
                             </StackPanel.Resources>
                             <views:CustomControl2 />
                             <views:CustomControl2 Label="AA4A5"/>

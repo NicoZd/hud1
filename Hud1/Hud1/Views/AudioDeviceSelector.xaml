@@ -7,7 +7,7 @@
              mc:Ignorable="d"            
              d:DesignHeight="40" d:DesignWidth="300"
              >
-    <Grid x:Name="LayoutRoot" DataContext="{Binding Path=Model, RelativeSource={RelativeSource AncestorType=local:AudioDeviceSelector}}">
+    <Grid DataContext="{Binding Path=ViewModel, RelativeSource={RelativeSource AncestorType=local:AudioDeviceSelector}}">
         <Grid Background="{Binding Path=Background}" >
             <Border BorderBrush="#6600ff00" BorderThickness="1" />
             <Label Foreground="#ffbbffbb" Content="{Binding Path=Label}" Padding="15,5,15,5" FontFamily="Cascadia Code" FontSize="12">

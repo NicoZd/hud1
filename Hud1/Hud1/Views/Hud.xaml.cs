@@ -12,14 +12,20 @@ namespace Hud1.Views
 {
     public partial class Hud : UserControl
     {
-        HudViewModel Model = new();
+        public HudViewModel ViewModel = new();
+        private static readonly DependencyProperty ViewModelProperty =
+            DependencyProperty.Register("ViewModel", typeof(HudViewModel), typeof(Hud));
+
+        public AudioDeviceViewModel AudioDeviceViewModel = new();
+        private static readonly DependencyProperty AudioDeviceViewModelProperty =
+            DependencyProperty.Register("AudioDeviceViewModel", typeof(AudioDeviceViewModel), typeof(Hud));
 
         StateMachine<string, string> Navigation;
 
         public Hud()
         {
             InitializeComponent();
-            LayoutRoot.DataContext = this.Model;
+            SetValue(ViewModelProperty, ViewModel);
             RebuildNav();
             UpdateModelFromStateless();
         }
@@ -33,7 +39,7 @@ namespace Hud1.Views
             var playbackContainer = this.FindUid("PlaybackContainer") as StackPanel;
             playbackContainer.Children.Clear();
 
-            var devices = Model.PlaybackDevices;
+            var devices = AudioDeviceViewModel.PlaybackDevices;
             if (devices.Count > 0)
             {
                 Navigation.Configure("menu-audio")
@@ -141,7 +147,7 @@ namespace Hud1.Views
         {
             // Debug.Print("UpdateModelFromStateless {0} ", nav.State);
 
-            Model.State = Navigation.State;
+            ViewModel.State = Navigation.State;
 
             if (Navigation.State == "exit-right")
             {
@@ -161,6 +167,7 @@ namespace Hud1.Views
             foreach (StateInfo stateInfo in info.States)
             {
                 string name = stateInfo.ToString();
+                Debug.Print("UpdateModelFromStateless {0} {1}", name, Navigation.IsInState(name));
                 // Debug.Print("Add State {0} {1} {2}", name, nav.State, nav.State.Equals(name));
                 newStates[name] = new
                 {
@@ -169,7 +176,7 @@ namespace Hud1.Views
                 };
             }
 
-            Model.States = newStates;
+            ViewModel.States = newStates;
 
         }
 
@@ -179,7 +186,7 @@ namespace Hud1.Views
 
             GlobalKeyboardManager.KeyDown += HandleKeyDown;
 
-            this.Model.PropertyChanged += (sender, e) =>
+            AudioDeviceViewModel.PropertyChanged += (sender, e) =>
             {
                 if (e.PropertyName == "PlaybackDevices")
                 {

@@ -10,7 +10,7 @@ namespace Hud1.Views
         public CustomControl2ViewModel ViewModel = new CustomControl2ViewModel();
 
         private static readonly DependencyProperty ModelProperty =
-            DependencyProperty.Register("Model", typeof(CustomControl2ViewModel), typeof(CustomControl2));
+            DependencyProperty.Register("ViewModel", typeof(CustomControl2ViewModel), typeof(CustomControl2));
 
         public static readonly DependencyProperty LabelProperty =
             BindingHelper.CreateProperty<CustomControl2, string>("Label", "",
