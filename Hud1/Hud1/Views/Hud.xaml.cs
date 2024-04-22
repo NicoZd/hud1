@@ -1,7 +1,4 @@
-﻿using AudioSwitcher.AudioApi;
-using AudioSwitcher.AudioApi.CoreAudio;
-using AudioSwitcher.AudioApi.Observables;
-using Hud1.Helpers;
+﻿using Hud1.Helpers;
 using Hud1.ViewModels;
 using Stateless;
 using Stateless.Reflection;
@@ -16,7 +13,6 @@ namespace Hud1.Controls
     public partial class Hud : UserControl
     {
         HudViewModel Model = new();
-        CoreAudioController AudioController = new();
 
         StateMachine<string, string> Navigation;
 
@@ -24,16 +20,8 @@ namespace Hud1.Controls
         {
             InitializeComponent();
             LayoutRoot.DataContext = this.Model;
-
-            AudioController = new CoreAudioController();
-            AudioController.AudioDeviceChanged.Subscribe(OnDeviceChanged);
-
             RebuildNav();
             UpdateModelFromStateless();
-        }
-        public void OnDeviceChanged(DeviceChangedArgs args)
-        {
-            Application.Current.Dispatcher.Invoke(new Action(() => RebuildUI()));
         }
 
         private void RebuildUI()
@@ -45,28 +33,29 @@ namespace Hud1.Controls
             var playbackContainer = this.FindUid("PlaybackContainer") as StackPanel;
             playbackContainer.Children.Clear();
 
-            var devices = AudioController.GetPlaybackDevices(DeviceState.Active).ToArray();
-            if (devices.Length > 0)
+            var devices = Model.PlaybackDevices;
+            if (devices.Count > 0)
             {
-                Navigation.Configure("menu")
-                    .Permit("left", devices[0].Id.ToString());
+                Navigation.Configure("menu-audio")
+                    .Permit("down", devices[0].ID.ToString());
             }
 
-            for (var i = 0; i < devices.Length; i++)
+            for (var i = 0; i < devices.Count; i++)
             {
                 var device = devices[i];
-                var state = Navigation.Configure(device.Id.ToString()).SubstateOf("left-panel");
+                //Debug.Print("Device {0} {1}", device.ID, device.DeviceFriendlyName);
+                var state = Navigation.Configure(device.ID.ToString());
                 if (i > 0)
-                    state.Permit("up", devices[i - 1].Id.ToString());
+                    state.Permit("up", devices[i - 1].ID.ToString());
 
-                if (i < devices.Length - 1)
-                    state.Permit("down", devices[i + 1].Id.ToString());
+                if (i < devices.Count - 1)
+                    state.Permit("down", devices[i + 1].ID.ToString());
 
 
                 var playbackDeviceButton = new CustomControl2();
-                playbackDeviceButton.Label = Regex.Replace(device.InterfaceName, "[0-9]- ", "");
+                playbackDeviceButton.Label = Regex.Replace(device.DeviceFriendlyName, "[0-9]- ", "");
 
-                Binding selectedBinding = new Binding("States[" + devices[i].Id.ToString() + "].Selected");
+                Binding selectedBinding = new Binding("States[" + devices[i].ID.ToString() + "].Selected");
                 playbackDeviceButton.SetBinding(CustomControl2.SelectedProperty, selectedBinding);
 
                 playbackContainer.Children.Add(playbackDeviceButton);
@@ -189,6 +178,15 @@ namespace Hud1.Controls
             RebuildUI();
 
             GlobalKeyboardManager.KeyDown += HandleKeyDown;
+
+            this.Model.PropertyChanged += (sender, e) =>
+            {
+                if (e.PropertyName == "PlaybackDevices")
+                {
+                    RebuildUI();
+                }
+            };
+
         }
 
         private void HandleKeyDown(KeyEvent keyEvent)
