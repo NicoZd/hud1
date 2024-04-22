@@ -8,7 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 
-namespace Hud1.Controls
+namespace Hud1.Views
 {
     public partial class Hud : UserControl
     {

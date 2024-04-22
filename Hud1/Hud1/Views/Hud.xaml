@@ -1,9 +1,9 @@
-﻿<UserControl x:Class="Hud1.Controls.Hud"
+﻿<UserControl x:Class="Hud1.Views.Hud"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:controls="clr-namespace:Hud1.Controls"
+             xmlns:views="clr-namespace:Hud1.Views"
              mc:Ignorable="d"
              Loaded="OnWindowLoaded"
              >
@@ -11,7 +11,7 @@
         <Grid.Effect>
             <DropShadowEffect ShadowDepth="3" Color="#008800" Opacity="0.5" BlurRadius="20" Direction="0" />
         </Grid.Effect>
-        <controls:GlassPanel>
+        <views:GlassPanel>
             <StackPanel Margin="15,1,15,15">
                 <Label Foreground="#ffbbffbb" Content="GUD - Gamer HUD" Padding="0,10,0,5" FontFamily="Cascadia Code" FontSize="22">
                     <Label.Effect>
@@ -26,15 +26,15 @@
                 </StackPanel>
                 <WrapPanel Orientation="Horizontal" Margin="-2,0,-2,0">
                     <WrapPanel.Resources>
-                        <Style TargetType="{x:Type controls:CustomControl2}">
+                        <Style TargetType="{x:Type views:CustomControl2}">
                             <Setter Property="Margin" Value="2,0,2,0"/>
                         </Style>
                     </WrapPanel.Resources>
-                    <controls:CustomControl2 Label="GAMMA" Selected="{Binding Path=States[menu-gamma].Selected}"/>
-                    <controls:CustomControl2 Label="AUDIO" Selected="{Binding Path=States[menu-audio].Selected}"/>
-                    <controls:CustomControl2 Label="MACRO" Selected="{Binding Path=States[menu-macro].Selected}"/>
-                    <controls:CustomControl2 Label="CROSSHAIR" Selected="{Binding Path=States[menu-crosshair].Selected}"/>
-                    <controls:CustomControl2 Label="MORE" Selected="{Binding Path=States[menu-more].Selected}"/>
+                    <views:CustomControl2 Label="GAMMA" Selected="{Binding Path=States[menu-gamma].Selected}"/>
+                    <views:CustomControl2 Label="AUDIO" Selected="{Binding Path=States[menu-audio].Selected}"/>
+                    <views:CustomControl2 Label="MACRO" Selected="{Binding Path=States[menu-macro].Selected}"/>
+                    <views:CustomControl2 Label="CROSSHAIR" Selected="{Binding Path=States[menu-crosshair].Selected}"/>
+                    <views:CustomControl2 Label="MORE" Selected="{Binding Path=States[menu-more].Selected}"/>
                 </WrapPanel>
 
                 <Grid Visibility="{Binding Path=States[gamma-visible].Visibility}" Margin="0,50,0,0">
@@ -48,17 +48,17 @@
 
                         <StackPanel Uid="GammaContainer" Orientation="Horizontal" Margin="-2,2,0,0">
                             <StackPanel.Resources>
-                                <Style TargetType="{x:Type controls:CustomControl2}">
+                                <Style TargetType="{x:Type views:CustomControl2}">
                                     <Setter Property="Margin" Value="2,0,2,0"/>
                                 </Style>
                             </StackPanel.Resources>
 
-                            <controls:CustomControl2 Label="1.0" Selected="{Binding Path=States[gamma-1.0].Selected}" />
-                            <controls:CustomControl2 Label="1.1" Selected="{Binding Path=States[gamma-1.1].Selected}" />
-                            <controls:CustomControl2 Label="1.25"/>
-                            <controls:CustomControl2 Label="1.5"/>
-                            <controls:CustomControl2 Label="2.0"/>
-                            <controls:CustomControl2 Label="3.0"/>
+                            <views:CustomControl2 Label="1.0" Selected="{Binding Path=States[gamma-1.0].Selected}" />
+                            <views:CustomControl2 Label="1.1" Selected="{Binding Path=States[gamma-1.1].Selected}" />
+                            <views:CustomControl2 Label="1.25"/>
+                            <views:CustomControl2 Label="1.5"/>
+                            <views:CustomControl2 Label="2.0"/>
+                            <views:CustomControl2 Label="3.0"/>
                         </StackPanel>
                     </StackPanel>
 
@@ -75,13 +75,13 @@
                         </StackPanel>
                         <StackPanel Uid="PlaybackContainer">
                             <StackPanel.Resources>
-                                <Style TargetType="{x:Type controls:CustomControl2}">
+                                <Style TargetType="{x:Type views:CustomControl2}">
                                     <Setter Property="Margin" Value="0,2,0,2"/>
                                 </Style>
                             </StackPanel.Resources>
-                            <controls:CustomControl2 />
-                            <controls:CustomControl2 Label="AA4A5"/>
-                            <controls:CustomControl2 Label="BBB" Selected="True"/>
+                            <views:CustomControl2 />
+                            <views:CustomControl2 Label="AA4A5"/>
+                            <views:CustomControl2 Label="BBB" Selected="True"/>
                         </StackPanel>
                     </StackPanel>
                 </Grid>
@@ -89,7 +89,7 @@
                 <Grid Visibility="{Binding Path=States[macro-visible].Visibility}">
                     <StackPanel Margin="0,50,0,0">
                         <StackPanel.Resources>
-                            <Style TargetType="{x:Type controls:CustomControl2}">
+                            <Style TargetType="{x:Type views:CustomControl2}">
                                 <Setter Property="Margin" Value="0,2,0,2"/>
                             </Style>
                         </StackPanel.Resources>
@@ -98,21 +98,21 @@
                                 <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />
                             </Label.Effect>
                         </Label>
-                        <controls:CustomControl2 Label="Hold Left"/>
-                        <controls:CustomControl2 Label="Repeat Left"/>
+                        <views:CustomControl2 Label="Hold Left"/>
+                        <views:CustomControl2 Label="Repeat Left"/>
                         <Label Foreground="#ffbbffbb" Content="KEY MACRO" Padding="0,20,0,5" FontFamily="Cascadia Code" FontSize="16">
                             <Label.Effect>
                                 <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />
                             </Label.Effect>
                         </Label>
-                        <controls:CustomControl2 Label="Hold W"/>
+                        <views:CustomControl2 Label="Hold W"/>
                     </StackPanel>
                 </Grid>
 
                 <Grid Visibility="{Binding Path=States[crosshair-visible].Visibility}">
                     <StackPanel Margin="0,50,0,0" Orientation="Vertical">
                         <StackPanel.Resources>
-                            <Style TargetType="{x:Type controls:CustomControl2}">
+                            <Style TargetType="{x:Type views:CustomControl2}">
                                 <Setter Property="Margin" Value="0,2,0,2"/>
                             </Style>
                         </StackPanel.Resources>
@@ -121,10 +121,10 @@
                                 <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />
                             </Label.Effect>
                         </Label>
-                        <controls:CustomControl2 Label="ON/OFF" Selected="{Binding Path=States[cross-visible].Selected}" />
-                        <controls:CustomControl2 Label="C" Selected="{Binding Path=States[cross-color].Selected}"/>
-                        <controls:CustomControl2 Label="F" Selected="{Binding Path=States[cross-form].Selected}"/>
-                        <controls:CustomControl2 Label="S" Selected="{Binding Path=States[cross-size].Selected}"/>
+                        <views:CustomControl2 Label="ON/OFF" Selected="{Binding Path=States[cross-visible].Selected}" />
+                        <views:CustomControl2 Label="C" Selected="{Binding Path=States[cross-color].Selected}"/>
+                        <views:CustomControl2 Label="F" Selected="{Binding Path=States[cross-form].Selected}"/>
+                        <views:CustomControl2 Label="S" Selected="{Binding Path=States[cross-size].Selected}"/>
                     </StackPanel>
                 </Grid>
 
@@ -139,13 +139,13 @@
 
                         <StackPanel Margin="0,0,0,0" Orientation="Vertical" >
                             <StackPanel.Resources>
-                                <Style TargetType="{x:Type controls:CustomControl2}">
-                                    <Setter Property="Margin" Value="2,0,2,0"/>
+                                <Style TargetType="{x:Type views:CustomControl2}">
+                                    <Setter Property="Margin" Value="2,2,2,0"/>
                                 </Style>
                             </StackPanel.Resources>
                             <StackPanel Margin="-2,0,0,0" Orientation="Horizontal">
-                                <controls:CustomControl2 Label="EXIT" Selected="{Binding Path=States[exit].Selected}" />
-                                <controls:CustomControl2 Label=">" Selected="{Binding Path=States[exit-right].Selected}"/>
+                                <views:CustomControl2 Label="EXIT" Selected="{Binding Path=States[exit].Selected}" />
+                                <views:CustomControl2 Label=">" Selected="{Binding Path=States[exit-right].Selected}"/>
                             </StackPanel>
                         </StackPanel>
 
@@ -162,6 +162,6 @@
                     </StackPanel>
                 </Grid>
             </StackPanel>
-        </controls:GlassPanel>
+        </views:GlassPanel>
     </Grid>
 </UserControl>

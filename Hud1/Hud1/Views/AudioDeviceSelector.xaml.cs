@@ -5,30 +5,30 @@ using System.Windows.Controls;
 
 namespace Hud1.Views
 {
-    public partial class CustomControl2 : UserControl
+    public partial class AudioDeviceSelector : UserControl
     {
-        public CustomControl2ViewModel ViewModel = new CustomControl2ViewModel();
+        public AudioDeviceSelectorViewModel ViewModel = new AudioDeviceSelectorViewModel();
 
-        private static readonly DependencyProperty ModelProperty =
-            DependencyProperty.Register("Model", typeof(CustomControl2ViewModel), typeof(CustomControl2));
+        private static readonly DependencyProperty ViewModelProperty =
+            DependencyProperty.Register("ViewModel", typeof(AudioDeviceSelectorViewModel), typeof(AudioDeviceSelector));
 
         public static readonly DependencyProperty LabelProperty =
-            BindingHelper.CreateProperty<CustomControl2, string>("Label", "",
+            BindingHelper.CreateProperty<AudioDeviceSelector, string>("Label", "",
                 (control, value) => control.ViewModel.Label = value);
 
 
         public static readonly DependencyProperty SelectedProperty =
-            BindingHelper.CreateProperty<CustomControl2, bool>("Selected", false,
+            BindingHelper.CreateProperty<AudioDeviceSelector, bool>("Selected", false,
                 (control, value) => control.ViewModel.Selected = value);
 
         public String Label { set => SetValue(LabelProperty, value); }
 
         public bool Selected { set => SetValue(SelectedProperty, value); }
 
-        public CustomControl2()
+        public AudioDeviceSelector()
         {
             InitializeComponent();
-            SetValue(ModelProperty, ViewModel);
+            SetValue(ViewModelProperty, ViewModel);
         }
     }
 }

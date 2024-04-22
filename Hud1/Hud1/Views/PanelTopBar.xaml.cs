@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace Hud1.Controls
+namespace Hud1.Views
 {
     /// <summary>
     /// Interaction logic for PanelTopBar.xaml
