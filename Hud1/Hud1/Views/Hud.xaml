@@ -140,10 +140,10 @@
                         <StackPanel Margin="0,0,0,0" Orientation="Vertical" >
                             <StackPanel.Resources>
                                 <Style TargetType="{x:Type controls:CustomControl2}">
-                                    <Setter Property="Margin" Value="0,2,0,2"/>
+                                    <Setter Property="Margin" Value="2,0,2,0"/>
                                 </Style>
                             </StackPanel.Resources>
-                            <StackPanel Margin="0,0,0,0" Orientation="Horizontal">
+                            <StackPanel Margin="-2,0,0,0" Orientation="Horizontal">
                                 <controls:CustomControl2 Label="EXIT" Selected="{Binding Path=States[exit].Selected}" />
                                 <controls:CustomControl2 Label=">" Selected="{Binding Path=States[exit-right].Selected}"/>
                             </StackPanel>
