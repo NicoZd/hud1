@@ -2,6 +2,7 @@
 {
     public class NavigationStates
     {
+        // MENU
         public static readonly NavigationState MENU_GAMMA = new();
         public static readonly NavigationState GAMMA_VISIBLE = new();
 
@@ -16,5 +17,8 @@
 
         public static readonly NavigationState MENU_MORE = new();
         public static readonly NavigationState MORE_VISIBLE = new();
+
+        // MORE
+        public static readonly NavigationState EXIT = new();
     }
 }

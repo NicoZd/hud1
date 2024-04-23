@@ -45,11 +45,24 @@ namespace Hud1.ViewModels
             Navigation.Configure(NavigationStates.MENU_MORE)
                 .SubstateOf(NavigationStates.MORE_VISIBLE)
                 .Permit(NavigationTriggers.LEFT, NavigationStates.MENU_CROSSHAIR)
-                .Permit(NavigationTriggers.RIGHT, NavigationStates.MENU_GAMMA);
+                .Permit(NavigationTriggers.RIGHT, NavigationStates.MENU_GAMMA)
+              .Permit(NavigationTriggers.DOWN, NavigationStates.EXIT);
+
+            // MORE
+
+            NavigationStates.EXIT.ExecuteRightAction = Application.Current.Shutdown;
+            Navigation.Configure(NavigationStates.EXIT)
+                .SubstateOf(NavigationStates.MORE_VISIBLE)
+                .Permit(NavigationTriggers.UP, NavigationStates.MENU_MORE)
+                .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.EXIT.ExecuteRight);
 
             string graph = UmlDotGraph.Format(Navigation.GetInfo());
             Debug.Print(graph);
 
+            Navigation.OnUnhandledTrigger((state, trigger) =>
+            {
+                Debug.Print("OnUnhandledTrigger {0} {1}", state, trigger);
+            });
             Navigation.OnTransitionCompleted(a => UpdateModelFromStateless());
             UpdateModelFromStateless();
         }
@@ -58,42 +71,24 @@ namespace Hud1.ViewModels
         {
             // Debug.WriteLine("ListenerOnKeyPressed {0}", key);
 
-            //if (key == GlobalKey.VK_UP)
-            //{
-            //    if (Navigation.CanFire("up"))
-            //    {
-            //        Navigation.Fire("up");
-            //    }
-            //}
-            //if (key == GlobalKey.VK_DOWN)
-            //{
-            //    if (Navigation.CanFire("down"))
-            //    {
-            //        Navigation.Fire("down");
-            //    }
-            //}
-            //if (key == GlobalKey.VK_LEFT)
-            //{
-            //    if (Navigation.CanFire("left"))
-            //    {
-            //        Navigation.Fire("left");
-            //    }
-            //}
-
             if (key == GlobalKey.VK_LEFT)
             {
-                if (Navigation.CanFire(NavigationTriggers.LEFT))
-                {
-                    Navigation.Fire(NavigationTriggers.LEFT);
-                }
+                Navigation.Fire(NavigationTriggers.LEFT);
             }
 
             if (key == GlobalKey.VK_RIGHT)
             {
-                if (Navigation.CanFire(NavigationTriggers.RIGHT))
-                {
-                    Navigation.Fire(NavigationTriggers.RIGHT);
-                }
+                Navigation.Fire(NavigationTriggers.RIGHT);
+            }
+
+            if (key == GlobalKey.VK_UP)
+            {
+                Navigation.Fire(NavigationTriggers.UP);
+            }
+
+            if (key == GlobalKey.VK_DOWN)
+            {
+                Navigation.Fire(NavigationTriggers.DOWN);
             }
         }
 

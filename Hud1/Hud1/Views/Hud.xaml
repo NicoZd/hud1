@@ -56,8 +56,8 @@
                                 </Style>
                             </StackPanel.Resources>
 
-                            <views:CustomControl2 Label="1.0" Selected="{Binding Path=States[gamma-1.0].Selected}" />
-                            <views:CustomControl2 Label="1.1" Selected="{Binding Path=States[gamma-1.1].Selected}" />
+                            <!--<views:CustomControl2 Label="1.0" Selected="{Binding Path=States[gamma-1.0].Selected}" />-->
+                            <!--<views:CustomControl2 Label="1.1" Selected="{Binding Path=States[gamma-1.1].Selected}" />-->
                             <views:CustomControl2 Label="1.25"/>
                             <views:CustomControl2 Label="1.5"/>
                             <views:CustomControl2 Label="2.0"/>
@@ -75,7 +75,7 @@
                                     <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />
                                 </Label.Effect>
                             </Label>
-                            <views:AudioDeviceSelector HudState="{Binding Path=States[audio-playback-device]}"  />
+                            <!--<views:AudioDeviceSelector HudState="{Binding Path=States[audio-playback-device]}"  />-->
                             <views:CustomControl2 Label="AA4A5"/>
                         </StackPanel>
                         <StackPanel Uid="PlaybackContainer">
@@ -126,10 +126,10 @@
                                 <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />
                             </Label.Effect>
                         </Label>
-                        <views:CustomControl2 Label="ON/OFF" Selected="{Binding Path=States[cross-visible].Selected}" />
+                        <!--<views:CustomControl2 Label="ON/OFF" Selected="{Binding Path=States[cross-visible].Selected}" />
                         <views:CustomControl2 Label="C" Selected="{Binding Path=States[cross-color].Selected}"/>
                         <views:CustomControl2 Label="F" Selected="{Binding Path=States[cross-form].Selected}"/>
-                        <views:CustomControl2 Label="S" Selected="{Binding Path=States[cross-size].Selected}"/>
+                        <views:CustomControl2 Label="S" Selected="{Binding Path=States[cross-size].Selected}"/>-->
                     </StackPanel>
                 </Grid>
 
@@ -149,8 +149,8 @@
                                 </Style>
                             </StackPanel.Resources>
                             <StackPanel Margin="-2,0,0,0" Orientation="Horizontal">
-                                <views:CustomControl2 Label="EXIT" Selected="{Binding Path=States[exit].Selected}" />
-                                <views:CustomControl2 Label=">" Selected="{Binding Path=States[exit-right].Selected}"/>
+                                <views:CustomControl2 Label="EXIT" Selected="{Binding Path=States[EXIT].Selected}" />
+                                <views:CustomControl2 Label=">" Selected="{Binding Path=States[EXIT].SelectRight}"/>
                             </StackPanel>
                         </StackPanel>
 

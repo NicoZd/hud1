@@ -22,13 +22,5 @@ namespace Hud1.Helpers
             }
             return null;
         }
-
-        public static void Wait(this DependencyObject parent, int milliseconds, Action action)
-        {
-            Task.Delay(milliseconds).ContinueWith(_ =>
-            {
-                Application.Current.Dispatcher.Invoke(action);
-            });
-        }
     }
 }
