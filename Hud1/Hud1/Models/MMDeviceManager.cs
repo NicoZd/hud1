@@ -3,10 +3,28 @@ using System.Diagnostics;
 using System.Windows;
 namespace Hud1.Models
 {
+    public class Volume
+    {
+        public float Value { get; set; }
+        public bool Muted { get; set; }
+        public string StringValue
+        {
+            get { return "" + Math.Round(Value * 100); }
+        }
+
+        public string MuteValue
+        {
+            get { return Muted ? "True" : "False"; }
+        }
+    }
+
     public class MMDeviceManager
     {
         public delegate void DevicesUpdateHandler();
         public event DevicesUpdateHandler? DevicesChanged;
+
+        public delegate void VolumeUpdateHandler();
+        public event VolumeUpdateHandler? VolumeChanged;
 
         public String DefaultPlaybackDeviceId = "";
         public String DefaultCaptureDeviceId = "";
@@ -36,6 +54,29 @@ namespace Hud1.Models
             }
         }
 
+        public void SetVolume(float volume)
+        {
+            var device = PlaybackDevices.Find(d => d.ID == DefaultPlaybackDeviceId);
+            if (device != null)
+            {
+                device.AudioEndpointVolume.MasterVolumeLevelScalar = Math.Max(0, Math.Min(1, volume));
+                VolumeChanged?.Invoke();
+            }
+        }
+
+        public Volume GetVolume()
+        {
+            var device = PlaybackDevices.Find(d => d.ID == DefaultPlaybackDeviceId);
+            if (device != null && device.AudioEndpointVolume != null)
+            {
+                return new Volume { Value = device.AudioEndpointVolume.MasterVolumeLevelScalar, Muted = device.AudioEndpointVolume.Mute };
+            }
+            else
+            {
+                return new Volume { Muted = false, Value = 0.5f };
+            }
+        }
+
         public void SelectNextDevice()
         {
             var index = PlaybackDevices.FindIndex(d => d.ID == DefaultPlaybackDeviceId);
@@ -46,20 +87,45 @@ namespace Hud1.Models
             }
         }
 
+        public void OnVolumeNotification(AudioVolumeNotificationData data)
+        {
+            Debug.Print("OnVolumeNotification: {0} {1}", data.MasterVolume, data.Muted);
+            //GetVolume();
+            Application.Current.Dispatcher.Invoke(new Action(() =>
+            {
+                VolumeChanged?.Invoke();
+            }));
+        }
 
         private void UpdateDevices()
         {
             Application.Current.Dispatcher.Invoke(new Action(() =>
             {
+                var device = PlaybackDevices.Find(d => d.ID == DefaultPlaybackDeviceId);
+                if (device != null && device.AudioEndpointVolume != null)
+                {
+                    device.AudioEndpointVolume.OnVolumeNotification -= OnVolumeNotification;
+                }
+
                 DefaultPlaybackDeviceId = deviceEnumerator.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia).ID;
                 DefaultCaptureDeviceId = deviceEnumerator.GetDefaultAudioEndpoint(DataFlow.Capture, Role.Communications).ID;
 
                 PlaybackDevices = new List<MMDevice>(deviceEnumerator.EnumerateAudioEndPoints(DataFlow.Render, DeviceState.Active));
                 CaptureDevices = new List<MMDevice>(deviceEnumerator.EnumerateAudioEndPoints(DataFlow.Capture, DeviceState.Active));
 
+                device = PlaybackDevices.Find(d => d.ID == DefaultPlaybackDeviceId);
+                Debug.Print("UpdateDevices: {0} {1}", device?.AudioEndpointVolume, device?.DeviceFriendlyName);
+                if (device != null && device.AudioEndpointVolume != null)
+                {
+                    device.AudioEndpointVolume.OnVolumeNotification += OnVolumeNotification;
+                }
+
+                VolumeChanged?.Invoke();
                 DevicesChanged?.Invoke();
                 //LogDevices();
             }));
+
+
         }
 
         private void LogDevices()

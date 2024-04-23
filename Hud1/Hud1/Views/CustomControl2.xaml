@@ -12,7 +12,7 @@
             <Border BorderBrush="#6600ff00" BorderThickness="1" />
             <Label Foreground="#ffbbffbb" Content="{Binding Path=Label}" Padding="15,5,15,5" FontFamily="Cascadia Code" FontSize="12" HorizontalContentAlignment="Center">
                 <Label.Effect>
-                    <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />
+                    <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.5" BlurRadius="10" />
                 </Label.Effect>
             </Label>
         </Grid>

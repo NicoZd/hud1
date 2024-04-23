@@ -4,7 +4,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:views="clr-namespace:Hud1.Views"
+             xmlns:foo="clr-namespace:Foo"
+              xmlns:views="clr-namespace:Hud1.Views"
              xmlns:local="clr-namespace:Hud1.Views"
              mc:Ignorable="d"
              Loaded="OnWindowLoaded"             
@@ -15,29 +16,34 @@
         </Grid.Effect>
         <views:GlassPanel>
             <StackPanel Margin="15,1,15,15">
-                <Label Foreground="#ffbbffbb" Content="GUD - Gamer HUD" Padding="0,10,0,5" FontFamily="Cascadia Code" FontSize="22">
+                <Label Foreground="#ffbbffbb" Content="GUD - Game HUD" Padding="0,10,0,5" FontFamily="Cascadia Code" FontSize="22">
                     <Label.Effect>
                         <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />
                     </Label.Effect>
                 </Label>
 
                 <StackPanel Orientation="Vertical" Margin="-3,0,0,10">
-                    <Label Content="{Binding Path=State}" Foreground="#ffbbffbb"/>
-                    <Label Content="Time: 8:23 PM" Foreground="#ffbbffbb"/>
-                    <Label Content="Press F2 to open and close this window." Foreground="#ffbbffbb"/>
-                    <Label Content="Use cursor keys to navigate and select." Foreground="#ffbbffbb"/>
+                    <StackPanel.Resources>
+                        <Style TargetType="{x:Type Label}">
+                            <Setter Property="Foreground" Value="#88bbffbb"/>
+                            <Setter Property="Margin" Value="0,0,0,-10"/>
+                        </Style>
+                    </StackPanel.Resources>
+                    <Label Content="Time: 8:23 PM"/>
+                    <Label Content="Press F2 to open and close this window."/>
+                    <Label Content="Use cursor keys to navigate and select."/>
                 </StackPanel>
-                <WrapPanel Orientation="Horizontal" Margin="-2,0,-2,0">
+                <WrapPanel Orientation="Horizontal" Margin="-2,15,-2,0">
                     <WrapPanel.Resources>
                         <Style TargetType="{x:Type views:CustomControl2}">
                             <Setter Property="Margin" Value="2,0,2,0"/>
                         </Style>
                     </WrapPanel.Resources>
-                    <views:CustomControl2 Label="GAMMA" Selected="{Binding Path=States[MENU_GAMMA].Selected}"/>
-                    <views:CustomControl2 Label="AUDIO" Selected="{Binding Path=States[MENU_AUDIO].Selected}"/>
-                    <views:CustomControl2 Label="MACRO" Selected="{Binding Path=States[MENU_MACRO].Selected}"/>
-                    <views:CustomControl2 Label="CROSSHAIR" Selected="{Binding Path=States[MENU_CROSSHAIR].Selected}"/>
-                    <views:CustomControl2 Label="MORE" Selected="{Binding Path=States[MENU_MORE].Selected}"/>
+                    <views:CustomControl2 Label="GAMMA" Selected="{Binding Path=States[GAMMA_VISIBLE].Selected}"/>
+                    <views:CustomControl2 Label="AUDIO" Selected="{Binding Path=States[AUDIO_VISIBLE].Selected}"/>
+                    <views:CustomControl2 Label="MACRO" Selected="{Binding Path=States[MACRO_VISIBLE].Selected}"/>
+                    <views:CustomControl2 Label="CROSSHAIR" Selected="{Binding Path=States[CROSSHAIR_VISIBLE].Selected}"/>
+                    <views:CustomControl2 Label="MORE" Selected="{Binding Path=States[MORE_VISIBLE].Selected}"/>
                 </WrapPanel>
 
                 <Grid Visibility="{Binding Path=States[GAMMA_VISIBLE].Visibility}" Margin="0,50,0,0">
@@ -67,23 +73,73 @@
 
                 </Grid>
 
-                <Grid Visibility="{Binding Path=States[AUDIO_VISIBLE].Visibility}" Margin="0,0,0,0">
-                    <StackPanel Margin="0,50,0,0">
-                        <Label Foreground="#ffbbffbb" Content="AUDIO" Padding="0,0,0,5" FontFamily="Cascadia Code" FontSize="16">
+                <Grid Visibility="{Binding Path=States[AUDIO_VISIBLE].Visibility}">
+                    <StackPanel Margin="0,25,0,0" foo:Spacing.Vertical="10">
+
+                        <Label Foreground="#ffbbffbb" Content="AUDIO" Padding="0,0,0,20" FontFamily="Cascadia Code" FontSize="16">
                             <Label.Effect>
                                 <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />
                             </Label.Effect>
                         </Label>
-                        <DockPanel Margin="-2,0,0,0">
-                            <DockPanel.Resources>
-                                <Style TargetType="{x:Type views:CustomControl2}">
-                                    <Setter Property="Margin" Value="2,2,2,0"/>
-                                </Style>
-                            </DockPanel.Resources>
-                            <views:CustomControl2 DockPanel.Dock="Left" Label="&lt;" Selected="{Binding Path=States[PLAYBACK_DEVICE].SelectLeft}"/>
-                            <views:CustomControl2 DockPanel.Dock="Right" Label="&gt;" Selected="{Binding Path=States[PLAYBACK_DEVICE].SelectRight}"/>
-                            <views:CustomControl2 Label="{Binding Path=AudioDeviceViewModel.DefaultPlaybackDeviceName}" Selected="{Binding Path=States[PLAYBACK_DEVICE].Selected}" />
-                        </DockPanel>
+
+                        <Grid Background="{Binding Path=States[PLAYBACK_DEVICE].SelectedBackground}">
+
+                            <Border BorderBrush="{Binding Path=States[PLAYBACK_DEVICE].SelectedBorder}" BorderThickness="1" Padding="0">
+                                <Border.Effect>
+                                    <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="{Binding Path=States[PLAYBACK_DEVICE].SelectedBlurOpacity}" BlurRadius="10" />
+                                </Border.Effect>
+                                <StackPanel>
+                                    <Label Foreground="#ffbbffbb" Content="PLAYBACK DEVICE" Padding="8,5,0,5" FontFamily="Cascadia Code" FontSize="12"/>
+
+                                    <DockPanel Margin="3,0,3,5">
+                                        <DockPanel.Resources>
+                                            <Style TargetType="{x:Type views:CustomControl2}">
+                                                <Setter Property="Margin" Value="2,0,2,0"/>
+                                            </Style>
+                                        </DockPanel.Resources>
+                                        <views:CustomControl2 DockPanel.Dock="Left" Label="&lt;" Selected="{Binding Path=States[PLAYBACK_DEVICE].Selected}" Pressed="{Binding Path=States[PLAYBACK_DEVICE].SelectLeft}"/>
+                                        <views:CustomControl2 DockPanel.Dock="Right" Label="&gt;" Selected="{Binding Path=States[PLAYBACK_DEVICE].Selected}" Pressed="{Binding Path=States[PLAYBACK_DEVICE].SelectRight}"/>
+                                        <views:CustomControl2 Label="{Binding Path=AudioDeviceViewModel.DefaultPlaybackDeviceName}" Selected="{Binding Path=States[PLAYBACK_DEVICE].Selected}" />
+                                    </DockPanel>
+
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+
+                        <Border BorderBrush="{Binding Path=States[PLAYBACK_VOLUME].SelectedBorder}" BorderThickness="1" Padding="0">
+                            <StackPanel Background="#66006600" Margin="0" >
+                                <Label Foreground="#ffbbffbb" Content="MUTE" Padding="8,8,0,5" FontFamily="Cascadia Code" FontSize="14">
+                                    <Label.Effect>
+                                        <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />
+                                    </Label.Effect>
+                                </Label>
+                                <DockPanel Margin="-2,0,0,0">
+                                    <views:CustomControl2 DockPanel.Dock="Left" Label="&lt;" Selected="{Binding Path=States[PLAYBACK_VOLUME].SelectLeft}"/>
+                                    <views:CustomControl2 DockPanel.Dock="Right" Label="&gt;" Selected="{Binding Path=States[PLAYBACK_VOLUME].SelectRight}"/>
+                                    <views:CustomControl2 Label="{Binding Path=AudioDeviceViewModel.Volume.StringValue}" Selected="{Binding Path=States[PLAYBACK_VOLUME].Selected}" />
+                                </DockPanel>
+                            </StackPanel>
+                        </Border>
+
+
+                        <Border BorderBrush="{Binding Path=States[PLAYBACK_MUTE].SelectedBorder}" BorderThickness="1" Padding="0">
+                            <StackPanel Background="#66006600" Margin="0" >
+                                <Label Foreground="#ffbbffbb" Content="MUTE" Padding="0,0,0,5" FontFamily="Cascadia Code" FontSize="16">
+                                    <Label.Effect>
+                                        <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />
+                                    </Label.Effect>
+                                </Label>
+                                <Grid Margin="-2,0,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <views:CustomControl2  Grid.Column="0" Label="ON" Selected="{Binding Path=States[PLAYBACK_MUTE].SelectLeft}"/>
+                                    <views:CustomControl2 Grid.Column="1" Label="OFF" Selected="{Binding Path=States[PLAYBACK_MUTE].SelectRight}"/>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+
                     </StackPanel>
                 </Grid>
 

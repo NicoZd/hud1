@@ -20,6 +20,8 @@
 
         // SOUND
         public static readonly NavigationState PLAYBACK_DEVICE = new();
+        public static readonly NavigationState PLAYBACK_VOLUME = new();
+        public static readonly NavigationState PLAYBACK_MUTE = new();
 
         // MORE
         public static readonly NavigationState EXIT = new();

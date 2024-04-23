@@ -6,6 +6,8 @@ namespace Hud1.ViewModels
 {
     public partial class AudioDeviceViewModel : ObservableObject
     {
+        public static readonly float VOLUME_INCREMENT = 0.02f;
+
         [ObservableProperty]
         public List<MMDevice> playbackDevices = [];
 
@@ -21,12 +23,18 @@ namespace Hud1.ViewModels
         [ObservableProperty]
         public String defaultCaptureDeviceID = "";
 
+        [ObservableProperty]
+        public Volume volume = new();
+
+
         private MMDeviceManager MMDeviceManager = new MMDeviceManager();
 
         public AudioDeviceViewModel()
         {
             MMDeviceManager.DevicesChanged += OnDevicesChanged;
+            MMDeviceManager.VolumeChanged += OnVolumeChanged;
             OnDevicesChanged();
+            OnVolumeChanged();
         }
 
         public void SelectPrevDevice()
@@ -37,6 +45,20 @@ namespace Hud1.ViewModels
         public void SelectNextDevice()
         {
             MMDeviceManager.SelectNextDevice();
+        }
+
+        public void VolumeUp()
+        {
+            MMDeviceManager.SetVolume(Volume.Value + VOLUME_INCREMENT);
+        }
+        public void VolumeDown()
+        {
+            MMDeviceManager.SetVolume(Volume.Value - VOLUME_INCREMENT);
+        }
+
+        void OnVolumeChanged()
+        {
+            Volume = MMDeviceManager.GetVolume();
         }
 
 

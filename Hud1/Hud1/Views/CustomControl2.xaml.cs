@@ -21,9 +21,15 @@ namespace Hud1.Views
             BindingHelper.CreateProperty<CustomControl2, bool>("Selected", false,
                 (control, value) => control.ViewModel.Selected = value);
 
+        private static readonly DependencyProperty PressedProperty =
+            BindingHelper.CreateProperty<CustomControl2, bool>("Pressed", false,
+                (control, value) => control.ViewModel.Pressed = value);
+
         public String Label { set => SetValue(LabelProperty, value); }
 
         public bool Selected { set => SetValue(SelectedProperty, value); }
+
+        public bool Pressed { set => SetValue(PressedProperty, value); }
 
         public CustomControl2()
         {

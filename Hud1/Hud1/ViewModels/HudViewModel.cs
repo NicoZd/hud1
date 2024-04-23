@@ -58,8 +58,26 @@ namespace Hud1.ViewModels
             Navigation.Configure(NavigationStates.PLAYBACK_DEVICE)
                .SubstateOf(NavigationStates.AUDIO_VISIBLE)
                .Permit(NavigationTriggers.UP, NavigationStates.MENU_AUDIO)
+               .Permit(NavigationTriggers.DOWN, NavigationStates.PLAYBACK_VOLUME)
                .InternalTransition(NavigationTriggers.LEFT, NavigationStates.PLAYBACK_DEVICE.ExecuteLeft)
                .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.PLAYBACK_DEVICE.ExecuteRight);
+
+            NavigationStates.PLAYBACK_VOLUME.LeftAction = audioDeviceViewModel.VolumeDown;
+            NavigationStates.PLAYBACK_VOLUME.RightAction = audioDeviceViewModel.VolumeUp;
+            Navigation.Configure(NavigationStates.PLAYBACK_VOLUME)
+               .SubstateOf(NavigationStates.AUDIO_VISIBLE)
+               .Permit(NavigationTriggers.UP, NavigationStates.PLAYBACK_DEVICE)
+               .Permit(NavigationTriggers.DOWN, NavigationStates.PLAYBACK_MUTE)
+               .InternalTransition(NavigationTriggers.LEFT, NavigationStates.PLAYBACK_VOLUME.ExecuteLeft)
+               .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.PLAYBACK_VOLUME.ExecuteRight);
+
+            //NavigationStates.PLAYBACK_MUTED.LeftAction = audioDeviceViewModel.Mute();
+            //NavigationStates.PLAYBACK_MUTED.RightAction = audioDeviceViewModel.Unmute();
+            Navigation.Configure(NavigationStates.PLAYBACK_MUTE)
+               .SubstateOf(NavigationStates.AUDIO_VISIBLE)
+               .Permit(NavigationTriggers.UP, NavigationStates.PLAYBACK_VOLUME)
+               .InternalTransition(NavigationTriggers.LEFT, NavigationStates.PLAYBACK_MUTE.ExecuteLeft)
+               .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.PLAYBACK_MUTE.ExecuteRight);
 
             // MORE
             NavigationStates.EXIT.RightAction = Application.Current.Shutdown;
