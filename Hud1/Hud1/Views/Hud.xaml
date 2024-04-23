@@ -33,14 +33,14 @@
                             <Setter Property="Margin" Value="2,0,2,0"/>
                         </Style>
                     </WrapPanel.Resources>
-                    <views:CustomControl2 Label="GAMMA" Selected="{Binding Path=States[menu-gamma].Selected}"/>
-                    <views:CustomControl2 Label="AUDIO" Selected="{Binding Path=States[menu-audio].Selected}"/>
-                    <views:CustomControl2 Label="MACRO" Selected="{Binding Path=States[menu-macro].Selected}"/>
-                    <views:CustomControl2 Label="CROSSHAIR" Selected="{Binding Path=States[menu-crosshair].Selected}"/>
-                    <views:CustomControl2 Label="MORE" Selected="{Binding Path=States[menu-more].Selected}"/>
+                    <views:CustomControl2 Label="GAMMA" Selected="{Binding Path=States[MENU_GAMMA].Selected}"/>
+                    <views:CustomControl2 Label="AUDIO" Selected="{Binding Path=States[MENU_AUDIO].Selected}"/>
+                    <views:CustomControl2 Label="MACRO" Selected="{Binding Path=States[MENU_MACRO].Selected}"/>
+                    <views:CustomControl2 Label="CROSSHAIR" Selected="{Binding Path=States[MENU_CROSSHAIR].Selected}"/>
+                    <views:CustomControl2 Label="MORE" Selected="{Binding Path=States[MENU_MORE].Selected}"/>
                 </WrapPanel>
 
-                <Grid Visibility="{Binding Path=States[gamma-visible].Visibility}" Margin="0,50,0,0">
+                <Grid Visibility="{Binding Path=States[GAMMA_VISIBLE].Visibility}" Margin="0,50,0,0">
                     <StackPanel Margin="0,0,0,0" Orientation="Vertical">
 
                         <Label Foreground="#ffbbffbb" Content="GAMMA" Padding="0,0,0,5" FontFamily="Cascadia Code" FontSize="16">
@@ -67,7 +67,7 @@
 
                 </Grid>
 
-                <Grid Visibility="{Binding Path=States[audio-visible].Visibility}" Margin="0,0,0,0">
+                <Grid Visibility="{Binding Path=States[AUDIO_VISIBLE].Visibility}" Margin="0,0,0,0">
                     <StackPanel Margin="0,50,0,0">
                         <StackPanel >
                             <Label Foreground="#ffbbffbb" Content="AUDIO" Padding="0,0,0,5" FontFamily="Cascadia Code" FontSize="16">
@@ -75,7 +75,7 @@
                                     <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />
                                 </Label.Effect>
                             </Label>
-                            <views:AudioDeviceSelector Label="AudioDeviceSelector" />
+                            <views:AudioDeviceSelector HudState="{Binding Path=States[audio-playback-device]}"  />
                             <views:CustomControl2 Label="AA4A5"/>
                         </StackPanel>
                         <StackPanel Uid="PlaybackContainer">
@@ -91,7 +91,7 @@
                     </StackPanel>
                 </Grid>
 
-                <Grid Visibility="{Binding Path=States[macro-visible].Visibility}">
+                <Grid Visibility="{Binding Path=States[MACRO_VISIBLE].Visibility}">
                     <StackPanel Margin="0,50,0,0">
                         <StackPanel.Resources>
                             <Style TargetType="{x:Type views:CustomControl2}">
@@ -114,7 +114,7 @@
                     </StackPanel>
                 </Grid>
 
-                <Grid Visibility="{Binding Path=States[crosshair-visible].Visibility}">
+                <Grid Visibility="{Binding Path=States[CROSSHAIR_VISIBLE].Visibility}">
                     <StackPanel Margin="0,50,0,0" Orientation="Vertical">
                         <StackPanel.Resources>
                             <Style TargetType="{x:Type views:CustomControl2}">
@@ -133,7 +133,7 @@
                     </StackPanel>
                 </Grid>
 
-                <Grid Visibility="{Binding Path=States[help-visible].Visibility}" Margin="0,0,0,0">
+                <Grid Visibility="{Binding Path=States[MORE_VISIBLE].Visibility}" Margin="0,0,0,0">
                     <StackPanel Margin="0,50,0,0">
 
                         <Label Foreground="#ffbbffbb" Content="FUNCTIONS" Padding="0,0,0,5" FontFamily="Cascadia Code" FontSize="16">

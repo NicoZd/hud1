@@ -1,34 +1,41 @@
-﻿using Hud1.Helpers;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Hud1.Helpers;
+using Hud1.Models;
 using Hud1.ViewModels;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 
 namespace Hud1.Views
 {
+    [INotifyPropertyChanged]
     public partial class AudioDeviceSelector : UserControl
     {
-        public AudioDeviceSelectorViewModel ViewModel = new AudioDeviceSelectorViewModel();
+        [ObservableProperty]
+        public AudioDeviceSelectorViewModel viewModel = new AudioDeviceSelectorViewModel();
 
-        private static readonly DependencyProperty ViewModelProperty =
+        private static readonly DependencyProperty ModellPropertyProperty =
             DependencyProperty.Register("ViewModel", typeof(AudioDeviceSelectorViewModel), typeof(AudioDeviceSelector));
 
-        public static readonly DependencyProperty LabelProperty =
-            BindingHelper.CreateProperty<AudioDeviceSelector, string>("Label", "",
-                (control, value) => control.ViewModel.Label = value);
+        public static readonly DependencyProperty HudStateProperty =
+            BindingHelper.CreateProperty<AudioDeviceSelector, NavigationState>("HudState", null, (a, b) =>
+            {
+                if (b.SelectRight)
+                {
+                    Debug.Print("SelectRight");
+                }
+            });
 
-
-        public static readonly DependencyProperty SelectedProperty =
-            BindingHelper.CreateProperty<AudioDeviceSelector, bool>("Selected", false,
-                (control, value) => control.ViewModel.Selected = value);
-
-        public String Label { set => SetValue(LabelProperty, value); }
-
-        public bool Selected { set => SetValue(SelectedProperty, value); }
+        public NavigationState HudState
+        {
+            set => SetValue(HudStateProperty, value);
+            get => (NavigationState)GetValue(HudStateProperty);
+        }
 
         public AudioDeviceSelector()
         {
             InitializeComponent();
-            SetValue(ViewModelProperty, ViewModel);
+            Debug.Print("AudioDeviceSelector {0} {1}", HudState?.Selected, HudState?.Visibility);
         }
     }
 }
