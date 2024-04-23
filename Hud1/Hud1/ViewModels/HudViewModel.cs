@@ -15,6 +15,9 @@ namespace Hud1.ViewModels
         [ObservableProperty]
         public Dictionary<string, NavigationState> states = new Dictionary<string, NavigationState> { };
 
+        [ObservableProperty]
+        public AudioDeviceViewModel audioDeviceViewModel = new();
+
         public Stateless.StateMachine<NavigationState, NavigationTrigger> Navigation;
 
         public HudViewModel()
@@ -30,7 +33,8 @@ namespace Hud1.ViewModels
             Navigation.Configure(NavigationStates.MENU_AUDIO)
                 .SubstateOf(NavigationStates.AUDIO_VISIBLE)
                 .Permit(NavigationTriggers.LEFT, NavigationStates.MENU_GAMMA)
-                .Permit(NavigationTriggers.RIGHT, NavigationStates.MENU_MACRO);
+                .Permit(NavigationTriggers.RIGHT, NavigationStates.MENU_MACRO)
+                .Permit(NavigationTriggers.DOWN, NavigationStates.PLAYBACK_DEVICE);
 
             Navigation.Configure(NavigationStates.MENU_MACRO)
                 .SubstateOf(NavigationStates.MACRO_VISIBLE)
@@ -46,10 +50,19 @@ namespace Hud1.ViewModels
                 .SubstateOf(NavigationStates.MORE_VISIBLE)
                 .Permit(NavigationTriggers.LEFT, NavigationStates.MENU_CROSSHAIR)
                 .Permit(NavigationTriggers.RIGHT, NavigationStates.MENU_GAMMA)
-              .Permit(NavigationTriggers.DOWN, NavigationStates.EXIT);
+                .Permit(NavigationTriggers.DOWN, NavigationStates.EXIT);
+
+            // SOUND
+            NavigationStates.PLAYBACK_DEVICE.ExecuteLeftAction = () => Debug.Print("ExecuteLeftAction");
+            NavigationStates.PLAYBACK_DEVICE.ExecuteRightAction = () => Debug.Print("ExecuteRightAction");
+
+            Navigation.Configure(NavigationStates.PLAYBACK_DEVICE)
+               .SubstateOf(NavigationStates.AUDIO_VISIBLE)
+               .Permit(NavigationTriggers.UP, NavigationStates.MENU_AUDIO)
+               .InternalTransition(NavigationTriggers.LEFT, NavigationStates.PLAYBACK_DEVICE.ExecuteLeft)
+               .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.PLAYBACK_DEVICE.ExecuteRight);
 
             // MORE
-
             NavigationStates.EXIT.ExecuteRightAction = Application.Current.Shutdown;
             Navigation.Configure(NavigationStates.EXIT)
                 .SubstateOf(NavigationStates.MORE_VISIBLE)
@@ -67,29 +80,35 @@ namespace Hud1.ViewModels
             UpdateModelFromStateless();
         }
 
-        public void OnKeyPressed(GlobalKey key)
+        public bool OnKeyPressed(GlobalKey key)
         {
-            // Debug.WriteLine("ListenerOnKeyPressed {0}", key);
+            Debug.WriteLine("ListenerOnKeyPressed {0}", key);
 
             if (key == GlobalKey.VK_LEFT)
             {
                 Navigation.Fire(NavigationTriggers.LEFT);
+                return true;
             }
 
             if (key == GlobalKey.VK_RIGHT)
             {
                 Navigation.Fire(NavigationTriggers.RIGHT);
+                return true;
             }
 
             if (key == GlobalKey.VK_UP)
             {
                 Navigation.Fire(NavigationTriggers.UP);
+                return true;
             }
 
             if (key == GlobalKey.VK_DOWN)
             {
                 Navigation.Fire(NavigationTriggers.DOWN);
+                return true;
             }
+
+            return false;
         }
 
         void UpdateModelFromStateless()
@@ -98,26 +117,11 @@ namespace Hud1.ViewModels
 
             State = Navigation.State;
 
-            //if (ViewModel.Navigation.State. == "exit-right")
-            //{
-            //    Debug.Print("Some Action1");
-            //    Debug.Print("Some Action2 {0}", Thread.CurrentThread.Name);
-            //    this.Wait(100, () =>
-            //    {
-            //        Navigation.Fire("return");
-            //        this.Wait(100, () => { Application.Current.Shutdown(); });
-            //    });
-
-            //}
-
             var newStates = new Dictionary<string, NavigationState> { };
 
             var info = Navigation.GetInfo();
             foreach (StateInfo stateInfo in info.States)
             {
-                string name = stateInfo.ToString();
-                //Debug.Print("UpdateModelFromStateless {0} {1}", name, Navigation.IsInState(name));
-                // Debug.Print("Add State {0} {1} {2}", name, nav.State, nav.State.Equals(name));
 
                 var navigationState = stateInfo.UnderlyingState as NavigationState;
 
@@ -126,12 +130,6 @@ namespace Hud1.ViewModels
                 navigationState.Visibility = isInState ? Visibility.Visible : Visibility.Collapsed;
 
                 newStates[navigationState.Label] = navigationState;
-
-                //newStates[name] = new NavigationState
-                //{
-                //Selected = ViewModel.Navigation.IsInState(name),
-                //Visibility = ViewModel.Navigation.IsInState(name) ? Visibility.Visible : Visibility.Collapsed,
-                //};
             }
 
             States = newStates;

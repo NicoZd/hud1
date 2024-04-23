@@ -69,25 +69,21 @@
 
                 <Grid Visibility="{Binding Path=States[AUDIO_VISIBLE].Visibility}" Margin="0,0,0,0">
                     <StackPanel Margin="0,50,0,0">
-                        <StackPanel >
-                            <Label Foreground="#ffbbffbb" Content="AUDIO" Padding="0,0,0,5" FontFamily="Cascadia Code" FontSize="16">
-                                <Label.Effect>
-                                    <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />
-                                </Label.Effect>
-                            </Label>
-                            <!--<views:AudioDeviceSelector HudState="{Binding Path=States[audio-playback-device]}"  />-->
-                            <views:CustomControl2 Label="AA4A5"/>
-                        </StackPanel>
-                        <StackPanel Uid="PlaybackContainer">
-                            <StackPanel.Resources>
+                        <Label Foreground="#ffbbffbb" Content="AUDIO" Padding="0,0,0,5" FontFamily="Cascadia Code" FontSize="16">
+                            <Label.Effect>
+                                <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />
+                            </Label.Effect>
+                        </Label>
+                        <DockPanel Margin="-2,0,0,0">
+                            <DockPanel.Resources>
                                 <Style TargetType="{x:Type views:CustomControl2}">
-                                    <Setter Property="Margin" Value="0,2,0,2"/>
-                                 </Style>
-                            </StackPanel.Resources>
-                            <views:CustomControl2 />
-                            <views:CustomControl2 Label="AA4A5"/>
-                            <views:CustomControl2 Label="BBB" Selected="True"/>
-                        </StackPanel>
+                                    <Setter Property="Margin" Value="2,2,2,0"/>
+                                </Style>
+                            </DockPanel.Resources>
+                            <views:CustomControl2 DockPanel.Dock="Left" Label="&lt;" Selected="{Binding Path=States[PLAYBACK_DEVICE].SelectLeft}"/>
+                            <views:CustomControl2 DockPanel.Dock="Right" Label="&gt;" Selected="{Binding Path=States[PLAYBACK_DEVICE].SelectRight}"/>
+                            <views:CustomControl2 Label="{Binding Path=AudioDeviceViewModel.DefaultPlaybackDeviceName}" Selected="{Binding Path=States[PLAYBACK_DEVICE].Selected}" />
+                        </DockPanel>
                     </StackPanel>
                 </Grid>
 
@@ -143,15 +139,15 @@
                         </Label>
 
                         <StackPanel Margin="0,0,0,0" Orientation="Vertical" >
-                            <StackPanel.Resources>
-                                <Style TargetType="{x:Type views:CustomControl2}">
-                                    <Setter Property="Margin" Value="2,2,2,0"/>
-                                </Style>
-                            </StackPanel.Resources>
-                            <StackPanel Margin="-2,0,0,0" Orientation="Horizontal">
+                            <DockPanel Margin="-2,0,0,0">
+                                <DockPanel.Resources>
+                                    <Style TargetType="{x:Type views:CustomControl2}">
+                                        <Setter Property="Margin" Value="2,2,2,0"/>
+                                    </Style>
+                                </DockPanel.Resources>
+                                <views:CustomControl2 DockPanel.Dock="Right" Label=">" Selected="{Binding Path=States[EXIT].SelectRight}"/>
                                 <views:CustomControl2 Label="EXIT" Selected="{Binding Path=States[EXIT].Selected}" />
-                                <views:CustomControl2 Label=">" Selected="{Binding Path=States[EXIT].SelectRight}"/>
-                            </StackPanel>
+                            </DockPanel>
                         </StackPanel>
 
                         <Label Foreground="#ffbbffbb" Content="HELP" Padding="0,15,0,5" FontFamily="Cascadia Code" FontSize="16">

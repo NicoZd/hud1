@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CoreAudio;
 using Hud1.Models;
+using System.Text.RegularExpressions;
 namespace Hud1.ViewModels
 {
     public partial class AudioDeviceViewModel : ObservableObject
@@ -10,6 +11,9 @@ namespace Hud1.ViewModels
 
         [ObservableProperty]
         public String defaultPlaybackDeviceID = "";
+
+        [ObservableProperty]
+        public String defaultPlaybackDeviceName = "";
 
         [ObservableProperty]
         public List<MMDevice> captureDevices = [];
@@ -31,6 +35,15 @@ namespace Hud1.ViewModels
             CaptureDevices = MMDeviceManager.CaptureDevices;
             DefaultPlaybackDeviceID = MMDeviceManager.DefaultPlaybackDeviceId;
             DefaultCaptureDeviceID = MMDeviceManager.DefaultCaptureDeviceId;
+
+            var playbackDevice = PlaybackDevices.Find(d => d.ID == DefaultPlaybackDeviceID);
+            DefaultPlaybackDeviceName = playbackDevice == null ? "Unknown" : TrimName(playbackDevice.DeviceInterfaceFriendlyName);
+        }
+
+        private static string TrimName(string name)
+        {
+            name = Regex.Replace(name, @"^\d+-\s", "");
+            return name;
         }
 
     }
