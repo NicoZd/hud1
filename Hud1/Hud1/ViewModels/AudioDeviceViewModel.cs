@@ -29,6 +29,17 @@ namespace Hud1.ViewModels
             OnDevicesChanged();
         }
 
+        public void SelectPrevDevice()
+        {
+            MMDeviceManager.SelectPrevDevice();
+        }
+
+        public void SelectNextDevice()
+        {
+            MMDeviceManager.SelectNextDevice();
+        }
+
+
         void OnDevicesChanged()
         {
             PlaybackDevices = MMDeviceManager.PlaybackDevices;

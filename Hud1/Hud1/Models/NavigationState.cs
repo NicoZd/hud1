@@ -19,9 +19,9 @@ namespace Hud1.Models
 
         public string Label { get; set; }
 
-        public Action? ExecuteLeftAction { get; set; }
+        public Action? LeftAction { get; set; }
 
-        public Action? ExecuteRightAction { get; set; }
+        public Action? RightAction { get; set; }
 
         public NavigationState([CallerMemberName] string label = "")
         {
@@ -35,8 +35,8 @@ namespace Hud1.Models
         {
             SelectLeft = true;
             await Task.Delay(50);
-            if (ExecuteLeftAction != null)
-                try { ExecuteLeftAction(); } catch (Exception ex) { Debug.Print("ExecuteLeft {0}", ex); }
+            if (LeftAction != null)
+                try { LeftAction(); } catch (Exception ex) { Debug.Print("ExecuteLeft {0}", ex); }
             await Task.Delay(50);
             SelectLeft = false;
         }
@@ -45,8 +45,8 @@ namespace Hud1.Models
         {
             SelectRight = true;
             await Task.Delay(50);
-            if (ExecuteRightAction != null)
-                try { ExecuteRightAction(); } catch (Exception ex) { Debug.Print("ExecuteRight {0}", ex); }
+            if (RightAction != null)
+                try { RightAction(); } catch (Exception ex) { Debug.Print("ExecuteRight {0}", ex); }
             await Task.Delay(50);
             SelectRight = false;
         }

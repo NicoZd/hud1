@@ -25,7 +25,29 @@ namespace Hud1.Models
             UpdateDevices();
         }
 
-        public void UpdateDevices()
+
+        public void SelectPrevDevice()
+        {
+            var index = PlaybackDevices.FindIndex(d => d.ID == DefaultPlaybackDeviceId);
+            if (index != -1)
+            {
+                index = (index - 1 + PlaybackDevices.Count) % PlaybackDevices.Count;
+                PlaybackDevices[index].Selected = true;
+            }
+        }
+
+        public void SelectNextDevice()
+        {
+            var index = PlaybackDevices.FindIndex(d => d.ID == DefaultPlaybackDeviceId);
+            if (index != -1)
+            {
+                index = (index + 1) % PlaybackDevices.Count;
+                PlaybackDevices[index].Selected = true;
+            }
+        }
+
+
+        private void UpdateDevices()
         {
             Application.Current.Dispatcher.Invoke(new Action(() =>
             {
@@ -40,7 +62,7 @@ namespace Hud1.Models
             }));
         }
 
-        public void LogDevices()
+        private void LogDevices()
         {
             Debug.Print("LogDevices: =================================================== ");
             Debug.Print("defaultPlaybackDeviceID: {0}", DefaultPlaybackDeviceId);

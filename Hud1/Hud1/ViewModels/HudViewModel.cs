@@ -53,9 +53,8 @@ namespace Hud1.ViewModels
                 .Permit(NavigationTriggers.DOWN, NavigationStates.EXIT);
 
             // SOUND
-            NavigationStates.PLAYBACK_DEVICE.ExecuteLeftAction = () => Debug.Print("ExecuteLeftAction");
-            NavigationStates.PLAYBACK_DEVICE.ExecuteRightAction = () => Debug.Print("ExecuteRightAction");
-
+            NavigationStates.PLAYBACK_DEVICE.LeftAction = audioDeviceViewModel.SelectPrevDevice;
+            NavigationStates.PLAYBACK_DEVICE.RightAction = audioDeviceViewModel.SelectNextDevice;
             Navigation.Configure(NavigationStates.PLAYBACK_DEVICE)
                .SubstateOf(NavigationStates.AUDIO_VISIBLE)
                .Permit(NavigationTriggers.UP, NavigationStates.MENU_AUDIO)
@@ -63,7 +62,7 @@ namespace Hud1.ViewModels
                .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.PLAYBACK_DEVICE.ExecuteRight);
 
             // MORE
-            NavigationStates.EXIT.ExecuteRightAction = Application.Current.Shutdown;
+            NavigationStates.EXIT.RightAction = Application.Current.Shutdown;
             Navigation.Configure(NavigationStates.EXIT)
                 .SubstateOf(NavigationStates.MORE_VISIBLE)
                 .Permit(NavigationTriggers.UP, NavigationStates.MENU_MORE)
@@ -122,9 +121,7 @@ namespace Hud1.ViewModels
             var info = Navigation.GetInfo();
             foreach (StateInfo stateInfo in info.States)
             {
-
                 var navigationState = stateInfo.UnderlyingState as NavigationState;
-
                 var isInState = Navigation.IsInState(navigationState);
                 navigationState.Selected = isInState;
                 navigationState.Visibility = isInState ? Visibility.Visible : Visibility.Collapsed;
@@ -136,52 +133,3 @@ namespace Hud1.ViewModels
         }
     }
 }
-
-
-//Navigation = new StateMachine<string, string>(Navigation != null ? Navigation.State : "menu-gamma");
-//Navigation.OnTransitionCompleted(a => UpdateModelFromStateless());
-
-//// menu
-//Navigation.Configure("menu-gamma")
-//    .SubstateOf("gamma-visible")
-//    .Permit("right", "menu-audio")
-//    .Permit("left", "menu-more");
-
-//Navigation.Configure("menu-audio")
-//    .SubstateOf("audio-visible")
-//    .Permit("right", "menu-macro")
-//    .Permit("left", "menu-gamma")
-//    .Permit("down", "audio-playback-device");
-
-//Navigation.Configure("menu-macro")
-//    .SubstateOf("macro-visible")
-//    .Permit("right", "menu-crosshair")
-//    .Permit("left", "menu-audio");
-
-//Navigation.Configure("menu-crosshair")
-//    .SubstateOf("crosshair-visible")
-//    .Permit("right", "menu-more")
-//    .Permit("left", "menu-macro");
-
-//Navigation.Configure("menu-more")
-//    .SubstateOf("help-visible")
-//    .Permit("right", "menu-gamma")
-//    .Permit("left", "menu-crosshair")
-//    .Permit("down", "exit");
-
-//// sound
-//Navigation.Configure("audio-playback-device")
-//    .SubstateOf("audio-visible")
-//    .OnActivate(() => Debug.Print("Activate audio-playback-device"))
-//    .Permit("up", "menu-audio");
-
-//// more
-//Navigation.Configure("exit")
-//    .SubstateOf("help-visible")
-//    .Permit("right", "exit-right")
-//    .Permit("up", "menu-more");
-
-//Navigation.Configure("exit-right")
-//    .SubstateOf("help-visible")
-//    .Permit("return", "exit");
-
