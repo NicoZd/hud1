@@ -86,15 +86,16 @@ namespace Hud1.Models
             {
                 if (Selected)
                 {
-                    var colHig = (Color)ColorConverter.ConvertFromString("#ff55ee22");
-                    var colLow = (Color)ColorConverter.ConvertFromString("#ee009900");
+                    var colHig = (Color)ColorConverter.ConvertFromString("#88009900");
+                    var colLow = (Color)ColorConverter.ConvertFromString("#55009900");
                     LinearGradientBrush brush = new LinearGradientBrush();
                     brush.StartPoint = new Point(0, 0);
                     brush.EndPoint = new Point(1, 0);
                     //brush.GradientStops.Add(new GradientStop(colHig, 0.0));
                     //brush.GradientStops.Add(new GradientStop(colHig, 0.035));
-                    brush.GradientStops.Add(new GradientStop(colLow, 0.0));
-                    brush.GradientStops.Add(new GradientStop(colLow, 1));
+                    brush.GradientStops.Add(new GradientStop(colHig, 0.0));
+                    brush.GradientStops.Add(new GradientStop(colLow, 0.5));
+                    brush.GradientStops.Add(new GradientStop(colHig, 1));
                     //brush.GradientStops.Add(new GradientStop(colHig, 0.965));
                     //brush.GradientStops.Add(new GradientStop(colHig, 1.0));
                     return brush;
