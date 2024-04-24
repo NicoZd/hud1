@@ -4,43 +4,28 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:foo="clr-namespace:Foo"
-              xmlns:views="clr-namespace:Hud1.Views"
+             xmlns:views="clr-namespace:Hud1.Views"
              xmlns:local="clr-namespace:Hud1.Views"
              mc:Ignorable="d"
              Loaded="OnWindowLoaded"             
              >
 
-    
     <Grid DataContext="{Binding Path=ViewModel, RelativeSource={RelativeSource AncestorType=local:Hud}}" HorizontalAlignment="Left" Margin="0,0,0,0">
         <Grid.Effect>
             <DropShadowEffect ShadowDepth="3" Color="#008800" Opacity="0.5" BlurRadius="20" Direction="0" />
         </Grid.Effect>
         <views:GlassPanel>
             <StackPanel Margin="15,1,15,15">
-                <Label Foreground="#ffbbffbb" Content="GUD - Game HUD" Padding="0,10,0,5" FontFamily="Cascadia Code" FontSize="22">
-                    <Label.Effect>
-                        <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />
-                    </Label.Effect>
-                </Label>
+                <Label Content="GUD - Game HUD" Style="{DynamicResource TitleLabel}" />
 
-                <StackPanel Orientation="Vertical" Margin="-3,0,0,10">
-                    <StackPanel.Resources>
-                        <Style TargetType="{x:Type Label}">
-                            <Setter Property="Foreground" Value="#88bbffbb"/>
-                            <Setter Property="Margin" Value="0,0,0,-10"/>
-                        </Style>
-                    </StackPanel.Resources>
+                <StackPanel Orientation="Vertical" Margin="-3,0,0,10" views:Spacing.Vertical="-6">
                     <Label Content="Time: 8:23 PM"/>
                     <Label Content="Press F2 to open and close this window."/>
                     <Label Content="Use cursor keys to navigate and select."/>
                 </StackPanel>
-                <WrapPanel Orientation="Horizontal" Margin="-2,15,-2,0">
-                    <WrapPanel.Resources>
-                        <Style TargetType="{x:Type views:CustomControl2}">
-                            <Setter Property="Margin" Value="2,0,2,0"/>
-                        </Style>
-                    </WrapPanel.Resources>
+
+                <WrapPanel Orientation="Horizontal" Margin="-2,15,-2,0" views:Spacing.Horizontal="4">
+     
                     <views:CustomControl2 Label="GAMMA" Selected="{Binding Path=States[GAMMA_VISIBLE].Selected}"/>
                     <views:CustomControl2 Label="AUDIO" Selected="{Binding Path=States[AUDIO_VISIBLE].Selected}"/>
                     <views:CustomControl2 Label="MACRO" Selected="{Binding Path=States[MACRO_VISIBLE].Selected}"/>
@@ -76,7 +61,7 @@
                 </Grid>
 
                 <Grid Visibility="{Binding Path=States[AUDIO_VISIBLE].Visibility}">
-                    <StackPanel Margin="0,25,0,0" foo:Spacing.Vertical="10">
+                    <StackPanel Margin="0,25,0,0" views:Spacing.Vertical="10">
 
                         <Label Foreground="#ffbbffbb" Content="AUDIO" Padding="0,0,0,20" FontFamily="Cascadia Code" FontSize="16">
                             <Label.Effect>

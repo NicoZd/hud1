@@ -30,7 +30,7 @@ namespace Hud1.Views
                 if ((DataContext as MainWindowViewModel)!.Active)
                 {
                     var block = ViewModel.OnKeyPressed(keyEvent.key);
-                    keyEvent.block = block;
+                    //keyEvent.block = block;
                 }
             }
         }
