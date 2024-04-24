@@ -10,6 +10,8 @@
              mc:Ignorable="d"
              Loaded="OnWindowLoaded"             
              >
+
+    
     <Grid DataContext="{Binding Path=ViewModel, RelativeSource={RelativeSource AncestorType=local:Hud}}" HorizontalAlignment="Left" Margin="0,0,0,0">
         <Grid.Effect>
             <DropShadowEffect ShadowDepth="3" Color="#008800" Opacity="0.5" BlurRadius="20" Direction="0" />
@@ -99,7 +101,11 @@
                                         </DockPanel.Resources>
                                         <views:CustomControl2 DockPanel.Dock="Left" Label="&lt;" Selected="{Binding Path=States[PLAYBACK_DEVICE].Selected}" Pressed="{Binding Path=States[PLAYBACK_DEVICE].SelectLeft}"/>
                                         <views:CustomControl2 DockPanel.Dock="Right" Label="&gt;" Selected="{Binding Path=States[PLAYBACK_DEVICE].Selected}" Pressed="{Binding Path=States[PLAYBACK_DEVICE].SelectRight}"/>
-                                        <views:CustomControl2 Label="{Binding Path=AudioDeviceViewModel.DefaultPlaybackDeviceName}" Selected="{Binding Path=States[PLAYBACK_DEVICE].Selected}" />
+                                        <Border BorderBrush="#ff008800" BorderThickness="1">
+                                            <TextBlock Width="250" TextTrimming="CharacterEllipsis" FontFamily="Cascadia Code" FontSize="10" Foreground="#ffbbffbb" VerticalAlignment="Center" Text="{Binding Path=AudioDeviceViewModel.DefaultPlaybackDeviceName}" TextAlignment="Center"/>
+                                        </Border>
+
+                                        <!--<views:CustomControl2 Label="{Binding Path=AudioDeviceViewModel.DefaultPlaybackDeviceName}" />-->
                                     </DockPanel>
 
                                 </StackPanel>
