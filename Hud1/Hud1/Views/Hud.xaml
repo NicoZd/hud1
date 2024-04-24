@@ -18,14 +18,14 @@
             <StackPanel Margin="15,1,15,15">
                 <Label Content="GUD - Game HUD" Style="{DynamicResource TitleLabel}" />
 
-                <StackPanel Orientation="Vertical" Margin="-3,0,0,10" views:Spacing.Vertical="-6">
-                    <Label Content="Time: 8:23 PM"/>
-                    <Label Content="Press F2 to open and close this window."/>
-                    <Label Content="Use cursor keys to navigate and select."/>
+                <StackPanel Orientation="Vertical" Margin="0,0,0,0">
+                    <Label Content="Time: 8:23 PM" Style="{DynamicResource InfoLabel}" />
+                    <Label Content="Press F2 to open and close this window." Style="{DynamicResource InfoLabel}" />
+                    <Label Content="Use cursor keys to navigate and select." Style="{DynamicResource InfoLabel}" />
                 </StackPanel>
 
                 <WrapPanel Orientation="Horizontal" Margin="-2,15,-2,0" views:Spacing.Horizontal="4">
-     
+
                     <views:CustomControl2 Label="GAMMA" Selected="{Binding Path=States[GAMMA_VISIBLE].Selected}"/>
                     <views:CustomControl2 Label="AUDIO" Selected="{Binding Path=States[AUDIO_VISIBLE].Selected}"/>
                     <views:CustomControl2 Label="MACRO" Selected="{Binding Path=States[MACRO_VISIBLE].Selected}"/>
@@ -203,9 +203,10 @@
                             </Label.Effect>
                         </Label>
 
-                        <StackPanel Orientation="Vertical" Margin="-3,0,0,10">
-                            <Label Content="Press F2 or ALT-S, ALT-F or ALT-L to open and close this window." Foreground="#ffbbffbb"/>
-                            <Label Content="Use cursor keys to navigate and select." Foreground="#ffbbffbb"/>
+                        <StackPanel Orientation="Vertical" Margin="0,0,0,10">
+                            <Label Content="Keys to open and close this window:" Style="{DynamicResource InfoLabel}" />
+                            <Label Content="- F2, ALT-S, ALT-F or ALT-L" Style="{DynamicResource InfoLabel}" />
+                            <Label Content="Use cursor keys to navigate and select." Style="{DynamicResource InfoLabel}" />
                         </StackPanel>
                     </StackPanel>
                 </Grid>
