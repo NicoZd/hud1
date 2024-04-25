@@ -14,11 +14,16 @@ namespace Hud1.Models
         [ObservableProperty]
         public bool selectLeft;
 
-        public bool Selected { get; set; }
+        [ObservableProperty]
+        [NotifyPropertyChangedFor("SelectedBorder", "SelectedBackground", "SelectedBlurOpacity")]
+        private bool selected;
 
         public Visibility Visibility { get; set; }
 
         public string Label { get; set; }
+
+        [ObservableProperty]
+        public string selectionLabel;
 
         public Action? LeftAction { get; set; }
 
@@ -27,6 +32,7 @@ namespace Hud1.Models
         public NavigationState([CallerMemberName] string label = "")
         {
             this.Label = label;
+            SelectionLabel = "";
             Selected = false;
             SelectRight = false;
             Visibility = Visibility.Collapsed;

@@ -1,0 +1,40 @@
+﻿<UserControl x:Class="Hud1.Views.SelectionControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:views="clr-namespace:Hud1.Views"
+             xmlns:local="clr-namespace:Hud1.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Border 
+        DataContext="{Binding Path=NavigationState, RelativeSource={RelativeSource AncestorType=local:SelectionControl}}"
+        Background="{Binding Path=SelectedBackground}"
+        BorderBrush="{Binding Path=SelectedBorder}" BorderThickness="1" Padding="0">
+        <Border.Effect>
+            <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="{Binding Path=SelectedBlurOpacity}" BlurRadius="10" />
+        </Border.Effect>
+        <StackPanel>
+            <Label Foreground="#ffbbffbb" Content="PLAYBACK DEVICE" Padding="8,5,0,5" FontFamily="Cascadia Code" FontSize="12"/>
+
+            <DockPanel Margin="3,0,3,5">
+                <DockPanel.Resources>
+                    <Style TargetType="{x:Type views:CustomControl2}">
+                        <Setter Property="Margin" Value="2,0,2,0"/>
+                    </Style>
+                </DockPanel.Resources>
+                <views:CustomControl2 DockPanel.Dock="Left" Label="&lt;" Selected="{Binding Path=Selected}" Pressed="{Binding Path=SelectLeft}"/>
+                <views:CustomControl2 DockPanel.Dock="Right" Label="&gt;" Selected="{Binding Path=Selected}" Pressed="{Binding Path=SelectRight}"/>
+                <Border BorderBrush="#ff008800" BorderThickness="1">
+                    <TextBlock Width="250" TextTrimming="CharacterEllipsis"
+                               FontFamily="{DynamicResource FontFamily}"
+                               Foreground="{DynamicResource InfoColor}" 
+                               FontSize="10" 
+                               VerticalAlignment="Center"
+                               TextAlignment="Center"
+                               Text="{Binding Path=SelectionLabel}"/>
+                </Border>
+            </DockPanel>
+        </StackPanel>
+    </Border>
+</UserControl>

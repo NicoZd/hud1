@@ -71,6 +71,8 @@ namespace Hud1.ViewModels
 
             var playbackDevice = PlaybackDevices.Find(d => d.ID == DefaultPlaybackDeviceID);
             DefaultPlaybackDeviceName = playbackDevice == null ? "Unknown" : TrimName(playbackDevice.DeviceInterfaceFriendlyName);
+
+            NavigationStates.PLAYBACK_DEVICE.SelectionLabel = DefaultPlaybackDeviceName;
         }
 
         private static string TrimName(string name)

@@ -69,34 +69,30 @@
                             </Label.Effect>
                         </Label>
 
-                        <Grid Background="{Binding Path=States[PLAYBACK_DEVICE].SelectedBackground}">
+                        <Border  Background="{Binding Path=States[PLAYBACK_DEVICE].SelectedBackground}" BorderBrush="{Binding Path=States[PLAYBACK_DEVICE].SelectedBorder}" BorderThickness="1" Padding="0">
+                            <Border.Effect>
+                                <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="{Binding Path=States[PLAYBACK_DEVICE].SelectedBlurOpacity}" BlurRadius="10" />
+                            </Border.Effect>
+                            <StackPanel>
+                                <Label Foreground="#ffbbffbb" Content="PLAYBACK DEVICE" Padding="8,5,0,5" FontFamily="Cascadia Code" FontSize="12"/>
 
-                            <Border BorderBrush="{Binding Path=States[PLAYBACK_DEVICE].SelectedBorder}" BorderThickness="1" Padding="0">
-                                <Border.Effect>
-                                    <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="{Binding Path=States[PLAYBACK_DEVICE].SelectedBlurOpacity}" BlurRadius="10" />
-                                </Border.Effect>
-                                <StackPanel>
-                                    <Label Foreground="#ffbbffbb" Content="PLAYBACK DEVICE" Padding="8,5,0,5" FontFamily="Cascadia Code" FontSize="12"/>
+                                <DockPanel Margin="3,0,3,5">
+                                    <DockPanel.Resources>
+                                        <Style TargetType="{x:Type views:CustomControl2}">
+                                            <Setter Property="Margin" Value="2,0,2,0"/>
+                                        </Style>
+                                    </DockPanel.Resources>
+                                    <views:CustomControl2 DockPanel.Dock="Left" Label="&lt;" Selected="{Binding Path=States[PLAYBACK_DEVICE].Selected}" Pressed="{Binding Path=States[PLAYBACK_DEVICE].SelectLeft}"/>
+                                    <views:CustomControl2 DockPanel.Dock="Right" Label="&gt;" Selected="{Binding Path=States[PLAYBACK_DEVICE].Selected}" Pressed="{Binding Path=States[PLAYBACK_DEVICE].SelectRight}"/>
+                                    <Border BorderBrush="#ff008800" BorderThickness="1">
+                                        <TextBlock Width="250" TextTrimming="CharacterEllipsis" FontFamily="Cascadia Code" FontSize="10" Foreground="#ffbbffbb" VerticalAlignment="Center" Text="{Binding Path=AudioDeviceViewModel.DefaultPlaybackDeviceName}" TextAlignment="Center"/>
+                                    </Border>
+                                </DockPanel>
+                            </StackPanel>
+                        </Border>
 
-                                    <DockPanel Margin="3,0,3,5">
-                                        <DockPanel.Resources>
-                                            <Style TargetType="{x:Type views:CustomControl2}">
-                                                <Setter Property="Margin" Value="2,0,2,0"/>
-                                            </Style>
-                                        </DockPanel.Resources>
-                                        <views:CustomControl2 DockPanel.Dock="Left" Label="&lt;" Selected="{Binding Path=States[PLAYBACK_DEVICE].Selected}" Pressed="{Binding Path=States[PLAYBACK_DEVICE].SelectLeft}"/>
-                                        <views:CustomControl2 DockPanel.Dock="Right" Label="&gt;" Selected="{Binding Path=States[PLAYBACK_DEVICE].Selected}" Pressed="{Binding Path=States[PLAYBACK_DEVICE].SelectRight}"/>
-                                        <Border BorderBrush="#ff008800" BorderThickness="1">
-                                            <TextBlock Width="250" TextTrimming="CharacterEllipsis" FontFamily="Cascadia Code" FontSize="10" Foreground="#ffbbffbb" VerticalAlignment="Center" Text="{Binding Path=AudioDeviceViewModel.DefaultPlaybackDeviceName}" TextAlignment="Center"/>
-                                        </Border>
-
-                                        <!--<views:CustomControl2 Label="{Binding Path=AudioDeviceViewModel.DefaultPlaybackDeviceName}" />-->
-                                    </DockPanel>
-
-                                </StackPanel>
-                            </Border>
-                        </Grid>
-
+                        <views:SelectionControl NavigationState="{Binding Path=States[PLAYBACK_DEVICE]}"  />
+                        
                         <Border BorderBrush="{Binding Path=States[PLAYBACK_VOLUME].SelectedBorder}" BorderThickness="1" Padding="0">
                             <StackPanel Background="#66006600" Margin="0" >
                                 <Label Foreground="#ffbbffbb" Content="MUTE" Padding="8,8,0,5" FontFamily="Cascadia Code" FontSize="14">
