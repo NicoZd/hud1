@@ -7,34 +7,28 @@
              xmlns:local="clr-namespace:Hud1.Views"
              mc:Ignorable="d" >
     <views:GlowBorder DataContext="{Binding Path=NavigationState, RelativeSource={RelativeSource AncestorType=local:SelectionControl}}">
-        <Border         
-        Background="{Binding Path=SelectedBackground}"
-        BorderBrush="{Binding Path=SelectedBorder}" BorderThickness="1" Padding="0">
-            <Border.Effect>
-                <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="{Binding Path=SelectedBlurOpacity}" BlurRadius="10" />
-            </Border.Effect>
-            <StackPanel>
-                <Label Foreground="#ffbbffbb" Content="{Binding Path=Label}" Padding="8,5,0,5" FontFamily="Cascadia Code" FontSize="12"/>
 
-                <DockPanel Margin="3,0,3,5">
-                    <DockPanel.Resources>
-                        <Style TargetType="{x:Type views:CustomControl2}">
-                            <Setter Property="Margin" Value="2,0,2,0"/>
-                        </Style>
-                    </DockPanel.Resources>
-                    <views:CustomControl2 DockPanel.Dock="Left" Label="&lt;" Selected="{Binding Path=Selected}" Pressed="{Binding Path=SelectLeft}"/>
-                    <views:CustomControl2 DockPanel.Dock="Right" Label="&gt;" Selected="{Binding Path=Selected}" Pressed="{Binding Path=SelectRight}"/>
-                    <Border BorderBrush="#ff008800" BorderThickness="1">
-                        <TextBlock Width="250" TextTrimming="CharacterEllipsis"
+        <StackPanel>
+            <Label Foreground="#ffbbffbb" Content="{Binding Path=Label}" Padding="8,5,0,5" FontFamily="Cascadia Code" FontSize="12"/>
+
+            <DockPanel Margin="3,0,3,5">
+                <DockPanel.Resources>
+                    <Style TargetType="{x:Type views:CustomControl2}">
+                        <Setter Property="Margin" Value="2,0,2,0"/>
+                    </Style>
+                </DockPanel.Resources>
+                <views:CustomControl2 DockPanel.Dock="Left" Label="&lt;" Selected="{Binding Path=Selected}" Pressed="{Binding Path=SelectLeft}"/>
+                <views:CustomControl2 DockPanel.Dock="Right" Label="&gt;" Selected="{Binding Path=Selected}" Pressed="{Binding Path=SelectRight}"/>
+                <Border BorderBrush="#ffff00ff" BorderThickness="1">
+                    <TextBlock Width="250" TextTrimming="CharacterEllipsis"
                                FontFamily="{DynamicResource FontFamily}"
                                Foreground="{DynamicResource InfoColor}" 
                                FontSize="10" 
                                VerticalAlignment="Center"
                                TextAlignment="Center"
                                Text="{Binding Path=SelectionLabel}"/>
-                    </Border>
-                </DockPanel>
-            </StackPanel>
-        </Border>
+                </Border>
+            </DockPanel>
+        </StackPanel>
     </views:GlowBorder>
 </UserControl>

@@ -70,8 +70,9 @@
                             </Label.Effect>
                         </Label>
 
-                        <views:SelectionControl NavigationState="{Binding Path=States[PLAYBACK_DEVICE]}" />
                         
+                        <views:SelectionControl NavigationState="{Binding Path=States[PLAYBACK_DEVICE]}" />
+
                         <Border BorderBrush="{Binding Path=States[PLAYBACK_VOLUME].SelectedBorder}" BorderThickness="1" Padding="0">
                             <StackPanel Background="#66006600" Margin="0" >
                                 <Label Foreground="#ffbbffbb" Content="MUTE" Padding="8,8,0,5" FontFamily="Cascadia Code" FontSize="14">
@@ -87,9 +88,8 @@
                             </StackPanel>
                         </Border>
 
-
-                        <Border BorderBrush="{Binding Path=States[PLAYBACK_MUTE].SelectedBorder}" BorderThickness="1" Padding="0">
-                            <StackPanel Background="#66006600" Margin="0" >
+                        <Border BorderBrush="{DynamicResource InfoColor}" BorderThickness="1" Padding="0">
+                            <StackPanel Margin="0" >
                                 <Label Foreground="#ffbbffbb" Content="MUTE" Padding="0,0,0,5" FontFamily="Cascadia Code" FontSize="16">
                                     <Label.Effect>
                                         <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />
