@@ -6,17 +6,18 @@
     
 	<Application.Resources>
 
-        <!--<Color x:Key="ColorSuperBright">#bbffbb</Color>
+        <Color x:Key="ColorSuperBright">#bbffbb</Color>
         <Color x:Key="ColorBright">#66ff66</Color>
         <Color x:Key="ColorBackgroundDark">#f5008800</Color>
         <Color x:Key="ColorBackgroundDarkMed">#dd005500</Color>
         <Color x:Key="ColorBackgroundDarkTrans">#11005500</Color>
-        <Color x:Key="ColorInfo">#bbffbb</Color>-->
+        <Color x:Key="ColorInfo">#bbffbb</Color>
 
         <!-- Effects -->
         <sys:Double x:Key="DropShadowOpacity">1.5</sys:Double>
 
         <!-- Texts & Labels -->
+        <SolidColorBrush x:Key="SeparatorColor" Color="{DynamicResource ColorBackgroundDark}" />
         <SolidColorBrush x:Key="TitleColor" Color="{DynamicResource ColorSuperBright}" />
         <SolidColorBrush x:Key="LabelColor" Color="{DynamicResource ColorSuperBright}" />
         <SolidColorBrush x:Key="InfoColor" Color="{DynamicResource ColorInfo}" />

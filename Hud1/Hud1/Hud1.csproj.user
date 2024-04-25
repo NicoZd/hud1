@@ -12,6 +12,9 @@
     <Compile Update="Views\CustomControl2.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\GlowBorder.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\Hud.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -24,6 +27,9 @@
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\CustomControl2.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\GlowBorder.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\Hud.xaml">

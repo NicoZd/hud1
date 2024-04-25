@@ -54,6 +54,7 @@ namespace Hud1
             }
 
             // update brushes
+            Resources["SeparatorColor"] = new SolidColorBrush((Color)Resources["ColorBackgroundDark"]);
             Resources["TitleColor"] = new SolidColorBrush((Color)Resources["ColorSuperBright"]);
             Resources["LabelColor"] = new SolidColorBrush((Color)Resources["ColorSuperBright"]);
             Resources["InfoColor"] = new SolidColorBrush((Color)Resources["ColorInfo"]);
