@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using Hud1.Models;
+using System.Diagnostics;
+using System.Windows;
 using System.Windows.Media;
 using System.Windows.Threading;
 
@@ -12,27 +14,64 @@ namespace Hud1
         public App()
         {
             InitializeComponent();
+            SelectStyle("Green");
 
             DispatcherTimer dispatcherTimer = new DispatcherTimer();
-            dispatcherTimer.Tick += new EventHandler(OnTick);
+            dispatcherTimer.Tick += new EventHandler((a, b) =>
+            {
+                SelectStyle(NavigationStates.STYLE.SelectionLabel);
+            });
             dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
             dispatcherTimer.Start();
         }
-
-        private void OnTick(object sender, EventArgs e)
+        private static Action EmptyDelegate = delegate () { };
+        public static void SelectStyle(String name)
         {
-            switch ("blue")
+            Debug.Print("SelectStyle {0}", name);
+            var Resources = Application.Current.Resources;
+            switch (name)
             {
-                case "green":
+                case "Green":
                     Resources["ColorSuperBright"] = (Color)ColorConverter.ConvertFromString("#bbffbb");
-                    Resources["ColorBright"] = (Color)ColorConverter.ConvertFromString("#99cc99");
+                    Resources["ColorBright"] = (Color)ColorConverter.ConvertFromString("#66ff66");
+                    Resources["ColorBackgroundDark"] = (Color)ColorConverter.ConvertFromString("#f5008800");
+                    Resources["ColorBackgroundDarkMed"] = (Color)ColorConverter.ConvertFromString("#dd005500");
+                    Resources["ColorBackgroundDarkTrans"] = (Color)ColorConverter.ConvertFromString("#11005500");
+                    Resources["ColorInfo"] = (Color)ColorConverter.ConvertFromString("#bbffbb");
                     break;
-                case "blue":
+                case "Dark":
                     Resources["ColorSuperBright"] = (Color)ColorConverter.ConvertFromString("#99ccff");
-                    Resources["ColorBright"] = (Color)ColorConverter.ConvertFromString("#336699");
+                    Resources["ColorBright"] = (Color)ColorConverter.ConvertFromString("#3399cc");
+                    break;
+                case "Red":
+                    Resources["ColorSuperBright"] = (Color)ColorConverter.ConvertFromString("#b55050");
+                    Resources["ColorBright"] = (Color)ColorConverter.ConvertFromString("#9f392e");
+                    Resources["ColorBackgroundDark"] = (Color)ColorConverter.ConvertFromString("#ff3b191c");
+                    Resources["ColorBackgroundDarkMed"] = (Color)ColorConverter.ConvertFromString("#ee1f0f15");
+                    Resources["ColorBackgroundDarkTrans"] = (Color)ColorConverter.ConvertFromString("#9905050d");
+                    Resources["ColorInfo"] = (Color)ColorConverter.ConvertFromString("#51e8fe");
                     break;
             }
+
+            // update brushes
+            Resources["TitleColor"] = new SolidColorBrush((Color)Resources["ColorSuperBright"]);
+            Resources["LabelColor"] = new SolidColorBrush((Color)Resources["ColorSuperBright"]);
+            Resources["InfoColor"] = new SolidColorBrush((Color)Resources["ColorInfo"]);
+
+            //var mainWindow = ((MainWindow)System.Windows.Application.Current.MainWindow);
+            //Debug.Print("mainWindow {0}", mainWindow);
+            //mainWindow?.Dispatcher.Invoke(DispatcherPriority.Render, EmptyDelegate);
+
+            //Application.Current.Dispatcher?.Invoke(DispatcherPriority.Render, EmptyDelegate);
+            //            if (mainWindow != null)
+            //                EnumVisual(mainWindow!);
+
+            //mainWindow.Visibility = Visibility.Collapsed;
+            //mainWindow.Visibility = Visibility.Visible;
+
         }
+
+
     }
 
 }

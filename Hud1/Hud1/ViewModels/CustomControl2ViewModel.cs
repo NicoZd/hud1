@@ -7,11 +7,11 @@ namespace Hud1.ViewModels
     public partial class CustomControl2ViewModel : ObservableObject
     {
         [ObservableProperty]
-        [NotifyPropertyChangedFor("Background")]
+        [NotifyPropertyChangedFor("Background", "Foreground", "Border")]
         public Boolean selected = false;
 
         [ObservableProperty]
-        [NotifyPropertyChangedFor("Background")]
+        [NotifyPropertyChangedFor("Background", "Foreground", "Border")]
         public Boolean pressed = false;
 
         [ObservableProperty]
@@ -23,18 +23,14 @@ namespace Hud1.ViewModels
             {
                 if (Selected && !Pressed)
                 {
-                    var colHig = (Color)ColorConverter.ConvertFromString("#cc009900");
-                    var colLow = (Color)ColorConverter.ConvertFromString("#55009900");
+                    var colHig = (Color)Application.Current.Resources["ColorBackgroundDark"];
+                    var colLow = (Color)Application.Current.Resources["ColorBackgroundDarkMed"];
                     LinearGradientBrush brush = new LinearGradientBrush();
                     brush.StartPoint = new Point(0, 0);
                     brush.EndPoint = new Point(1, 0);
-                    //brush.GradientStops.Add(new GradientStop(colHig, 0.0));
-                    //brush.GradientStops.Add(new GradientStop(colHig, 0.035));
                     brush.GradientStops.Add(new GradientStop(colHig, 0.0));
                     brush.GradientStops.Add(new GradientStop(colLow, 0.5));
                     brush.GradientStops.Add(new GradientStop(colHig, 1));
-                    //brush.GradientStops.Add(new GradientStop(colHig, 0.965));
-                    //brush.GradientStops.Add(new GradientStop(colHig, 1.0));
                     return brush;
                 }
                 else if (Pressed)
@@ -44,18 +40,52 @@ namespace Hud1.ViewModels
                     LinearGradientBrush brush = new LinearGradientBrush();
                     brush.StartPoint = new Point(0, 0);
                     brush.EndPoint = new Point(1, 0);
-                    //brush.GradientStops.Add(new GradientStop(colHig, 0.0));
-                    //brush.GradientStops.Add(new GradientStop(colHig, 0.035));
                     brush.GradientStops.Add(new GradientStop(colHig, 0.0));
                     brush.GradientStops.Add(new GradientStop(colLow, 0.5));
                     brush.GradientStops.Add(new GradientStop(colHig, 1));
-                    //brush.GradientStops.Add(new GradientStop(colHig, 0.965));
-                    //brush.GradientStops.Add(new GradientStop(colHig, 1.0));
                     return brush;
                 }
                 else
                 {
-                    return new SolidColorBrush((Color)ColorConverter.ConvertFromString("#aa007700"));
+                    return new SolidColorBrush((Color)Application.Current.Resources["ColorBackgroundDark"]);
+                }
+            }
+        }
+
+        public Brush Foreground
+        {
+            get
+            {
+                if (Selected && !Pressed)
+                {
+                    return new SolidColorBrush((Color)Application.Current.Resources["ColorInfo"]);
+                }
+                else if (Pressed)
+                {
+                    return new SolidColorBrush((Color)Application.Current.Resources["ColorInfo"]);
+                }
+                else
+                {
+                    return new SolidColorBrush((Color)Application.Current.Resources["ColorBright"]);
+                }
+            }
+        }
+
+        public Brush Border
+        {
+            get
+            {
+                if (Selected && !Pressed)
+                {
+                    return new SolidColorBrush((Color)Application.Current.Resources["ColorInfo"]);
+                }
+                else if (Pressed)
+                {
+                    return new SolidColorBrush((Color)Application.Current.Resources["ColorInfo"]);
+                }
+                else
+                {
+                    return new SolidColorBrush((Color)Application.Current.Resources["ColorBright"]);
                 }
             }
         }

@@ -25,7 +25,6 @@
                 </StackPanel>
 
                 <WrapPanel Orientation="Horizontal" Margin="-2,15,-2,0" views:Spacing.Horizontal="4">
-
                     <views:CustomControl2 Label="GAMMA" Selected="{Binding Path=States[GAMMA_VISIBLE].Selected}"/>
                     <views:CustomControl2 Label="AUDIO" Selected="{Binding Path=States[AUDIO_VISIBLE].Selected}"/>
                     <views:CustomControl2 Label="MACRO" Selected="{Binding Path=States[MACRO_VISIBLE].Selected}"/>
@@ -91,7 +90,7 @@
                             </StackPanel>
                         </Border>
 
-                        <views:SelectionControl NavigationState="{Binding Path=States[PLAYBACK_DEVICE]}"  />
+                        <views:SelectionControl NavigationState="{Binding Path=States[PLAYBACK_DEVICE]}" />
                         
                         <Border BorderBrush="{Binding Path=States[PLAYBACK_VOLUME].SelectedBorder}" BorderThickness="1" Padding="0">
                             <StackPanel Background="#66006600" Margin="0" >
@@ -194,6 +193,8 @@
                             </Label.Effect>
                         </Label>
 
+                        <views:SelectionControl NavigationState="{Binding Path=States[STYLE]}" />
+                        
                         <Label Foreground="#ffbbffbb" Content="HELP" Padding="0,15,0,5" FontFamily="Cascadia Code" FontSize="16">
                             <Label.Effect>
                                 <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />

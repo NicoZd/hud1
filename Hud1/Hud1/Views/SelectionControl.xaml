@@ -15,7 +15,7 @@
             <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="{Binding Path=SelectedBlurOpacity}" BlurRadius="10" />
         </Border.Effect>
         <StackPanel>
-            <Label Foreground="#ffbbffbb" Content="PLAYBACK DEVICE" Padding="8,5,0,5" FontFamily="Cascadia Code" FontSize="12"/>
+            <Label Foreground="#ffbbffbb" Content="{Binding Path=Label}" Padding="8,5,0,5" FontFamily="Cascadia Code" FontSize="12"/>
 
             <DockPanel Margin="3,0,3,5">
                 <DockPanel.Resources>

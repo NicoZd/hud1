@@ -20,6 +20,7 @@ namespace Hud1.Models
 
         public Visibility Visibility { get; set; }
 
+        public string Name { get; set; }
         public string Label { get; set; }
 
         [ObservableProperty]
@@ -29,9 +30,11 @@ namespace Hud1.Models
 
         public Action? RightAction { get; set; }
 
-        public NavigationState([CallerMemberName] string label = "")
+        public NavigationState([CallerMemberName] string Name = "")
         {
-            this.Label = label;
+            this.Name = Name;
+
+            Label = "";
             SelectionLabel = "";
             Selected = false;
             SelectRight = false;

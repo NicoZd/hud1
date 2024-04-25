@@ -20,6 +20,8 @@ namespace Hud1.ViewModels
 
         public Stateless.StateMachine<NavigationState, NavigationTrigger> Navigation;
 
+        private readonly string[] Styles = ["Green", "Dark", "Red"];
+
         public HudViewModel()
         {
             Navigation = new(NavigationStates.MENU_GAMMA);
@@ -84,7 +86,17 @@ namespace Hud1.ViewModels
             Navigation.Configure(NavigationStates.EXIT)
                 .SubstateOf(NavigationStates.MORE_VISIBLE)
                 .Permit(NavigationTriggers.UP, NavigationStates.MENU_MORE)
+                .Permit(NavigationTriggers.DOWN, NavigationStates.STYLE)
                 .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.EXIT.ExecuteRight);
+
+            NavigationStates.STYLE.LeftAction = PrevStyle;
+            NavigationStates.STYLE.RightAction = NextStyle;
+            Navigation.Configure(NavigationStates.STYLE)
+               .SubstateOf(NavigationStates.MORE_VISIBLE)
+               .Permit(NavigationTriggers.UP, NavigationStates.EXIT)
+               .InternalTransition(NavigationTriggers.LEFT, NavigationStates.STYLE.ExecuteLeft)
+               .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.STYLE.ExecuteRight);
+
 
             string graph = UmlDotGraph.Format(Navigation.GetInfo());
             Debug.Print(graph);
@@ -128,6 +140,23 @@ namespace Hud1.ViewModels
             return false;
         }
 
+        void NextStyle()
+        {
+            Debug.Print("NextStyle");
+            var currentStyleIndex = Array.IndexOf(Styles, NavigationStates.STYLE.SelectionLabel);
+            var nextStyleIndex = (currentStyleIndex + 1) % Styles.Length;
+            NavigationStates.STYLE.SelectionLabel = Styles[nextStyleIndex];
+            App.SelectStyle(NavigationStates.STYLE.SelectionLabel);
+        }
+        void PrevStyle()
+        {
+            Debug.Print("PrevStyle");
+            var currentStyleIndex = Array.IndexOf(Styles, NavigationStates.STYLE.SelectionLabel);
+            var prevStyleIndex = (currentStyleIndex - 1 + Styles.Length) % Styles.Length;
+            NavigationStates.STYLE.SelectionLabel = Styles[prevStyleIndex];
+            App.SelectStyle(NavigationStates.STYLE.SelectionLabel);
+        }
+
         void UpdateModelFromStateless()
         {
             // Debug.Print("UpdateModelFromStateless {0} ", nav.State);
@@ -144,7 +173,7 @@ namespace Hud1.ViewModels
                 navigationState.Selected = isInState;
                 navigationState.Visibility = isInState ? Visibility.Visible : Visibility.Collapsed;
 
-                newStates[navigationState.Label] = navigationState;
+                newStates[navigationState.Name] = navigationState;
             }
 
             States = newStates;
