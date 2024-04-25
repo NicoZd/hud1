@@ -1,4 +1,6 @@
 ﻿using System.Windows;
+using System.Windows.Media;
+using System.Windows.Threading;
 
 namespace Hud1
 {
@@ -11,16 +13,25 @@ namespace Hud1
         {
             InitializeComponent();
 
-            //DispatcherTimer dispatcherTimer = new DispatcherTimer();
-            //dispatcherTimer.Tick += new EventHandler(OnTick);
-            //dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
-            //dispatcherTimer.Start();
+            DispatcherTimer dispatcherTimer = new DispatcherTimer();
+            dispatcherTimer.Tick += new EventHandler(OnTick);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
+            dispatcherTimer.Start();
         }
 
         private void OnTick(object sender, EventArgs e)
         {
-            //Resources["LabelColor"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ffbbff00"));
-            //Resources["FontFamily"] = new FontFamily("Cascadia Code");
+            switch ("blue")
+            {
+                case "green":
+                    Resources["ColorSuperBright"] = (Color)ColorConverter.ConvertFromString("#bbffbb");
+                    Resources["ColorBright"] = (Color)ColorConverter.ConvertFromString("#99cc99");
+                    break;
+                case "blue":
+                    Resources["ColorSuperBright"] = (Color)ColorConverter.ConvertFromString("#99ccff");
+                    Resources["ColorBright"] = (Color)ColorConverter.ConvertFromString("#336699");
+                    break;
+            }
         }
     }
 

@@ -186,16 +186,17 @@
                         </Label>
 
                         <StackPanel Margin="0,0,0,0" Orientation="Vertical" >
-                            <DockPanel Margin="-2,0,0,0">
-                                <DockPanel.Resources>
-                                    <Style TargetType="{x:Type views:CustomControl2}">
-                                        <Setter Property="Margin" Value="2,2,2,0"/>
-                                    </Style>
-                                </DockPanel.Resources>
+                            <DockPanel views:MarginSetter.Margin="4,0,0,0">
                                 <views:CustomControl2 DockPanel.Dock="Right" Label=">" Selected="{Binding Path=States[EXIT].SelectRight}"/>
                                 <views:CustomControl2 Label="EXIT" Selected="{Binding Path=States[EXIT].Selected}" />
                             </DockPanel>
                         </StackPanel>
+
+                        <Label Foreground="#ffbbffbb" Content="STYLE" Padding="0,0,0,5" FontFamily="Cascadia Code" FontSize="16">
+                            <Label.Effect>
+                                <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />
+                            </Label.Effect>
+                        </Label>
 
                         <Label Foreground="#ffbbffbb" Content="HELP" Padding="0,15,0,5" FontFamily="Cascadia Code" FontSize="16">
                             <Label.Effect>
