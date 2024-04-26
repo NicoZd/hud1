@@ -14,18 +14,31 @@ namespace Hud1
         public App()
         {
             InitializeComponent();
-            SelectStyle("Green");
 
             DispatcherTimer dispatcherTimer = new DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler((a, b) =>
             {
                 SelectStyle(NavigationStates.STYLE.SelectionLabel);
+                //SelectStyle2(NavigationStates.STYLE.SelectionLabel);
             });
             dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
             dispatcherTimer.Start();
         }
-        private static Action EmptyDelegate = delegate () { };
+
         public static void SelectStyle(String name)
+        {
+            Application.Current.Resources.MergedDictionaries.Clear();
+            Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary()
+            {
+                Source = new Uri("Themes/" + name + ".xaml", UriKind.RelativeOrAbsolute)
+            });
+            Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary()
+            {
+                Source = new Uri("Themes/Standard.xaml", UriKind.RelativeOrAbsolute)
+            });
+        }
+
+        public static void SelectStyleOld(String name)
         {
             Debug.Print("SelectStyle {0}", name);
             var Resources = Application.Current.Resources;

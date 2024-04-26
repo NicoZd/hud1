@@ -26,6 +26,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Themes\Red.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Themes\Standard.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Themes\Green.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\CustomControl2.xaml">
       <SubType>Designer</SubType>
     </Page>

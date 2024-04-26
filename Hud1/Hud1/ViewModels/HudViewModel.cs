@@ -20,7 +20,7 @@ namespace Hud1.ViewModels
 
         public Stateless.StateMachine<NavigationState, NavigationTrigger> Navigation;
 
-        private readonly string[] Styles = ["Green", "Dark", "Red"];
+        private readonly string[] Styles = ["Green", "Red"];
 
         public HudViewModel()
         {
