@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Hud1.Helpers;
-using Hud1.ViewModels;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -9,27 +8,32 @@ namespace Hud1.Views
     [INotifyPropertyChanged]
     public partial class CustomControl2 : UserControl
     {
-        [ObservableProperty]
-        public CustomControl2ViewModel viewModel = new CustomControl2ViewModel();
-
         private static readonly DependencyProperty LabelProperty =
-            BindingHelper.CreateProperty<CustomControl2, string>("Label", "",
-                (control, value) => control.ViewModel.Label = value);
-
+            BindingHelper.CreateProperty<CustomControl2, string>("Label", "");
 
         private static readonly DependencyProperty SelectedProperty =
-            BindingHelper.CreateProperty<CustomControl2, bool>("Selected", false,
-                (control, value) => control.ViewModel.Selected = value);
+            BindingHelper.CreateProperty<CustomControl2, bool>("Selected", false);
 
         private static readonly DependencyProperty PressedProperty =
-            BindingHelper.CreateProperty<CustomControl2, bool>("Pressed", false,
-                (control, value) => control.ViewModel.Pressed = value);
+            BindingHelper.CreateProperty<CustomControl2, bool>("Pressed", false);
 
-        public String Label { set => SetValue(LabelProperty, value); }
+        public String Label
+        {
+            set => SetValue(LabelProperty, value);
+            get => (String)GetValue(LabelProperty);
+        }
 
-        public bool Selected { set => SetValue(SelectedProperty, value); }
+        public bool Selected
+        {
+            set => SetValue(SelectedProperty, value);
+            get => (Boolean)GetValue(SelectedProperty);
+        }
 
-        public bool Pressed { set => SetValue(PressedProperty, value); }
+        public bool Pressed
+        {
+            set => SetValue(PressedProperty, value);
+            get => (Boolean)GetValue(PressedProperty);
+        }
 
         public CustomControl2()
         {
