@@ -33,7 +33,10 @@
                         <DrawingBrush Viewport="0,0,5,5" ViewportUnits="Absolute" TileMode="Tile">
                             <DrawingBrush.Drawing>
                                 <DrawingGroup>
-                                    <GeometryDrawing Brush="#3300ff00">
+                                    <GeometryDrawing>
+                                        <GeometryDrawing.Brush>
+                                            <SolidColorBrush Color="{DynamicResource ColorBright}" Opacity="0.2"/>
+                                        </GeometryDrawing.Brush>
                                         <GeometryDrawing.Geometry>
                                             <GeometryGroup>
                                                 <RectangleGeometry Rect="0,0,50,50" />
