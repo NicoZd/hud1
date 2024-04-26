@@ -118,7 +118,7 @@ namespace Hud1.Models
 
         public override string? ToString()
         {
-            return Label;
+            return Name;
         }
     }
 }
