@@ -59,6 +59,7 @@ namespace Hud1.ViewModels
         void OnVolumeChanged()
         {
             Volume = MMDeviceManager.GetVolume();
+            NavigationStates.PLAYBACK_VOLUME.SelectionLabel = "" + Math.Round(Volume.Value * 100);
         }
 
 

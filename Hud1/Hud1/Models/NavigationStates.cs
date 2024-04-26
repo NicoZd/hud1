@@ -19,9 +19,9 @@
         public static readonly NavigationState MORE_VISIBLE = new();
 
         // SOUND
-        public static readonly NavigationState PLAYBACK_DEVICE = new() { Label = "PLAYBACK DEVICE" };
-        public static readonly NavigationState PLAYBACK_VOLUME = new();
-        public static readonly NavigationState PLAYBACK_MUTE = new();
+        public static readonly NavigationState PLAYBACK_DEVICE = new() { Label = "Playback Device" };
+        public static readonly NavigationState PLAYBACK_VOLUME = new() { Label = "Volume" };
+        public static readonly NavigationState PLAYBACK_MUTE = new() { Label = "Mute" };
 
         // MORE
         public static readonly NavigationState EXIT = new();

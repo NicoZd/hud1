@@ -70,41 +70,9 @@
                             </Label.Effect>
                         </Label>
 
-                        
                         <views:SelectionControl NavigationState="{Binding Path=States[PLAYBACK_DEVICE]}" />
-
-                        <Border BorderBrush="{Binding Path=States[PLAYBACK_VOLUME].SelectedBorder}" BorderThickness="1" Padding="0">
-                            <StackPanel Background="#66006600" Margin="0" >
-                                <Label Foreground="#ffbbffbb" Content="MUTE" Padding="8,8,0,5" FontFamily="Cascadia Code" FontSize="14">
-                                    <Label.Effect>
-                                        <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />
-                                    </Label.Effect>
-                                </Label>
-                                <DockPanel Margin="-2,0,0,0">
-                                    <views:GlowBorderLabel DockPanel.Dock="Left" Label="&lt;" Selected="{Binding Path=States[PLAYBACK_VOLUME].SelectLeft}"/>
-                                    <views:GlowBorderLabel DockPanel.Dock="Right" Label="&gt;" Selected="{Binding Path=States[PLAYBACK_VOLUME].SelectRight}"/>
-                                    <views:GlowBorderLabel Label="{Binding Path=AudioDeviceViewModel.Volume.StringValue}" Selected="{Binding Path=States[PLAYBACK_VOLUME].Selected}" />
-                                </DockPanel>
-                            </StackPanel>
-                        </Border>
-
-                        <Border BorderBrush="{DynamicResource InfoColor}" BorderThickness="1" Padding="0">
-                            <StackPanel Margin="0" >
-                                <Label Foreground="#ffbbffbb" Content="MUTE" Padding="0,0,0,5" FontFamily="Cascadia Code" FontSize="16">
-                                    <Label.Effect>
-                                        <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />
-                                    </Label.Effect>
-                                </Label>
-                                <Grid Margin="-2,0,0,0">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <views:GlowBorderLabel  Grid.Column="0" Label="ON" Selected="{Binding Path=States[PLAYBACK_MUTE].SelectLeft}"/>
-                                    <views:GlowBorderLabel Grid.Column="1" Label="OFF" Selected="{Binding Path=States[PLAYBACK_MUTE].SelectRight}"/>
-                                </Grid>
-                            </StackPanel>
-                        </Border>
+                        <views:SelectionControl NavigationState="{Binding Path=States[PLAYBACK_VOLUME]}" />
+                        <views:SelectionControl NavigationState="{Binding Path=States[PLAYBACK_MUTE]}" />
 
                     </StackPanel>
                 </Grid>
