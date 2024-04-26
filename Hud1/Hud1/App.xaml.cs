@@ -1,6 +1,4 @@
-﻿using Hud1.Models;
-using System.Windows;
-using System.Windows.Threading;
+﻿using System.Windows;
 
 namespace Hud1
 {
@@ -12,15 +10,6 @@ namespace Hud1
         public App()
         {
             InitializeComponent();
-
-            DispatcherTimer dispatcherTimer = new DispatcherTimer();
-            dispatcherTimer.Tick += new EventHandler((a, b) =>
-            {
-                SelectStyle(NavigationStates.STYLE.SelectionLabel);
-                //SelectStyle2(NavigationStates.STYLE.SelectionLabel);
-            });
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
-            dispatcherTimer.Start();
         }
 
         public static void SelectStyle(String name)
