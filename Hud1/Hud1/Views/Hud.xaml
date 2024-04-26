@@ -25,11 +25,11 @@
                 </StackPanel>
 
                 <WrapPanel Orientation="Horizontal" Margin="-2,15,-2,0" views:Spacing.Horizontal="4">
-                    <views:CustomControl2 Label="GAMMA" Selected="{Binding Path=States[GAMMA_VISIBLE].Selected}"/>
-                    <views:CustomControl2 Label="AUDIO" Selected="{Binding Path=States[AUDIO_VISIBLE].Selected}"/>
-                    <views:CustomControl2 Label="MACRO" Selected="{Binding Path=States[MACRO_VISIBLE].Selected}"/>
-                    <views:CustomControl2 Label="CROSSHAIR" Selected="{Binding Path=States[CROSSHAIR_VISIBLE].Selected}"/>
-                    <views:CustomControl2 Label="MORE" Selected="{Binding Path=States[MORE_VISIBLE].Selected}"/>
+                    <views:GlowBorderLabel Label="GAMMA" Selected="{Binding Path=States[GAMMA_VISIBLE].Selected}"/>
+                    <views:GlowBorderLabel Label="AUDIO" Selected="{Binding Path=States[AUDIO_VISIBLE].Selected}"/>
+                    <views:GlowBorderLabel Label="MACRO" Selected="{Binding Path=States[MACRO_VISIBLE].Selected}"/>
+                    <views:GlowBorderLabel Label="CROSSHAIR" Selected="{Binding Path=States[CROSSHAIR_VISIBLE].Selected}"/>
+                    <views:GlowBorderLabel Label="MORE" Selected="{Binding Path=States[MORE_VISIBLE].Selected}"/>
                 </WrapPanel>
 
                 <Separator Margin="0,15,0,0" Background="{DynamicResource SeparatorColor}"/>
@@ -45,17 +45,17 @@
 
                         <StackPanel Uid="GammaContainer" Orientation="Horizontal" Margin="-2,2,0,0">
                             <StackPanel.Resources>
-                                <Style TargetType="{x:Type views:CustomControl2}">
+                                <Style TargetType="{x:Type views:GlowBorderLabel}">
                                     <Setter Property="Margin" Value="2,0,2,0"/>
                                 </Style>
                             </StackPanel.Resources>
 
-                            <!--<views:CustomControl2 Label="1.0" Selected="{Binding Path=States[gamma-1.0].Selected}" />-->
-                            <!--<views:CustomControl2 Label="1.1" Selected="{Binding Path=States[gamma-1.1].Selected}" />-->
-                            <views:CustomControl2 Label="1.25"/>
-                            <views:CustomControl2 Label="1.5"/>
-                            <views:CustomControl2 Label="2.0"/>
-                            <views:CustomControl2 Label="3.0"/>
+                            <!--<views:GlowBorderLabel Label="1.0" Selected="{Binding Path=States[gamma-1.0].Selected}" />-->
+                            <!--<views:GlowBorderLabel Label="1.1" Selected="{Binding Path=States[gamma-1.1].Selected}" />-->
+                            <views:GlowBorderLabel Label="1.25"/>
+                            <views:GlowBorderLabel Label="1.5"/>
+                            <views:GlowBorderLabel Label="2.0"/>
+                            <views:GlowBorderLabel Label="3.0"/>
                         </StackPanel>
                     </StackPanel>
 
@@ -81,9 +81,9 @@
                                     </Label.Effect>
                                 </Label>
                                 <DockPanel Margin="-2,0,0,0">
-                                    <views:CustomControl2 DockPanel.Dock="Left" Label="&lt;" Selected="{Binding Path=States[PLAYBACK_VOLUME].SelectLeft}"/>
-                                    <views:CustomControl2 DockPanel.Dock="Right" Label="&gt;" Selected="{Binding Path=States[PLAYBACK_VOLUME].SelectRight}"/>
-                                    <views:CustomControl2 Label="{Binding Path=AudioDeviceViewModel.Volume.StringValue}" Selected="{Binding Path=States[PLAYBACK_VOLUME].Selected}" />
+                                    <views:GlowBorderLabel DockPanel.Dock="Left" Label="&lt;" Selected="{Binding Path=States[PLAYBACK_VOLUME].SelectLeft}"/>
+                                    <views:GlowBorderLabel DockPanel.Dock="Right" Label="&gt;" Selected="{Binding Path=States[PLAYBACK_VOLUME].SelectRight}"/>
+                                    <views:GlowBorderLabel Label="{Binding Path=AudioDeviceViewModel.Volume.StringValue}" Selected="{Binding Path=States[PLAYBACK_VOLUME].Selected}" />
                                 </DockPanel>
                             </StackPanel>
                         </Border>
@@ -100,8 +100,8 @@
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
-                                    <views:CustomControl2  Grid.Column="0" Label="ON" Selected="{Binding Path=States[PLAYBACK_MUTE].SelectLeft}"/>
-                                    <views:CustomControl2 Grid.Column="1" Label="OFF" Selected="{Binding Path=States[PLAYBACK_MUTE].SelectRight}"/>
+                                    <views:GlowBorderLabel  Grid.Column="0" Label="ON" Selected="{Binding Path=States[PLAYBACK_MUTE].SelectLeft}"/>
+                                    <views:GlowBorderLabel Grid.Column="1" Label="OFF" Selected="{Binding Path=States[PLAYBACK_MUTE].SelectRight}"/>
                                 </Grid>
                             </StackPanel>
                         </Border>
@@ -112,7 +112,7 @@
                 <Grid Visibility="{Binding Path=States[MACRO_VISIBLE].Visibility}">
                     <StackPanel Margin="0,50,0,0">
                         <StackPanel.Resources>
-                            <Style TargetType="{x:Type views:CustomControl2}">
+                            <Style TargetType="{x:Type views:GlowBorderLabel}">
                                 <Setter Property="Margin" Value="0,2,0,2"/>
                             </Style>
                         </StackPanel.Resources>
@@ -121,21 +121,21 @@
                                 <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />
                             </Label.Effect>
                         </Label>
-                        <views:CustomControl2 Label="Hold Left"/>
-                        <views:CustomControl2 Label="Repeat Left"/>
+                        <views:GlowBorderLabel Label="Hold Left"/>
+                        <views:GlowBorderLabel Label="Repeat Left"/>
                         <Label Foreground="#ffbbffbb" Content="KEY MACRO" Padding="0,20,0,5" FontFamily="Cascadia Code" FontSize="16">
                             <Label.Effect>
                                 <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />
                             </Label.Effect>
                         </Label>
-                        <views:CustomControl2 Label="Hold W"/>
+                        <views:GlowBorderLabel Label="Hold W"/>
                     </StackPanel>
                 </Grid>
 
                 <Grid Visibility="{Binding Path=States[CROSSHAIR_VISIBLE].Visibility}">
                     <StackPanel Margin="0,50,0,0" Orientation="Vertical">
                         <StackPanel.Resources>
-                            <Style TargetType="{x:Type views:CustomControl2}">
+                            <Style TargetType="{x:Type views:GlowBorderLabel}">
                                 <Setter Property="Margin" Value="0,2,0,2"/>
                             </Style>
                         </StackPanel.Resources>
@@ -144,10 +144,10 @@
                                 <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />
                             </Label.Effect>
                         </Label>
-                        <!--<views:CustomControl2 Label="ON/OFF" Selected="{Binding Path=States[cross-visible].Selected}" />
-                        <views:CustomControl2 Label="C" Selected="{Binding Path=States[cross-color].Selected}"/>
-                        <views:CustomControl2 Label="F" Selected="{Binding Path=States[cross-form].Selected}"/>
-                        <views:CustomControl2 Label="S" Selected="{Binding Path=States[cross-size].Selected}"/>-->
+                        <!--<views:GlowBorderLabel Label="ON/OFF" Selected="{Binding Path=States[cross-visible].Selected}" />
+                        <views:GlowBorderLabel Label="C" Selected="{Binding Path=States[cross-color].Selected}"/>
+                        <views:GlowBorderLabel Label="F" Selected="{Binding Path=States[cross-form].Selected}"/>
+                        <views:GlowBorderLabel Label="S" Selected="{Binding Path=States[cross-size].Selected}"/>-->
                     </StackPanel>
                 </Grid>
 
@@ -162,8 +162,8 @@
 
                         <StackPanel Margin="0,0,0,0" Orientation="Vertical" >
                             <DockPanel views:MarginSetter.Margin="4,0,0,0">
-                                <views:CustomControl2 DockPanel.Dock="Right" Label=">" Selected="{Binding Path=States[EXIT].SelectRight}"/>
-                                <views:CustomControl2 Label="EXIT" Selected="{Binding Path=States[EXIT].Selected}" />
+                                <views:GlowBorderLabel DockPanel.Dock="Right" Label=">" Selected="{Binding Path=States[EXIT].SelectRight}"/>
+                                <views:GlowBorderLabel Label="EXIT" Selected="{Binding Path=States[EXIT].Selected}" />
                             </DockPanel>
                         </StackPanel>
 

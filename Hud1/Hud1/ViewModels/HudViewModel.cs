@@ -111,7 +111,7 @@ namespace Hud1.ViewModels
 
         public bool OnKeyPressed(GlobalKey key)
         {
-            Debug.WriteLine("ListenerOnKeyPressed {0}", key);
+            //Debug.WriteLine("ListenerOnKeyPressed {0}", key);
 
             if (key == GlobalKey.VK_LEFT)
             {

@@ -9,7 +9,7 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="Views\CustomControl2.xaml.cs">
+    <Compile Update="Views\GlowBorderLabel.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\GlowBorder.xaml.cs">
@@ -35,7 +35,7 @@
     <Page Update="Themes\Green.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\CustomControl2.xaml">
+    <Page Update="Views\GlowBorderLabel.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\GlowBorder.xaml">

@@ -38,12 +38,12 @@
 
             <DockPanel Margin="3,0,3,5">
                 <DockPanel.Resources>
-                    <Style TargetType="{x:Type views:CustomControl2}">
+                    <Style TargetType="{x:Type views:GlowBorderLabel}">
                         <Setter Property="Margin" Value="2,0,2,0"/>
                     </Style>
                 </DockPanel.Resources>
-                <views:CustomControl2 DockPanel.Dock="Left" Label="&lt;" Selected="{Binding Path=Selected}" Pressed="{Binding Path=SelectLeft}"/>
-                <views:CustomControl2 DockPanel.Dock="Right" Label="&gt;" Selected="{Binding Path=Selected}" Pressed="{Binding Path=SelectRight}"/>
+                <views:GlowBorderLabel DockPanel.Dock="Left" Label="&lt;" Selected="{Binding Path=Selected}" Pressed="{Binding Path=SelectLeft}"/>
+                <views:GlowBorderLabel DockPanel.Dock="Right" Label="&gt;" Selected="{Binding Path=Selected}" Pressed="{Binding Path=SelectRight}"/>
                 <Border BorderThickness="0">
                     <Border.Style>
                         <Style TargetType="Border">

@@ -1,0 +1,37 @@
+﻿<UserControl x:Class="Hud1.Views.GlowBorderLabel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:views="clr-namespace:Hud1.Views"
+             mc:Ignorable="d"            
+             >
+    <views:GlowBorder DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}">
+        <Label Content="{Binding Path=Label}">
+            <Label.Style>
+                <Style TargetType="Label" BasedOn="{StaticResource ButtonLabel}">
+                    <Setter Property="Foreground">
+                        <Setter.Value>
+                            <SolidColorBrush Color="{DynamicResource ColorBright}"/>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="Effect">
+                        <Setter.Value>
+                            <DropShadowEffect ShadowDepth="0" BlurRadius="3" Color="{DynamicResource ColorBright}" Opacity="0.5"/>
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Path=Selected}" Value="True">
+                            <Setter Property="Foreground" Value="{DynamicResource InfoColor}"/>
+                            <Setter Property="Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect ShadowDepth="0" BlurRadius="10" Color="{DynamicResource ColorInfo}" Opacity="1.0"/>
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Label.Style>
+        </Label>
+    </views:GlowBorder>
+</UserControl>

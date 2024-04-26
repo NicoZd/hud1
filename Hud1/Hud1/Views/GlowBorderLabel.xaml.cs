@@ -6,16 +6,16 @@ using System.Windows.Controls;
 namespace Hud1.Views
 {
     [INotifyPropertyChanged]
-    public partial class CustomControl2 : UserControl
+    public partial class GlowBorderLabel : UserControl
     {
         private static readonly DependencyProperty LabelProperty =
-            BindingHelper.CreateProperty<CustomControl2, string>("Label", "");
+            BindingHelper.CreateProperty<GlowBorderLabel, string>("Label", "");
 
         private static readonly DependencyProperty SelectedProperty =
-            BindingHelper.CreateProperty<CustomControl2, bool>("Selected", false);
+            BindingHelper.CreateProperty<GlowBorderLabel, bool>("Selected", false);
 
         private static readonly DependencyProperty PressedProperty =
-            BindingHelper.CreateProperty<CustomControl2, bool>("Pressed", false);
+            BindingHelper.CreateProperty<GlowBorderLabel, bool>("Pressed", false);
 
         public String Label
         {
@@ -35,7 +35,7 @@ namespace Hud1.Views
             get => (Boolean)GetValue(PressedProperty);
         }
 
-        public CustomControl2()
+        public GlowBorderLabel()
         {
             InitializeComponent();
         }
