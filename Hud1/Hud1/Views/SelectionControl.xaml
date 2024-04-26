@@ -71,7 +71,7 @@
                     <TextBlock Width="250" TextTrimming="CharacterEllipsis"
                                FontFamily="{DynamicResource FontFamily}"
                                Foreground="{DynamicResource InfoColor}" 
-                               FontSize="10" 
+                               FontSize="12" 
                                VerticalAlignment="Center"
                                TextAlignment="Center"
                                Text="{Binding Path=SelectionLabel}"/>

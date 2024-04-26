@@ -25,11 +25,21 @@
                 </StackPanel>
 
                 <WrapPanel Orientation="Horizontal" Margin="-2,15,-2,0" views:Spacing.Horizontal="4">
-                    <views:GlowBorderLabel Label="GAMMA" Selected="{Binding Path=States[GAMMA_VISIBLE].Selected}"/>
-                    <views:GlowBorderLabel Label="AUDIO" Selected="{Binding Path=States[AUDIO_VISIBLE].Selected}"/>
-                    <views:GlowBorderLabel Label="MACRO" Selected="{Binding Path=States[MACRO_VISIBLE].Selected}"/>
-                    <views:GlowBorderLabel Label="CROSSHAIR" Selected="{Binding Path=States[CROSSHAIR_VISIBLE].Selected}"/>
-                    <views:GlowBorderLabel Label="MORE" Selected="{Binding Path=States[MORE_VISIBLE].Selected}"/>
+                    <views:GlowBorderLabel Label="GAMMA" 
+                                           Pressed="{Binding Path=States[MENU_GAMMA].Selected}"
+                                           Selected="{Binding Path=States[GAMMA_VISIBLE].Selected}"/>
+                    <views:GlowBorderLabel Label="AUDIO" 
+                                           Pressed="{Binding Path=States[MENU_AUDIO].Selected}"
+                                           Selected="{Binding Path=States[AUDIO_VISIBLE].Selected}"/>
+                    <views:GlowBorderLabel Label="MACRO" 
+                                           Pressed="{Binding Path=States[MENU_MACRO].Selected}"
+                                           Selected="{Binding Path=States[MACRO_VISIBLE].Selected}"/>
+                    <views:GlowBorderLabel Label="CROSSHAIR" 
+                                           Pressed="{Binding Path=States[MENU_CROSSHAIR].Selected}"
+                                           Selected="{Binding Path=States[CROSSHAIR_VISIBLE].Selected}"/>
+                    <views:GlowBorderLabel Label="MORE" 
+                                           Pressed="{Binding Path=States[MENU_MORE].Selected}"
+                                           Selected="{Binding Path=States[MORE_VISIBLE].Selected}"/>
                 </WrapPanel>
 
                 <Separator Margin="0,15,0,0" Background="{DynamicResource SeparatorColor}"/>
@@ -62,7 +72,7 @@
                 </Grid>
 
                 <Grid Visibility="{Binding Path=States[AUDIO_VISIBLE].Visibility}">
-                    <StackPanel Margin="0,25,0,0" views:Spacing.Vertical="10">
+                    <StackPanel Margin="0,25,0,0" views:Spacing.Vertical="15">
 
                         <Label Foreground="#ffbbffbb" Content="AUDIO" Padding="0,0,0,20" FontFamily="Cascadia Code" FontSize="16">
                             <Label.Effect>

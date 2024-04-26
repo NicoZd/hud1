@@ -36,7 +36,8 @@ namespace Hud1.ViewModels
                 .SubstateOf(NavigationStates.AUDIO_VISIBLE)
                 .Permit(NavigationTriggers.LEFT, NavigationStates.MENU_GAMMA)
                 .Permit(NavigationTriggers.RIGHT, NavigationStates.MENU_MACRO)
-                .Permit(NavigationTriggers.DOWN, NavigationStates.PLAYBACK_DEVICE);
+                .Permit(NavigationTriggers.DOWN, NavigationStates.PLAYBACK_DEVICE)
+                .Permit(NavigationTriggers.UP, NavigationStates.PLAYBACK_MUTE);
 
             Navigation.Configure(NavigationStates.MENU_MACRO)
                 .SubstateOf(NavigationStates.MACRO_VISIBLE)
@@ -78,6 +79,7 @@ namespace Hud1.ViewModels
             Navigation.Configure(NavigationStates.PLAYBACK_MUTE)
                .SubstateOf(NavigationStates.AUDIO_VISIBLE)
                .Permit(NavigationTriggers.UP, NavigationStates.PLAYBACK_VOLUME)
+               .Permit(NavigationTriggers.DOWN, NavigationStates.MENU_AUDIO)
                .InternalTransition(NavigationTriggers.LEFT, NavigationStates.PLAYBACK_MUTE.ExecuteLeft)
                .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.PLAYBACK_MUTE.ExecuteRight);
 

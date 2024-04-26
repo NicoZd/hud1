@@ -36,6 +36,21 @@
                                     <Setter Property="Background" >
                                         <Setter.Value>
                                             <LinearGradientBrush StartPoint="0,0" EndPoint="0,0">
+                                                <GradientStop Color="{DynamicResource ColorBackgroundDarkMed}" Offset="0.0"/>
+                                            </LinearGradientBrush>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Setter Property="BorderBrush" Value="{DynamicResource InfoColor}" />
+                                    <Setter Property="Effect">
+                                        <Setter.Value>
+                                            <DropShadowEffect ShadowDepth="0" BlurRadius="10" Color="{DynamicResource ColorInfo}" Opacity="0.5"/>
+                                        </Setter.Value>
+                                    </Setter>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Path=Pressed}" Value="True">
+                                    <Setter Property="Background" >
+                                        <Setter.Value>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,0">
                                                 <GradientStop Color="{DynamicResource ColorMed}" Offset="0.0"/>
                                             </LinearGradientBrush>
                                         </Setter.Value>
@@ -48,6 +63,7 @@
                                     </Setter>
                                 </DataTrigger>
                             </Style.Triggers>
+                            
                         </Style>
                     </Border.Style>
                 </Border>
