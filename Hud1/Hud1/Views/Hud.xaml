@@ -10,7 +10,7 @@
              Loaded="OnWindowLoaded"             
              >
 
-    <Grid DataContext="{Binding Path=ViewModel, RelativeSource={RelativeSource AncestorType=local:Hud}}" HorizontalAlignment="Left" Margin="0,0,0,0">
+    <Grid DataContext="{Binding Path=ViewModel, RelativeSource={RelativeSource AncestorType=local:Hud}}" HorizontalAlignment="Right" Margin="0,0,0,0">
         <Grid.Effect>
             <DropShadowEffect ShadowDepth="3" Color="#008800" Opacity="0.5" BlurRadius="20" Direction="0" />
         </Grid.Effect>
