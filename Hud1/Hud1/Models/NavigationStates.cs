@@ -19,9 +19,13 @@
         public static readonly NavigationState MORE_VISIBLE = new();
 
         // SOUND
-        public static readonly NavigationState PLAYBACK_DEVICE = new() { Label = "Playback Device" };
+        public static readonly NavigationState PLAYBACK_DEVICE = new() { Label = "Device" };
         public static readonly NavigationState PLAYBACK_VOLUME = new() { Label = "Volume" };
         public static readonly NavigationState PLAYBACK_MUTE = new() { Label = "Mute" };
+
+        public static readonly NavigationState CAPTURE_DEVICE = new() { Label = "Device" };
+        public static readonly NavigationState CAPTURE_VOLUME = new() { Label = "Volume" };
+        public static readonly NavigationState CAPTURE_MUTE = new() { Label = "Mute" };
 
         // MORE
         public static readonly NavigationState EXIT = new();

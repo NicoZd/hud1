@@ -42,12 +42,15 @@
                                            Selected="{Binding Path=States[MORE_VISIBLE].Selected}"/>
                 </WrapPanel>
 
-                <Separator Margin="0,15,0,0" Background="{DynamicResource SeparatorColor}"/>
+                <Separator Margin="0,12,0,25" Background="{DynamicResource SeparatorColor}"/>
+
+                <TextBlock FontFamily="{DynamicResource FontFamily}" Foreground="{DynamicResource InfoColor}" 
+                    FontSize="12" Text="Select stuff to have fun with ofther stuff."/>
 
                 <Grid Visibility="{Binding Path=States[GAMMA_VISIBLE].Visibility}" Margin="0,50,0,0">
                     <StackPanel Margin="0,0,0,0" Orientation="Vertical">
 
-                        <Label Foreground="#ffbbffbb" Content="GAMMA" Padding="0,0,0,5" FontFamily="Cascadia Code" FontSize="16">
+                        <Label Foreground="#ffbbffbb" Content="GAMMA" Padding="0,0,0,10" FontFamily="Cascadia Code" FontSize="16">
                             <Label.Effect>
                                 <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />
                             </Label.Effect>
@@ -72,9 +75,9 @@
                 </Grid>
 
                 <Grid Visibility="{Binding Path=States[AUDIO_VISIBLE].Visibility}">
-                    <StackPanel Margin="0,25,0,0" views:Spacing.Vertical="15">
+                    <StackPanel Margin="0,20,0,0" views:Spacing.Vertical="8">
 
-                        <Label Foreground="#ffbbffbb" Content="AUDIO" Padding="0,0,0,20" FontFamily="Cascadia Code" FontSize="16">
+                        <Label Foreground="#ffbbffbb" Content="Playback" Padding="0,0,0,5" FontFamily="Cascadia Code" FontSize="16">
                             <Label.Effect>
                                 <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />
                             </Label.Effect>
@@ -83,6 +86,16 @@
                         <views:SelectionControl NavigationState="{Binding Path=States[PLAYBACK_DEVICE]}" />
                         <views:SelectionControl NavigationState="{Binding Path=States[PLAYBACK_VOLUME]}" />
                         <views:SelectionControl NavigationState="{Binding Path=States[PLAYBACK_MUTE]}" />
+
+                        <Label Foreground="#ffbbffbb" Content="Capture" Padding="0,20,0,5" FontFamily="Cascadia Code" FontSize="16">
+                            <Label.Effect>
+                                <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />
+                            </Label.Effect>
+                        </Label>
+
+                        <views:SelectionControl NavigationState="{Binding Path=States[CAPTURE_DEVICE]}" />
+                        <views:SelectionControl NavigationState="{Binding Path=States[CAPTURE_VOLUME]}" />
+                        <views:SelectionControl NavigationState="{Binding Path=States[CAPTURE_MUTE]}" />
 
                     </StackPanel>
                 </Grid>
