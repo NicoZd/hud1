@@ -12,7 +12,7 @@
         <Color x:Key="ColorBackgroundDark">#f5008800</Color>
         <Color x:Key="ColorBackgroundDarkMed">#dd005500</Color>
         <Color x:Key="ColorBackgroundDarkTrans">#11005500</Color>
-        <Color x:Key="ColorInfo">#bbffbb</Color>
+        <Color x:Key="ColorInfo">#ffff00</Color>
 
         <!-- Effects -->
         <sys:Double x:Key="DropShadowOpacity">1.5</sys:Double>

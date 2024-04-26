@@ -10,7 +10,32 @@
              >
     <Grid DataContext="{Binding Path=ViewModel, RelativeSource={RelativeSource AncestorType=local:CustomControl2}}">
         <views:GlowBorder >
-            <Label Content="{Binding Path=Label}" Style="{DynamicResource ButtonLabel}" Foreground="{Binding Path=Foreground}"/>
+            <Label Content="{Binding Path=Label}">
+                <Label.Style>
+                    <Style TargetType="Label" BasedOn="{StaticResource ButtonLabel}">
+                        <Setter Property="Foreground">
+                            <Setter.Value>
+                                <SolidColorBrush Color="{DynamicResource ColorBright}"/>
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="Effect">
+                            <Setter.Value>
+                                <DropShadowEffect ShadowDepth="0" BlurRadius="3" Color="{DynamicResource ColorBright}" Opacity="0.5"/>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=Selected}" Value="True">
+                                <Setter Property="Foreground" Value="{DynamicResource InfoColor}"/>
+                                <Setter Property="Effect">
+                                    <Setter.Value>
+                                        <DropShadowEffect ShadowDepth="0" BlurRadius="10" Color="{DynamicResource ColorInfo}" Opacity="1.0"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Label.Style>
+            </Label>
         </views:GlowBorder>
     </Grid>
 </UserControl>

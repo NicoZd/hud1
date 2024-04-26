@@ -46,7 +46,8 @@ namespace Hud1
                 case "Red":
                     Resources["ColorSuperBright"] = (Color)ColorConverter.ConvertFromString("#b55050");
                     Resources["ColorBright"] = (Color)ColorConverter.ConvertFromString("#9f392e");
-                    Resources["ColorBackgroundDark"] = (Color)ColorConverter.ConvertFromString("#ff3b191c");
+                    Resources["ColorMed"] = (Color)ColorConverter.ConvertFromString("#ff45191c");
+                    Resources["ColorBackgroundDark"] = (Color)ColorConverter.ConvertFromString("#ff0f060a");
                     Resources["ColorBackgroundDarkMed"] = (Color)ColorConverter.ConvertFromString("#ee1f0f15");
                     Resources["ColorBackgroundDarkTrans"] = (Color)ColorConverter.ConvertFromString("#9905050d");
                     Resources["ColorInfo"] = (Color)ColorConverter.ConvertFromString("#51e8fe");
