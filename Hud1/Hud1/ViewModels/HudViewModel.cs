@@ -18,6 +18,9 @@ namespace Hud1.ViewModels
         [ObservableProperty]
         public AudioDeviceViewModel audioDeviceViewModel = new();
 
+        [ObservableProperty]
+        public GammaViewModel gammaViewModel = new();
+
         public Stateless.StateMachine<NavigationState, NavigationTrigger> Navigation;
 
         private readonly string[] Styles = ["Green", "Red"];
@@ -59,8 +62,8 @@ namespace Hud1.ViewModels
                 .Permit(NavigationTriggers.DOWN, NavigationStates.EXIT);
 
             // GAMMA
-            //NavigationStates.GAMMA.LeftAction = audioDeviceViewModel.SelectPrevDevice;
-            //NavigationStates.GAMMA.RightAction = audioDeviceViewModel.SelectNextDevice;
+            NavigationStates.GAMMA.LeftAction = gammaViewModel.SelectPrevGama;
+            NavigationStates.GAMMA.RightAction = gammaViewModel.SelectNextGama;
             Navigation.Configure(NavigationStates.GAMMA)
                .SubstateOf(NavigationStates.GAMMA_VISIBLE)
                .Permit(NavigationTriggers.UP, NavigationStates.MENU_GAMMA)
