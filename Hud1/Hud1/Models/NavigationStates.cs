@@ -32,6 +32,6 @@
 
         // MORE
         public static readonly NavigationState EXIT = new();
-        public static readonly NavigationState STYLE = new() { SelectionLabel = "Green" };
+        public static readonly NavigationState STYLE = new() { SelectionLabel = "Green", Label = "Colors", Hint = "Adjust colors of this window." };
     }
 }

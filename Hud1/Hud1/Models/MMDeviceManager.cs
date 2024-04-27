@@ -42,15 +42,32 @@ namespace Hud1.Models
             client.DefaultDeviceChanged += (s, e) => UpdateDevices();
             UpdateDevices();
         }
+        public void SelectNextDevice()
+        {
+            var index = PlaybackDevices.FindIndex(d => d.ID == DefaultPlaybackDeviceId);
+            if (index != -1)
+            {
+                var nextIndex = Math.Min(index + 1, PlaybackDevices.Count - 1);
 
+                if (nextIndex != index)
+                {
+                    index = nextIndex;
+                    PlaybackDevices[index].Selected = true;
+                }
+            }
+        }
 
         public void SelectPrevDevice()
         {
             var index = PlaybackDevices.FindIndex(d => d.ID == DefaultPlaybackDeviceId);
             if (index != -1)
             {
-                index = (index - 1 + PlaybackDevices.Count) % PlaybackDevices.Count;
-                PlaybackDevices[index].Selected = true;
+                var nextIndex = Math.Max(index - 1, 0);
+                if (nextIndex != index)
+                {
+                    index = nextIndex;
+                    PlaybackDevices[index].Selected = true;
+                }
             }
         }
 
@@ -77,16 +94,6 @@ namespace Hud1.Models
             else
             {
                 return new Volume { Muted = false, Value = 0.5f };
-            }
-        }
-
-        public void SelectNextDevice()
-        {
-            var index = PlaybackDevices.FindIndex(d => d.ID == DefaultPlaybackDeviceId);
-            if (index != -1)
-            {
-                index = (index + 1) % PlaybackDevices.Count;
-                PlaybackDevices[index].Selected = true;
             }
         }
 

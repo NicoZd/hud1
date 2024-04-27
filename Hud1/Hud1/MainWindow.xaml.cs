@@ -88,33 +88,6 @@ namespace Hud1
             }
         }
 
-        private bool HandleKeyDown(GlobalKey key, bool alt)
-        {
-            Debug.Print("HandleKeyDown {0} {1}", key, alt);
-
-            if (alt)
-            {
-                if (key == GlobalKey.VK_S || key == GlobalKey.VK_F || key == GlobalKey.VK_L)
-                {
-                    windowModel.Active = !windowModel.Active;
-                    return true;
-                }
-            }
-            else
-            {
-                if (key == GlobalKey.VK_F2)
-                {
-                    windowModel.Active = !windowModel.Active;
-                }
-                else if (windowModel.Active)
-                {
-                    //return ListenerOnKeyPressed(key);
-                }
-
-            }
-            return false;
-        }
-
         private void ShowApp()
         {
             var animation = new DoubleAnimation

@@ -70,10 +70,12 @@ namespace Hud1.ViewModels
             DefaultPlaybackDeviceID = MMDeviceManager.DefaultPlaybackDeviceId;
             DefaultCaptureDeviceID = MMDeviceManager.DefaultCaptureDeviceId;
 
-            var playbackDevice = PlaybackDevices.Find(d => d.ID == DefaultPlaybackDeviceID);
+            var playbackDeviceIndex = PlaybackDevices.FindIndex(d => d.ID == DefaultPlaybackDeviceID);
+            var playbackDevice = PlaybackDevices[playbackDeviceIndex];
             DefaultPlaybackDeviceName = playbackDevice == null ? "Unknown" : TrimName(playbackDevice.DeviceInterfaceFriendlyName);
 
-            NavigationStates.PLAYBACK_DEVICE.SelectionLabel = DefaultPlaybackDeviceName;
+            NavigationStates.PLAYBACK_DEVICE.SelectionLabel = DefaultPlaybackDeviceName + " " + (playbackDeviceIndex + 1) + "/" + PlaybackDevices.Count;
+            //NavigationStates.PLAYBACK_DEVICE.Selection
         }
 
         private static string TrimName(string name)
