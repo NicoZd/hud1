@@ -170,7 +170,7 @@ namespace Hud1.ViewModels
             var info = Navigation.GetInfo();
             foreach (StateInfo stateInfo in info.States)
             {
-                var navigationState = stateInfo.UnderlyingState as NavigationState;
+                var navigationState = (NavigationState)stateInfo.UnderlyingState;
                 var isInState = Navigation.IsInState(navigationState);
                 navigationState.Selected = isInState;
                 navigationState.Visibility = isInState ? Visibility.Visible : Visibility.Collapsed;

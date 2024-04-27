@@ -5,7 +5,7 @@ namespace Hud1.Helpers
 {
     public static class DependencyObjectExtensions
     {
-        public static UIElement FindUid(this DependencyObject parent, string uid)
+        public static UIElement? FindUid(this DependencyObject parent, string uid)
         {
             var count = VisualTreeHelper.GetChildrenCount(parent);
             if (count == 0) return null;

@@ -49,7 +49,7 @@ namespace Hud1.Helpers
         //        internal static Func<GlobalKey, bool, bool> HandleKeyDown;
 
         public delegate void KeyDownHandler(KeyEvent keyEvent);
-        public static event KeyDownHandler KeyDown;
+        public static event KeyDownHandler? KeyDown;
 
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Hud1.Helpers
         {
             using (Process curProcess = Process.GetCurrentProcess())
             {
-                using (ProcessModule curModule = curProcess.MainModule)
+                using (ProcessModule curModule = curProcess.MainModule!)
                 {
                     return SetWindowsHookEx(WH_KEYBOARD_LL, proc, GetModuleHandle(curModule.ModuleName), 0);
                 }
@@ -102,8 +102,7 @@ namespace Hud1.Helpers
                         {
                             int vkCode = Marshal.ReadInt32(lParam);
                             var keyEvent = new KeyEvent((GlobalKey)vkCode);
-                            KeyDown(keyEvent);
-
+                            KeyDown?.Invoke(keyEvent);
                             // Debug.Print("WM_KEYDOWN vkCode:{0} blocked:{1}", vkCode, blocked);
                             if (keyEvent.block)
                             {
@@ -127,7 +126,7 @@ namespace Hud1.Helpers
                             }
                             var keyEvent = new KeyEvent((GlobalKey)vkCode);
                             keyEvent.alt = IsDown.ContainsKey(GlobalKey.VK_LMENU) && IsDown[GlobalKey.VK_LMENU];
-                            KeyDown(keyEvent);
+                            KeyDown?.Invoke(keyEvent);
                             // Debug.Print("WM_KEYDOWN vkCode:{0} blocked:{1}", vkCode, blocked);
                             if (keyEvent.block)
                             {

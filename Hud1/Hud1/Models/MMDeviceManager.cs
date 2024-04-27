@@ -59,7 +59,10 @@ namespace Hud1.Models
             var device = PlaybackDevices.Find(d => d.ID == DefaultPlaybackDeviceId);
             if (device != null)
             {
-                device.AudioEndpointVolume.MasterVolumeLevelScalar = Math.Max(0, Math.Min(1, volume));
+                if (device.AudioEndpointVolume != null)
+                {
+                    device.AudioEndpointVolume.MasterVolumeLevelScalar = Math.Max(0, Math.Min(1, volume));
+                }
                 VolumeChanged?.Invoke();
             }
         }

@@ -30,7 +30,7 @@ namespace Hud1.Views
             }
         }
 
-        private static void OnPanelLoaded(object sender, RoutedEventArgs e)
+        private static void OnPanelLoaded(object sender, RoutedEventArgs? e)
         {
             var panel = (Panel)sender;
 
