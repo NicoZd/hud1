@@ -22,7 +22,7 @@
                     </Setter>
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding Path=Selected}" Value="True">
-                            <Setter Property="Foreground" Value="{DynamicResource InfoColor}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource BrushInfo}"/>
                             <Setter Property="Effect">
                                 <Setter.Value>
                                     <DropShadowEffect ShadowDepth="0" BlurRadius="10" Color="{DynamicResource ColorInfo}" Opacity="1.0"/>

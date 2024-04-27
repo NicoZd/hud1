@@ -30,14 +30,17 @@ namespace Hud1.ViewModels
             Navigation.Configure(NavigationStates.MENU_GAMMA)
                 .SubstateOf(NavigationStates.GAMMA_VISIBLE)
                 .Permit(NavigationTriggers.LEFT, NavigationStates.MENU_MORE)
-                .Permit(NavigationTriggers.RIGHT, NavigationStates.MENU_AUDIO);
+                .Permit(NavigationTriggers.RIGHT, NavigationStates.MENU_AUDIO)
+                .Permit(NavigationTriggers.DOWN, NavigationStates.GAMMA)
+                .Permit(NavigationTriggers.UP, NavigationStates.GAMMA);
+
 
             Navigation.Configure(NavigationStates.MENU_AUDIO)
                 .SubstateOf(NavigationStates.AUDIO_VISIBLE)
                 .Permit(NavigationTriggers.LEFT, NavigationStates.MENU_GAMMA)
                 .Permit(NavigationTriggers.RIGHT, NavigationStates.MENU_MACRO)
                 .Permit(NavigationTriggers.DOWN, NavigationStates.PLAYBACK_DEVICE)
-                .Permit(NavigationTriggers.UP, NavigationStates.PLAYBACK_MUTE);
+                .Permit(NavigationTriggers.UP, NavigationStates.CAPTURE_MUTE);
 
             Navigation.Configure(NavigationStates.MENU_MACRO)
                 .SubstateOf(NavigationStates.MACRO_VISIBLE)
@@ -54,6 +57,16 @@ namespace Hud1.ViewModels
                 .Permit(NavigationTriggers.LEFT, NavigationStates.MENU_CROSSHAIR)
                 .Permit(NavigationTriggers.RIGHT, NavigationStates.MENU_GAMMA)
                 .Permit(NavigationTriggers.DOWN, NavigationStates.EXIT);
+
+            // GAMMA
+            //NavigationStates.GAMMA.LeftAction = audioDeviceViewModel.SelectPrevDevice;
+            //NavigationStates.GAMMA.RightAction = audioDeviceViewModel.SelectNextDevice;
+            Navigation.Configure(NavigationStates.GAMMA)
+               .SubstateOf(NavigationStates.GAMMA_VISIBLE)
+               .Permit(NavigationTriggers.UP, NavigationStates.MENU_GAMMA)
+               .Permit(NavigationTriggers.DOWN, NavigationStates.MENU_GAMMA)
+               .InternalTransition(NavigationTriggers.LEFT, NavigationStates.GAMMA.ExecuteLeft)
+               .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.GAMMA.ExecuteRight);
 
             // SOUND
             NavigationStates.PLAYBACK_DEVICE.LeftAction = audioDeviceViewModel.SelectPrevDevice;
@@ -79,9 +92,30 @@ namespace Hud1.ViewModels
             Navigation.Configure(NavigationStates.PLAYBACK_MUTE)
                .SubstateOf(NavigationStates.AUDIO_VISIBLE)
                .Permit(NavigationTriggers.UP, NavigationStates.PLAYBACK_VOLUME)
-               .Permit(NavigationTriggers.DOWN, NavigationStates.MENU_AUDIO)
+               .Permit(NavigationTriggers.DOWN, NavigationStates.CAPTURE_DEVICE)
                .InternalTransition(NavigationTriggers.LEFT, NavigationStates.PLAYBACK_MUTE.ExecuteLeft)
                .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.PLAYBACK_MUTE.ExecuteRight);
+
+            Navigation.Configure(NavigationStates.CAPTURE_DEVICE)
+              .SubstateOf(NavigationStates.AUDIO_VISIBLE)
+              .Permit(NavigationTriggers.UP, NavigationStates.PLAYBACK_MUTE)
+              .Permit(NavigationTriggers.DOWN, NavigationStates.CAPTURE_VOLUME)
+              .InternalTransition(NavigationTriggers.LEFT, NavigationStates.CAPTURE_DEVICE.ExecuteLeft)
+              .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.CAPTURE_DEVICE.ExecuteRight);
+
+            Navigation.Configure(NavigationStates.CAPTURE_VOLUME)
+              .SubstateOf(NavigationStates.AUDIO_VISIBLE)
+              .Permit(NavigationTriggers.UP, NavigationStates.CAPTURE_DEVICE)
+              .Permit(NavigationTriggers.DOWN, NavigationStates.CAPTURE_MUTE)
+              .InternalTransition(NavigationTriggers.LEFT, NavigationStates.CAPTURE_VOLUME.ExecuteLeft)
+              .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.CAPTURE_VOLUME.ExecuteRight);
+
+            Navigation.Configure(NavigationStates.CAPTURE_MUTE)
+              .SubstateOf(NavigationStates.AUDIO_VISIBLE)
+              .Permit(NavigationTriggers.UP, NavigationStates.CAPTURE_VOLUME)
+              .Permit(NavigationTriggers.DOWN, NavigationStates.MENU_AUDIO)
+              .InternalTransition(NavigationTriggers.LEFT, NavigationStates.CAPTURE_MUTE.ExecuteLeft)
+              .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.CAPTURE_MUTE.ExecuteRight);
 
             // MORE
             NavigationStates.EXIT.RightAction = Application.Current.Shutdown;

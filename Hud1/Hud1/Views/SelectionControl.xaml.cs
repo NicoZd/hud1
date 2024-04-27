@@ -14,13 +14,17 @@ namespace Hud1.Views
         public NavigationState NavigationState
         {
             get { return (NavigationState)GetValue(NavigationStateProperty); }
-            set { SetValue(NavigationStateProperty, value); }
+            set
+            {
+                SetValue(NavigationStateProperty, value);
+                Debug.Print("SelectionControl SET {0} {1}", NavigationState?.Name, NavigationState?.Label);
+            }
         }
 
         public SelectionControl()
         {
             InitializeComponent();
-            Debug.Print("SelectionControl {0}", NavigationState);
+            Debug.Print("SelectionControl {0} {1}", NavigationState?.Name, NavigationState?.Label);
         }
     }
 }

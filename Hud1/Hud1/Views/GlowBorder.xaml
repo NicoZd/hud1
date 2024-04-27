@@ -40,7 +40,7 @@
                                             </LinearGradientBrush>
                                         </Setter.Value>
                                     </Setter>
-                                    <Setter Property="BorderBrush" Value="{DynamicResource InfoColor}" />
+                                    <Setter Property="BorderBrush" Value="{DynamicResource BrushInfo}" />
                                     <Setter Property="Effect">
                                         <Setter.Value>
                                             <DropShadowEffect ShadowDepth="0" BlurRadius="10" Color="{DynamicResource ColorInfo}" Opacity="0.5"/>
@@ -55,7 +55,7 @@
                                             </LinearGradientBrush>
                                         </Setter.Value>
                                     </Setter>
-                                    <Setter Property="BorderBrush" Value="{DynamicResource InfoColor}" />
+                                    <Setter Property="BorderBrush" Value="{DynamicResource BrushInfo}" />
                                     <Setter Property="Effect">
                                         <Setter.Value>
                                             <DropShadowEffect ShadowDepth="0" BlurRadius="10" Color="{DynamicResource ColorInfo}" Opacity="0.5"/>

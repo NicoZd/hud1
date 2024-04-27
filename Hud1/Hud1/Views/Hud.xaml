@@ -42,56 +42,28 @@
                                            Selected="{Binding Path=States[MORE_VISIBLE].Selected}"/>
                 </WrapPanel>
 
-                <Separator Margin="0,12,0,25" Background="{DynamicResource SeparatorColor}"/>
+                <Separator Margin="0,12,0,25" Background="{DynamicResource BrushSeparator}"/>
 
-                <TextBlock FontFamily="{DynamicResource FontFamily}" Foreground="{DynamicResource InfoColor}" 
-                    FontSize="12" Text="Select stuff to have fun with ofther stuff."/>
+                <TextBlock FontFamily="{DynamicResource FontFamily}" Foreground="{DynamicResource BrushInfo}" 
+                    FontSize="12" Text="{Binding State.Hint}"/>
 
-                <Grid Visibility="{Binding Path=States[GAMMA_VISIBLE].Visibility}" Margin="0,50,0,0">
-                    <StackPanel Margin="0,0,0,0" Orientation="Vertical">
-
-                        <Label Foreground="#ffbbffbb" Content="GAMMA" Padding="0,0,0,10" FontFamily="Cascadia Code" FontSize="16">
-                            <Label.Effect>
-                                <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />
-                            </Label.Effect>
-                        </Label>
-
-                        <StackPanel Uid="GammaContainer" Orientation="Horizontal" Margin="-2,2,0,0">
-                            <StackPanel.Resources>
-                                <Style TargetType="{x:Type views:GlowBorderLabel}">
-                                    <Setter Property="Margin" Value="2,0,2,0"/>
-                                </Style>
-                            </StackPanel.Resources>
-
-                            <!--<views:GlowBorderLabel Label="1.0" Selected="{Binding Path=States[gamma-1.0].Selected}" />-->
-                            <!--<views:GlowBorderLabel Label="1.1" Selected="{Binding Path=States[gamma-1.1].Selected}" />-->
-                            <views:GlowBorderLabel Label="1.25"/>
-                            <views:GlowBorderLabel Label="1.5"/>
-                            <views:GlowBorderLabel Label="2.0"/>
-                            <views:GlowBorderLabel Label="3.0"/>
-                        </StackPanel>
+                <Grid Visibility="{Binding Path=States[GAMMA_VISIBLE].Visibility}" >
+                    <StackPanel views:Spacing.Vertical="8">
+                        <Label Content="Gamma" Style="{DynamicResource TitleContent}"/>
+                        <views:SelectionControl NavigationState="{Binding Path=States[GAMMA]}" />
                     </StackPanel>
-
                 </Grid>
 
                 <Grid Visibility="{Binding Path=States[AUDIO_VISIBLE].Visibility}">
-                    <StackPanel Margin="0,20,0,0" views:Spacing.Vertical="8">
+                    <StackPanel views:Spacing.Vertical="8">
 
-                        <Label Foreground="#ffbbffbb" Content="Playback" Padding="0,0,0,5" FontFamily="Cascadia Code" FontSize="16">
-                            <Label.Effect>
-                                <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />
-                            </Label.Effect>
-                        </Label>
+                        <Label Content="Playback" Style="{DynamicResource TitleContent}"/>
 
                         <views:SelectionControl NavigationState="{Binding Path=States[PLAYBACK_DEVICE]}" />
                         <views:SelectionControl NavigationState="{Binding Path=States[PLAYBACK_VOLUME]}" />
                         <views:SelectionControl NavigationState="{Binding Path=States[PLAYBACK_MUTE]}" />
 
-                        <Label Foreground="#ffbbffbb" Content="Capture" Padding="0,20,0,5" FontFamily="Cascadia Code" FontSize="16">
-                            <Label.Effect>
-                                <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />
-                            </Label.Effect>
-                        </Label>
+                        <Label Content="Capture" Style="{DynamicResource TitleContent}"/>
 
                         <views:SelectionControl NavigationState="{Binding Path=States[CAPTURE_DEVICE]}" />
                         <views:SelectionControl NavigationState="{Binding Path=States[CAPTURE_VOLUME]}" />
@@ -107,18 +79,10 @@
                                 <Setter Property="Margin" Value="0,2,0,2"/>
                             </Style>
                         </StackPanel.Resources>
-                        <Label Foreground="#ffbbffbb" Content="MOUSE MACRO" Padding="0,0,0,5" FontFamily="Cascadia Code" FontSize="16">
-                            <Label.Effect>
-                                <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />
-                            </Label.Effect>
-                        </Label>
+                        <Label Content="MOUSE MACRO" Style="{DynamicResource TitleContent}"/>
                         <views:GlowBorderLabel Label="Hold Left"/>
                         <views:GlowBorderLabel Label="Repeat Left"/>
-                        <Label Foreground="#ffbbffbb" Content="KEY MACRO" Padding="0,20,0,5" FontFamily="Cascadia Code" FontSize="16">
-                            <Label.Effect>
-                                <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />
-                            </Label.Effect>
-                        </Label>
+                        <Label  Content="KEY MACRO" Style="{DynamicResource TitleContent}"/>
                         <views:GlowBorderLabel Label="Hold W"/>
                     </StackPanel>
                 </Grid>
@@ -130,11 +94,7 @@
                                 <Setter Property="Margin" Value="0,2,0,2"/>
                             </Style>
                         </StackPanel.Resources>
-                        <Label Foreground="#ffbbffbb" Content="CROSSHAIR" Padding="0,0,0,5" FontFamily="Cascadia Code" FontSize="16">
-                            <Label.Effect>
-                                <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />
-                            </Label.Effect>
-                        </Label>
+                        <Label Content="CROSSHAIR" Style="{DynamicResource TitleContent}"/>
                         <!--<views:GlowBorderLabel Label="ON/OFF" Selected="{Binding Path=States[cross-visible].Selected}" />
                         <views:GlowBorderLabel Label="C" Selected="{Binding Path=States[cross-color].Selected}"/>
                         <views:GlowBorderLabel Label="F" Selected="{Binding Path=States[cross-form].Selected}"/>
@@ -145,11 +105,7 @@
                 <Grid Visibility="{Binding Path=States[MORE_VISIBLE].Visibility}" Margin="0,0,0,0">
                     <StackPanel Margin="0,50,0,0">
 
-                        <Label Foreground="#ffbbffbb" Content="FUNCTIONS" Padding="0,0,0,5" FontFamily="Cascadia Code" FontSize="16">
-                            <Label.Effect>
-                                <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />
-                            </Label.Effect>
-                        </Label>
+                        <Label Content="FUNCTIONS" Style="{DynamicResource TitleContent}"/>
 
                         <StackPanel Margin="0,0,0,0" Orientation="Vertical" >
                             <DockPanel views:MarginSetter.Margin="4,0,0,0">
@@ -158,19 +114,11 @@
                             </DockPanel>
                         </StackPanel>
 
-                        <Label Foreground="#ffbbffbb" Content="STYLE" Padding="0,0,0,5" FontFamily="Cascadia Code" FontSize="16">
-                            <Label.Effect>
-                                <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />
-                            </Label.Effect>
-                        </Label>
+                        <Label Content="STYLE" Style="{DynamicResource TitleContent}"/>
 
                         <views:SelectionControl NavigationState="{Binding Path=States[STYLE]}" />
-                        
-                        <Label Foreground="#ffbbffbb" Content="HELP" Padding="0,15,0,5" FontFamily="Cascadia Code" FontSize="16">
-                            <Label.Effect>
-                                <DropShadowEffect ShadowDepth="0" Color="#ffff00" Opacity="0.7" BlurRadius="10" />
-                            </Label.Effect>
-                        </Label>
+
+                        <Label Content="HELP" Style="{DynamicResource TitleContent}"/>
 
                         <StackPanel Orientation="Vertical" Margin="0,0,0,10">
                             <Label Content="Keys to open and close this window:" Style="{DynamicResource InfoLabel}" />

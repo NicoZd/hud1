@@ -7,16 +7,16 @@
     <sys:Double x:Key="DropShadowOpacity">1.5</sys:Double>
 
     <!-- Texts & Labels -->
-    <SolidColorBrush x:Key="SeparatorColor" Color="{DynamicResource ColorBackgroundDark}" />
-    <SolidColorBrush x:Key="TitleColor" Color="{DynamicResource ColorSuperBright}" />
-    <SolidColorBrush x:Key="LabelColor" Color="{DynamicResource ColorSuperBright}" />
-    <SolidColorBrush x:Key="InfoColor" Color="{DynamicResource ColorInfo}" />
+    <SolidColorBrush x:Key="BrushSeparator" Color="{DynamicResource ColorBackgroundDark}" />
+    <SolidColorBrush x:Key="BrushTitle" Color="{DynamicResource ColorSuperBright}" />
+    <SolidColorBrush x:Key="BrushLabel" Color="{DynamicResource ColorSuperBright}" />
+    <SolidColorBrush x:Key="BrushInfo" Color="{DynamicResource ColorInfo}" />
     
     <FontFamily x:Key="FontFamily">Cascadia Code</FontFamily>
 
     <!-- Title -->
     <Style TargetType="{x:Type Label}" x:Key="TitleLabel">
-        <Setter Property="Foreground" Value="{DynamicResource TitleColor}"/>
+        <Setter Property="Foreground" Value="{DynamicResource BrushTitle}"/>
         <Setter Property="FontFamily" Value="{DynamicResource FontFamily}"/>
         <Setter Property="FontSize" Value="22"/>
         <Setter Property="Padding" Value="0,10,0,10"/>
@@ -28,9 +28,22 @@
         </Setter>
     </Style>
 
+    <Style TargetType="{x:Type Label}" x:Key="TitleContent">
+        <Setter Property="Foreground" Value="{DynamicResource BrushTitle}"/>
+        <Setter Property="FontFamily" Value="{DynamicResource FontFamily}"/>
+        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="Padding" Value="0,20,0,0"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="Effect" >
+            <Setter.Value>
+                <DropShadowEffect ShadowDepth="0" Color="{DynamicResource ColorSuperBright}" Opacity="{DynamicResource DropShadowOpacity}" BlurRadius="10" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <!-- Button -->
     <Style TargetType="{x:Type Label}" x:Key="ButtonLabel">
-        <Setter Property="Foreground" Value="{DynamicResource LabelColor}"/>
+        <Setter Property="Foreground" Value="{DynamicResource BrushLabel}"/>
         <Setter Property="FontFamily" Value="{DynamicResource FontFamily}"/>
         <Setter Property="FontSize" Value="12"/>
         <Setter Property="Padding" Value="15,5,15,5"/>
@@ -44,7 +57,7 @@
 
     <!-- Info -->
     <Style TargetType="{x:Type Label}" x:Key="InfoLabel">
-        <Setter Property="Foreground" Value="{DynamicResource InfoColor}"/>
+        <Setter Property="Foreground" Value="{DynamicResource BrushInfo}"/>
         <Setter Property="FontFamily" Value="{DynamicResource FontFamily}"/>
         <Setter Property="FontSize" Value="12"/>
         <Setter Property="Padding" Value="0,0,0,0"/>

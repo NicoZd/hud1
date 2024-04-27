@@ -1,6 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Hud1.Helpers;
+using Hud1.Models;
 using Hud1.ViewModels;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -15,6 +17,8 @@ namespace Hud1.Views
         public Hud()
         {
             InitializeComponent();
+            Debug.Print("adasd {0}", NavigationStates.GAMMA);
+            //NavigationStates.GAMMA
         }
 
         private void OnWindowLoaded(object sender, RoutedEventArgs e)

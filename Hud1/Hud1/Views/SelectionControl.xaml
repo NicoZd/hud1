@@ -70,7 +70,7 @@
                     </Grid.Style>
                     <TextBlock Width="250" TextTrimming="CharacterEllipsis"
                                FontFamily="{DynamicResource FontFamily}"
-                               Foreground="{DynamicResource InfoColor}" 
+                               Foreground="{DynamicResource BrushInfo}" 
                                FontSize="12" 
                                VerticalAlignment="Center"
                                TextAlignment="Center"

@@ -23,6 +23,8 @@ namespace Hud1.Models
         public string Name { get; set; }
         public string Label { get; set; }
 
+        public string Hint { get; set; }
+
         [ObservableProperty]
         public string selectionLabel;
 
