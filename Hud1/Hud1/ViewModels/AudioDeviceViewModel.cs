@@ -7,7 +7,7 @@ namespace Hud1.ViewModels
     public partial class AudioDeviceViewModel : ObservableObject
     {
         public static readonly float VOLUME_INCREMENT_SINGLE = 0.01f;
-        public static readonly float VOLUME_INCREMENT_REPEAT = 0.03f;
+        public static readonly float VOLUME_INCREMENT_REPEAT = 0.04f;
 
         [ObservableProperty]
         public List<MMDevice> playbackDevices = [];
@@ -75,6 +75,7 @@ namespace Hud1.ViewModels
         {
             Volume = MMDeviceManager.GetVolume();
             NavigationStates.PLAYBACK_VOLUME.SelectionLabel = "" + Math.Round(Volume.Value * 100);
+            NavigationStates.PLAYBACK_MUTE.SelectionLabel = Volume.Muted ? "Muted" : "Unmuted";
         }
 
 

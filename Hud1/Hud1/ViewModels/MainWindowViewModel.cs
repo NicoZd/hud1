@@ -13,7 +13,7 @@ namespace Hud1.ViewModels
         {
             get
             {
-                return Active ? Visibility.Visible : Visibility.Hidden;
+                return Active ? Visibility.Visible : Visibility.Collapsed;
             }
         }
     }

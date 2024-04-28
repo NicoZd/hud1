@@ -26,20 +26,20 @@
 
                 <WrapPanel Orientation="Horizontal" Margin="-2,15,-2,0" views:Spacing.Horizontal="4">
                     <views:GlowBorderLabel Label="GAMMA" 
-                                           Pressed="{Binding Path=States[MENU_GAMMA].Selected}"
-                                           Selected="{Binding Path=States[GAMMA_VISIBLE].Selected}"/>
+                                           Selected="{Binding Path=States[MENU_GAMMA].Selected}"
+                                           Highlighted="{Binding Path=States[GAMMA_VISIBLE].Selected}"/>
                     <views:GlowBorderLabel Label="AUDIO" 
-                                           Pressed="{Binding Path=States[MENU_AUDIO].Selected}"
-                                           Selected="{Binding Path=States[AUDIO_VISIBLE].Selected}"/>
+                                           Selected="{Binding Path=States[MENU_AUDIO].Selected}"
+                                           Highlighted="{Binding Path=States[AUDIO_VISIBLE].Selected}"/>
                     <views:GlowBorderLabel Label="MACRO" 
-                                           Pressed="{Binding Path=States[MENU_MACRO].Selected}"
-                                           Selected="{Binding Path=States[MACRO_VISIBLE].Selected}"/>
+                                           Selected="{Binding Path=States[MENU_MACRO].Selected}"
+                                           Highlighted="{Binding Path=States[MACRO_VISIBLE].Selected}"/>
                     <views:GlowBorderLabel Label="CROSSHAIR" 
-                                           Pressed="{Binding Path=States[MENU_CROSSHAIR].Selected}"
-                                           Selected="{Binding Path=States[CROSSHAIR_VISIBLE].Selected}"/>
+                                           Selected="{Binding Path=States[MENU_CROSSHAIR].Selected}"
+                                           Highlighted="{Binding Path=States[CROSSHAIR_VISIBLE].Selected}"/>
                     <views:GlowBorderLabel Label="MORE" 
-                                           Pressed="{Binding Path=States[MENU_MORE].Selected}"
-                                           Selected="{Binding Path=States[MORE_VISIBLE].Selected}"/>
+                                           Selected="{Binding Path=States[MENU_MORE].Selected}"
+                                           Highlighted="{Binding Path=States[MORE_VISIBLE].Selected}"/>
                 </WrapPanel>
 
                 <Separator Margin="0,12,0,25" Background="{DynamicResource BrushSeparator}"/>

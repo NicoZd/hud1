@@ -21,6 +21,14 @@
                         </Setter.Value>
                     </Setter>
                     <Style.Triggers>
+                        <DataTrigger Binding="{Binding Path=Highlighted}" Value="True">
+                            <Setter Property="Foreground" Value="{DynamicResource BrushSolidSuperBright}"/>
+                            <Setter Property="Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect ShadowDepth="0" BlurRadius="10" Color="{DynamicResource ColorSuperBright}" Opacity="1.0"/>
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
                         <DataTrigger Binding="{Binding Path=Selected}" Value="True">
                             <Setter Property="Foreground" Value="{DynamicResource BrushInfo}"/>
                             <Setter Property="Effect">

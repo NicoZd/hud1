@@ -32,6 +32,12 @@ namespace Hud1.Models
         [ObservableProperty]
         public string selectionLabel;
 
+        [ObservableProperty]
+        public string selectionLeftLabel = "<";
+
+        [ObservableProperty]
+        public string selectionRightLabel = ">";
+
         public Action? LeftAction { get; set; }
 
         public Action? RightAction { get; set; }

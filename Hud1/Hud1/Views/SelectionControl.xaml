@@ -51,11 +51,37 @@
         </Border.Style>
 
         <StackPanel>
-            <Label Foreground="#ffbbffbb" Content="{Binding Path=Label}" Padding="8,5,0,5" FontFamily="Cascadia Code" FontSize="12"/>
+            <Label Content="{Binding Path=Label}" Padding="8,5,0,5" FontSize="12" >
+                <Label.Style>
+                    <Style TargetType="Label" BasedOn="{StaticResource TitleContent}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=Selected}" Value="False">
+                                <Setter Property="Foreground">
+                                    <Setter.Value>
+                                        <SolidColorBrush Color="{DynamicResource ColorBright}"></SolidColorBrush>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="Effect">
+                                    <Setter.Value>
+                                        <DropShadowEffect ShadowDepth="0" Color="{DynamicResource ColorSuperBright}" Opacity="0" BlurRadius="10" />
+                                    </Setter.Value>
+                                </Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Path=Selected}" Value="True">
+                                <Setter Property="Foreground">
+                                    <Setter.Value>
+                                        <SolidColorBrush Color="{DynamicResource ColorSuperBright}"></SolidColorBrush>
+                                    </Setter.Value>
+                                </Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Label.Style>
+            </Label>
 
             <DockPanel Margin="0,0,0,4"  views:MarginSetter.Margin="4,0,4,0">
-                <views:GlowBorderLabel DockPanel.Dock="Left" Label="&lt;" Selected="{Binding Path=Selected}" Pressed="{Binding Path=SelectLeft}"/>
-                <views:GlowBorderLabel DockPanel.Dock="Right" Label="&gt;" Selected="{Binding Path=Selected}" Pressed="{Binding Path=SelectRight}"/>
+                <views:GlowBorderLabel DockPanel.Dock="Left" Label="{Binding Path=SelectionLeftLabel}" Selected="{Binding Path=Selected}" Pressed="{Binding Path=SelectLeft}"/>
+                <views:GlowBorderLabel DockPanel.Dock="Right" Label="{Binding Path=SelectionRightLabel}" Selected="{Binding Path=Selected}" Pressed="{Binding Path=SelectRight}"/>
                 <Grid>
                     <Grid.Style>
                         <Style TargetType="Grid">
@@ -68,13 +94,33 @@
                             </Setter>
                         </Style>
                     </Grid.Style>
-                    <TextBlock Width="250" TextTrimming="CharacterEllipsis"
+                    <TextBlock TextTrimming="CharacterEllipsis"
                                FontFamily="{DynamicResource FontFamily}"
-                               Foreground="{DynamicResource BrushInfo}" 
                                FontSize="12" 
                                VerticalAlignment="Center"
                                TextAlignment="Center"
-                               Text="{Binding Path=SelectionLabel}"/>
+                               Text="{Binding Path=SelectionLabel}">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Path=Selected}" Value="False">
+                                        <Setter Property="Foreground">
+                                            <Setter.Value>
+                                                <SolidColorBrush Color="{DynamicResource ColorBright}"></SolidColorBrush>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Path=Selected}" Value="True">
+                                        <Setter Property="Foreground">
+                                            <Setter.Value>
+                                                <SolidColorBrush Color="{DynamicResource ColorSuperBright}"></SolidColorBrush>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
                 </Grid>
             </DockPanel>
         </StackPanel>
