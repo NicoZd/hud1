@@ -148,9 +148,17 @@ namespace Hud1.ViewModels
             UpdateModelFromStateless();
         }
 
-        public bool OnKeyPressed(GlobalKey key)
+        public bool OnKeyPressed(KeyEvent keyEvent)
         {
             //Debug.WriteLine("ListenerOnKeyPressed {0}", key);
+            if (keyEvent.alt)
+                return false;
+
+            var key = keyEvent.key;
+
+            NavigationState.Repeat = keyEvent.repeated;
+            if (NavigationState.Repeat && !State.AllowRepeat)
+                return false;
 
             if (key == GlobalKey.VK_LEFT)
             {

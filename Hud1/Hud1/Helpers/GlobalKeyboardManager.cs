@@ -23,6 +23,7 @@ namespace Hud1.Helpers
     {
         public bool alt = false;
         public bool block = false;
+        public bool repeated = false;
 
         public GlobalKey key;
 
@@ -46,6 +47,8 @@ namespace Hud1.Helpers
 
         // The system hook ID (for storing this application's hook)
         private static IntPtr HookID = IntPtr.Zero;
+        private static GlobalKey? _lastPressedKey;
+
         //        internal static Func<GlobalKey, bool, bool> HandleKeyDown;
 
         public delegate void KeyDownHandler(KeyEvent keyEvent);
@@ -102,6 +105,8 @@ namespace Hud1.Helpers
                         {
                             int vkCode = Marshal.ReadInt32(lParam);
                             var keyEvent = new KeyEvent((GlobalKey)vkCode);
+                            keyEvent.repeated = keyEvent.key.Equals(_lastPressedKey);
+                            _lastPressedKey = keyEvent.key;
                             KeyDown?.Invoke(keyEvent);
                             // Debug.Print("WM_KEYDOWN vkCode:{0} blocked:{1}", vkCode, blocked);
                             if (keyEvent.block)
@@ -114,6 +119,7 @@ namespace Hud1.Helpers
                         {
                             int vkCode = Marshal.ReadInt32(lParam);
                             // Debug.Print("WM_KEYUP vkCode:{0}", vkCode);
+                            _lastPressedKey = null;
                             break;
                         }
                     case WM_SYSKEYDOWN:

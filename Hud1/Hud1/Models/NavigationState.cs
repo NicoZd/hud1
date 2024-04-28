@@ -8,6 +8,10 @@ namespace Hud1.Models
 {
     public partial class NavigationState : ObservableObject
     {
+        public static bool Repeat = false;
+        public bool AllowRepeat { get; set; } = false;
+
+
         [ObservableProperty]
         public bool selectRight;
 

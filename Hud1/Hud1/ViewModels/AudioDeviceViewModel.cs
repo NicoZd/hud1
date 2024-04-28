@@ -6,7 +6,8 @@ namespace Hud1.ViewModels
 {
     public partial class AudioDeviceViewModel : ObservableObject
     {
-        public static readonly float VOLUME_INCREMENT = 0.02f;
+        public static readonly float VOLUME_INCREMENT_SINGLE = 0.01f;
+        public static readonly float VOLUME_INCREMENT_REPEAT = 0.03f;
 
         [ObservableProperty]
         public List<MMDevice> playbackDevices = [];
@@ -49,11 +50,25 @@ namespace Hud1.ViewModels
 
         public void VolumeUp()
         {
-            MMDeviceManager.SetVolume(Volume.Value + VOLUME_INCREMENT);
+            if (NavigationState.Repeat)
+            {
+                MMDeviceManager.SetVolume(Volume.Value + VOLUME_INCREMENT_REPEAT);
+            }
+            else
+            {
+                MMDeviceManager.SetVolume(Volume.Value + VOLUME_INCREMENT_SINGLE);
+            }
         }
         public void VolumeDown()
         {
-            MMDeviceManager.SetVolume(Volume.Value - VOLUME_INCREMENT);
+            if (NavigationState.Repeat)
+            {
+                MMDeviceManager.SetVolume(Volume.Value - VOLUME_INCREMENT_REPEAT);
+            }
+            else
+            {
+                MMDeviceManager.SetVolume(Volume.Value - VOLUME_INCREMENT_SINGLE);
+            }
         }
 
         void OnVolumeChanged()
