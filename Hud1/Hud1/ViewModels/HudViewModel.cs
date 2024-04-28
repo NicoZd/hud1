@@ -157,7 +157,7 @@ namespace Hud1.ViewModels
             var key = keyEvent.key;
 
             NavigationState.Repeat = keyEvent.repeated;
-            if (NavigationState.Repeat && !State.AllowRepeat)
+            if (NavigationState.Repeat && !State!.AllowRepeat)
                 return false;
 
             if (key == GlobalKey.VK_LEFT)

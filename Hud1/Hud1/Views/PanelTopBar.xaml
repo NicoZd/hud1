@@ -9,8 +9,8 @@
     <Canvas Height="8">
         <Canvas.Background>
             <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                <GradientStop Color="{DynamicResource ColorSuperBright}" Offset="0.0"/>
-                <GradientStop Color="{DynamicResource ColorSuperBright}" Offset="0.9"/>
+                <GradientStop Color="{DynamicResource ColorBright}" Offset="0.0"/>
+                <GradientStop Color="{DynamicResource ColorBright}" Offset="0.9"/>
                 <GradientStop Color="{DynamicResource ColorBright}" Offset="1"/>
             </LinearGradientBrush>
         </Canvas.Background>

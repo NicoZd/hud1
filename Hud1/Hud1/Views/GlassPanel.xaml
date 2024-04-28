@@ -28,6 +28,18 @@
                             />
                     </Grid.Background>
                 </Grid>
+                <Grid>
+                    <Grid.Background>
+                        <ImageBrush                            
+                            Opacity="0.035"
+                            ImageSource="../Assets/dragon.png"
+                            ViewportUnits="Absolute"
+                            Viewport="-400,150,1000,1000"
+                            TileMode="None"
+                            Stretch="Uniform"
+                            />      
+                    </Grid.Background>
+                </Grid>
                 <Border Padding="0" BorderThickness="1,1,1,1">
                     <Border.BorderBrush>
                         <DrawingBrush Viewport="0,0,5,5" ViewportUnits="Absolute" TileMode="Tile">

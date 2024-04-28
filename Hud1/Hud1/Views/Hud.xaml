@@ -16,12 +16,11 @@
         </Grid.Effect>
         <views:GlassPanel>
             <StackPanel Margin="15,1,15,15">
-                <Label Content="GUD - Game HUD" Style="{DynamicResource TitleLabel}" />
+                <Label Content="Hydra HUD" Style="{DynamicResource TitleLabel}" />
 
                 <StackPanel Orientation="Vertical" Margin="0,0,0,0">
-                    <Label Content="Time: 8:23 PM" Style="{DynamicResource InfoLabel}" />
-                    <Label Content="Press F2 to open and close this window." Style="{DynamicResource InfoLabel}" />
-                    <Label Content="Use cursor keys to navigate and select." Style="{DynamicResource InfoLabel}" />
+                    <Label Content="Press F2 to open and close this window." Style="{DynamicResource InfoLabelSecondary}" />
+                    <Label Content="Use cursor keys to navigate and select." Style="{DynamicResource InfoLabelSecondary}" />
                 </StackPanel>
 
                 <WrapPanel Orientation="Horizontal" Margin="-2,15,-2,0" views:Spacing.Horizontal="4">
@@ -42,9 +41,9 @@
                                            Highlighted="{Binding Path=States[MORE_VISIBLE].Selected}"/>
                 </WrapPanel>
 
-                <Separator Margin="0,12,0,25" Background="{DynamicResource BrushSeparator}"/>
+                <Separator Margin="-3,12,-3,25" Background="{DynamicResource BrushSeparator}"/>
 
-                <TextBlock FontFamily="{DynamicResource FontFamily}" Foreground="{DynamicResource BrushInfo}" 
+                <TextBlock FontFamily="{DynamicResource FontFamily}" Foreground="{DynamicResource BrushInfoSecondary}" 
                     FontSize="12" Text="{Binding State.Hint}"/>
 
                 <Grid Visibility="{Binding Path=States[GAMMA_VISIBLE].Visibility}" >
@@ -121,9 +120,9 @@
                         <Label Content="HELP" Style="{DynamicResource TitleContent}"/>
 
                         <StackPanel Orientation="Vertical" Margin="0,0,0,10">
-                            <Label Content="Keys to open and close this window:" Style="{DynamicResource InfoLabel}" />
-                            <Label Content="- F2, ALT-S, ALT-F or ALT-L" Style="{DynamicResource InfoLabel}" />
-                            <Label Content="Use cursor keys to navigate and select." Style="{DynamicResource InfoLabel}" />
+                            <Label Content="Keys to open and close this window:" Style="{DynamicResource InfoLabelSecondary}" />
+                            <Label Content="- F2, ALT-S, ALT-F or ALT-L" Style="{DynamicResource InfoLabelSecondary}" />
+                            <Label Content="Use cursor keys to navigate and select." Style="{DynamicResource InfoLabelSecondary}" />
                         </StackPanel>
                     </StackPanel>
                 </Grid>

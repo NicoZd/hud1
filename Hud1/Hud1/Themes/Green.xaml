@@ -4,9 +4,13 @@
     <Color x:Key="ColorSuperBright">#bbffbb</Color>
     <Color x:Key="ColorBright">#66ff66</Color>
     <Color x:Key="ColorMed">#3300ff00</Color>
+    <Color x:Key="ColorMedHalf">#2000ff00</Color>
+    <Color x:Key="ColorMedLow">#2200ff00</Color>
     <Color x:Key="ColorBackgroundDark">#f5002200</Color>
     <Color x:Key="ColorBackgroundDarkMed">#dd004400</Color>
+    <Color x:Key="ColorBackgroundDarkMedUp">#66005500</Color>
     <Color x:Key="ColorBackgroundDarkTrans">#11005500</Color>
     <Color x:Key="ColorInfo">#ffff00</Color>
+    <Color x:Key="ColorInfoSecondary">#bbbb00</Color>
 
 </ResourceDictionary>

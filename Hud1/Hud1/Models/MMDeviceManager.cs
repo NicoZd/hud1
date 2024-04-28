@@ -149,7 +149,7 @@ namespace Hud1.Models
                 DevicesChanged?.Invoke();
                 //LogDevices();
 
-                ThreadPool.QueueUserWorkItem(async (a) =>
+                ThreadPool.QueueUserWorkItem((_) =>
                 {
                     Thread.Sleep(100);
                     _updateRunning = false;

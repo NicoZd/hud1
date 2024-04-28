@@ -6,11 +6,12 @@
     <sys:Double x:Key="DropShadowOpacity">1.5</sys:Double>
 
     <!-- Texts & Labels -->
-    <SolidColorBrush x:Key="BrushSeparator" Color="{DynamicResource ColorBackgroundDark}" />
+    <SolidColorBrush x:Key="BrushSeparator" Color="{DynamicResource ColorMed}" />
 
     <SolidColorBrush x:Key="BrushSolidSuperBright" Color="{DynamicResource ColorSuperBright}" />
     <SolidColorBrush x:Key="BrushTitle" Color="{DynamicResource ColorSuperBright}" />
     <SolidColorBrush x:Key="BrushLabel" Color="{DynamicResource ColorSuperBright}" />
+    <SolidColorBrush x:Key="BrushInfoSecondary" Color="{DynamicResource ColorInfoSecondary}" />
     <SolidColorBrush x:Key="BrushInfo" Color="{DynamicResource ColorInfo}" />
     
     <FontFamily x:Key="FontFamily">Cascadia Code</FontFamily>
@@ -59,6 +60,15 @@
     <!-- Info -->
     <Style TargetType="{x:Type Label}" x:Key="InfoLabel">
         <Setter Property="Foreground" Value="{DynamicResource BrushInfo}"/>
+        <Setter Property="FontFamily" Value="{DynamicResource FontFamily}"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Padding" Value="0,0,0,0"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+    </Style>   
+    
+    <!-- Info -->
+    <Style TargetType="{x:Type Label}" x:Key="InfoLabelSecondary">
+        <Setter Property="Foreground" Value="{DynamicResource BrushInfoSecondary}"/>
         <Setter Property="FontFamily" Value="{DynamicResource FontFamily}"/>
         <Setter Property="FontSize" Value="12"/>
         <Setter Property="Padding" Value="0,0,0,0"/>

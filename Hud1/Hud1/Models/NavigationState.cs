@@ -25,12 +25,12 @@ namespace Hud1.Models
         public Visibility Visibility { get; set; }
 
         public string Name { get; set; }
-        public string Label { get; set; }
+        public string Label { get; set; } = "";
 
-        public string Hint { get; set; }
+        public string Hint { get; set; } = "";
 
         [ObservableProperty]
-        public string selectionLabel;
+        public string selectionLabel = "";
 
         [ObservableProperty]
         public string selectionLeftLabel = "<";
@@ -45,12 +45,6 @@ namespace Hud1.Models
         public NavigationState([CallerMemberName] string Name = "")
         {
             this.Name = Name;
-
-            Label = "";
-            SelectionLabel = "";
-            Selected = false;
-            SelectRight = false;
-            Visibility = Visibility.Collapsed;
         }
 
         public async void ExecuteLeft()

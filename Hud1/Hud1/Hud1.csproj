@@ -21,6 +21,7 @@
   <ItemGroup>
     <None Remove="Abstract-colorful-fluid-background-on-transparent-PNG.png" />
     <None Remove="Assets\blue-noise.png" />
+    <None Remove="Assets\dragon.png" />
     <None Remove="Assets\fluid-background-transparent.png" />
   </ItemGroup>
 
@@ -37,6 +38,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Assets\dragon.png" />
     <Resource Include="Assets\blue-noise.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
