@@ -35,11 +35,19 @@ namespace Hud1.Models
         private MMDeviceEnumerator deviceEnumerator;
         private MMNotificationClient client;
 
+        private bool _hasNextUpdate = false;
+        private bool _updateRunning = false;
+
         public MMDeviceManager()
         {
             deviceEnumerator = new MMDeviceEnumerator(Guid.NewGuid());
             client = new MMNotificationClient(deviceEnumerator);
-            client.DefaultDeviceChanged += (s, e) => UpdateDevices();
+            client.DefaultDeviceChanged += (s, e) =>
+            {
+                //Debug.Print("DefaultDeviceChanged {0}", e.DeviceId);
+                Thread thread = new(UpdateDevices);
+                thread.Start();
+            };
             UpdateDevices();
         }
         public void SelectNextDevice()
@@ -66,7 +74,13 @@ namespace Hud1.Models
                 if (nextIndex != index)
                 {
                     index = nextIndex;
+                    //long millisecondsStart = DateTimeOffset.Now.ToUnixTimeMilliseconds();
+
                     PlaybackDevices[index].Selected = true;
+                    //long millisecondsEnd = DateTimeOffset.Now.ToUnixTimeMilliseconds();
+
+                    //Debug.Print("SelectPrevDevice {0}", millisecondsEnd - millisecondsStart);
+
                 }
             }
         }
@@ -109,8 +123,20 @@ namespace Hud1.Models
 
         private void UpdateDevices()
         {
+            if (_updateRunning)
+            {
+                //Debug.Print("SKIP UpdateDevices...");
+                _hasNextUpdate = true;
+                return;
+            }
+
+            //Debug.Print("RUN UpdateDevices...");
+
+            _updateRunning = true;
             Application.Current.Dispatcher.Invoke(new Action(() =>
             {
+                //long millisecondsStart = DateTimeOffset.Now.ToUnixTimeMilliseconds();
+
                 var device = PlaybackDevices.Find(d => d.ID == DefaultPlaybackDeviceId);
                 if (device != null && device.AudioEndpointVolume != null)
                 {
@@ -124,7 +150,6 @@ namespace Hud1.Models
                 CaptureDevices = new List<MMDevice>(deviceEnumerator.EnumerateAudioEndPoints(DataFlow.Capture, DeviceState.Active));
 
                 device = PlaybackDevices.Find(d => d.ID == DefaultPlaybackDeviceId);
-                Debug.Print("UpdateDevices: {0} {1}", device?.AudioEndpointVolume, device?.DeviceFriendlyName);
                 if (device != null && device.AudioEndpointVolume != null)
                 {
                     device.AudioEndpointVolume.OnVolumeNotification += OnVolumeNotification;
@@ -132,6 +157,20 @@ namespace Hud1.Models
 
                 VolumeChanged?.Invoke();
                 DevicesChanged?.Invoke();
+
+                //long millisecondsEnd = DateTimeOffset.Now.ToUnixTimeMilliseconds();
+
+                //Debug.Print("DONE {0}", millisecondsEnd - millisecondsStart);
+                _updateRunning = false;
+
+                Application.Current.Dispatcher.Invoke(new Action(() =>
+                {
+                    if (_hasNextUpdate)
+                    {
+                        _hasNextUpdate = false;
+                        UpdateDevices();
+                    }
+                }));
                 //LogDevices();
             }));
 
