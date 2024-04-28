@@ -44,9 +44,7 @@ namespace Hud1.Models
             client = new MMNotificationClient(deviceEnumerator);
             client.DefaultDeviceChanged += (s, e) =>
             {
-                //Debug.Print("DefaultDeviceChanged {0}", e.DeviceId);
-                Thread thread = new(UpdateDevices);
-                thread.Start();
+                UpdateDevices();
             };
             UpdateDevices();
         }
@@ -63,6 +61,7 @@ namespace Hud1.Models
                     PlaybackDevices[index].Selected = true;
                 }
             }
+
         }
 
         public void SelectPrevDevice()
@@ -74,13 +73,7 @@ namespace Hud1.Models
                 if (nextIndex != index)
                 {
                     index = nextIndex;
-                    //long millisecondsStart = DateTimeOffset.Now.ToUnixTimeMilliseconds();
-
                     PlaybackDevices[index].Selected = true;
-                    //long millisecondsEnd = DateTimeOffset.Now.ToUnixTimeMilliseconds();
-
-                    //Debug.Print("SelectPrevDevice {0}", millisecondsEnd - millisecondsStart);
-
                 }
             }
         }
@@ -113,8 +106,7 @@ namespace Hud1.Models
 
         public void OnVolumeNotification(AudioVolumeNotificationData data)
         {
-            Debug.Print("OnVolumeNotification: {0} {1}", data.MasterVolume, data.Muted);
-            //GetVolume();
+            // Debug.Print("OnVolumeNotification: {0} {1}", data.MasterVolume, data.Muted);
             Application.Current.Dispatcher.Invoke(new Action(() =>
             {
                 VolumeChanged?.Invoke();
@@ -131,12 +123,10 @@ namespace Hud1.Models
             }
 
             //Debug.Print("RUN UpdateDevices...");
-
             _updateRunning = true;
+
             Application.Current.Dispatcher.Invoke(new Action(() =>
             {
-                //long millisecondsStart = DateTimeOffset.Now.ToUnixTimeMilliseconds();
-
                 var device = PlaybackDevices.Find(d => d.ID == DefaultPlaybackDeviceId);
                 if (device != null && device.AudioEndpointVolume != null)
                 {
@@ -157,24 +147,19 @@ namespace Hud1.Models
 
                 VolumeChanged?.Invoke();
                 DevicesChanged?.Invoke();
+                //LogDevices();
 
-                //long millisecondsEnd = DateTimeOffset.Now.ToUnixTimeMilliseconds();
-
-                //Debug.Print("DONE {0}", millisecondsEnd - millisecondsStart);
-                _updateRunning = false;
-
-                Application.Current.Dispatcher.Invoke(new Action(() =>
+                ThreadPool.QueueUserWorkItem(async (a) =>
                 {
+                    Thread.Sleep(100);
+                    _updateRunning = false;
                     if (_hasNextUpdate)
                     {
                         _hasNextUpdate = false;
                         UpdateDevices();
                     }
-                }));
-                //LogDevices();
+                });
             }));
-
-
         }
 
         private void LogDevices()

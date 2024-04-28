@@ -71,6 +71,8 @@ namespace Hud1.ViewModels
             DefaultCaptureDeviceID = MMDeviceManager.DefaultCaptureDeviceId;
 
             var playbackDeviceIndex = PlaybackDevices.FindIndex(d => d.ID == DefaultPlaybackDeviceID);
+            if (playbackDeviceIndex == -1)
+                return;
             var playbackDevice = PlaybackDevices[playbackDeviceIndex];
             DefaultPlaybackDeviceName = playbackDevice == null ? "Unknown" : TrimName(playbackDevice.DeviceInterfaceFriendlyName);
 
