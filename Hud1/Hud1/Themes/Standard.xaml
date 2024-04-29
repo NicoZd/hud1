@@ -2,9 +2,6 @@
                      xmlns:sys="clr-namespace:System;assembly=mscorlib"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <!-- Effects -->
-    <sys:Double x:Key="DropShadowOpacity">1.5</sys:Double>
-
     <!-- Texts & Labels -->
     <SolidColorBrush x:Key="BrushSeparator" Color="{DynamicResource ColorMed}" />
 
@@ -14,7 +11,11 @@
     <SolidColorBrush x:Key="BrushInfoSecondary" Color="{DynamicResource ColorInfoSecondary}" />
     <SolidColorBrush x:Key="BrushInfo" Color="{DynamicResource ColorInfo}" />
     
+    <!--
     <FontFamily x:Key="FontFamily">Cascadia Code</FontFamily>
+    <FontFamily x:Key="FontFamily">DejaVu Sans Mono</FontFamily>
+    -->
+    <FontFamily x:Key="FontFamily">Fira Code</FontFamily>
 
     <!-- Title -->
     <Style TargetType="{x:Type Label}" x:Key="TitleLabel">
@@ -25,7 +26,7 @@
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
         <Setter Property="Effect" >
             <Setter.Value>
-                <DropShadowEffect ShadowDepth="0" Color="{DynamicResource ColorSuperBright}" Opacity="{DynamicResource DropShadowOpacity}" BlurRadius="10" />
+                <DropShadowEffect ShadowDepth="0" Color="{DynamicResource ColorSuperBright}" Opacity="1" BlurRadius="10" />
             </Setter.Value>
         </Setter>
     </Style>
@@ -38,7 +39,7 @@
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
         <Setter Property="Effect" >
             <Setter.Value>
-                <DropShadowEffect ShadowDepth="0" Color="{DynamicResource ColorSuperBright}" Opacity="{DynamicResource DropShadowOpacity}" BlurRadius="10" />
+                <DropShadowEffect ShadowDepth="0" Color="{DynamicResource ColorSuperBright}" Opacity="1" BlurRadius="10" />
             </Setter.Value>
         </Setter>
     </Style>
@@ -52,7 +53,7 @@
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="Effect" >
             <Setter.Value>
-                <DropShadowEffect ShadowDepth="0" Color="{DynamicResource ColorSuperBright}" Opacity="{DynamicResource DropShadowOpacity}" BlurRadius="10" />
+                <DropShadowEffect ShadowDepth="0" Color="{DynamicResource ColorSuperBright}" Opacity="1" BlurRadius="10" />
             </Setter.Value>
         </Setter>
     </Style>

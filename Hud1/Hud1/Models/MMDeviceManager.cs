@@ -91,6 +91,20 @@ namespace Hud1.Models
             }
         }
 
+        public void SetMute(bool mute)
+        {
+            var device = PlaybackDevices.Find(d => d.ID == DefaultPlaybackDeviceId);
+            if (device != null)
+            {
+                if (device.AudioEndpointVolume != null)
+                {
+                    device.AudioEndpointVolume.Mute = mute;
+                }
+                VolumeChanged?.Invoke();
+            }
+        }
+
+
         public Volume GetVolume()
         {
             var device = PlaybackDevices.Find(d => d.ID == DefaultPlaybackDeviceId);

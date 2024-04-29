@@ -70,6 +70,15 @@ namespace Hud1.ViewModels
                 MMDeviceManager.SetVolume(Volume.Value - VOLUME_INCREMENT_SINGLE);
             }
         }
+        public void Mute()
+        {
+            MMDeviceManager.SetMute(true);
+        }
+
+        public void Unmute()
+        {
+            MMDeviceManager.SetMute(false);
+        }
 
         void OnVolumeChanged()
         {

@@ -90,8 +90,8 @@ namespace Hud1.ViewModels
                .InternalTransition(NavigationTriggers.LEFT, NavigationStates.PLAYBACK_VOLUME.ExecuteLeft)
                .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.PLAYBACK_VOLUME.ExecuteRight);
 
-            //NavigationStates.PLAYBACK_MUTED.LeftAction = audioDeviceViewModel.Mute();
-            //NavigationStates.PLAYBACK_MUTED.RightAction = audioDeviceViewModel.Unmute();
+            NavigationStates.PLAYBACK_MUTE.LeftAction = audioDeviceViewModel.Unmute;
+            NavigationStates.PLAYBACK_MUTE.RightAction = audioDeviceViewModel.Mute;
             Navigation.Configure(NavigationStates.PLAYBACK_MUTE)
                .SubstateOf(NavigationStates.AUDIO_VISIBLE)
                .Permit(NavigationTriggers.UP, NavigationStates.PLAYBACK_VOLUME)

@@ -9,8 +9,8 @@
     <Color x:Key="ColorBackgroundDark">#f5002200</Color>
     <Color x:Key="ColorBackgroundDarkMed">#dd004400</Color>
     <Color x:Key="ColorBackgroundDarkMedUp">#66005500</Color>
-    <Color x:Key="ColorBackgroundDarkTrans">#11005500</Color>
+    <Color x:Key="ColorBackgroundDarkTrans">#44002200</Color>
     <Color x:Key="ColorInfo">#ffff00</Color>
-    <Color x:Key="ColorInfoSecondary">#bbbb00</Color>
+    <Color x:Key="ColorInfoSecondary">#d0d000</Color>
 
 </ResourceDictionary>
