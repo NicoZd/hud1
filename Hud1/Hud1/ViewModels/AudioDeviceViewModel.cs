@@ -25,7 +25,13 @@ namespace Hud1.ViewModels
         public String defaultCaptureDeviceID = "";
 
         [ObservableProperty]
-        public Volume volume = new();
+        public String defaultCaptureDeviceName = "";
+
+        [ObservableProperty]
+        public Volume playbackVolume = new();
+
+        [ObservableProperty]
+        public Volume captureVolume = new();
 
 
         private MMDeviceManager MMDeviceManager = new MMDeviceManager();
@@ -38,74 +44,128 @@ namespace Hud1.ViewModels
             OnVolumeChanged();
         }
 
-        public void SelectPrevDevice()
+        public void SelectPrevPlaybackDevice()
         {
-            MMDeviceManager.SelectPrevDevice();
+            MMDeviceManager.SelectPrevPlaybackDevice();
         }
 
-        public void SelectNextDevice()
+        public void SelectNextPlaybackDevice()
         {
-            MMDeviceManager.SelectNextDevice();
+            MMDeviceManager.SelectNextPlaybackDevice();
         }
 
-        public void VolumeUp()
+        public void PlaybackVolumeUp()
         {
             if (NavigationState.Repeat)
             {
-                MMDeviceManager.SetVolume(Volume.Value + VOLUME_INCREMENT_REPEAT);
+                MMDeviceManager.SetPlaybackVolume(PlaybackVolume.Value + VOLUME_INCREMENT_REPEAT);
             }
             else
             {
-                MMDeviceManager.SetVolume(Volume.Value + VOLUME_INCREMENT_SINGLE);
+                MMDeviceManager.SetPlaybackVolume(PlaybackVolume.Value + VOLUME_INCREMENT_SINGLE);
             }
         }
-        public void VolumeDown()
+        public void PlaybackVolumeDown()
         {
             if (NavigationState.Repeat)
             {
-                MMDeviceManager.SetVolume(Volume.Value - VOLUME_INCREMENT_REPEAT);
+                MMDeviceManager.SetPlaybackVolume(PlaybackVolume.Value - VOLUME_INCREMENT_REPEAT);
             }
             else
             {
-                MMDeviceManager.SetVolume(Volume.Value - VOLUME_INCREMENT_SINGLE);
+                MMDeviceManager.SetPlaybackVolume(PlaybackVolume.Value - VOLUME_INCREMENT_SINGLE);
             }
         }
-        public void Mute()
+        public void PlaybackMute()
         {
-            MMDeviceManager.SetMute(true);
+            MMDeviceManager.SetPlaybackMute(true);
         }
 
-        public void Unmute()
+        public void PlaybackUnmute()
         {
-            MMDeviceManager.SetMute(false);
+            MMDeviceManager.SetPlaybackMute(false);
+        }
+
+        public void SelectPrevCaptureDevice()
+        {
+            MMDeviceManager.SelectPrevCaptureDevice();
+        }
+
+        public void SelectNextCaptureDevice()
+        {
+            MMDeviceManager.SelectNextCaptureDevice();
+        }
+
+        public void CaptureVolumeUp()
+        {
+            if (NavigationState.Repeat)
+            {
+                MMDeviceManager.SetCaptureVolume(CaptureVolume.Value + VOLUME_INCREMENT_REPEAT);
+            }
+            else
+            {
+                MMDeviceManager.SetCaptureVolume(CaptureVolume.Value + VOLUME_INCREMENT_SINGLE);
+            }
+        }
+        public void CaptureVolumeDown()
+        {
+            if (NavigationState.Repeat)
+            {
+                MMDeviceManager.SetCaptureVolume(CaptureVolume.Value - VOLUME_INCREMENT_REPEAT);
+            }
+            else
+            {
+                MMDeviceManager.SetCaptureVolume(CaptureVolume.Value - VOLUME_INCREMENT_SINGLE);
+            }
+        }
+        public void CaptureMute()
+        {
+            MMDeviceManager.SetCaptureMute(true);
+        }
+
+        public void CaptureUnmute()
+        {
+            MMDeviceManager.SetCaptureMute(false);
         }
 
         void OnVolumeChanged()
         {
-            Volume = MMDeviceManager.GetVolume();
-            NavigationStates.PLAYBACK_VOLUME.SelectionLabel = "" + Math.Round(Volume.Value * 100);
-            NavigationStates.PLAYBACK_MUTE.SelectionLabel = Volume.Muted ? "Muted" : "Unmuted";
+            PlaybackVolume = MMDeviceManager.GetPlaybackVolume();
+            NavigationStates.PLAYBACK_VOLUME.SelectionLabel = "" + Math.Round(PlaybackVolume.Value * 100);
+            NavigationStates.PLAYBACK_MUTE.SelectionLabel = PlaybackVolume.Muted ? "Muted" : "Unmuted";
+
+            CaptureVolume = MMDeviceManager.GetCaptureVolume();
+            NavigationStates.CAPTURE_VOLUME.SelectionLabel = "" + Math.Round(CaptureVolume.Value * 100);
+            NavigationStates.CAPTURE_MUTE.SelectionLabel = CaptureVolume.Muted ? "Muted" : "Unmuted";
         }
 
 
         void OnDevicesChanged()
         {
             PlaybackDevices = MMDeviceManager.PlaybackDevices;
-            CaptureDevices = MMDeviceManager.CaptureDevices;
             DefaultPlaybackDeviceID = MMDeviceManager.DefaultPlaybackDeviceId;
-            DefaultCaptureDeviceID = MMDeviceManager.DefaultCaptureDeviceId;
 
             var playbackDeviceIndex = PlaybackDevices.FindIndex(d => d.ID == DefaultPlaybackDeviceID);
-            if (playbackDeviceIndex == -1)
-                return;
-            var playbackDevice = PlaybackDevices[playbackDeviceIndex];
-            DefaultPlaybackDeviceName = playbackDevice == null ? "Unknown" : TrimName(playbackDevice.DeviceInterfaceFriendlyName);
+            if (playbackDeviceIndex != -1)
+            {
+                var playbackDevice = PlaybackDevices[playbackDeviceIndex];
+                DefaultPlaybackDeviceName = playbackDevice == null ? "Unknown" : TrimName(playbackDevice.DeviceInterfaceFriendlyName);
+                NavigationStates.PLAYBACK_DEVICE.SelectionLabel = DefaultPlaybackDeviceName + " " + (playbackDeviceIndex + 1) + "/" + PlaybackDevices.Count;
+            }
 
-            NavigationStates.PLAYBACK_DEVICE.SelectionLabel = DefaultPlaybackDeviceName + " " + (playbackDeviceIndex + 1) + "/" + PlaybackDevices.Count;
-            //NavigationStates.PLAYBACK_DEVICE.Selection
+            CaptureDevices = MMDeviceManager.CaptureDevices;
+            DefaultCaptureDeviceID = MMDeviceManager.DefaultCaptureDeviceId;
+
+            var captureDeviceIndex = CaptureDevices.FindIndex(d => d.ID == DefaultCaptureDeviceID);
+            if (captureDeviceIndex != -1)
+            {
+                var captureDevice = CaptureDevices[captureDeviceIndex];
+                DefaultCaptureDeviceName = captureDevice == null ? "Unknown" : TrimName(captureDevice.DeviceInterfaceFriendlyName);
+                NavigationStates.CAPTURE_DEVICE.SelectionLabel = DefaultCaptureDeviceName + " " + (captureDeviceIndex + 1) + "/" + CaptureDevices.Count;
+            }
         }
 
-        private static string TrimName(string name)
+        public static string TrimName(string name)
         {
             name = Regex.Replace(name, @"^\d+-\s", "");
             return name;

@@ -1,4 +1,5 @@
 using CoreAudio;
+using Hud1.ViewModels;
 using System.Diagnostics;
 using System.Windows;
 namespace Hud1.Models
@@ -48,7 +49,8 @@ namespace Hud1.Models
             };
             UpdateDevices();
         }
-        public void SelectNextDevice()
+
+        public void SelectNextPlaybackDevice()
         {
             var index = PlaybackDevices.FindIndex(d => d.ID == DefaultPlaybackDeviceId);
             if (index != -1)
@@ -64,7 +66,7 @@ namespace Hud1.Models
 
         }
 
-        public void SelectPrevDevice()
+        public void SelectPrevPlaybackDevice()
         {
             var index = PlaybackDevices.FindIndex(d => d.ID == DefaultPlaybackDeviceId);
             if (index != -1)
@@ -78,7 +80,7 @@ namespace Hud1.Models
             }
         }
 
-        public void SetVolume(float volume)
+        public void SetPlaybackVolume(float volume)
         {
             var device = PlaybackDevices.Find(d => d.ID == DefaultPlaybackDeviceId);
             if (device != null)
@@ -91,7 +93,7 @@ namespace Hud1.Models
             }
         }
 
-        public void SetMute(bool mute)
+        public void SetPlaybackMute(bool mute)
         {
             var device = PlaybackDevices.Find(d => d.ID == DefaultPlaybackDeviceId);
             if (device != null)
@@ -105,9 +107,79 @@ namespace Hud1.Models
         }
 
 
-        public Volume GetVolume()
+        public Volume GetPlaybackVolume()
         {
             var device = PlaybackDevices.Find(d => d.ID == DefaultPlaybackDeviceId);
+            if (device != null && device.AudioEndpointVolume != null)
+            {
+                return new Volume { Value = device.AudioEndpointVolume.MasterVolumeLevelScalar, Muted = device.AudioEndpointVolume.Mute };
+            }
+            else
+            {
+                return new Volume { Muted = false, Value = 0.5f };
+            }
+        }
+
+        public void SelectNextCaptureDevice()
+        {
+            var index = CaptureDevices.FindIndex(d => d.ID == DefaultCaptureDeviceId);
+            if (index != -1)
+            {
+                var nextIndex = Math.Min(index + 1, CaptureDevices.Count - 1);
+
+                if (nextIndex != index)
+                {
+                    index = nextIndex;
+                    CaptureDevices[index].Selected = true;
+                }
+            }
+
+        }
+
+        public void SelectPrevCaptureDevice()
+        {
+            var index = CaptureDevices.FindIndex(d => d.ID == DefaultCaptureDeviceId);
+            if (index != -1)
+            {
+                var nextIndex = Math.Max(index - 1, 0);
+                if (nextIndex != index)
+                {
+                    index = nextIndex;
+                    CaptureDevices[index].Selected = true;
+                }
+            }
+        }
+
+        public void SetCaptureVolume(float volume)
+        {
+            var device = CaptureDevices.Find(d => d.ID == DefaultCaptureDeviceId);
+            if (device != null)
+            {
+                if (device.AudioEndpointVolume != null)
+                {
+                    device.AudioEndpointVolume.MasterVolumeLevelScalar = Math.Max(0, Math.Min(1, volume));
+                }
+                VolumeChanged?.Invoke();
+            }
+        }
+
+        public void SetCaptureMute(bool mute)
+        {
+            var device = CaptureDevices.Find(d => d.ID == DefaultCaptureDeviceId);
+            if (device != null)
+            {
+                if (device.AudioEndpointVolume != null)
+                {
+                    device.AudioEndpointVolume.Mute = mute;
+                }
+                VolumeChanged?.Invoke();
+            }
+        }
+
+
+        public Volume GetCaptureVolume()
+        {
+            var device = CaptureDevices.Find(d => d.ID == DefaultCaptureDeviceId);
             if (device != null && device.AudioEndpointVolume != null)
             {
                 return new Volume { Value = device.AudioEndpointVolume.MasterVolumeLevelScalar, Muted = device.AudioEndpointVolume.Mute };
@@ -150,8 +222,8 @@ namespace Hud1.Models
                 DefaultPlaybackDeviceId = deviceEnumerator.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia).ID;
                 DefaultCaptureDeviceId = deviceEnumerator.GetDefaultAudioEndpoint(DataFlow.Capture, Role.Communications).ID;
 
-                PlaybackDevices = new List<MMDevice>(deviceEnumerator.EnumerateAudioEndPoints(DataFlow.Render, DeviceState.Active));
-                CaptureDevices = new List<MMDevice>(deviceEnumerator.EnumerateAudioEndPoints(DataFlow.Capture, DeviceState.Active));
+                PlaybackDevices = new List<MMDevice>(deviceEnumerator.EnumerateAudioEndPoints(DataFlow.Render, DeviceState.Active).OrderBy(d => AudioDeviceViewModel.TrimName(d.DeviceInterfaceFriendlyName)));
+                CaptureDevices = new List<MMDevice>(deviceEnumerator.EnumerateAudioEndPoints(DataFlow.Capture, DeviceState.Active).OrderBy(d => AudioDeviceViewModel.TrimName(d.DeviceInterfaceFriendlyName)));
 
                 device = PlaybackDevices.Find(d => d.ID == DefaultPlaybackDeviceId);
                 if (device != null && device.AudioEndpointVolume != null)

@@ -106,12 +106,14 @@
                             </Setter>
                         </Style>
                     </Grid.Style>
-                    <TextBlock TextTrimming="CharacterEllipsis"
-                               FontFamily="{DynamicResource FontFamily}"
-                               FontSize="12" 
-                               VerticalAlignment="Center"
-                               TextAlignment="Center"
-                               Text="{Binding Path=SelectionLabel}">
+                    <TextBlock 
+                        MaxWidth="250"
+                        TextTrimming="CharacterEllipsis"
+                        FontFamily="{DynamicResource FontFamily}"
+                        FontSize="12" 
+                        VerticalAlignment="Center"
+                        TextAlignment="Center"
+                        Text="{Binding Path=SelectionLabel}">
                         <TextBlock.Style>
                             <Style TargetType="TextBlock">
                                 <Style.Triggers>
