@@ -9,6 +9,8 @@
     <StartupObject>Hud1.Helpers.CustomSplashScreen.Entry</StartupObject>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Title>Drako HUD</Title>
+    <PackageIcon></PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>

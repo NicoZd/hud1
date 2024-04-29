@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 
 namespace Hud1.Helpers
 {
@@ -7,6 +6,7 @@ namespace Hud1.Helpers
     public static class WindowsServices
     {
         const int WS_EX_TRANSPARENT = 0x00000020;
+        const int WS_EX_TOOLWINDOW = 0x00000080;
         const int GWL_EXSTYLE = (-20);
 
         [DllImport("user32.dll")]
@@ -17,16 +17,8 @@ namespace Hud1.Helpers
 
         public static void SetWindowExTransparent(IntPtr hwnd)
         {
-            Debug.Print("Set WS_EX_TRANSPARENT");
             var extendedStyle = GetWindowLong(hwnd, GWL_EXSTYLE);
-            SetWindowLong(hwnd, GWL_EXSTYLE, extendedStyle | WS_EX_TRANSPARENT);
-        }
-
-        public static void RemoveWindowExTransparent(IntPtr hwnd)
-        {
-            Debug.Print("Remove WS_EX_TRANSPARENT");
-            var extendedStyle = GetWindowLong(hwnd, GWL_EXSTYLE);
-            SetWindowLong(hwnd, GWL_EXSTYLE, extendedStyle ^ WS_EX_TRANSPARENT);
+            SetWindowLong(hwnd, GWL_EXSTYLE, extendedStyle | WS_EX_TRANSPARENT | WS_EX_TOOLWINDOW);
         }
     }
 }

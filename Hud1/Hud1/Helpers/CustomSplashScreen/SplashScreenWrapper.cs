@@ -5,6 +5,40 @@ using System.Windows.Threading;
 
 namespace Hud1.Helpers.CustomSplashScreen
 {
+    [Flags]
+    public enum SetWindowPosFlags : uint
+    {
+        SWP_NOACTIVATE = 0x0010,
+        SWP_NOMOVE = 0x0002,
+        SWP_NOSIZE = 0x0001
+    }
+
+    public class SafeNativeMethods
+    {
+        public const int WS_EX_NOACTIVATE = 0x08000000;
+        public const int ULW_ALPHA = 0x00000002;
+        public const int AC_SRC_OVER = 0x00000000;
+        public const int AC_SRC_ALPHA = 0x00000001;
+        public static readonly nint HWND_TOP = new nint(0);
+
+        [DllImport("user32.dll", ExactSpelling = true, SetLastError = true)]
+        public static extern bool UpdateLayeredWindow(nint hwnd, nint hdcDst, nint pptDst, nint psize, nint hdcSrc, nint pptSrc, uint crKey, [In] ref BLENDFUNCTION pblend, uint dwFlags);
+
+        [DllImport("user32.dll", ExactSpelling = true, SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool SetWindowPos(nint hWnd, nint hWndInsertAfter, int X, int Y, int cx, int cy, SetWindowPosFlags uFlags);
+
+        public struct BLENDFUNCTION
+        {
+            public byte BlendOp;
+            public byte BlendFlags;
+            public byte SourceConstantAlpha;
+            public byte AlphaFormat;
+        }
+
+
+    }
+
     public sealed class SplashScreenWrapper
     {
         private readonly SplashScreen splashScreen;
@@ -26,7 +60,7 @@ namespace Hud1.Helpers.CustomSplashScreen
             splashForegroundTimer.Tick += delegate
             {
                 // this brings the splash to the top of the z-order without activating it
-                SafeNativeMethods.SetWindowPos(splashScreen.GetHandle(), SafeNativeMethods.HWND_TOP, 0, 0, 0, 0, SafeNativeMethods.SetWindowPosFlags.SWP_NOMOVE | SafeNativeMethods.SetWindowPosFlags.SWP_NOSIZE | SafeNativeMethods.SetWindowPosFlags.SWP_NOACTIVATE);
+                SafeNativeMethods.SetWindowPos(splashScreen.GetHandle(), SafeNativeMethods.HWND_TOP, 0, 0, 0, 0, SetWindowPosFlags.SWP_NOMOVE | SetWindowPosFlags.SWP_NOSIZE | SetWindowPosFlags.SWP_NOACTIVATE);
             };
 
             blendFunction = new SafeNativeMethods.BLENDFUNCTION
@@ -85,36 +119,6 @@ namespace Hud1.Helpers.CustomSplashScreen
             dispatcherTimer.Start();
         }
 
-        private sealed class SafeNativeMethods
-        {
-            public const int WS_EX_NOACTIVATE = 0x08000000;
-            public const int ULW_ALPHA = 0x00000002;
-            public const int AC_SRC_OVER = 0x00000000;
-            public const int AC_SRC_ALPHA = 0x00000001;
-            public static readonly nint HWND_TOP = new nint(0);
 
-            [DllImport("user32.dll", ExactSpelling = true, SetLastError = true)]
-            public static extern bool UpdateLayeredWindow(nint hwnd, nint hdcDst, nint pptDst, nint psize, nint hdcSrc, nint pptSrc, uint crKey, [In] ref BLENDFUNCTION pblend, uint dwFlags);
-
-            [DllImport("user32.dll", ExactSpelling = true, SetLastError = true)]
-            [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool SetWindowPos(nint hWnd, nint hWndInsertAfter, int X, int Y, int cx, int cy, SetWindowPosFlags uFlags);
-
-            public struct BLENDFUNCTION
-            {
-                public byte BlendOp;
-                public byte BlendFlags;
-                public byte SourceConstantAlpha;
-                public byte AlphaFormat;
-            }
-
-            [Flags]
-            public enum SetWindowPosFlags : uint
-            {
-                SWP_NOACTIVATE = 0x0010,
-                SWP_NOMOVE = 0x0002,
-                SWP_NOSIZE = 0x0001
-            }
-        }
     }
 }

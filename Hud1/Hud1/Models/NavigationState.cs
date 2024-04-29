@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows;
-using System.Windows.Media;
 
 namespace Hud1.Models
 {
@@ -14,12 +13,13 @@ namespace Hud1.Models
 
         [ObservableProperty]
         public bool selectRight;
+        private int _selectRightCounter = 0;
 
         [ObservableProperty]
         public bool selectLeft;
+        private int _selectLeftCounter = 0;
 
         [ObservableProperty]
-        [NotifyPropertyChangedFor("SelectedBorder", "SelectedBackground", "SelectedBlurOpacity")]
         private bool selected;
 
         public Visibility Visibility { get; set; }
@@ -50,76 +50,27 @@ namespace Hud1.Models
         public async void ExecuteLeft()
         {
             SelectLeft = true;
+            _selectLeftCounter++;
             await Task.Delay(10);
             if (LeftAction != null)
                 try { LeftAction(); } catch (Exception ex) { Debug.Print("ExecuteLeft {0}", ex); }
-            SelectLeft = false;
+            await Task.Delay(100);
+            _selectLeftCounter--;
+            if (_selectLeftCounter == 0)
+                SelectLeft = false;
         }
 
         public async void ExecuteRight()
         {
             SelectRight = true;
+            _selectRightCounter++;
             await Task.Delay(10);
             if (RightAction != null)
                 try { RightAction(); } catch (Exception ex) { Debug.Print("ExecuteRight {0}", ex); }
-            SelectRight = false;
-        }
-
-        public Brush SelectedBorder
-        {
-            get
-            {
-                if (Selected)
-                {
-                    return new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ff00ff00"));
-                }
-                else
-                {
-                    return new SolidColorBrush((Color)ColorConverter.ConvertFromString("#8800ff00"));
-                }
-            }
-        }
-
-        public float SelectedBlurOpacity
-        {
-            get
-            {
-                if (Selected)
-                {
-                    return 0.2f;
-                }
-                else
-                {
-                    return 0;
-                }
-            }
-        }
-
-        public Brush SelectedBackground
-        {
-            get
-            {
-                if (Selected)
-                {
-                    var colHig = (Color)ColorConverter.ConvertFromString("#88009900");
-                    var colLow = (Color)ColorConverter.ConvertFromString("#55009900");
-                    LinearGradientBrush brush = new LinearGradientBrush();
-                    brush.StartPoint = new Point(0, 0);
-                    brush.EndPoint = new Point(1, 0);
-                    //brush.GradientStops.Add(new GradientStop(colHig, 0.0));
-                    //brush.GradientStops.Add(new GradientStop(colHig, 0.035));
-                    brush.GradientStops.Add(new GradientStop(colHig, 0.0));
-                    brush.GradientStops.Add(new GradientStop(colLow, 0.5));
-                    brush.GradientStops.Add(new GradientStop(colHig, 1));
-                    //brush.GradientStops.Add(new GradientStop(colHig, 0.965));
-                    //brush.GradientStops.Add(new GradientStop(colHig, 1.0));
-                    return brush;
-                }
-                else
-                {
-                    return new SolidColorBrush((Color)ColorConverter.ConvertFromString("#aa007700"));
-                }
-            }
+            await Task.Delay(100);
+            _selectRightCounter--;
+            if (_selectRightCounter == 0)
+                SelectRight = false;
         }
 
         public override string? ToString()

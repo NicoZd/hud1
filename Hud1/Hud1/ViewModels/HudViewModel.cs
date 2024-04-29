@@ -157,8 +157,15 @@ namespace Hud1.ViewModels
             var key = keyEvent.key;
 
             NavigationState.Repeat = keyEvent.repeated;
-            if (NavigationState.Repeat && !State!.AllowRepeat)
+            var isVerticalNavigation = key == GlobalKey.VK_UP || key == GlobalKey.VK_DOWN;
+
+            if (NavigationState.Repeat && (!State!.AllowRepeat || isVerticalNavigation))
+            {
+                //Debug.Print("Skip {0}", keyEvent.key);
                 return false;
+            }
+
+            //Debug.Print("Execute {0} {1} {2}", State.Name, State.AllowRepeat, keyEvent.key);
 
             if (key == GlobalKey.VK_LEFT)
             {

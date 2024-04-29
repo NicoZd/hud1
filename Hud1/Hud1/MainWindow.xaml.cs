@@ -1,7 +1,9 @@
 ﻿//using Hud1.Service;
 using Hud1.Helpers;
+using Hud1.Helpers.CustomSplashScreen;
 using Hud1.ViewModels;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media.Animation;
@@ -45,6 +47,14 @@ namespace Hud1
             hwnd = new WindowInteropHelper(this).Handle;
             Debug.WriteLine("OnWindowLoaded {0}", hwnd);
 
+            System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+            dispatcherTimer.Tick += new EventHandler((_, _) =>
+            {
+                SetWindowPos(hwnd, SafeNativeMethods.HWND_TOP, 0, 0, 0, 0, SetWindowPosFlags.SWP_NOMOVE | SetWindowPosFlags.SWP_NOSIZE | SetWindowPosFlags.SWP_NOACTIVATE);
+            });
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
+            dispatcherTimer.Start();
+
             WindowsServices.SetWindowExTransparent(hwnd);
 
             int width = (int)System.Windows.SystemParameters.PrimaryScreenWidth;
@@ -66,9 +76,13 @@ namespace Hud1
             GlobalKeyboardManager.SetupSystemHook();
         }
 
+        [DllImport("user32.dll", ExactSpelling = true, SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool SetWindowPos(nint hWnd, nint hWndInsertAfter, int X, int Y, int cx, int cy, SetWindowPosFlags uFlags);
+
         private void HandleKeyDown(KeyEvent keyEvent)
         {
-            //Debug.Print("HandleKeyDown2 {0} {1}", keyEvent.key, keyEvent.alt);
+            //Debug.Print("HandleKeyDown2 {0} {1}", keyEvent.key, keyEvent.alt);           
 
             if (keyEvent.alt)
             {

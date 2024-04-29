@@ -1,8 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Hud1.Helpers;
-using Hud1.Models;
 using Hud1.ViewModels;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -17,8 +15,6 @@ namespace Hud1.Views
         public Hud()
         {
             InitializeComponent();
-            Debug.Print("adasd {0}", NavigationStates.GAMMA);
-            //NavigationStates.GAMMA
         }
 
         private void OnWindowLoaded(object sender, RoutedEventArgs e)
@@ -28,7 +24,7 @@ namespace Hud1.Views
 
         private void HandleKeyDown(KeyEvent keyEvent)
         {
-            // Debug.Print("HandleKeyDown {0} {1}", key, alt);
+            //Debug.Print("HandleKeyDown {0} {1} {2}", keyEvent.alt, keyEvent.key, keyEvent.repeated);
             if (!keyEvent.alt)
             {
                 if ((DataContext as MainWindowViewModel)!.Active)
