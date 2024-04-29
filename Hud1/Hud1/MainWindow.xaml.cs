@@ -1,6 +1,7 @@
 ﻿//using Hud1.Service;
 using Hud1.Helpers;
 using Hud1.Helpers.CustomSplashScreen;
+using Hud1.Models;
 using Hud1.ViewModels;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
@@ -47,15 +48,21 @@ namespace Hud1
             hwnd = new WindowInteropHelper(this).Handle;
             Debug.WriteLine("OnWindowLoaded {0}", hwnd);
 
+            NavigationStates.BRIGHTNESS.SelectionLabel = "" + BrightnessController.Get();
+
             System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler((_, _) =>
             {
                 SetWindowPos(hwnd, SafeNativeMethods.HWND_TOP, 0, 0, 0, 0, SetWindowPosFlags.SWP_NOMOVE | SetWindowPosFlags.SWP_NOSIZE | SetWindowPosFlags.SWP_NOACTIVATE);
+                NavigationStates.BRIGHTNESS.SelectionLabel = "" + BrightnessController.Get();
             });
             dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
             dispatcherTimer.Start();
 
             WindowsServices.SetWindowExTransparent(hwnd);
+
+
+            BrightnessController.Set(100);
 
             int width = (int)System.Windows.SystemParameters.PrimaryScreenWidth;
             int height = (int)System.Windows.SystemParameters.PrimaryScreenHeight;

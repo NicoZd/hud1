@@ -61,15 +61,24 @@ namespace Hud1.ViewModels
                 .Permit(NavigationTriggers.RIGHT, NavigationStates.MENU_GAMMA)
                 .Permit(NavigationTriggers.DOWN, NavigationStates.EXIT);
 
-            // GAMMA
+            // DISPLAY
             NavigationStates.GAMMA.LeftAction = gammaViewModel.SelectPrevGama;
             NavigationStates.GAMMA.RightAction = gammaViewModel.SelectNextGama;
             Navigation.Configure(NavigationStates.GAMMA)
                .SubstateOf(NavigationStates.GAMMA_VISIBLE)
                .Permit(NavigationTriggers.UP, NavigationStates.MENU_GAMMA)
-               .Permit(NavigationTriggers.DOWN, NavigationStates.MENU_GAMMA)
+               .Permit(NavigationTriggers.DOWN, NavigationStates.BRIGHTNESS)
                .InternalTransition(NavigationTriggers.LEFT, NavigationStates.GAMMA.ExecuteLeft)
                .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.GAMMA.ExecuteRight);
+
+            NavigationStates.BRIGHTNESS.LeftAction = DecreaseBrightness;
+            NavigationStates.BRIGHTNESS.RightAction = IncreaseBrightness;
+            Navigation.Configure(NavigationStates.BRIGHTNESS)
+               .SubstateOf(NavigationStates.GAMMA_VISIBLE)
+               .Permit(NavigationTriggers.UP, NavigationStates.GAMMA)
+               .Permit(NavigationTriggers.DOWN, NavigationStates.MENU_GAMMA)
+               .InternalTransition(NavigationTriggers.LEFT, NavigationStates.BRIGHTNESS.ExecuteLeft)
+               .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.BRIGHTNESS.ExecuteRight);
 
             // SOUND
             NavigationStates.PLAYBACK_DEVICE.LeftAction = audioDeviceViewModel.SelectPrevPlaybackDevice;
@@ -142,6 +151,7 @@ namespace Hud1.ViewModels
                .InternalTransition(NavigationTriggers.LEFT, NavigationStates.STYLE.ExecuteLeft)
                .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.STYLE.ExecuteRight);
 
+            NavigationStates.BRIGHTNESS.SelectionLabel = "" + BrightnessController.Get();
 
             string graph = UmlDotGraph.Format(Navigation.GetInfo());
             Debug.Print(graph);
@@ -152,6 +162,20 @@ namespace Hud1.ViewModels
             });
             Navigation.OnTransitionCompleted(a => UpdateModelFromStateless());
             UpdateModelFromStateless();
+        }
+
+        public void DecreaseBrightness()
+        {
+            var x = Math.Max(0, BrightnessController.Get() - (NavigationState.Repeat ? 5 : 5));
+            BrightnessController.Set(x);
+            NavigationStates.BRIGHTNESS.SelectionLabel = "" + BrightnessController.Get();
+        }
+
+        public void IncreaseBrightness()
+        {
+            var x = Math.Min(100, BrightnessController.Get() + (NavigationState.Repeat ? 5 : 5));
+            BrightnessController.Set(x);
+            NavigationStates.BRIGHTNESS.SelectionLabel = "" + BrightnessController.Get();
         }
 
         public bool OnKeyPressed(KeyEvent keyEvent)
