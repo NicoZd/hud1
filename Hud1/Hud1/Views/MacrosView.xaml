@@ -9,23 +9,47 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid DataContext="{Binding Path=MacrosViewModel, RelativeSource={RelativeSource AncestorType=local:MacrosView}}">
         <StackPanel views:Spacing.Vertical="8">
-            <Label Content="Playback" Style="{DynamicResource TitleContent}"/>
-            <local:GlowBorder>
-                <StackPanel>
-                    <ItemsControl ItemsSource="{Binding Macros}"
+            <Label Content="Macros" Style="{DynamicResource TitleContent}"/>
+
+            <ItemsControl ItemsSource="{Binding Macros}"
+                      Margin="0,0,0,0"
                       BorderBrush="Transparent" BorderThickness="0"
                       Background="Transparent">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate >
-                                <StackPanel Orientation="Horizontal">
-                                    <Label Content="{Binding Path=Name}" />
-                                    <Label Content="{Binding Path=Selected}" />
-                                </StackPanel>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </StackPanel>
-            </local:GlowBorder>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate >
+                        <StackPanel Margin="0,0,0,8">
+                            <StackPanel.Style>
+                                <Style TargetType="StackPanel">
+                                    <Setter Property="Background">
+                                        <Setter.Value>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,0">
+                                                <GradientStop Color="{DynamicResource ColorBackgroundDarkMed}" Offset="0"/>
+                                            </LinearGradientBrush>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Path=Selected}" Value="True">
+                                            <Setter Property="Background">
+                                                <Setter.Value>
+                                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,0">
+                                                        <GradientStop Color="{DynamicResource ColorMedHalf}" Offset="0"/>
+                                                    </LinearGradientBrush>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </StackPanel.Style>
+                            <DockPanel Margin="4,4,4,4">
+                                <views:GlowBorderLabel DockPanel.Dock="Right" Width="80"  Label="{Binding Path=RightLabel}" Selected="{Binding Path=Selected}"/>
+                                <Label VerticalAlignment="Center" HorizontalAlignment="Left" Style="{DynamicResource InfoLabel}" Content="{Binding Path=Name}" />
+                            </DockPanel>
+                            <Label Margin="5,0,5,8" VerticalAlignment="Top" Style="{DynamicResource InfoLabel}" HorizontalAlignment="Left" Content="{Binding Path=Log}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
         </StackPanel>
     </Grid>
 </UserControl>

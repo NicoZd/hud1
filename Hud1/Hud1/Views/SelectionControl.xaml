@@ -91,7 +91,7 @@
                 </Label.Style>
             </Label>
 
-            <DockPanel Margin="0,0,0,4"  views:MarginSetter.Margin="4,0,4,0">
+            <DockPanel Margin="0,0,0,4" views:MarginSetter.Margin="4,0,4,0">
                 <views:GlowBorderLabel DockPanel.Dock="Left" Label="{Binding Path=SelectionLeftLabel}" Selected="{Binding Path=Selected}" Pressed="{Binding Path=SelectLeft}"/>
                 <views:GlowBorderLabel DockPanel.Dock="Right" Label="{Binding Path=SelectionRightLabel}" Selected="{Binding Path=Selected}" Pressed="{Binding Path=SelectRight}"/>
                 <Grid>

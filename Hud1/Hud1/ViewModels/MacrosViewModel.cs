@@ -1,7 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Hud1.Models;
+using MoonSharp.Interpreter;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.IO;
+using System.Windows;
+
 namespace Hud1.ViewModels
 {
     public partial class Macro : ObservableObject
@@ -10,8 +14,91 @@ namespace Hud1.ViewModels
         private string _name = "Hellooo!";
 
         [ObservableProperty]
+        private string _log = "";
+
+        [ObservableProperty]
         private bool _selected = false;
 
+        [ObservableProperty]
+        private bool _running = false;
+
+        [ObservableProperty]
+        private string _rightLabel = "";
+
+        private string _path = "";
+
+        private Script? _script;
+
+        public Macro(String path)
+        {
+            _path = path;
+            Name = Path.GetFileName(path);
+            RightLabel = "START >";
+        }
+
+        internal void OnLeft()
+        {
+        }
+
+        internal void OnRight()
+        {
+            if (Running && _script != null)
+            {
+                RightLabel = "STOPPING";
+                _script.Globals["running"] = false;
+                return;
+            }
+            RightLabel = "STOP >";
+            Running = true;
+
+            string scriptCode = File.ReadAllText(_path);
+
+            _script = new Script(CoreModules.None);
+            _script.Globals["sleep"] = (int a) =>
+            {
+                //Debug.Print("SLEEP {0}", a);
+                Thread.Sleep(a);
+            };
+
+
+            _script.Globals["print"] = (string a) =>
+            {
+                //Debug.Print("print {0}", a);
+                Log = a;
+            };
+
+            _script.Globals["running"] = true;
+
+            ThreadPool.QueueUserWorkItem((_) =>
+            {
+                try
+                {
+                    _script.DoString(scriptCode);
+                    _script.Call(_script.Globals["setup"]);
+                    while ((bool)_script.Globals["running"])
+                    {
+                        _script.Call(_script.Globals["run"]);
+                    };
+                    _script.Call(_script.Globals["cleanup"]);
+                }
+                catch (SyntaxErrorException ex)
+                {
+                    Debug.Print("ERROR {0}", ex.DecoratedMessage);
+                    Log = ex.DecoratedMessage;
+                }
+                catch (ScriptRuntimeException ex)
+                {
+                    Debug.Print($"{ex.DecoratedMessage}");
+                    Log = ex.DecoratedMessage;
+                }
+                catch (Exception ex)
+                {
+                    Debug.Print("Exception");
+                }
+                Running = false;
+                RightLabel = "START >";
+            });
+        }
     }
 
     public partial class MacrosViewModel : ObservableObject
@@ -26,11 +113,58 @@ namespace Hud1.ViewModels
         [ObservableProperty]
         public bool selected = false;
 
+        private FileSystemWatcher _watcher;
+
+        private String _path = "";
+
         public MacrosViewModel()
         {
             Macros = new ObservableCollection<Macro>();
-            Macros.Add(new Macro());
-            Macros.Add(new Macro());
+
+            _path = Path.Combine(Directory.GetCurrentDirectory(), "Macros");
+            Debug.Print("Macros Path {0}", _path);
+
+            _watcher = new FileSystemWatcher(_path);
+            //watcher.Path = path;
+            _watcher.NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.CreationTime | NotifyFilters.FileName;
+            //watcher.Filter = "*.*";
+            _watcher.Changed += OnDirectoryChanged;
+            _watcher.Created += OnDirectoryChanged;
+            _watcher.Deleted += OnDirectoryChanged;
+            _watcher.Renamed += OnDirectoryChanged;
+            _watcher.EnableRaisingEvents = true;
+
+            UpdateFiles();
+        }
+
+        private void OnDirectoryChanged(object sender, FileSystemEventArgs e)
+        {
+            Debug.Print("OnDirectoryChanged");
+            Application.Current.Dispatcher.Invoke(new Action(() =>
+            {
+                UpdateFiles();
+            }));
+        }
+
+        private void UpdateFiles()
+        {
+            Debug.Print("UpdateFiles");
+            string[] fileEntries = Directory.GetFiles(_path);
+
+            foreach (Macro macro in Macros)
+            {
+                macro.Running = false;
+            }
+            Macros.Clear();
+
+            foreach (string fileEntry in fileEntries)
+            {
+                Macros.Add(new Macro(fileEntry));
+            }
+
+            var lastIndex = SelectedIndex;
+            SelectedIndex = -1;
+            SelectedIndex = lastIndex;
         }
 
         partial void OnSelectedIndexChanged(int value)
@@ -98,10 +232,12 @@ namespace Hud1.ViewModels
         public void OnLeft()
         {
             Debug.Print("OnLeft");
+            Macros[SelectedIndex].OnLeft();
         }
         public void OnRight()
         {
-            Debug.Print("OnRight2");
+            Debug.Print("OnRight");
+            Macros[SelectedIndex].OnRight();
         }
 
     }

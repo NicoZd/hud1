@@ -25,6 +25,8 @@
     <None Remove="Assets\blue-noise.png" />
     <None Remove="Assets\dragon.png" />
     <None Remove="Assets\fluid-background-transparent.png" />
+    <None Remove="Macros\first.lua" />
+    <None Remove="Macros\second.lua" />
   </ItemGroup>
 
   <ItemGroup>
@@ -49,6 +51,12 @@
     <Resource Include="Assets\fluid-background-transparent.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <Content Include="Macros\first.lua">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Macros\second.lua">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>
