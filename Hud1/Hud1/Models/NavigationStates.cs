@@ -18,7 +18,7 @@
         public static readonly NavigationState MENU_MORE = new() { Hint = "Quit, Skin, Adjust, Info" };
         public static readonly NavigationState MORE_VISIBLE = new();
 
-        // GAMMA
+        // DISPLAY
         public static readonly NavigationState GAMMA = new() { Label = "Gamma", Hint = "Adjust Windows Desktop Gamma Settings.", AllowRepeat = true };
         public static readonly NavigationState BRIGHTNESS = new() { Label = "Brightness", Hint = "Adjust Display Brightness.", AllowRepeat = true };
 
@@ -30,6 +30,9 @@
         public static readonly NavigationState CAPTURE_DEVICE = new() { Label = "Device" };
         public static readonly NavigationState CAPTURE_VOLUME = new() { Label = "Volume", AllowRepeat = true };
         public static readonly NavigationState CAPTURE_MUTE = new() { Label = "Mute", SelectionLeftLabel = " < Mute ", SelectionRightLabel = "Unmute >" };
+
+        // MACRO
+        public static readonly NavigationState MACROS = new() { };
 
         // MORE
         public static readonly NavigationState EXIT = new();

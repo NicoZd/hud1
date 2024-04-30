@@ -1,0 +1,31 @@
+﻿<UserControl x:Class="Hud1.Views.MacrosView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:views="clr-namespace:Hud1.Views"
+             xmlns:local="clr-namespace:Hud1.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid DataContext="{Binding Path=MacrosViewModel, RelativeSource={RelativeSource AncestorType=local:MacrosView}}">
+        <StackPanel views:Spacing.Vertical="8">
+            <Label Content="Playback" Style="{DynamicResource TitleContent}"/>
+            <local:GlowBorder>
+                <StackPanel>
+                    <ItemsControl ItemsSource="{Binding Macros}"
+                      BorderBrush="Transparent" BorderThickness="0"
+                      Background="Transparent">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate >
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Content="{Binding Path=Name}" />
+                                    <Label Content="{Binding Path=Selected}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </local:GlowBorder>
+        </StackPanel>
+    </Grid>
+</UserControl>

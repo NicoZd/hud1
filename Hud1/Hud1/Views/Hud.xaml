@@ -73,18 +73,7 @@
                 </Grid>
 
                 <Grid Visibility="{Binding Path=States[MACRO_VISIBLE].Visibility}">
-                    <StackPanel Margin="0,50,0,0">
-                        <StackPanel.Resources>
-                            <Style TargetType="{x:Type views:GlowBorderLabel}">
-                                <Setter Property="Margin" Value="0,2,0,2"/>
-                            </Style>
-                        </StackPanel.Resources>
-                        <Label Content="MOUSE MACRO" Style="{DynamicResource TitleContent}"/>
-                        <views:GlowBorderLabel Label="Hold Left"/>
-                        <views:GlowBorderLabel Label="Repeat Left"/>
-                        <Label  Content="KEY MACRO" Style="{DynamicResource TitleContent}"/>
-                        <views:GlowBorderLabel Label="Hold W"/>
-                    </StackPanel>
+                    <views:MacrosView MacrosViewModel="{Binding Path=MacrosViewModel}"/>
                 </Grid>
 
                 <Grid Visibility="{Binding Path=States[CROSSHAIR_VISIBLE].Visibility}">

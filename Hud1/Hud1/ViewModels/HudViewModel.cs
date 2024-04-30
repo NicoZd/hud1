@@ -21,6 +21,9 @@ namespace Hud1.ViewModels
         [ObservableProperty]
         public GammaViewModel gammaViewModel = new();
 
+        [ObservableProperty]
+        public MacrosViewModel macrosViewModel = new();
+
         public Stateless.StateMachine<NavigationState, NavigationTrigger> Navigation;
 
         private readonly string[] Styles = ["Green", "Red"];
@@ -48,7 +51,9 @@ namespace Hud1.ViewModels
             Navigation.Configure(NavigationStates.MENU_MACRO)
                 .SubstateOf(NavigationStates.MACRO_VISIBLE)
                 .Permit(NavigationTriggers.LEFT, NavigationStates.MENU_AUDIO)
-                .Permit(NavigationTriggers.RIGHT, NavigationStates.MENU_CROSSHAIR);
+                .Permit(NavigationTriggers.RIGHT, NavigationStates.MENU_CROSSHAIR)
+                .Permit(NavigationTriggers.UP, NavigationStates.MACROS)
+                .Permit(NavigationTriggers.DOWN, NavigationStates.MACROS);
 
             Navigation.Configure(NavigationStates.MENU_CROSSHAIR)
                 .SubstateOf(NavigationStates.CROSSHAIR_VISIBLE)
@@ -134,6 +139,20 @@ namespace Hud1.ViewModels
               .Permit(NavigationTriggers.DOWN, NavigationStates.MENU_AUDIO)
               .InternalTransition(NavigationTriggers.LEFT, NavigationStates.CAPTURE_MUTE.ExecuteLeft)
               .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.CAPTURE_MUTE.ExecuteRight);
+
+            MacrosViewModel.Navigation = Navigation;
+            // MACROS
+            Navigation.Configure(NavigationStates.MACROS)
+             .SubstateOf(NavigationStates.MACRO_VISIBLE)
+             .OnEntryFrom(NavigationTriggers.UP, MacrosViewModel.OnEntryFromBottom)
+             .OnEntryFrom(NavigationTriggers.DOWN, MacrosViewModel.OnEntryFromTop)
+             .OnEntry(MacrosViewModel.OnEntry)
+             .OnExit(MacrosViewModel.OnExit)
+             .InternalTransition(NavigationTriggers.LEFT, MacrosViewModel.OnLeft)
+             .InternalTransition(NavigationTriggers.RIGHT, MacrosViewModel.OnRight)
+             .InternalTransition(NavigationTriggers.UP, MacrosViewModel.OnUp)
+             .InternalTransition(NavigationTriggers.DOWN, MacrosViewModel.OnDown)
+             .Permit(NavigationTriggers.RETURN, NavigationStates.MENU_MACRO);
 
             // MORE
             NavigationStates.EXIT.RightAction = Application.Current.Shutdown;

@@ -18,6 +18,9 @@
     <Compile Update="Views\Hud.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\MacrosView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\PanelTopBar.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -42,6 +45,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\Hud.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\MacrosView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\PanelTopBar.xaml">

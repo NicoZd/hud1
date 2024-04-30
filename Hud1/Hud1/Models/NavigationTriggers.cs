@@ -6,5 +6,6 @@
         public static NavigationTrigger RIGHT = new();
         public static NavigationTrigger UP = new();
         public static NavigationTrigger DOWN = new();
+        public static NavigationTrigger RETURN = new();
     }
 }

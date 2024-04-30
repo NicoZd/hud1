@@ -9,12 +9,10 @@ namespace Hud1.ViewModels
         public double[] Gammas = [1, 1.25, 1.5, 2, 3, 4.2];
 
         public int GammaIndex = 0;
-
         public GammaViewModel()
         {
             NavigationStates.GAMMA.SelectionLabel = "" + Gammas[GammaIndex];
         }
-
         public void SelectPrevGama()
         {
             Debug.Print("SelectPrevGama {0}", GammaIndex);
@@ -34,8 +32,5 @@ namespace Hud1.ViewModels
             NavigationStates.GAMMA.SelectionLabel = "" + Gammas[GammaIndex];
             Gamma.SetGamma(Gammas[GammaIndex]);
         }
-
-
-
     }
 }
