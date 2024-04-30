@@ -24,9 +24,9 @@
                 </StackPanel>
 
                 <WrapPanel Orientation="Horizontal" Margin="-2,15,-2,0" views:Spacing.Horizontal="4">
-                    <views:GlowBorderLabel Label="GAMMA" 
-                                           Selected="{Binding Path=States[MENU_GAMMA].Selected}"
-                                           Highlighted="{Binding Path=States[GAMMA_VISIBLE].Selected}"/>
+                    <views:GlowBorderLabel Label="DISPLAY" 
+                                           Selected="{Binding Path=States[MENU_DISPLAY].Selected}"
+                                           Highlighted="{Binding Path=States[MENU_DISPLAY].Selected}"/>
                     <views:GlowBorderLabel Label="AUDIO" 
                                            Selected="{Binding Path=States[MENU_AUDIO].Selected}"
                                            Highlighted="{Binding Path=States[AUDIO_VISIBLE].Selected}"/>
@@ -46,7 +46,7 @@
                 <TextBlock FontFamily="{DynamicResource FontFamily}" Foreground="{DynamicResource BrushInfoSecondary}" 
                     FontSize="12" Text="{Binding State.Hint}"/>
 
-                <Grid Visibility="{Binding Path=States[GAMMA_VISIBLE].Visibility}" >
+                <Grid Visibility="{Binding Path=States[DISPLAY_VISIBLE].Visibility}" >
                     <StackPanel views:Spacing.Vertical="8">
                         <Label Content="Gamma" Style="{DynamicResource TitleContent}"/>
                         <views:SelectionControl NavigationState="{Binding Path=States[GAMMA]}" />

@@ -27,11 +27,11 @@ namespace Hud1.ViewModels
 
         public HudViewModel()
         {
-            Navigation = new(NavigationStates.MENU_GAMMA);
+            Navigation = new(NavigationStates.MENU_DISPLAY);
 
             // MENU
-            Navigation.Configure(NavigationStates.MENU_GAMMA)
-                .SubstateOf(NavigationStates.GAMMA_VISIBLE)
+            Navigation.Configure(NavigationStates.MENU_DISPLAY)
+                .SubstateOf(NavigationStates.DISPLAY_VISIBLE)
                 .Permit(NavigationTriggers.LEFT, NavigationStates.MENU_MORE)
                 .Permit(NavigationTriggers.RIGHT, NavigationStates.MENU_AUDIO)
                 .Permit(NavigationTriggers.DOWN, NavigationStates.GAMMA)
@@ -40,7 +40,7 @@ namespace Hud1.ViewModels
 
             Navigation.Configure(NavigationStates.MENU_AUDIO)
                 .SubstateOf(NavigationStates.AUDIO_VISIBLE)
-                .Permit(NavigationTriggers.LEFT, NavigationStates.MENU_GAMMA)
+                .Permit(NavigationTriggers.LEFT, NavigationStates.MENU_DISPLAY)
                 .Permit(NavigationTriggers.RIGHT, NavigationStates.MENU_MACRO)
                 .Permit(NavigationTriggers.DOWN, NavigationStates.PLAYBACK_DEVICE)
                 .Permit(NavigationTriggers.UP, NavigationStates.CAPTURE_MUTE);
@@ -58,15 +58,15 @@ namespace Hud1.ViewModels
             Navigation.Configure(NavigationStates.MENU_MORE)
                 .SubstateOf(NavigationStates.MORE_VISIBLE)
                 .Permit(NavigationTriggers.LEFT, NavigationStates.MENU_CROSSHAIR)
-                .Permit(NavigationTriggers.RIGHT, NavigationStates.MENU_GAMMA)
+                .Permit(NavigationTriggers.RIGHT, NavigationStates.MENU_DISPLAY)
                 .Permit(NavigationTriggers.DOWN, NavigationStates.EXIT);
 
             // DISPLAY
             NavigationStates.GAMMA.LeftAction = gammaViewModel.SelectPrevGama;
             NavigationStates.GAMMA.RightAction = gammaViewModel.SelectNextGama;
             Navigation.Configure(NavigationStates.GAMMA)
-               .SubstateOf(NavigationStates.GAMMA_VISIBLE)
-               .Permit(NavigationTriggers.UP, NavigationStates.MENU_GAMMA)
+               .SubstateOf(NavigationStates.DISPLAY_VISIBLE)
+               .Permit(NavigationTriggers.UP, NavigationStates.MENU_DISPLAY)
                .Permit(NavigationTriggers.DOWN, NavigationStates.BRIGHTNESS)
                .InternalTransition(NavigationTriggers.LEFT, NavigationStates.GAMMA.ExecuteLeft)
                .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.GAMMA.ExecuteRight);
@@ -74,9 +74,9 @@ namespace Hud1.ViewModels
             NavigationStates.BRIGHTNESS.LeftAction = DecreaseBrightness;
             NavigationStates.BRIGHTNESS.RightAction = IncreaseBrightness;
             Navigation.Configure(NavigationStates.BRIGHTNESS)
-               .SubstateOf(NavigationStates.GAMMA_VISIBLE)
+               .SubstateOf(NavigationStates.DISPLAY_VISIBLE)
                .Permit(NavigationTriggers.UP, NavigationStates.GAMMA)
-               .Permit(NavigationTriggers.DOWN, NavigationStates.MENU_GAMMA)
+               .Permit(NavigationTriggers.DOWN, NavigationStates.MENU_DISPLAY)
                .InternalTransition(NavigationTriggers.LEFT, NavigationStates.BRIGHTNESS.ExecuteLeft)
                .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.BRIGHTNESS.ExecuteRight);
 
