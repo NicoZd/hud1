@@ -36,12 +36,13 @@ namespace Hud1.Helpers
 
         // The system hook ID (for storing this application's hook)
         private static IntPtr HookID = IntPtr.Zero;
-        // private static GlobalKey? _lastPressedKey;
 
-        //        internal static Func<GlobalKey, bool, bool> HandleKeyDown;
+        public static bool IgnoreNextEvent { get; internal set; }
 
-        //public delegate void KeyDownHandler(KeyEvent keyEvent);
-        //public static event KeyDownHandler? KeyDown;
+        public static bool IsLeftMouseDown { get; set; } = false;
+
+        //public delegate void MouseDownHandler();
+        //public static event MouseDownHandler? MouseDown;
 
 
         /// <summary>
@@ -79,20 +80,23 @@ namespace Hud1.Helpers
         /// <returns>LRESULT</returns>
         private static IntPtr HookCallback(int code, IntPtr wParam, IntPtr lParam)
         {
-            if (code > -1)
+            if (code > -1 && !IgnoreNextEvent)
             {
                 switch (wParam)
                 {
                     case WM_LBUTTONDOWN:
                         {
                             Debug.Print("DOWN");
+                            IsLeftMouseDown = true;
                             break;
                         }
                     case WM_LBUTTONUP:
                         {
                             Debug.Print("UP");
+                            IsLeftMouseDown = false;
                             break;
                         }
+                    case WM_MOUSEWHEEL:
                     case WM_MOUSEMOVE:
                         {
                             //IGNORE

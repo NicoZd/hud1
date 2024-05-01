@@ -6,6 +6,9 @@ function Setup()
 end
 
 function Run()
+	if IsLeftMouseDown() then
+		Running = false
+	end 
 end
 
 function Cleanup()

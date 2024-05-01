@@ -94,6 +94,11 @@ namespace Hud1.ViewModels
                 Log = a;
             };
 
+            _script.Globals["IsLeftMouseDown"] = () =>
+            {
+                return GlobalMouseHook.IsLeftMouseDown;
+            };
+
             _script.Globals["MouseDown"] = () =>
             {
                 MouseService.MouseDown(MouseService.MouseButton.Left);

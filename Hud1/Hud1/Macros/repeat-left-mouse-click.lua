@@ -12,6 +12,10 @@ function Run()
 	Sleep(100)
 	Print("Up")
 	MouseUp()
+
+	if IsLeftMouseDown() then
+		Running = false
+	end 
 end
 
 function Cleanup()
