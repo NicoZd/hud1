@@ -9,6 +9,9 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Views\PanelBackground.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\GlowBorderLabel.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -19,6 +22,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\MacrosView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\PanelLabel.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\PanelTopBar.xaml.cs">
@@ -38,6 +44,9 @@
     <Page Update="Themes\Green.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Views\PanelBackground.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\GlowBorderLabel.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -50,6 +59,9 @@
     <Page Update="Views\MacrosView.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Views\PanelLabel.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\PanelTopBar.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -60,4 +72,6 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
+  <Target Name="PlatformVerificationTask" Condition="'$(PlatformVerification)' 
+    == 'true'" /> 
 </Project>

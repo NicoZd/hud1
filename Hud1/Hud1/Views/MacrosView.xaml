@@ -10,58 +10,75 @@
     <Grid DataContext="{Binding Path=MacrosViewModel, RelativeSource={RelativeSource AncestorType=local:MacrosView}}">
         <StackPanel views:Spacing.Vertical="8">
             <Label Content="Macros" Style="{DynamicResource TitleContent}"/>
-
             <ItemsControl ItemsSource="{Binding Macros}"
-                      Margin="0,0,0,0"
-                      BorderBrush="Transparent" BorderThickness="0"
-                      Background="Transparent">
+                Margin="0,0,0,0"
+                BorderBrush="Transparent" BorderThickness="0"
+                Background="Transparent">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate >
-                        <StackPanel Margin="0,0,0,8">
-                            <StackPanel.Style>
-                                <Style TargetType="StackPanel">
-                                    <Setter Property="Background">
-                                        <Setter.Value>
-                                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,0">
-                                                <GradientStop Color="{DynamicResource ColorBackgroundDarkMed}" Offset="0"/>
-                                            </LinearGradientBrush>
-                                        </Setter.Value>
-                                    </Setter>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Path=Selected}" Value="True">
-                                            <Setter Property="Background">
-                                                <Setter.Value>
-                                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,0">
-                                                        <GradientStop Color="{DynamicResource ColorMedHalf}" Offset="0"/>
-                                                    </LinearGradientBrush>
-                                                </Setter.Value>
-                                            </Setter>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </StackPanel.Style>
-                            <DockPanel Margin="4,4,4,4">
-                                <views:GlowBorderLabel DockPanel.Dock="Right" Label="{Binding Path=RightLabel}" Selected="{Binding Path=Selected}"/>
-                                <Label VerticalAlignment="Center" HorizontalAlignment="Left" Style="{DynamicResource InfoLabel}" Content="{Binding Path=Name}" />
-                                <Label Margin="5,0,5,0" VerticalAlignment="Center" Style="{DynamicResource InfoLabel}" HorizontalAlignment="Left" Content="{Binding Path=Log}" />
-                            </DockPanel>
-                            <Grid MaxWidth="450" HorizontalAlignment="Left">
-                                <Grid.Style>
-                                    <Style TargetType="Grid">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Path=Error}" Value="">
-                                                <Setter Property="Visibility" Value="Collapsed"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Grid.Style>
-                                <Label Margin="5,0,5,0" FontSize="10" VerticalAlignment="Center" Style="{DynamicResource InfoLabel}" HorizontalAlignment="Left" Content="{Binding Path=Error}" />
-                            </Grid>
-                        </StackPanel>
+                        <views:PanelBackground Margin="0,0,0,8">
+                            <StackPanel>
+                                <StackPanel>
+                                    <DockPanel>
+                                        <views:GlowBorderLabel
+                                            Width="90"
+                                            Margin="0,4,4,4"
+                                            DockPanel.Dock="Right"
+                                            Label="{Binding Path=RightLabel}"
+                                            Selected="{Binding Path=Selected}"/>
+                                        <views:PanelLabel VerticalAlignment="Center" HorizontalAlignment="Left" Content="{Binding Path=Name}" />
+                                    </DockPanel>
+                                </StackPanel>
+                                <views:IgnoreWidthControl>
+                                    <Grid Background="{DynamicResource BrushColorMedLow}"
+                                        Margin="4,0,4,4" >
+                                        <Grid.Style>
+                                            <Style TargetType="Grid">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Path=Error}" Value="">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Grid.Style>
+                                        <TextBlock
+                                            FontFamily="{DynamicResource FontFamily}"
+                                            Foreground="{DynamicResource BrushInfo}"
+                                            TextWrapping="Wrap"
+                                            FontSize="12"
+                                            Text="{Binding Path=Error}"
+                                            Margin="4">
+                                        </TextBlock>
+                                    </Grid>
+                                </views:IgnoreWidthControl>
+                                <views:IgnoreWidthControl>
+                                    <Grid
+                                        Background="{DynamicResource BrushColorMedLow}"
+                                        Margin="4,0,4,4">
+                                        <Grid.Style>
+                                            <Style TargetType="Grid">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Path=Log}" Value="">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Grid.Style>
+                                        <TextBlock 
+                                            FontFamily="{DynamicResource FontFamily}"
+                                            Foreground="{DynamicResource BrushSolidSuperBright}"
+                                            TextWrapping="Wrap"
+                                            FontSize="12"
+                                            Text="{Binding Path=Log}"
+                                            Margin="4">
+                                        </TextBlock>
+                                    </Grid>
+                                </views:IgnoreWidthControl>
+                            </StackPanel>
+                        </views:PanelBackground>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
-
         </StackPanel>
     </Grid>
 </UserControl>

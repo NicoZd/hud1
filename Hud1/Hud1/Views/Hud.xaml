@@ -10,7 +10,9 @@
              Loaded="OnWindowLoaded"             
              >
 
-    <Grid DataContext="{Binding Path=ViewModel, RelativeSource={RelativeSource AncestorType=local:Hud}}" HorizontalAlignment="Right" Margin="0,0,0,0">
+    <Grid HorizontalAlignment="Right"
+          DataContext="{Binding Path=ViewModel, RelativeSource={RelativeSource AncestorType=local:Hud}}"
+          >
         <Grid.Effect>
             <DropShadowEffect ShadowDepth="3" Color="#008800" Opacity="0.5" BlurRadius="20" Direction="0" />
         </Grid.Effect>
@@ -23,7 +25,11 @@
                     <Label Content="Use cursor keys to navigate and select." Style="{DynamicResource InfoLabelSecondary}" />
                 </StackPanel>
 
-                <WrapPanel Orientation="Horizontal" Margin="-2,15,-2,0" views:Spacing.Horizontal="4">
+                <WrapPanel 
+                    Orientation="Horizontal"
+                    Margin="-2,15,-2,0"
+                    views:Spacing.Horizontal="4"
+                    >
                     <views:GlowBorderLabel Label="DISPLAY" 
                                            Selected="{Binding Path=States[MENU_DISPLAY].Selected}"
                                            Highlighted="{Binding Path=States[MENU_DISPLAY].Selected}"/>

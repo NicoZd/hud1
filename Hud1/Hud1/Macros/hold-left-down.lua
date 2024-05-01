@@ -1,4 +1,4 @@
-name = "Hold Left Down"
+label = "Device Hold Left Down"
 description = "Hold Left Down"
 
 function setup()              

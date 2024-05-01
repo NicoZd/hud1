@@ -10,6 +10,7 @@
     <SolidColorBrush x:Key="BrushLabel" Color="{DynamicResource ColorSuperBright}" />
     <SolidColorBrush x:Key="BrushInfoSecondary" Color="{DynamicResource ColorInfoSecondary}" />
     <SolidColorBrush x:Key="BrushInfo" Color="{DynamicResource ColorInfo}" />
+    <SolidColorBrush x:Key="BrushColorMedLow" Color="{DynamicResource ColorMedLow}" />
     
     <!--
     <FontFamily x:Key="FontFamily">Cascadia Code</FontFamily>

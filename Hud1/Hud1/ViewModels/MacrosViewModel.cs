@@ -11,7 +11,7 @@ namespace Hud1.ViewModels
     public partial class Macro : ObservableObject
     {
         [ObservableProperty]
-        private string _name = "";
+        private string _label = "";
 
         [ObservableProperty]
         private string _log = "";
@@ -35,16 +35,16 @@ namespace Hud1.ViewModels
         public Macro(String path)
         {
             _path = path;
-            Name = Path.GetFileName(path);
-            RightLabel = "▶";
+            Label = Path.GetFileName(path);
+            RightLabel = "Start ▶";
 
             try
             {
                 string scriptCode = File.ReadAllText(_path);
                 _script = new Script(CoreModules.None);
-                _script.Globals["name"] = Name;
+                _script.Globals["label"] = Label;
                 _script.DoString(scriptCode);
-                Name = (string)_script.Globals["name"];
+                Label = (string)_script.Globals["label"];
             }
             catch (InterpreterException ex)
             {
@@ -65,12 +65,12 @@ namespace Hud1.ViewModels
         {
             if (Running && _script != null)
             {
-                RightLabel = "…";
+                RightLabel = "Stopping";
                 _script.Globals["running"] = false;
                 return;
             }
             Error = "";
-            RightLabel = "▮";
+            RightLabel = "Stop ▶";
             Running = true;
 
             string scriptCode = File.ReadAllText(_path);
@@ -113,14 +113,14 @@ namespace Hud1.ViewModels
                     Error = ex.Message;
                 }
                 Running = false;
-                RightLabel = "▶";
+                RightLabel = "Start ▶";
             });
         }
     }
 
     public partial class MacrosViewModel : ObservableObject
     {
-        public ObservableCollection<Macro> Macros { get; set; }
+        public ObservableCollection<Macro> Macros { get; set; } = new();
 
         public Stateless.StateMachine<NavigationState, NavigationTrigger>? Navigation;
 
@@ -142,9 +142,7 @@ namespace Hud1.ViewModels
             Debug.Print("Macros Path {0}", _path);
 
             _watcher = new FileSystemWatcher(_path);
-            //watcher.Path = path;
             _watcher.NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.CreationTime | NotifyFilters.FileName;
-            //watcher.Filter = "*.*";
             _watcher.Changed += OnDirectoryChanged;
             _watcher.Created += OnDirectoryChanged;
             _watcher.Deleted += OnDirectoryChanged;
@@ -156,7 +154,6 @@ namespace Hud1.ViewModels
 
         private void OnDirectoryChanged(object sender, FileSystemEventArgs e)
         {
-            Debug.Print("OnDirectoryChanged");
             Application.Current.Dispatcher.Invoke(new Action(() =>
             {
                 UpdateFiles();
@@ -166,17 +163,20 @@ namespace Hud1.ViewModels
         private void UpdateFiles()
         {
             Debug.Print("UpdateFiles");
-            string[] fileEntries = Directory.GetFiles(_path);
-
             foreach (Macro macro in Macros)
-            {
                 macro.Running = false;
-            }
-            Macros.Clear();
 
+            string[] fileEntries = Directory.GetFiles(_path);
+            var temp = new ObservableCollection<Macro>();
             foreach (string fileEntry in fileEntries)
             {
-                Macros.Add(new Macro(fileEntry));
+                temp.Add(new Macro(fileEntry));
+            }
+
+            Macros.Clear();
+            foreach (Macro m in temp.OrderBy(m => m.Label))
+            {
+                Macros.Add(m);
             }
 
             var lastIndex = SelectedIndex;
