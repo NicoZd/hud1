@@ -73,6 +73,8 @@ namespace Hud1
             this.Left = 0;
             this.Top = 0;
 
+            GlobalMouseHook.SystemHook();
+
             GlobalKeyboardHook.KeyDown += HandleKeyDown;
             GlobalKeyboardHook.SystemHook();
 
