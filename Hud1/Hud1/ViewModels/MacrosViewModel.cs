@@ -14,6 +14,9 @@ namespace Hud1.ViewModels
         private string _label = "";
 
         [ObservableProperty]
+        private string _description = "";
+
+        [ObservableProperty]
         private string _log = "";
 
         [ObservableProperty]
@@ -36,6 +39,7 @@ namespace Hud1.ViewModels
         {
             _path = path;
             Label = Path.GetFileName(path);
+            Description = "";
             RightLabel = "Start ▶";
 
             try
@@ -43,8 +47,10 @@ namespace Hud1.ViewModels
                 string scriptCode = File.ReadAllText(_path);
                 _script = new Script(CoreModules.None);
                 _script.Globals["label"] = Label;
+                _script.Globals["description"] = Description;
                 _script.DoString(scriptCode);
                 Label = (string)_script.Globals["label"];
+                Description = (string)_script.Globals["description"];
             }
             catch (InterpreterException ex)
             {
@@ -192,6 +198,10 @@ namespace Hud1.ViewModels
             {
                 var macro = Macros[i];
                 macro.Selected = i == value;
+                if (i == value)
+                {
+                    NavigationStates.MACROS.Hint = macro.Description;
+                }
             }
         }
 

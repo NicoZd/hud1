@@ -49,8 +49,16 @@
 
                 <Separator Margin="-3,12,-3,25" Background="{DynamicResource BrushSeparator}"/>
 
-                <TextBlock FontFamily="{DynamicResource FontFamily}" Foreground="{DynamicResource BrushInfoSecondary}" 
-                    FontSize="12" Text="{Binding State.Hint}"/>
+                <views:IgnoreWidthControl>
+                    <TextBlock    
+                        Height="30"
+                        Margin="0,0,0,-15"
+                        TextWrapping="Wrap"
+                        FontFamily="{DynamicResource FontFamily}"
+                        Foreground="{DynamicResource BrushInfoSecondary}" 
+                        FontSize="12"
+                        Text="{Binding State.Hint}"/>
+                </views:IgnoreWidthControl>
 
                 <Grid Visibility="{Binding Path=States[DISPLAY_VISIBLE].Visibility}" >
                     <StackPanel views:Spacing.Vertical="8">
