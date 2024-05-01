@@ -61,11 +61,10 @@ namespace Hud1
 
             WindowsServices.SetWindowExTransparent(hwnd);
 
-
             BrightnessController.Set(100);
 
-            int width = (int)System.Windows.SystemParameters.PrimaryScreenWidth;
-            int height = (int)System.Windows.SystemParameters.PrimaryScreenHeight;
+            int width = (int)SystemParameters.PrimaryScreenWidth;
+            int height = (int)SystemParameters.PrimaryScreenHeight;
 
             Debug.WriteLine("Window_Loaded {0} {1}", width, height);
 
@@ -74,13 +73,17 @@ namespace Hud1
             this.Left = 0;
             this.Top = 0;
 
+            GlobalKeyboardHook.KeyDown += HandleKeyDown;
+            GlobalKeyboardHook.SystemHook();
+
             Task.Delay(500).ContinueWith(_ =>
             {
                 Application.Current?.Dispatcher.Invoke(new Action(() => { ShowApp(); }));
             });
-
-            GlobalKeyboardManager.KeyDown += HandleKeyDown;
-            GlobalKeyboardManager.SetupSystemHook();
+        }
+        private void OnWindowUnloaded(object sender, RoutedEventArgs e)
+        {
+            GlobalKeyboardHook.SystemUnhook();
         }
 
         [DllImport("user32.dll", ExactSpelling = true, SetLastError = true)]
@@ -122,12 +125,5 @@ namespace Hud1
             this.BeginAnimation(UIElement.OpacityProperty, animation);
         }
 
-
-
-
-        private void OnWindowUnloaded(object sender, RoutedEventArgs e)
-        {
-            GlobalKeyboardManager.ShutdownSystemHook();
-        }
     }
 }

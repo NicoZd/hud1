@@ -33,7 +33,9 @@ namespace Hud1.Helpers
         }
     }
 
-    public static class GlobalKeyboardManager
+    //GlobalKeyboardHook
+    //GlobalMouseHook
+    public static class GlobalKeyboardHook
     {
         // Callbacks
         private delegate IntPtr LowLevelKeyboardProc(int nCode, IntPtr wParam, IntPtr lParam);
@@ -58,7 +60,7 @@ namespace Hud1.Helpers
         /// <summary>
         /// Hooks/Sets up this application for receiving keydown callbacks
         /// </summary>
-        public static void SetupSystemHook()
+        public static void SystemHook()
         {
             HookID = SetHook(LowLevelProc);
         }
@@ -66,7 +68,7 @@ namespace Hud1.Helpers
         /// <summary>
         /// Unhooks this application, stopping it from receiving keydown callbacks
         /// </summary>
-        public static void ShutdownSystemHook()
+        public static void SystemUnhook()
         {
             UnhookWindowsHookEx(HookID);
         }

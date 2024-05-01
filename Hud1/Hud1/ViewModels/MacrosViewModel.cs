@@ -97,6 +97,7 @@ namespace Hud1.ViewModels
             _script.Globals["MouseDown"] = () =>
             {
                 MouseService.MouseDown(MouseService.MouseButton.Left);
+                //MouseService.LeftMouseDown();
             };
 
             _script.Globals["MouseUp"] = () =>
@@ -115,6 +116,7 @@ namespace Hud1.ViewModels
                     while ((bool)_script.Globals["Running"])
                     {
                         _script.Call(_script.Globals["Run"]);
+                        Thread.Sleep(100);
                     };
                     _script.Call(_script.Globals["Cleanup"]);
                 }

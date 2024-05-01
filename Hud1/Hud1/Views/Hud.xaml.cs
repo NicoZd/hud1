@@ -19,7 +19,7 @@ namespace Hud1.Views
 
         private void OnWindowLoaded(object sender, RoutedEventArgs e)
         {
-            GlobalKeyboardManager.KeyDown += HandleKeyDown;
+            GlobalKeyboardHook.KeyDown += HandleKeyDown;
         }
 
         private void HandleKeyDown(KeyEvent keyEvent)
