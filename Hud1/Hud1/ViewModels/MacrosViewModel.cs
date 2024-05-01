@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Hud1.Helpers;
 using Hud1.Models;
 using MoonSharp.Interpreter;
 using System.Collections.ObjectModel;
@@ -46,11 +47,11 @@ namespace Hud1.ViewModels
             {
                 string scriptCode = File.ReadAllText(_path);
                 _script = new Script(CoreModules.None);
-                _script.Globals["label"] = Label;
-                _script.Globals["description"] = Description;
+                _script.Globals["Label"] = Label;
+                _script.Globals["Description"] = Description;
                 _script.DoString(scriptCode);
-                Label = (string)_script.Globals["label"];
-                Description = (string)_script.Globals["description"];
+                Label = (string)_script.Globals["Label"];
+                Description = (string)_script.Globals["Description"];
             }
             catch (InterpreterException ex)
             {
@@ -72,7 +73,7 @@ namespace Hud1.ViewModels
             if (Running && _script != null)
             {
                 RightLabel = "Stopping";
-                _script.Globals["running"] = false;
+                _script.Globals["Running"] = false;
                 return;
             }
             Error = "";
@@ -82,32 +83,40 @@ namespace Hud1.ViewModels
             string scriptCode = File.ReadAllText(_path);
 
             _script = new Script(CoreModules.None);
-            _script.Globals["sleep"] = (int a) =>
+            _script.Globals["Sleep"] = (int a) =>
             {
-                //Debug.Print("SLEEP {0}", a);
                 Thread.Sleep(a);
             };
 
 
-            _script.Globals["print"] = (string a) =>
+            _script.Globals["Print"] = (string a) =>
             {
-                //Debug.Print("print {0}", a);
                 Log = a;
             };
 
-            _script.Globals["running"] = true;
+            _script.Globals["MouseDown"] = () =>
+            {
+                MouseService.MouseDown(MouseService.MouseButton.Left);
+            };
+
+            _script.Globals["MouseUp"] = () =>
+            {
+                MouseService.MouseUp(MouseService.MouseButton.Left);
+            };
+
+            _script.Globals["Running"] = true;
 
             ThreadPool.QueueUserWorkItem((_) =>
             {
                 try
                 {
                     _script.DoString(scriptCode);
-                    _script.Call(_script.Globals["setup"]);
-                    while ((bool)_script.Globals["running"])
+                    _script.Call(_script.Globals["Setup"]);
+                    while ((bool)_script.Globals["Running"])
                     {
-                        _script.Call(_script.Globals["run"]);
+                        _script.Call(_script.Globals["Run"]);
                     };
-                    _script.Call(_script.Globals["cleanup"]);
+                    _script.Call(_script.Globals["Cleanup"]);
                 }
                 catch (InterpreterException ex)
                 {

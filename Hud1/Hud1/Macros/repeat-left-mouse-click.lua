@@ -1,16 +1,19 @@
-label = "Repeat left mouse click"
-description = "Press and release the left mouse button every 100ms."
+Label = "Repeat left mouse click"
+Description = "Press and release the left mouse button every 100ms."
 
-function setup()  
+function Setup()  
 end
 
-function run()
-	sleep(100)
-	print("Down")
-	sleep(100)
-	print("Up")
+function Run()
+	Sleep(100)
+	Print("Down")
+	MouseDown()
+
+	Sleep(100)
+	Print("Up")
+	MouseUp()
 end
 
-function cleanup()
-	print("")
+function Cleanup()
+	Print("")
 end

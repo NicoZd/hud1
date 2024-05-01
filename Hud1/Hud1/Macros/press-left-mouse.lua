@@ -1,15 +1,15 @@
-label = "Press left mouse"
-description = "Press the left mouse button once."
+Label = "Press left mouse"
+Description = "Press the left mouse button once."
 
-function setup()    
+function Setup()    
 end
 
-function run()
-	print("Left mouse button is pressed until manually released.")
-	sleep(2000)
-	running = false
+function Run()
+	Print("Left mouse button is pressed until manually released or stopped.")
+	MouseDown()
 end
 
-function cleanup()
-	print("")
+function Cleanup()
+	MouseUp()
+	Print("")
 end
