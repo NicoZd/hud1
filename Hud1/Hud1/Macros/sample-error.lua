@@ -1,0 +1,1 @@
+func syntax error

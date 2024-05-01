@@ -25,8 +25,10 @@
     <None Remove="Assets\blue-noise.png" />
     <None Remove="Assets\dragon.png" />
     <None Remove="Assets\fluid-background-transparent.png" />
-    <None Remove="Macros\first.lua" />
-    <None Remove="Macros\second.lua" />
+    <None Remove="Macros\empty.lua" />
+    <None Remove="Macros\hold-left-down.lua" />
+    <None Remove="Macros\repeat-left-down.lua" />
+    <None Remove="Macros\sample-error.lua" />
   </ItemGroup>
 
   <ItemGroup>
@@ -51,10 +53,16 @@
     <Resource Include="Assets\fluid-background-transparent.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Content Include="Macros\first.lua">
+    <Content Include="Macros\hold-left-down.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Macros\second.lua">
+    <Content Include="Macros\empty.lua">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Macros\sample-error.lua">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Macros\repeat-left-down.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

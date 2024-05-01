@@ -11,10 +11,13 @@ namespace Hud1.ViewModels
     public partial class Macro : ObservableObject
     {
         [ObservableProperty]
-        private string _name = "Hellooo!";
+        private string _name = "";
 
         [ObservableProperty]
         private string _log = "";
+
+        [ObservableProperty]
+        private string _error = "";
 
         [ObservableProperty]
         private bool _selected = false;
@@ -33,7 +36,25 @@ namespace Hud1.ViewModels
         {
             _path = path;
             Name = Path.GetFileName(path);
-            RightLabel = "START >";
+            RightLabel = "▶";
+
+            try
+            {
+                string scriptCode = File.ReadAllText(_path);
+                _script = new Script(CoreModules.None);
+                _script.Globals["name"] = Name;
+                _script.DoString(scriptCode);
+                Name = (string)_script.Globals["name"];
+            }
+            catch (InterpreterException ex)
+            {
+                Error = ex.DecoratedMessage;
+            }
+            catch (Exception ex)
+            {
+                Error = ex.Message;
+            }
+
         }
 
         internal void OnLeft()
@@ -44,11 +65,12 @@ namespace Hud1.ViewModels
         {
             if (Running && _script != null)
             {
-                RightLabel = "STOPPING";
+                RightLabel = "…";
                 _script.Globals["running"] = false;
                 return;
             }
-            RightLabel = "STOP >";
+            Error = "";
+            RightLabel = "▮";
             Running = true;
 
             string scriptCode = File.ReadAllText(_path);
@@ -81,22 +103,17 @@ namespace Hud1.ViewModels
                     };
                     _script.Call(_script.Globals["cleanup"]);
                 }
-                catch (SyntaxErrorException ex)
+                catch (InterpreterException ex)
                 {
                     Debug.Print("ERROR {0}", ex.DecoratedMessage);
-                    Log = ex.DecoratedMessage;
-                }
-                catch (ScriptRuntimeException ex)
-                {
-                    Debug.Print($"{ex.DecoratedMessage}");
-                    Log = ex.DecoratedMessage;
+                    Error = ex.DecoratedMessage;
                 }
                 catch (Exception ex)
                 {
-                    Debug.Print("Exception");
+                    Error = ex.Message;
                 }
                 Running = false;
-                RightLabel = "START >";
+                RightLabel = "▶";
             });
         }
     }

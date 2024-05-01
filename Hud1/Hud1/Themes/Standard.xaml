@@ -49,7 +49,7 @@
         <Setter Property="Foreground" Value="{DynamicResource BrushLabel}"/>
         <Setter Property="FontFamily" Value="{DynamicResource FontFamily}"/>
         <Setter Property="FontSize" Value="12"/>
-        <Setter Property="Padding" Value="10,5,10,5"/>
+        <Setter Property="Padding" Value="15,5,15,5"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="Effect" >
             <Setter.Value>
