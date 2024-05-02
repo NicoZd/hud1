@@ -31,15 +31,21 @@ namespace Hud1.Models
         [ObservableProperty]
         private string _path = "";
 
-        private MacroScript _macroScript;
+        private MacroScript? _macroScript;
 
         public Macro(String path)
         {
-            _path = path;
-            Label = System.IO.Path.GetFileName(path);
+            Path = path;
+
+            Label = System.IO.Path.GetFileName(Path);
             Description = "";
             RightLabel = "Start ▶";
 
+            FetchProgramMetaData();
+        }
+
+        private void FetchProgramMetaData()
+        {
             try
             {
                 var script = new MacroScript(this);

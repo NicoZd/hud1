@@ -59,7 +59,8 @@ namespace Hud1
             dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
             dispatcherTimer.Start();
 
-            WindowsServices.AddWindowStyles(hwnd, WindowsServices.WS_EX_TRANSPARENT | WindowsServices.WS_EX_TOOLWINDOW);
+            var extendedStyle = WindowsAPI.GetWindowLong(hwnd, WindowsAPI.GWL_EXSTYLE);
+            WindowsAPI.SetWindowLong(hwnd, WindowsAPI.GWL_EXSTYLE, extendedStyle | WindowsAPI.WS_EX_TRANSPARENT | WindowsAPI.WS_EX_TOOLWINDOW);
 
             BrightnessController.Set(100);
 
