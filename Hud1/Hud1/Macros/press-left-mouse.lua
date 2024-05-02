@@ -5,10 +5,8 @@ function Setup()
 	MouseDown()
 end
 
-function Run()
-	if IsLeftMouseDown() then
-		Running = false
-	end 
+function OnMouseDown()  
+	Stop()
 end
 
 function Cleanup()

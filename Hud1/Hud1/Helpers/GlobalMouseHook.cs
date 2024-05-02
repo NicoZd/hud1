@@ -37,12 +37,8 @@ namespace Hud1.Helpers
         // The system hook ID (for storing this application's hook)
         private static IntPtr HookID = IntPtr.Zero;
 
-        public static bool IgnoreNextEvent { get; internal set; }
-
-        public static bool IsLeftMouseDown { get; set; } = false;
-
-        //public delegate void MouseDownHandler();
-        //public static event MouseDownHandler? MouseDown;
+        public delegate void MouseDownHandler();
+        public static event MouseDownHandler? MouseDown;
 
 
         /// <summary>
@@ -80,31 +76,17 @@ namespace Hud1.Helpers
         /// <returns>LRESULT</returns>
         private static IntPtr HookCallback(int code, IntPtr wParam, IntPtr lParam)
         {
-            if (code > -1 && !IgnoreNextEvent)
+            if (code > -1 && !MouseService.IgnoreNextEvent)
             {
                 switch (wParam)
                 {
                     case WM_LBUTTONDOWN:
                         {
-                            Debug.Print("DOWN");
-                            IsLeftMouseDown = true;
-                            break;
-                        }
-                    case WM_LBUTTONUP:
-                        {
-                            Debug.Print("UP");
-                            IsLeftMouseDown = false;
-                            break;
-                        }
-                    case WM_MOUSEWHEEL:
-                    case WM_MOUSEMOVE:
-                        {
-                            //IGNORE
+                            MouseDown?.Invoke();
                             break;
                         }
                     default:
                         {
-                            Debug.Print("wParam {0} {1} {2}", code, wParam, lParam);
                             break;
                         }
                 }

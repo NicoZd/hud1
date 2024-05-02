@@ -2,8 +2,10 @@
 
 namespace Hud1.Helpers
 {
-    internal class MouseService
+    public class MouseService
     {
+        public static bool IgnoreNextEvent { get; set; }
+
         public enum MouseButton
         {
             Left = 0x2,
@@ -16,16 +18,16 @@ namespace Hud1.Helpers
 
         public static void MouseDown(MouseButton button)
         {
-            GlobalMouseHook.IgnoreNextEvent = true;
+            IgnoreNextEvent = true;
             mouse_event(((int)button), 0, 0, 0, 0);
-            GlobalMouseHook.IgnoreNextEvent = false;
+            IgnoreNextEvent = false;
         }
 
         public static void MouseUp(MouseButton button)
         {
-            GlobalMouseHook.IgnoreNextEvent = true;
+            IgnoreNextEvent = true;
             mouse_event(((int)button) * 2, 0, 0, 0, 0);
-            GlobalMouseHook.IgnoreNextEvent = false;
+            IgnoreNextEvent = false;
         }
 
     }

@@ -2,7 +2,6 @@
 using Hud1.Helpers;
 using MoonSharp.Interpreter;
 using System.Diagnostics;
-using System.IO;
 
 namespace Hud1.Models
 {
@@ -29,22 +28,23 @@ namespace Hud1.Models
         [ObservableProperty]
         private string _rightLabel = "";
 
+        [ObservableProperty]
         private string _path = "";
 
-        private Script? _script;
+        private MacroScript _macroScript;
 
         public Macro(String path)
         {
             _path = path;
-            Label = Path.GetFileName(path);
+            Label = System.IO.Path.GetFileName(path);
             Description = "";
             RightLabel = "Start ▶";
 
             try
             {
-                var script = CreateScript();
-                Label = (string)script.Globals["Label"];
-                Description = (string)script.Globals["Description"];
+                var script = new MacroScript(this);
+                Label = (string)script.GetGlobal("Label");
+                Description = (string)script.GetGlobal("Description");
             }
             catch (InterpreterException ex)
             {
@@ -56,58 +56,16 @@ namespace Hud1.Models
             }
         }
 
-        Script CreateScript()
-        {
-            string scriptCode = File.ReadAllText(_path);
-
-            var script = new Script(CoreModules.None);
-
-            script.Globals["Label"] = Label;
-
-            script.Globals["Description"] = Description;
-
-            script.Globals["Running"] = true;
-
-            script.Globals["Sleep"] = (int a) =>
-            {
-                Thread.Sleep(a);
-            };
-
-            script.Globals["Print"] = (string a) =>
-            {
-                Log = a;
-            };
-
-            script.Globals["IsLeftMouseDown"] = () =>
-            {
-                return GlobalMouseHook.IsLeftMouseDown;
-            };
-
-            script.Globals["MouseDown"] = () =>
-            {
-                MouseService.MouseDown(MouseService.MouseButton.Left);
-            };
-
-            script.Globals["MouseUp"] = () =>
-            {
-                MouseService.MouseUp(MouseService.MouseButton.Left);
-            };
-
-            script.DoString(scriptCode);
-
-            return script;
-        }
-
         internal void OnLeft()
         {
         }
 
         internal void OnRight()
         {
-            if (Running && _script != null)
+            if (Running && _macroScript != null)
             {
                 RightLabel = "Stopping";
-                _script.Globals["Running"] = false;
+                _macroScript.SetGlobal("Running", false);
                 return;
             }
 
@@ -119,14 +77,11 @@ namespace Hud1.Models
             {
                 try
                 {
-                    _script = CreateScript();
-                    _script.Call(_script.Globals["Setup"]);
-                    while ((bool)_script.Globals["Running"])
+                    _macroScript = new MacroScript(this);
+                    using (var hooks = new ScriptHooks(_macroScript))
                     {
-                        _script.Call(_script.Globals["Run"]);
-                        Thread.Sleep(100);
-                    };
-                    _script.Call(_script.Globals["Cleanup"]);
+                        _macroScript.Run();
+                    }
                 }
                 catch (InterpreterException ex)
                 {
@@ -140,6 +95,29 @@ namespace Hud1.Models
                 Running = false;
                 RightLabel = "Start ▶";
             });
+        }
+
+        public class ScriptHooks : IDisposable
+        {
+            private MacroScript _macroScript;
+
+            public ScriptHooks(MacroScript macroScript)
+            {
+                _macroScript = macroScript;
+                GlobalMouseHook.MouseDown += OnMouseDown;
+            }
+
+            private void OnMouseDown()
+            {
+                Debug.Print("OnMouseDown");
+                _macroScript.OnMouseDown();
+            }
+
+            public void Dispose()
+            {
+                Debug.Print("MACROHOOK Dispose");
+                GlobalMouseHook.MouseDown -= OnMouseDown;
+            }
         }
     }
 }
