@@ -1,5 +1,5 @@
 Label = "Press left mouse"
-Description = "Press the left mouse button once."
+Description = "Press the left mouse button once. Left click to stop."
 
 function Setup()    
 	MouseDown()
