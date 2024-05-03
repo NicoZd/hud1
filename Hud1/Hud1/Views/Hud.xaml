@@ -64,7 +64,6 @@
                     <StackPanel views:Spacing.Vertical="8">
                         <Label Content="Gamma" Style="{DynamicResource TitleContent}"/>
                         <views:SelectionControl NavigationState="{Binding Path=States[GAMMA]}" />
-                        <views:SelectionControl NavigationState="{Binding Path=States[BRIGHTNESS]}" />
                     </StackPanel>
                 </Grid>
 

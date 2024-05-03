@@ -6,7 +6,7 @@ namespace Hud1.ViewModels
 {
     public partial class GammaViewModel : ObservableObject
     {
-        public double[] Gammas = [1, 1.25, 1.5, 2, 3, 4.2];
+        public double[] Gammas = [1, 1.25, 1.5, 2, 2.5, 3, 4.2];
 
         public int GammaIndex = 0;
         public GammaViewModel()
