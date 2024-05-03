@@ -47,6 +47,7 @@ namespace Hud1
         {
             hwnd = new WindowInteropHelper(this).Handle;
             windowModel.Hwnd = hwnd;
+            windowModel.Window = this;
             Debug.WriteLine("OnWindowLoaded {0}", hwnd);
 
             Cursor = Cursors.Pen;
