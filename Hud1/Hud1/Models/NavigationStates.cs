@@ -20,7 +20,6 @@
 
         // DISPLAY
         public static readonly NavigationState GAMMA = new() { Label = "Gamma", Hint = "Adjust Windows Desktop Gamma Settings.", AllowRepeat = true };
-        public static readonly NavigationState BRIGHTNESS = new() { Label = "Brightness", Hint = "Adjust Display Brightness.", AllowRepeat = true };
 
         // SOUND
         public static readonly NavigationState PLAYBACK_DEVICE = new() { Label = "Device", Hint = "Choose Playback Audio Device." };

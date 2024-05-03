@@ -20,7 +20,7 @@ namespace Hud1.Views
         {
             constraint.Width = ActualWidth;
             Size size = new Size();
-            UIElement child = GetFirstVisualChild();
+            UIElement? child = GetFirstVisualChild();
             if (child != null)
             {
                 child.Measure(constraint);
@@ -30,7 +30,7 @@ namespace Hud1.Views
             return size;
         }
 
-        private UIElement GetFirstVisualChild()
+        private UIElement? GetFirstVisualChild()
         {
             if (this.VisualChildrenCount <= 0)
                 return null;
