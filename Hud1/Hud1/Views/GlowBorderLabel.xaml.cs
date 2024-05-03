@@ -1,7 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Hud1.Helpers;
+using Hud1.Models;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace Hud1.Views
 {
@@ -20,6 +22,11 @@ namespace Hud1.Views
         private static readonly DependencyProperty PressedProperty =
             BindingHelper.CreateProperty<GlowBorderLabel, bool>("Pressed", false);
 
+        private static readonly DependencyProperty NavigationStateProperty =
+            BindingHelper.CreateProperty<GlowBorderLabel, NavigationState>("NavigationState", null);
+
+        private static readonly DependencyProperty ClickProperty =
+            BindingHelper.CreateProperty<GlowBorderLabel, ICommand>("Click", null);
 
         public String Label
         {
@@ -43,8 +50,17 @@ namespace Hud1.Views
             set => SetValue(PressedProperty, value);
             get => (Boolean)GetValue(PressedProperty);
         }
+        public ICommand Click
+        {
+            set => SetValue(ClickProperty, value);
+            get => (ICommand)GetValue(ClickProperty);
+        }
 
-
+        public NavigationState NavigationState
+        {
+            set => SetValue(NavigationStateProperty, value);
+            get => (NavigationState)GetValue(NavigationStateProperty);
+        }
 
         public GlowBorderLabel()
         {

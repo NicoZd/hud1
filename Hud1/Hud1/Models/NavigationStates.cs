@@ -2,6 +2,8 @@
 {
     public class NavigationStates
     {
+        public static readonly NavigationState ALL = new();
+
         // MENU
         public static readonly NavigationState MENU_DISPLAY = new() { Hint = "Adjust Display Settings." };
         public static readonly NavigationState DISPLAY_VISIBLE = new();

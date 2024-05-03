@@ -5,7 +5,6 @@ using Hud1.ViewModels;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Windows;
-using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media.Animation;
 
@@ -50,8 +49,6 @@ namespace Hud1
             windowModel.Window = this;
             Debug.WriteLine("OnWindowLoaded {0}", hwnd);
 
-            Cursor = Cursors.Pen;
-
             System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler((_, _) =>
             {
@@ -61,7 +58,7 @@ namespace Hud1
             dispatcherTimer.Start();
 
             var extendedStyle = WindowsAPI.GetWindowLong(hwnd, WindowsAPI.GWL_EXSTYLE);
-            WindowsAPI.SetWindowLong(hwnd, WindowsAPI.GWL_EXSTYLE, extendedStyle | WindowsAPI.WS_EX_TRANSPARENT | WindowsAPI.WS_EX_TOOLWINDOW);
+            WindowsAPI.SetWindowLong(hwnd, WindowsAPI.GWL_EXSTYLE, extendedStyle | WindowsAPI.WS_EX_TOOLWINDOW);
 
             int width = (int)SystemParameters.PrimaryScreenWidth;
             int height = (int)SystemParameters.PrimaryScreenHeight;

@@ -11,7 +11,7 @@
     <SolidColorBrush x:Key="BrushInfoSecondary" Color="{DynamicResource ColorInfoSecondary}" />
     <SolidColorBrush x:Key="BrushInfo" Color="{DynamicResource ColorInfo}" />
     <SolidColorBrush x:Key="BrushColorMedLow" Color="{DynamicResource ColorMedLow}" />
-    
+    <SolidColorBrush x:Key="BrushColorMed" Color="{DynamicResource ColorMed}" />
     <!--
     <FontFamily x:Key="FontFamily">Cascadia Code</FontFamily>
     <FontFamily x:Key="FontFamily">DejaVu Sans Mono</FontFamily>

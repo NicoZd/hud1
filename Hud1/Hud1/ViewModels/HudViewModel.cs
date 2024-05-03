@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Hud1.Helpers;
 using Hud1.Models;
 using Stateless.Graph;
@@ -28,9 +29,22 @@ namespace Hud1.ViewModels
 
         private readonly string[] Styles = ["Green", "Red"];
 
+        public static HudViewModel? Instance;
+        public static NavigationState? DirectNavigationStateTarget;
+
         public HudViewModel()
         {
+            Instance = this;
             Navigation = new(NavigationStates.MENU_DISPLAY);
+
+            Navigation.Configure(NavigationStates.ALL)
+                .PermitDynamic(NavigationTriggers.DIRECT, () => { return DirectNavigationStateTarget!; });
+
+            Navigation.Configure(NavigationStates.DISPLAY_VISIBLE).SubstateOf(NavigationStates.ALL);
+            Navigation.Configure(NavigationStates.AUDIO_VISIBLE).SubstateOf(NavigationStates.ALL);
+            Navigation.Configure(NavigationStates.MACRO_VISIBLE).SubstateOf(NavigationStates.ALL);
+            Navigation.Configure(NavigationStates.CROSSHAIR_VISIBLE).SubstateOf(NavigationStates.ALL);
+            Navigation.Configure(NavigationStates.MORE_VISIBLE).SubstateOf(NavigationStates.ALL);
 
             // MENU
             Navigation.Configure(NavigationStates.MENU_DISPLAY)
@@ -39,7 +53,6 @@ namespace Hud1.ViewModels
                 .Permit(NavigationTriggers.RIGHT, NavigationStates.MENU_AUDIO)
                 .Permit(NavigationTriggers.DOWN, NavigationStates.GAMMA)
                 .Permit(NavigationTriggers.UP, NavigationStates.GAMMA);
-
 
             Navigation.Configure(NavigationStates.MENU_AUDIO)
                 .SubstateOf(NavigationStates.AUDIO_VISIBLE)
@@ -172,6 +185,13 @@ namespace Hud1.ViewModels
             UpdateModelFromStateless();
         }
 
+        [RelayCommand]
+        private void Select(NavigationState navigationState)
+        {
+            Debug.Print("Some {0}", navigationState);
+            SelectNavigationState(navigationState);
+        }
+
         public bool OnKeyPressed(KeyEvent keyEvent)
         {
             //Debug.WriteLine("ListenerOnKeyPressed {0}", key);
@@ -255,6 +275,17 @@ namespace Hud1.ViewModels
             }
 
             States = newStates;
+        }
+
+        public static void SelectNavigationState(NavigationState navigationState)
+        {
+            if (Instance == null) return;
+
+            if (!Instance.Navigation.IsInState(navigationState))
+            {
+                DirectNavigationStateTarget = navigationState;
+                Instance.Navigation.Fire(NavigationTriggers.DIRECT);
+            }
         }
     }
 }

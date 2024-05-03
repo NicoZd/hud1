@@ -7,8 +7,6 @@ using System.Windows;
 
 namespace Hud1.ViewModels
 {
-
-
     public partial class MacrosViewModel : ObservableObject
     {
         public ObservableCollection<Macro> Macros { get; set; } = new();
@@ -29,8 +27,8 @@ namespace Hud1.ViewModels
         {
             Macros = new ObservableCollection<Macro>();
 
-            _path = Path.Combine(Directory.GetCurrentDirectory(), "Macros");
-            Debug.Print("Macros Path {0}", _path);
+            var exeFolder = Path.GetDirectoryName(Process.GetCurrentProcess()!.MainModule!.FileName);
+            _path = Path.Combine(exeFolder!, "Macros");
 
             _watcher = new FileSystemWatcher(_path);
             _watcher.NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.CreationTime | NotifyFilters.FileName;

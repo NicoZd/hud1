@@ -1,4 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using Hud1.ViewModels;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows;
@@ -46,6 +48,20 @@ namespace Hud1.Models
         public NavigationState([CallerMemberName] string Name = "")
         {
             this.Name = Name;
+        }
+
+        [RelayCommand]
+        private void Left()
+        {
+            HudViewModel.SelectNavigationState(this);
+            ExecuteLeft();
+        }
+
+        [RelayCommand]
+        private void Right()
+        {
+            HudViewModel.SelectNavigationState(this);
+            ExecuteRight();
         }
 
         public async void ExecuteLeft()

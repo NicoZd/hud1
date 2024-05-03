@@ -24,19 +24,19 @@ namespace Hud1.ViewModels
 
         private IntPtr handle;
 
-        partial void OnActiveChanged(bool isActive)
+        partial void OnActiveChanged(bool value)
         {
             if (Window == null)
                 return;
 
-            Debug.Print("OnActiveChanged", isActive);
+            Debug.Print("OnActiveChanged", value);
 
             var extendedStyle = WindowsAPI.GetWindowLong(Hwnd, WindowsAPI.GWL_EXSTYLE);
-            if (isActive)
+            if (value)
             {
                 handle = GetForegroundWindow();
 
-                Window.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#01ff0000"));
+                Window.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#00000000"));
                 Window.Activate();
                 Window.Focus();
                 WindowsAPI.SetWindowLong(Hwnd, WindowsAPI.GWL_EXSTYLE, extendedStyle ^ WindowsAPI.WS_EX_TRANSPARENT);
