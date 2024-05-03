@@ -72,6 +72,4 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
-  <Target Name="PlatformVerificationTask" Condition="'$(PlatformVerification)' 
-    == 'true'" /> 
 </Project>
