@@ -6,63 +6,54 @@
              xmlns:views="clr-namespace:Hud1.Views"
              mc:Ignorable="d"            
              >
-    <views:GlowBorder DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}">
-        <Button Focusable="False" Command="{Binding Path=Click}" CommandParameter="{Binding Path=NavigationState}">
-            <Button.Style>
-                <Style TargetType="{x:Type Button}">
-                    <Setter Property="Background" Value="Transparent"/>
-                    <Setter Property="Template">
+    <Button
+            DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
+            Focusable="False"
+            Command="{Binding Path=Click}"
+            CommandParameter="{Binding Path=NavigationState}"
+            Style="{StaticResource LabelButton}"
+            >
+        <Label Content="{Binding Path=Label}">
+            <Label.Style>
+                <Style TargetType="Label" BasedOn="{StaticResource ButtonLabel}">
+                    <Setter Property="Foreground">
                         <Setter.Value>
-                            <ControlTemplate TargetType="{x:Type Button}">
-                                <Border 
-                                    Background="{TemplateBinding Background}"
-                                    >
-                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                </Border>
-                            </ControlTemplate>
+                            <SolidColorBrush Color="{DynamicResource ColorBright}"/>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="Effect">
+                        <Setter.Value>
+                            <DropShadowEffect ShadowDepth="0" BlurRadius="3" Color="{DynamicResource ColorBright}" Opacity="0.5"/>
                         </Setter.Value>
                     </Setter>
                     <Style.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="{DynamicResource BrushColorMedLow}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource BrushSolidSuperBright}"/>
+                            <Setter Property="Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect ShadowDepth="0" BlurRadius="10" Color="{DynamicResource ColorSuperBright}" Opacity="1.0"/>
+                                </Setter.Value>
+                            </Setter>
                         </Trigger>
+                        <DataTrigger Binding="{Binding Path=Highlighted}" Value="True">
+                            <Setter Property="Foreground" Value="{DynamicResource BrushSolidSuperBright}"/>
+                            <Setter Property="Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect ShadowDepth="0" BlurRadius="10" Color="{DynamicResource ColorSuperBright}" Opacity="1.0"/>
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Path=Selected}" Value="True">
+                            <Setter Property="Foreground" Value="{DynamicResource BrushInfo}"/>
+                            <Setter Property="Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect ShadowDepth="0" BlurRadius="10" Color="{DynamicResource ColorInfo}" Opacity="1.0"/>
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
                     </Style.Triggers>
                 </Style>
-            </Button.Style>
-            <Label Content="{Binding Path=Label}">
-                <Label.Style>
-                    <Style TargetType="Label" BasedOn="{StaticResource ButtonLabel}">
-                        <Setter Property="Foreground">
-                            <Setter.Value>
-                                <SolidColorBrush Color="{DynamicResource ColorBright}"/>
-                            </Setter.Value>
-                        </Setter>
-                        <Setter Property="Effect">
-                            <Setter.Value>
-                                <DropShadowEffect ShadowDepth="0" BlurRadius="3" Color="{DynamicResource ColorBright}" Opacity="0.5"/>
-                            </Setter.Value>
-                        </Setter>
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding Path=Highlighted}" Value="True">
-                                <Setter Property="Foreground" Value="{DynamicResource BrushSolidSuperBright}"/>
-                                <Setter Property="Effect">
-                                    <Setter.Value>
-                                        <DropShadowEffect ShadowDepth="0" BlurRadius="10" Color="{DynamicResource ColorSuperBright}" Opacity="1.0"/>
-                                    </Setter.Value>
-                                </Setter>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding Path=Selected}" Value="True">
-                                <Setter Property="Foreground" Value="{DynamicResource BrushInfo}"/>
-                                <Setter Property="Effect">
-                                    <Setter.Value>
-                                        <DropShadowEffect ShadowDepth="0" BlurRadius="10" Color="{DynamicResource ColorInfo}" Opacity="1.0"/>
-                                    </Setter.Value>
-                                </Setter>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Label.Style>
-            </Label>
-        </Button>
-    </views:GlowBorder>
+            </Label.Style>
+        </Label>
+    </Button>
 </UserControl>

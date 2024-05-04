@@ -15,9 +15,6 @@
     <Compile Update="Views\GlowBorderLabel.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\GlowBorder.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Update="Views\Hud.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -48,9 +45,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\GlowBorderLabel.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\GlowBorder.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\Hud.xaml">
