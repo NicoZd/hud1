@@ -6,10 +6,9 @@
              xmlns:views="clr-namespace:Hud1.Views"
              xmlns:local="clr-namespace:Hud1.Views"
              mc:Ignorable="d" >
-    <views:PanelBackground
+    <Button Style="{DynamicResource PanelButton}"
         DataContext="{Binding Path=NavigationState, RelativeSource={RelativeSource AncestorType=local:SelectionControl}}"
         >
-
         <StackPanel>
             <views:PanelLabel/>
 
@@ -70,5 +69,5 @@
                 </Grid>
             </DockPanel>
         </StackPanel>
-    </views:PanelBackground>
+    </Button>
 </UserControl>

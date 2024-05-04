@@ -9,9 +9,6 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="Views\PanelBackground.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Update="Views\GlowBorderLabel.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -39,9 +36,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Themes\Green.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\PanelBackground.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\GlowBorderLabel.xaml">
