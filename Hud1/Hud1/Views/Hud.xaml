@@ -9,7 +9,7 @@
              mc:Ignorable="d"
              Loaded="OnWindowLoaded"             
              >
-
+    
     <Grid HorizontalAlignment="Right"
           DataContext="{Binding Path=ViewModel, RelativeSource={RelativeSource AncestorType=local:Hud}}"
           >
@@ -30,40 +30,45 @@
                     Margin="-2,15,-2,0"
                     views:Spacing.Horizontal="4"
                     >
-                    <views:GlowBorderLabel Label="DISPLAY" 
-                                           Selected="{Binding Path=States[MENU_DISPLAY].Selected}"
-                                           Highlighted="{Binding Path=States[DISPLAY_VISIBLE].Selected}"
-                                           Click="{Binding SelectCommand}"
-                                           NavigationState="{Binding Path=States[MENU_DISPLAY]}"
-                                           />
-                    
-                    <views:GlowBorderLabel Label="AUDIO" 
-                                           Selected="{Binding Path=States[MENU_AUDIO].Selected}"
-                                           Highlighted="{Binding Path=States[AUDIO_VISIBLE].Selected}"
-                                           Click="{Binding SelectCommand}"
-                                           NavigationState="{Binding Path=States[MENU_AUDIO]}"
-                                           />
-                    
-                    <views:GlowBorderLabel Label="MACRO" 
-                                           Selected="{Binding Path=States[MENU_MACRO].Selected}"
-                                           Highlighted="{Binding Path=States[MACRO_VISIBLE].Selected}"
-                                           Click="{Binding SelectCommand}"
-                                           NavigationState="{Binding Path=States[MENU_MACRO]}"
-                                           />
-                    
-                    <views:GlowBorderLabel Label="CROSSHAIR" 
-                                           Selected="{Binding Path=States[MENU_CROSSHAIR].Selected}"
-                                           Highlighted="{Binding Path=States[CROSSHAIR_VISIBLE].Selected}"
-                                           Click="{Binding SelectCommand}"
-                                           NavigationState="{Binding Path=States[MENU_CROSSHAIR]}"
-                                           />
-                    
-                    <views:GlowBorderLabel Label="MORE" 
-                                           Selected="{Binding Path=States[MENU_MORE].Selected}"
-                                           Highlighted="{Binding Path=States[MORE_VISIBLE].Selected}"
-                                           Click="{Binding SelectCommand}"
-                                           NavigationState="{Binding Path=States[MENU_MORE]}"
-                                           />
+                    <views:GlowBorderLabel 
+                        Label="DISPLAY" 
+                        Selected="{Binding Path=States[MENU_DISPLAY].Selected}"
+                        Highlighted="{Binding Path=States[DISPLAY_VISIBLE].Selected}"
+                        Click="{Binding SelectCommand}"
+                        NavigationState="{Binding Path=States[MENU_DISPLAY]}"
+                        />
+
+                    <views:GlowBorderLabel 
+                        Label="AUDIO" 
+                        Selected="{Binding Path=States[MENU_AUDIO].Selected}"
+                        Highlighted="{Binding Path=States[AUDIO_VISIBLE].Selected}"
+                        Click="{Binding SelectCommand}"
+                        NavigationState="{Binding Path=States[MENU_AUDIO]}"
+                        />
+
+                    <views:GlowBorderLabel 
+                        Label="MACRO" 
+                        Selected="{Binding Path=States[MENU_MACRO].Selected}"
+                        Highlighted="{Binding Path=States[MACRO_VISIBLE].Selected}"
+                        Click="{Binding SelectCommand}"
+                        NavigationState="{Binding Path=States[MENU_MACRO]}"
+                        />
+
+                    <views:GlowBorderLabel 
+                        Label="CROSSHAIR" 
+                        Selected="{Binding Path=States[MENU_CROSSHAIR].Selected}"
+                        Highlighted="{Binding Path=States[CROSSHAIR_VISIBLE].Selected}"
+                        Click="{Binding SelectCommand}"
+                        NavigationState="{Binding Path=States[MENU_CROSSHAIR]}"
+                        />
+
+                    <views:GlowBorderLabel
+                        Label="MORE" 
+                        Selected="{Binding Path=States[MENU_MORE].Selected}"
+                        Highlighted="{Binding Path=States[MORE_VISIBLE].Selected}"
+                        Click="{Binding SelectCommand}"
+                        NavigationState="{Binding Path=States[MENU_MORE]}"
+                        />
                 </WrapPanel>
 
                 <Separator Margin="-3,12,-3,25" Background="{DynamicResource BrushSeparator}"/>
