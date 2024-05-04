@@ -32,7 +32,7 @@
                     >
                     <views:GlowBorderLabel Label="DISPLAY" 
                                            Selected="{Binding Path=States[MENU_DISPLAY].Selected}"
-                                           Highlighted="{Binding Path=States[MENU_DISPLAY].Selected}"
+                                           Highlighted="{Binding Path=States[DISPLAY_VISIBLE].Selected}"
                                            Click="{Binding SelectCommand}"
                                            NavigationState="{Binding Path=States[MENU_DISPLAY]}"
                                            />
