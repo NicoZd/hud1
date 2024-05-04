@@ -9,7 +9,7 @@
              mc:Ignorable="d"
              Loaded="OnWindowLoaded"             
              >
-    
+
     <Grid HorizontalAlignment="Right"
           DataContext="{Binding Path=ViewModel, RelativeSource={RelativeSource AncestorType=local:Hud}}"
           >
@@ -30,6 +30,7 @@
                     Margin="-2,15,-2,0"
                     views:Spacing.Horizontal="4"
                     >
+
                     <views:GlowBorderLabel 
                         Label="DISPLAY" 
                         Selected="{Binding Path=States[MENU_DISPLAY].Selected}"

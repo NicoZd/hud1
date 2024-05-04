@@ -14,7 +14,7 @@
         Loaded="OnWindowLoaded"
         Unloaded="OnWindowUnloaded"
         >
-    
+
     <Window.Background>
         <SolidColorBrush Color="Transparent"/>
     </Window.Background>

@@ -37,7 +37,7 @@
                             Viewport="-400,150,1000,1000"
                             TileMode="None"
                             Stretch="Uniform"
-                            />      
+                            />
                     </Grid.Background>
                 </Grid>
                 <Border Padding="0" BorderThickness="1,1,1,1">
