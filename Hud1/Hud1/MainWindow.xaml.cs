@@ -45,8 +45,11 @@ namespace Hud1
         private void OnWindowLoaded(object sender, RoutedEventArgs e)
         {
             hwnd = new WindowInteropHelper(this).Handle;
+
+            // init view model
             windowModel.Hwnd = hwnd;
             windowModel.Window = this;
+
             Debug.WriteLine("OnWindowLoaded {0}", hwnd);
 
             System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
@@ -58,7 +61,10 @@ namespace Hud1
             dispatcherTimer.Start();
 
             var extendedStyle = WindowsAPI.GetWindowLong(hwnd, WindowsAPI.GWL_EXSTYLE);
-            WindowsAPI.SetWindowLong(hwnd, WindowsAPI.GWL_EXSTYLE, extendedStyle | WindowsAPI.WS_EX_TOOLWINDOW);
+            WindowsAPI.SetWindowLong(hwnd, WindowsAPI.GWL_EXSTYLE,
+                extendedStyle
+                | WindowsAPI.WS_EX_NOACTIVATE
+                );
 
             int width = (int)SystemParameters.PrimaryScreenWidth;
             int height = (int)SystemParameters.PrimaryScreenHeight;
@@ -79,6 +85,9 @@ namespace Hud1
             {
                 Application.Current?.Dispatcher.Invoke(new Action(() => { ShowApp(); }));
             });
+
+            var window = new CrosshairWindow();
+            window.Show();
         }
         private void OnWindowUnloaded(object sender, RoutedEventArgs e)
         {
@@ -97,7 +106,8 @@ namespace Hud1
             {
                 if (keyEvent.key == GlobalKey.VK_S || keyEvent.key == GlobalKey.VK_F || keyEvent.key == GlobalKey.VK_L)
                 {
-                    windowModel.Active = !windowModel.Active;
+                    //windowModel.Active = !windowModel.Active;
+                    windowModel.HandleKeyActivator();
                     keyEvent.block = true;
                 }
             }
@@ -105,7 +115,8 @@ namespace Hud1
             {
                 if (keyEvent.key == GlobalKey.VK_F2)
                 {
-                    windowModel.Active = !windowModel.Active;
+                    //windowModel.Active = !windowModel.Active;
+                    windowModel.HandleKeyActivator();
                     keyEvent.block = true;
                 }
             }

@@ -1,7 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Hud1.Helpers;
 using System.Diagnostics;
-using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Media;
 
@@ -10,50 +9,87 @@ namespace Hud1.ViewModels
     public partial class MainWindowViewModel : ObservableObject
     {
         [ObservableProperty]
-        [NotifyPropertyChangedFor("HudVisibility")]
-        public Boolean active = false;
+        public Boolean _active = true;
 
-        public nint Hwnd = 0;
+        [ObservableProperty]
+        public Boolean _bg = false;
+
+        [ObservableProperty]
+        public Visibility _hudVisibility = Visibility.Visible;
+
+        public nint Hwnd = -1;
         public Window? Window = null;
 
-        [DllImport("user32.dll")]
-        static extern IntPtr GetForegroundWindow();
+        private nint _clientHandle = -1;
+        private long _lastActiveMillis = 0;
 
-        [DllImportAttribute("User32.dll")]
-        private static extern IntPtr SetForegroundWindow(int hWnd);
-
-        private IntPtr handle;
-
-        partial void OnActiveChanged(bool value)
+        internal void HandleKeyActivator()
         {
             if (Window == null)
                 return;
 
-            Debug.Print("OnActiveChanged", value);
+            long milliseconds = DateTimeOffset.Now.ToUnixTimeMilliseconds();
+            long dt = milliseconds - _lastActiveMillis;
+            var handleDoubleActivator = dt < 200;
+            _lastActiveMillis = milliseconds;
 
-            var extendedStyle = WindowsAPI.GetWindowLong(Hwnd, WindowsAPI.GWL_EXSTYLE);
-            if (value)
+            Debug.Print("HandleKeyActivator {0} {1}", dt, handleDoubleActivator);
+
+            if (handleDoubleActivator)
             {
-                handle = GetForegroundWindow();
-
-                Window.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#00000000"));
-                Window.Activate();
-                Window.Focus();
-                WindowsAPI.SetWindowLong(Hwnd, WindowsAPI.GWL_EXSTYLE, extendedStyle ^ WindowsAPI.WS_EX_TRANSPARENT);
+                if (Active)
+                {
+                    Window.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#33005500"));
+                    HudVisibility = Visibility.Visible;
+                    Active = true;
+                    Bg = true;
+                    if (Active)
+                    {
+                        _clientHandle = WindowsAPI.GetForegroundWindow();
+                        Window.Activate();
+                    }
+                }
+                else
+                {
+                    Active = true;
+                    HudVisibility = Visibility.Visible;
+                    if (Bg)
+                    {
+                        Bg = false;
+                        Window.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#00000000"));
+                    }
+                    else
+                    {
+                        Bg = true;
+                        Window.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#33005500"));
+                        _clientHandle = WindowsAPI.GetForegroundWindow();
+                        Window.Activate();
+                    }
+                }
             }
             else
             {
-                Window.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#00000000"));
-                SetForegroundWindow((int)handle);
-                WindowsAPI.SetWindowLong(Hwnd, WindowsAPI.GWL_EXSTYLE, extendedStyle | WindowsAPI.WS_EX_TRANSPARENT);
-            }
-        }
 
-        public Visibility HudVisibility
-        {
-            get
-            {
-                return Active ? Visibility.Visible : Visibility.Collapsed;
+                if (Active)
+                {
+                    HudVisibility = Visibility.Collapsed;
+                    Active = false;
+
+                    Window.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#00000000"));
+
+                    if (_clientHandle != -1)
+                    {
+                        Debug.Print("SetForegroundWindow");
+                        WindowsAPI.SetForegroundWindow((int)_clientHandle);
+                        _clientHandle = -1;
+                    }
+                }
+                else
+                {
+                    HudVisibility = Visibility.Visible;
+                    Active = true;
+                    Bg = false;
+                }
             }
         }
     }

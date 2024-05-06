@@ -1,0 +1,34 @@
+﻿<Window x:Class="Hud1.CrosshairWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:views="clr-namespace:Hud1.Views"
+        mc:Ignorable="d"
+        Title="CrosshairWindow"
+        AllowsTransparency="True"
+        WindowStyle="None"
+        Topmost="True"
+        ShowInTaskbar="false"
+        Loaded="OnWindowLoaded"
+        >
+
+    <Window.Background>
+        <SolidColorBrush Color="Transparent"/>
+    </Window.Background>
+
+    <Grid>
+        <Canvas Width="20" Height="20" IsHitTestVisible="false" Background="#00000000">
+            <Canvas.Effect>
+                <BlurEffect Radius="10" />
+            </Canvas.Effect>
+            <Line X1="0" Y1="0" X2="20" Y2="20" Stroke="#5500ff66" StrokeThickness="3"/>
+            <Line X1="20" Y1="0" X2="0" Y2="20" Stroke="#5566ff00" StrokeThickness="3" />
+        </Canvas>
+
+        <Canvas Width="12" Height="12" IsHitTestVisible="false" Background="#00000000">
+            <Line X1="0" Y1="0" X2="12" Y2="12" Stroke="#88009933" StrokeThickness="1"/>
+            <Line X1="12" Y1="0" X2="0" Y2="12" Stroke="#99339900" StrokeThickness="1" />
+        </Canvas>
+    </Grid>
+</Window>

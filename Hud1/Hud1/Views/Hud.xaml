@@ -22,6 +22,7 @@
 
                 <StackPanel Orientation="Vertical" Margin="0,0,0,0">
                     <Label Content="Press F2 to open and close this window." Style="{DynamicResource InfoLabelSecondary}" />
+                    <Label Content="Double F2 to activate HUD and force mouse capture." Style="{DynamicResource InfoLabelSecondary}" />
                     <Label Content="Use cursor keys to navigate and select." Style="{DynamicResource InfoLabelSecondary}" />
                 </StackPanel>
 

@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using Hud1.Helpers.CustomSplashScreen;
+using System.Runtime.InteropServices;
 
 namespace Hud1.Helpers
 {
@@ -44,6 +45,7 @@ namespace Hud1.Helpers
 
         public const int WS_EX_TRANSPARENT = 0x00000020;
         public const int WS_EX_TOOLWINDOW = 0x00000080;
+        public const int WS_EX_NOACTIVATE = 0x08000000;
         public const int GWL_EXSTYLE = (-20);
 
         // Window Style
@@ -72,5 +74,24 @@ namespace Hud1.Helpers
 
         [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         public static extern IntPtr GetModuleHandle(string lpModuleName);
+
+        [DllImport("user32.dll", ExactSpelling = true, SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool SetWindowPos(nint hWnd, nint hWndInsertAfter, int X, int Y, int cx, int cy, SetWindowPosFlags uFlags);
+
+        [DllImport("user32.dll")]
+        public static extern IntPtr GetForegroundWindow();
+
+        [DllImportAttribute("User32.dll")]
+        public static extern IntPtr SetForegroundWindow(int hWnd);
+
+        [DllImport("user32.dll")]
+        public static extern bool EnableWindow(IntPtr hwnd, bool bEnable);
+
+        [DllImport("user32.dll")]
+        public static extern bool SetCapture(IntPtr hwnd);
+
+        [DllImport("user32.dll")]
+        public static extern bool ReleaseCapture();
     }
 }

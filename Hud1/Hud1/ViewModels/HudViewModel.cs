@@ -175,7 +175,7 @@ namespace Hud1.ViewModels
                .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.STYLE.ExecuteRight);
 
             string graph = UmlDotGraph.Format(Navigation.GetInfo());
-            Debug.Print(graph);
+            //Debug.Print(graph);
 
             Navigation.OnUnhandledTrigger((state, trigger) =>
             {
