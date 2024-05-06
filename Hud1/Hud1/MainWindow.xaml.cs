@@ -102,24 +102,28 @@ namespace Hud1
         {
             //Debug.Print("HandleKeyDown2 {0} {1}", keyEvent.key, keyEvent.alt);           
 
-            if (keyEvent.alt)
+            if (!keyEvent.repeated)
             {
-                if (keyEvent.key == GlobalKey.VK_S || keyEvent.key == GlobalKey.VK_F || keyEvent.key == GlobalKey.VK_L)
+                if (keyEvent.alt)
                 {
-                    //windowModel.Active = !windowModel.Active;
-                    windowModel.HandleKeyActivator();
-                    keyEvent.block = true;
+                    if (keyEvent.key == GlobalKey.VK_S || keyEvent.key == GlobalKey.VK_F || keyEvent.key == GlobalKey.VK_L)
+                    {
+                        //windowModel.Active = !windowModel.Active;
+                        windowModel.HandleKeyActivator();
+                        keyEvent.block = true;
+                    }
+                }
+                else
+                {
+                    if (keyEvent.key == GlobalKey.VK_F2)
+                    {
+                        //windowModel.Active = !windowModel.Active;
+                        windowModel.HandleKeyActivator();
+                        keyEvent.block = true;
+                    }
                 }
             }
-            else
-            {
-                if (keyEvent.key == GlobalKey.VK_F2)
-                {
-                    //windowModel.Active = !windowModel.Active;
-                    windowModel.HandleKeyActivator();
-                    keyEvent.block = true;
-                }
-            }
+
         }
 
         private void ShowApp()
