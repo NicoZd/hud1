@@ -93,5 +93,32 @@ namespace Hud1.Helpers
 
         [DllImport("user32.dll")]
         public static extern bool ReleaseCapture();
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct CursorInfo
+        {
+            public int Size;
+            public int Flags;
+            public IntPtr Handle;
+            public System.Drawing.Point Position;
+        }
+
+        [DllImport("user32.dll")]
+        public static extern bool GetCursorInfo(out CursorInfo info);
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct POINT
+        {
+            public int X;
+            public int Y;
+
+            public static implicit operator System.Drawing.Point(POINT point)
+            {
+                return new System.Drawing.Point(point.X, point.Y);
+            }
+        }
+
+        [DllImport("user32.dll")]
+        public static extern bool GetCursorPos(out POINT lpPoint);
     }
 }

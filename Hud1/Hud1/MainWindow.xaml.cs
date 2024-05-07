@@ -49,6 +49,7 @@ namespace Hud1
             // init view model
             windowModel.Hwnd = hwnd;
             windowModel.Window = this;
+            windowModel.CursorCanvas = MyCursorCanvas;
 
             Debug.WriteLine("OnWindowLoaded {0}", hwnd);
 
