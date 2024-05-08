@@ -25,7 +25,7 @@
         </Grid.Effect>
 
         <views:GlassPanel>
-            <StackPanel Margin="15,1,15,15">
+            <StackPanel Margin="15,5,15,15">
                 <Label Content="Draco HUD" Style="{DynamicResource TitleLabel}" />
 
                 <StackPanel Orientation="Vertical" Margin="0,0,0,0">
@@ -35,7 +35,7 @@
 
                 <WrapPanel 
                     Orientation="Horizontal"
-                    Margin="-2,15,-2,0"
+                    Margin="0,15,0,0"
                     views:Spacing.Horizontal="4"
                     >
 
@@ -80,18 +80,26 @@
                         />
                 </WrapPanel>
 
-                <Separator Margin="-3,12,-3,25" Background="{DynamicResource BrushSeparator}"/>
+                <Separator Margin="0,10,0,10" Background="{DynamicResource BrushSeparator}"/>
 
-                <views:IgnoreWidthControl>
-                    <TextBlock    
-                        Height="30"
-                        Margin="0,0,0,-15"
-                        TextWrapping="Wrap"
-                        FontFamily="{DynamicResource FontFamily}"
-                        Foreground="{DynamicResource BrushInfoSecondary}" 
-                        FontSize="12"
-                        Text="{Binding State.Hint}"/>
-                </views:IgnoreWidthControl>
+                <Grid
+                    VerticalAlignment="Center"
+                    Background="{DynamicResource BrushColorMedLow}"
+                    >
+                    <views:IgnoreWidthControl Margin="0">
+                        <TextBlock      
+                            Margin="8,5,8,0"
+                            Padding="0"
+                            VerticalAlignment="Top"
+                            Height="35"
+                            TextWrapping="Wrap"
+                            FontFamily="{DynamicResource FontFamily}"
+                            Foreground="{DynamicResource BrushInfoSecondary}" 
+                            FontSize="12"
+                            Text="{Binding State.Hint}"
+                            />
+                    </views:IgnoreWidthControl>
+                </Grid>
 
                 <Grid Visibility="{Binding Path=States[DISPLAY_VISIBLE].Visibility}" >
                     <StackPanel views:Spacing.Vertical="8">
@@ -119,7 +127,11 @@
                 </Grid>
 
                 <Grid Visibility="{Binding Path=States[MACRO_VISIBLE].Visibility}">
-                    <views:MacrosView MacrosViewModel="{Binding Path=MacrosViewModel}"/>
+                    <StackPanel Margin="0,0,0,0" views:Spacing.Vertical="8">
+                        <views:MacrosView MacrosViewModel="{Binding Path=MacrosViewModel}"/>
+                        <Label Content="Functions" Style="{DynamicResource TitleContent}"/>
+                        <views:ButtonPanel NavigationState="{Binding Path=States[MACROS_FOLDER]}"/>
+                    </StackPanel>
                 </Grid>
 
                 <Grid Visibility="{Binding Path=States[CROSSHAIR_VISIBLE].Visibility}">

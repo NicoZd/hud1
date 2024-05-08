@@ -21,7 +21,7 @@ namespace Hud1.ViewModels
 
         private FileSystemWatcher _watcher;
 
-        private String _path = "";
+        public String _path = "";
 
         public MacrosViewModel()
         {
@@ -95,7 +95,7 @@ namespace Hud1.ViewModels
 
             if (Macros.Count == 0)
             {
-                Navigation!.Fire(NavigationTriggers.RETURN);
+                Navigation!.Fire(NavigationTriggers.RETURN_UP);
             }
         }
 
@@ -123,7 +123,7 @@ namespace Hud1.ViewModels
             Debug.Print("OnUp {0}", SelectedIndex);
             if (SelectedIndex <= 0)
             {
-                Navigation?.Fire(NavigationTriggers.RETURN);
+                Navigation?.Fire(NavigationTriggers.RETURN_UP);
                 return;
             }
             SelectedIndex--;
@@ -133,7 +133,7 @@ namespace Hud1.ViewModels
             Debug.Print("OnDown {0}", SelectedIndex);
             if (SelectedIndex >= Macros.Count - 1)
             {
-                Navigation?.Fire(NavigationTriggers.RETURN);
+                Navigation?.Fire(NavigationTriggers.RETURN_DOWN);
                 return;
             }
             SelectedIndex++;

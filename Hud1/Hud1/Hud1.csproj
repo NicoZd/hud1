@@ -27,6 +27,7 @@
     <None Remove="Assets\fluid-background-transparent.png" />
     <None Remove="Macros\press-left-mouse.lua" />
     <None Remove="Macros\repeat-left-mouse-click.lua" />
+    <None Remove="Macros\test.lua" />
   </ItemGroup>
 
   <ItemGroup>
@@ -45,6 +46,9 @@
     <Resource Include="Assets\fluid-background-transparent.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <Content Include="Macros\test.lua">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Macros\press-left-mouse.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

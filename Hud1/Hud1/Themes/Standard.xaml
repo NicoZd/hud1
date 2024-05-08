@@ -20,6 +20,7 @@
 
     <!-- Title -->
     <Style TargetType="{x:Type Label}" x:Key="TitleLabel">
+        <Setter Property="Focusable" Value="False"/>
         <Setter Property="Foreground" Value="{DynamicResource BrushTitle}"/>
         <Setter Property="FontFamily" Value="{DynamicResource FontFamily}"/>
         <Setter Property="FontSize" Value="22"/>

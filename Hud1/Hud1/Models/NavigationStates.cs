@@ -34,6 +34,7 @@
 
         // MACRO
         public static readonly NavigationState MACROS = new() { };
+        public static readonly NavigationState MACROS_FOLDER = new() { Label = "Open Folder", Hint = "Open Folder with Macros.", SelectionRightLabel = " > " };
 
         // MORE
         public static readonly NavigationState ACTIVATE = new() { Label = "Activate", Hint = "Activate this Window to capture mouse once.", SelectionRightLabel = " > " };

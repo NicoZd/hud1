@@ -65,7 +65,7 @@ namespace Hud1.ViewModels
                 .SubstateOf(NavigationStates.MACRO_VISIBLE)
                 .Permit(NavigationTriggers.LEFT, NavigationStates.MENU_AUDIO)
                 .Permit(NavigationTriggers.RIGHT, NavigationStates.MENU_CROSSHAIR)
-                .Permit(NavigationTriggers.UP, NavigationStates.MACROS)
+                .Permit(NavigationTriggers.UP, NavigationStates.MACROS_FOLDER)
                 .Permit(NavigationTriggers.DOWN, NavigationStates.MACROS);
 
             Navigation.Configure(NavigationStates.MENU_CROSSHAIR)
@@ -157,7 +157,21 @@ namespace Hud1.ViewModels
              .InternalTransition(NavigationTriggers.RIGHT, MacrosViewModel.OnRight)
              .InternalTransition(NavigationTriggers.UP, MacrosViewModel.OnUp)
              .InternalTransition(NavigationTriggers.DOWN, MacrosViewModel.OnDown)
-             .Permit(NavigationTriggers.RETURN, NavigationStates.MENU_MACRO);
+             .Permit(NavigationTriggers.RETURN_UP, NavigationStates.MENU_MACRO)
+            .Permit(NavigationTriggers.RETURN_DOWN, NavigationStates.MACROS_FOLDER);
+
+            NavigationStates.MACROS_FOLDER.RightAction = () =>
+            {
+                Debug.Print("OPEN {0}", macrosViewModel._path);
+                Process.Start("explorer.exe", macrosViewModel._path);
+            };
+
+            Navigation.Configure(NavigationStates.MACROS_FOLDER)
+                .SubstateOf(NavigationStates.MACRO_VISIBLE)
+                .Permit(NavigationTriggers.UP, NavigationStates.MACROS)
+                .Permit(NavigationTriggers.DOWN, NavigationStates.MENU_MACRO)
+                .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.MACROS_FOLDER.ExecuteRight);
+
 
             // MORE
 
