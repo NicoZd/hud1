@@ -92,7 +92,11 @@ namespace Hud1.Models
                 catch (InterpreterException ex)
                 {
                     Debug.Print("ERROR {0}", ex.DecoratedMessage);
-                    Error = ex.DecoratedMessage;
+
+                    if (ex.DecoratedMessage != null)
+                        Error = ex.DecoratedMessage;
+                    else
+                        Error = "ERROR: " + ex.Message;
                 }
                 catch (Exception ex)
                 {

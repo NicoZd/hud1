@@ -68,7 +68,7 @@ namespace Hud1.Models
                 lastUpdateTimeMs = DateTimeOffset.Now.ToUnixTimeMilliseconds();
             };
 
-            var delay = 100;
+            var delay = 50;
             System.Timers.Timer timer = new(TimeSpan.FromMilliseconds(delay));
             timer.Elapsed += async (sender, e) => update();
             timer.AutoReset = false;
@@ -126,7 +126,7 @@ namespace Hud1.Models
             while (_systemEvents.Count > 0)
             {
                 var systemEvent = _systemEvents.Dequeue();
-                _script.Call(_script.Globals["OnMouseDown"]);
+                _script.Call(_script.Globals["OnMouseDown"], 0);
             }
         }
 
