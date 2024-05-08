@@ -13,7 +13,7 @@
     <Grid HorizontalAlignment="Right"
           DataContext="{Binding Path=ViewModel, RelativeSource={RelativeSource AncestorType=local:Hud}}"
           >
-        
+
         <Grid.Effect>
             <DropShadowEffect
                 Color="{DynamicResource ColorBackgroundDark}"                              
@@ -23,7 +23,7 @@
                 Direction="180"
                 />
         </Grid.Effect>
-        
+
         <views:GlassPanel>
             <StackPanel Margin="15,1,15,15">
                 <Label Content="Draco HUD" Style="{DynamicResource TitleLabel}" />
@@ -123,13 +123,8 @@
                 </Grid>
 
                 <Grid Visibility="{Binding Path=States[CROSSHAIR_VISIBLE].Visibility}">
-                    <StackPanel Margin="0,50,0,0" Orientation="Vertical">
-                        <StackPanel.Resources>
-                            <Style TargetType="{x:Type views:GlowBorderLabel}">
-                                <Setter Property="Margin" Value="0,2,0,2"/>
-                            </Style>
-                        </StackPanel.Resources>
-                        <Label Content="CROSSHAIR" Style="{DynamicResource TitleContent}"/>
+                    <StackPanel Margin="0,0,0,0" views:Spacing.Vertical="8">
+                        <Label Content="Crosshair" Style="{DynamicResource TitleContent}"/>
                         <!--<views:GlowBorderLabel Label="ON/OFF" Selected="{Binding Path=States[cross-visible].Selected}" />
                         <views:GlowBorderLabel Label="C" Selected="{Binding Path=States[cross-color].Selected}"/>
                         <views:GlowBorderLabel Label="F" Selected="{Binding Path=States[cross-form].Selected}"/>
@@ -138,22 +133,18 @@
                 </Grid>
 
                 <Grid Visibility="{Binding Path=States[MORE_VISIBLE].Visibility}" Margin="0,0,0,0">
-                    <StackPanel Margin="0,50,0,0">
+                    <StackPanel Margin="0,0,0,0" views:Spacing.Vertical="8">
 
-                        <Label Content="FUNCTIONS" Style="{DynamicResource TitleContent}"/>
+                        <Label Content="Functions" Style="{DynamicResource TitleContent}"/>
 
-                        <StackPanel Margin="0,0,0,0" Orientation="Vertical" >
-                            <DockPanel views:MarginSetter.Margin="4,0,0,0">
-                                <views:GlowBorderLabel DockPanel.Dock="Right" Label=">" Selected="{Binding Path=States[EXIT].SelectRight}"/>
-                                <views:GlowBorderLabel Label="EXIT" Selected="{Binding Path=States[EXIT].Selected}" />
-                            </DockPanel>
-                        </StackPanel>
+                        <views:SelectionControl NavigationState="{Binding Path=States[EXIT]}" />
+                        <views:SelectionControl NavigationState="{Binding Path=States[EXIT]}" />
 
-                        <Label Content="STYLE" Style="{DynamicResource TitleContent}"/>
+                        <Label Content="Style" Style="{DynamicResource TitleContent}"/>
 
                         <views:SelectionControl NavigationState="{Binding Path=States[STYLE]}" />
 
-                        <Label Content="HELP" Style="{DynamicResource TitleContent}"/>
+                        <Label Content="Help" Style="{DynamicResource TitleContent}"/>
 
                         <StackPanel Orientation="Vertical" Margin="0,0,0,10">
                             <Label Content="Keys to open and close this window:" Style="{DynamicResource InfoLabelSecondary}" />
