@@ -31,11 +31,6 @@
                 </LinearGradientBrush>
             </Setter.Value>
         </Setter>
-        <Setter Property="Effect">
-            <Setter.Value>
-                <DropShadowEffect ShadowDepth="0" BlurRadius="10" Color="{DynamicResource ColorInfo}" Opacity="0.0"/>
-            </Setter.Value>
-        </Setter>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Background" Value="{DynamicResource BrushColorMedLow}"/>
@@ -49,11 +44,6 @@
                     </Setter.Value>
                 </Setter>
                 <Setter Property="BorderBrush" Value="{DynamicResource BrushSolidSuperBright}" />
-                <Setter Property="Effect">
-                    <Setter.Value>
-                        <DropShadowEffect ShadowDepth="0" BlurRadius="10" Color="{DynamicResource ColorBright}" Opacity="0.5"/>
-                    </Setter.Value>
-                </Setter>
             </DataTrigger>
             <DataTrigger Binding="{Binding Path=Selected}" Value="True">
                 <Setter Property="Background" >
@@ -66,7 +56,11 @@
                 <Setter Property="BorderBrush" Value="{DynamicResource BrushInfo}" />
                 <Setter Property="Effect">
                     <Setter.Value>
-                        <DropShadowEffect ShadowDepth="0" BlurRadius="10" Color="{DynamicResource ColorInfo}" Opacity="0.5"/>
+                        <DropShadowEffect 
+                            ShadowDepth="0"
+                            BlurRadius="10" 
+                            Color="{DynamicResource ColorInfo}"
+                            Opacity="0.5"/>
                     </Setter.Value>
                 </Setter>
             </DataTrigger>
@@ -81,7 +75,11 @@
                 <Setter Property="BorderBrush" Value="{DynamicResource BrushInfo}" />
                 <Setter Property="Effect">
                     <Setter.Value>
-                        <DropShadowEffect ShadowDepth="0" BlurRadius="10" Color="{DynamicResource ColorInfo}" Opacity="0.5"/>
+                        <DropShadowEffect 
+                            ShadowDepth="0"
+                            BlurRadius="10" 
+                            Color="{DynamicResource ColorInfo}"
+                            Opacity="0.5"/>
                     </Setter.Value>
                 </Setter>
             </DataTrigger>
@@ -116,11 +114,7 @@
                 </LinearGradientBrush>
             </Setter.Value>
         </Setter>
-        <Setter Property="Effect">
-            <Setter.Value>
-                <DropShadowEffect ShadowDepth="0" BlurRadius="10" Opacity="0" Color="{DynamicResource ColorSuperBright}"/>
-            </Setter.Value>
-        </Setter>
+
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Background" Value="{DynamicResource BrushColorMedLow}"/>
@@ -138,11 +132,6 @@
                         <LinearGradientBrush StartPoint="0,0" EndPoint="0,0">
                             <GradientStop Color="{DynamicResource ColorBright}" Offset="0"/>
                         </LinearGradientBrush>
-                    </Setter.Value>
-                </Setter>
-                <Setter Property="Effect">
-                    <Setter.Value>
-                        <DropShadowEffect ShadowDepth="0" BlurRadius="10" Opacity="0.5" Color="{DynamicResource ColorBright}"/>
                     </Setter.Value>
                 </Setter>
             </DataTrigger>

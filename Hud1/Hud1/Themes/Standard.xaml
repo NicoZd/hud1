@@ -15,6 +15,7 @@
     <!--
     <FontFamily x:Key="FontFamily">Cascadia Code</FontFamily>
     <FontFamily x:Key="FontFamily">DejaVu Sans Mono</FontFamily>
+    <FontFamily x:Key="FontFamily">Fira Code</FontFamily>
     -->
     <FontFamily x:Key="FontFamily">Fira Code</FontFamily>
 
@@ -26,11 +27,7 @@
         <Setter Property="FontSize" Value="22"/>
         <Setter Property="Padding" Value="0,10,0,10"/>
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
-        <Setter Property="Effect" >
-            <Setter.Value>
-                <DropShadowEffect ShadowDepth="0" Color="{DynamicResource ColorSuperBright}" Opacity="1" BlurRadius="10" />
-            </Setter.Value>
-        </Setter>
+
     </Style>
 
     <Style TargetType="{x:Type Label}" x:Key="TitleContent">
@@ -39,11 +36,6 @@
         <Setter Property="FontSize" Value="18"/>
         <Setter Property="Padding" Value="0,20,0,0"/>
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
-        <Setter Property="Effect" >
-            <Setter.Value>
-                <DropShadowEffect ShadowDepth="0" Color="{DynamicResource ColorSuperBright}" Opacity="1" BlurRadius="10" />
-            </Setter.Value>
-        </Setter>
     </Style>
 
     <!-- Button -->
@@ -53,11 +45,7 @@
         <Setter Property="FontSize" Value="12"/>
         <Setter Property="Padding" Value="15,5,15,5"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
-        <Setter Property="Effect" >
-            <Setter.Value>
-                <DropShadowEffect ShadowDepth="0" Color="{DynamicResource ColorSuperBright}" Opacity="1" BlurRadius="10" />
-            </Setter.Value>
-        </Setter>
+       
     </Style>
 
     <!-- Info -->
