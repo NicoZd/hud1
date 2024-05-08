@@ -38,6 +38,9 @@
     <Page Update="Themes\Red.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Themes\Buttons.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Themes\Standard.xaml">
       <SubType>Designer</SubType>
     </Page>
