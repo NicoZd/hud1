@@ -36,6 +36,7 @@
         public static readonly NavigationState MACROS = new() { };
 
         // MORE
+        public static readonly NavigationState ACTIVATE = new() { Label = "Activate", Hint = "Activate this Window to capture mouse once.", SelectionRightLabel = " > " };
         public static readonly NavigationState EXIT = new() { Label = "Exit", Hint = "Exit HUD and terminate process.", SelectionRightLabel = " > " };
         public static readonly NavigationState STYLE = new() { SelectionLabel = "Green", Label = "Colors", Hint = "Adjust colors of this window." };
     }

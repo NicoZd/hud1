@@ -77,7 +77,8 @@ namespace Hud1.ViewModels
                 .SubstateOf(NavigationStates.MORE_VISIBLE)
                 .Permit(NavigationTriggers.LEFT, NavigationStates.MENU_CROSSHAIR)
                 .Permit(NavigationTriggers.RIGHT, NavigationStates.MENU_DISPLAY)
-                .Permit(NavigationTriggers.DOWN, NavigationStates.EXIT);
+                .Permit(NavigationTriggers.DOWN, NavigationStates.ACTIVATE)
+                .Permit(NavigationTriggers.UP, NavigationStates.STYLE);
 
             // DISPLAY
             NavigationStates.GAMMA.LeftAction = gammaViewModel.SelectPrevGama;
@@ -159,10 +160,18 @@ namespace Hud1.ViewModels
              .Permit(NavigationTriggers.RETURN, NavigationStates.MENU_MACRO);
 
             // MORE
+
+            NavigationStates.ACTIVATE.RightAction = Activate;
+            Navigation.Configure(NavigationStates.ACTIVATE)
+                .SubstateOf(NavigationStates.MORE_VISIBLE)
+                .Permit(NavigationTriggers.UP, NavigationStates.MENU_MORE)
+                .Permit(NavigationTriggers.DOWN, NavigationStates.EXIT)
+                .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.ACTIVATE.ExecuteRight);
+
             NavigationStates.EXIT.RightAction = Application.Current.Shutdown;
             Navigation.Configure(NavigationStates.EXIT)
                 .SubstateOf(NavigationStates.MORE_VISIBLE)
-                .Permit(NavigationTriggers.UP, NavigationStates.MENU_MORE)
+                .Permit(NavigationTriggers.UP, NavigationStates.ACTIVATE)
                 .Permit(NavigationTriggers.DOWN, NavigationStates.STYLE)
                 .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.EXIT.ExecuteRight);
 
@@ -171,6 +180,7 @@ namespace Hud1.ViewModels
             Navigation.Configure(NavigationStates.STYLE)
                .SubstateOf(NavigationStates.MORE_VISIBLE)
                .Permit(NavigationTriggers.UP, NavigationStates.EXIT)
+               .Permit(NavigationTriggers.DOWN, NavigationStates.MENU_MORE)
                .InternalTransition(NavigationTriggers.LEFT, NavigationStates.STYLE.ExecuteLeft)
                .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.STYLE.ExecuteRight);
 
@@ -190,6 +200,13 @@ namespace Hud1.ViewModels
         {
             Debug.Print("Some {0}", navigationState);
             SelectNavigationState(navigationState);
+        }
+
+        private void Activate()
+        {
+            Debug.Print("Activate");
+
+            MainWindowViewModel.Instance?.Activate();
         }
 
         public bool OnKeyPressed(KeyEvent keyEvent)

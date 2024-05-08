@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <_LastSelectedProfileId>C:\Workspaces\nico_2024\hud1\Hud1\Hud1\Properties\PublishProfiles\FolderProfile.pubxml</_LastSelectedProfileId>
+    <_LastSelectedProfileId>C:\Workspaces\nico_2024\hud1\Hud1\Hud1\Properties\PublishProfiles\FastProfile.pubxml</_LastSelectedProfileId>
   </PropertyGroup>
   <ItemGroup>
     <ApplicationDefinition Update="App.xaml">
@@ -10,6 +10,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Update="CrosshairWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\ButtonPanel.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\GlowBorderLabel.xaml.cs">
@@ -45,6 +48,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Themes\Green.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\ButtonPanel.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\GlowBorderLabel.xaml">

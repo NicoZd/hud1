@@ -44,6 +44,8 @@ namespace Hud1
         private void OnWindowLoaded(object sender, RoutedEventArgs e)
         {
             hwnd = new WindowInteropHelper(this).Handle;
+            windowModel.Window = this;
+            windowModel.Hwnd = hwnd;
 
             Debug.WriteLine("OnWindowLoaded {0}", hwnd);
 

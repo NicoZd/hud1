@@ -137,8 +137,8 @@
 
                         <Label Content="Functions" Style="{DynamicResource TitleContent}"/>
 
-                        <views:SelectionControl NavigationState="{Binding Path=States[EXIT]}" />
-                        <views:SelectionControl NavigationState="{Binding Path=States[EXIT]}" />
+                        <views:ButtonPanel NavigationState="{Binding Path=States[ACTIVATE]}" />
+                        <views:ButtonPanel NavigationState="{Binding Path=States[EXIT]}" />
 
                         <Label Content="Style" Style="{DynamicResource TitleContent}"/>
 
