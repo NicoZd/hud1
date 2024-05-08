@@ -3,7 +3,6 @@ using Hud1.Helpers;
 using Hud1.Helpers.CustomSplashScreen;
 using Hud1.ViewModels;
 using System.Diagnostics;
-using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media.Animation;
@@ -46,17 +45,12 @@ namespace Hud1
         {
             hwnd = new WindowInteropHelper(this).Handle;
 
-            // init view model
-            windowModel.Hwnd = hwnd;
-            windowModel.Window = this;
-            windowModel.CursorCanvas = MyCursorCanvas;
-
             Debug.WriteLine("OnWindowLoaded {0}", hwnd);
 
             System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler((_, _) =>
             {
-                SetWindowPos(hwnd, SafeNativeMethods.HWND_TOP, 0, 0, 0, 0, SetWindowPosFlags.SWP_NOMOVE | SetWindowPosFlags.SWP_NOSIZE | SetWindowPosFlags.SWP_NOACTIVATE);
+                WindowsAPI.SetWindowPos(hwnd, SafeNativeMethods.HWND_TOP, 0, 0, 0, 0, SetWindowPosFlags.SWP_NOMOVE | SetWindowPosFlags.SWP_NOSIZE | SetWindowPosFlags.SWP_NOACTIVATE);
             });
             dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
             dispatcherTimer.Start();
@@ -82,22 +76,12 @@ namespace Hud1
             GlobalKeyboardHook.KeyDown += HandleKeyDown;
             GlobalKeyboardHook.SystemHook();
 
-            Task.Delay(500).ContinueWith(_ =>
-            {
-                Application.Current?.Dispatcher.Invoke(new Action(() => { ShowApp(); }));
-            });
-
-            var window = new CrosshairWindow();
-            window.Show();
+            FadeIn();
         }
         private void OnWindowUnloaded(object sender, RoutedEventArgs e)
         {
             GlobalKeyboardHook.SystemUnhook();
         }
-
-        [DllImport("user32.dll", ExactSpelling = true, SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool SetWindowPos(nint hWnd, nint hWndInsertAfter, int X, int Y, int cx, int cy, SetWindowPosFlags uFlags);
 
         private void HandleKeyDown(KeyEvent keyEvent)
         {
@@ -109,7 +93,6 @@ namespace Hud1
                 {
                     if (keyEvent.key == GlobalKey.VK_S || keyEvent.key == GlobalKey.VK_F || keyEvent.key == GlobalKey.VK_L)
                     {
-                        //windowModel.Active = !windowModel.Active;
                         windowModel.HandleKeyActivator();
                         keyEvent.block = true;
                     }
@@ -118,7 +101,6 @@ namespace Hud1
                 {
                     if (keyEvent.key == GlobalKey.VK_F2)
                     {
-                        //windowModel.Active = !windowModel.Active;
                         windowModel.HandleKeyActivator();
                         keyEvent.block = true;
                     }
@@ -127,18 +109,33 @@ namespace Hud1
 
         }
 
-        private void ShowApp()
+        private async void FadeIn()
         {
-            var animation = new DoubleAnimation
-            {
-                To = 1,
-                BeginTime = TimeSpan.FromSeconds(0),
-                Duration = TimeSpan.FromSeconds(0.15),
-                FillBehavior = FillBehavior.Stop
-            };
-            animation.Completed += (s, a) => this.Opacity = 1;
-            this.BeginAnimation(UIElement.OpacityProperty, animation);
-        }
+            await Task.Delay(500);
 
+            Application.Current?.Dispatcher.Invoke(new Action(() =>
+            {
+                var crosshairWindow = new CrosshairWindow();
+                crosshairWindow.Opacity = 0;
+                crosshairWindow.Show();
+
+                var animation = new DoubleAnimation
+                {
+                    To = 1,
+                    BeginTime = TimeSpan.FromSeconds(0),
+                    Duration = TimeSpan.FromSeconds(0.15),
+                    FillBehavior = FillBehavior.Stop
+                };
+
+                animation.Completed += (s, a) =>
+                {
+                    crosshairWindow.Opacity = 1;
+                    this.Opacity = 1;
+                };
+
+                this.BeginAnimation(UIElement.OpacityProperty, animation);
+                crosshairWindow.BeginAnimation(UIElement.OpacityProperty, animation);
+            }));
+        }
     }
 }

@@ -48,14 +48,6 @@ namespace Hud1.Helpers
         public const int WS_EX_NOACTIVATE = 0x08000000;
         public const int GWL_EXSTYLE = (-20);
 
-        // Window Style
-
-        [DllImport("user32.dll")]
-        public static extern int GetWindowLong(IntPtr hwnd, int index);
-
-        [DllImport("user32.dll")]
-        public static extern int SetWindowLong(IntPtr hwnd, int index, int newStyle);
-
         // Hooks
 
         public delegate IntPtr HookProc(int nCode, IntPtr wParam, IntPtr lParam);
@@ -77,6 +69,8 @@ namespace Hud1.Helpers
 
         [DllImport("user32.dll", ExactSpelling = true, SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
+
+        // Windows
         public static extern bool SetWindowPos(nint hWnd, nint hWndInsertAfter, int X, int Y, int cx, int cy, SetWindowPosFlags uFlags);
 
         [DllImport("user32.dll")]
@@ -85,40 +79,12 @@ namespace Hud1.Helpers
         [DllImportAttribute("User32.dll")]
         public static extern IntPtr SetForegroundWindow(int hWnd);
 
-        [DllImport("user32.dll")]
-        public static extern bool EnableWindow(IntPtr hwnd, bool bEnable);
+        // Window Style
 
         [DllImport("user32.dll")]
-        public static extern bool SetCapture(IntPtr hwnd);
+        public static extern int GetWindowLong(IntPtr hwnd, int index);
 
         [DllImport("user32.dll")]
-        public static extern bool ReleaseCapture();
-
-        [StructLayout(LayoutKind.Sequential)]
-        public struct CursorInfo
-        {
-            public int Size;
-            public int Flags;
-            public IntPtr Handle;
-            public System.Drawing.Point Position;
-        }
-
-        [DllImport("user32.dll")]
-        public static extern bool GetCursorInfo(out CursorInfo info);
-
-        [StructLayout(LayoutKind.Sequential)]
-        public struct POINT
-        {
-            public int X;
-            public int Y;
-
-            public static implicit operator System.Drawing.Point(POINT point)
-            {
-                return new System.Drawing.Point(point.X, point.Y);
-            }
-        }
-
-        [DllImport("user32.dll")]
-        public static extern bool GetCursorPos(out POINT lpPoint);
+        public static extern int SetWindowLong(IntPtr hwnd, int index, int newStyle);
     }
 }

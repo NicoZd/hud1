@@ -19,18 +19,8 @@
         <SolidColorBrush Color="Transparent"/>
     </Window.Background>
 
-    <Canvas>
-        <Canvas Left="0.0" Top="0" x:Name="MyCursorCanvas" Width="12" Height="12" IsHitTestVisible="false" Background="#00000000" Margin="22,0,22,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <Line X1="0" Y1="0" X2="12" Y2="12" Stroke="#ffff0000" StrokeThickness="1"/>
-            <Line X1="12" Y1="0" X2="0" Y2="12" Stroke="#ffff0000" StrokeThickness="1" />
-        </Canvas>
+    <Grid>
+        <views:Hud Visibility="{Binding Path=HudVisibility}"/>
+    </Grid>
 
-        <Grid>
-            <views:Hud Visibility="{Binding Path=HudVisibility}"/>
-        </Grid>
-        <!--<StackPanel>
-            <Label Content="{Binding Active}" Foreground="White"/>
-            <Label Content="{Binding Bg}" Foreground="White"/>
-        </StackPanel>-->
-    </Canvas>
 </Window>

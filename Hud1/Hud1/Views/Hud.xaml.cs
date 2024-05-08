@@ -24,13 +24,11 @@ namespace Hud1.Views
 
         private void HandleKeyDown(KeyEvent keyEvent)
         {
-            //Debug.Print("HandleKeyDown {0} {1} {2}", keyEvent.alt, keyEvent.key, keyEvent.repeated);
             if (!keyEvent.alt)
             {
                 if ((DataContext as MainWindowViewModel)!.Active)
                 {
-                    var block = ViewModel.OnKeyPressed(keyEvent);
-                    //keyEvent.block = block;
+                    ViewModel.OnKeyPressed(keyEvent);
                 }
             }
         }
