@@ -1,15 +1,24 @@
-Label = "Test"
-Description = "Press the left mouse button once. Left click to stop."
+Label = "Sample Realtime Updates"
+Description = "Coding sample on how to do realtime updates."
 
-function Setup() 
+function Setup()
+	startMs = Millis()
 end
 
-function Run()
-	Print("Down")
+function Run()	
+	now = Millis()
+	dt = now - startMs
+	startMs = now;
+	Print(""
+		.. "Time and dt: " .. now .. "ms " .. dt .. "ms\n"
+		.. "UI Debounce: 100ms \n"
+		.. "Version    : " .. _VERSION
+		)
 end
 
 function OnMouseDown()  
 end
 
 function Cleanup()
+	Print("")
 end

@@ -1,7 +1,10 @@
-﻿using Hud1.Helpers;
+﻿using CoreAudio;
+using Hud1.Helpers;
 using MoonSharp.Interpreter;
 using System.Diagnostics;
 using System.IO;
+using System.Timers;
+using System.Windows;
 
 namespace Hud1.Models
 {
@@ -15,7 +18,7 @@ namespace Hud1.Models
         public MacroScript(Macro macro)
         {
             _macro = macro;
-            _script = new Script(CoreModules.None);
+            _script = new Script(CoreModules.None | CoreModules.GlobalConsts);
 
             _script.Globals["Label"] = _macro.Label;
             _script.Globals["Description"] = _macro.Description;
@@ -43,10 +46,47 @@ namespace Hud1.Models
                 DequeueEvents();
             };
 
+            _script.Globals["Millis"] = () =>
+            {
+                return DateTimeOffset.Now.ToUnixTimeMilliseconds();
+            };
+
+
+            var debouncedLog = "";
+            var lastUpdateTimeMs = (long)0;
+
+            var update = () =>
+            {
+                Application.Current.Dispatcher.Invoke(new Action(() =>
+                {
+                    if (debouncedLog != null)
+                    {
+                        _macro.Log = debouncedLog;
+                        debouncedLog = null;
+                    }
+                }));
+                lastUpdateTimeMs = DateTimeOffset.Now.ToUnixTimeMilliseconds();
+            };
+
+            var delay = 100;
+            System.Timers.Timer timer = new(TimeSpan.FromMilliseconds(delay));
+            timer.Elapsed += async (sender, e) => update();
+            timer.AutoReset = false;
+
             _script.Globals["Print"] = (string a) =>
             {
-                _macro.Log = a;
-                Debug.Print("SCRIPT: {0}", a);
+                debouncedLog = a;
+                if (!timer.Enabled)
+                {
+                    var now = DateTimeOffset.Now.ToUnixTimeMilliseconds();
+                    var dt = now - lastUpdateTimeMs;
+                    if (dt > delay)
+                    {
+                        update();
+                    }
+                    timer.Start();
+                }
+
             };
 
             _script.Globals["MouseDown"] = () =>
@@ -94,12 +134,14 @@ namespace Hud1.Models
         {
             _systemEvents.Clear();
             _script.Call(_script.Globals["Setup"]);
+            Thread.Sleep(25);
+            DequeueEvents();
             while ((bool)_script.Globals["Running"])
             {
                 _script.Call(_script.Globals["Run"]);
                 DequeueEvents();
 
-                Thread.Sleep(50);
+                Thread.Sleep(25);
                 DequeueEvents();
             };
             _script.Call(_script.Globals["Cleanup"]);

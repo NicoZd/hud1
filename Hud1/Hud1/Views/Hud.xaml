@@ -88,10 +88,10 @@
                     >
                     <views:IgnoreWidthControl Margin="0">
                         <TextBlock      
-                            Margin="8,5,8,0"
+                            Margin="5,4,5,0"
                             Padding="0"
                             VerticalAlignment="Top"
-                            Height="35"
+                            Height="33"
                             TextWrapping="Wrap"
                             FontFamily="{DynamicResource FontFamily}"
                             Foreground="{DynamicResource BrushInfoSecondary}" 
