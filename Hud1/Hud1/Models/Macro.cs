@@ -39,7 +39,7 @@ namespace Hud1.Models
 
             Label = System.IO.Path.GetFileName(Path);
             Description = "";
-            RightLabel = "Start ▶";
+            RightLabel = "Start >";
 
             FetchProgramMetaData();
         }
@@ -77,7 +77,7 @@ namespace Hud1.Models
 
             Error = "";
             Running = true;
-            RightLabel = "Stop ▶";
+            RightLabel = "Stop >";
 
             ThreadPool.QueueUserWorkItem((_) =>
             {
@@ -99,7 +99,7 @@ namespace Hud1.Models
                     Error = ex.Message;
                 }
                 Running = false;
-                RightLabel = "Start ▶";
+                RightLabel = "Start >";
             });
         }
 

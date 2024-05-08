@@ -20,19 +20,15 @@
                             <SolidColorBrush Color="{DynamicResource ColorBright}"/>
                         </Setter.Value>
                     </Setter>
-                   
                     <Style.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Foreground" Value="{DynamicResource BrushSolidSuperBright}"/>
-                           
                         </Trigger>
                         <DataTrigger Binding="{Binding Path=Highlighted}" Value="True">
                             <Setter Property="Foreground" Value="{DynamicResource BrushSolidSuperBright}"/>
-                            
                         </DataTrigger>
                         <DataTrigger Binding="{Binding Path=Selected}" Value="True">
                             <Setter Property="Foreground" Value="{DynamicResource BrushInfo}"/>
-                            
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>

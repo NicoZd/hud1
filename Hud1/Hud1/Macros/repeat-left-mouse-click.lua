@@ -1,4 +1,4 @@
-Label = "Repeat left mouse click"
+Label = "Repeat Left Mouse Click"
 Description = "Press and release the left mouse button every 100ms. Left click to stop."
 
 function Run()

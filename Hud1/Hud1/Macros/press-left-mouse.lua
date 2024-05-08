@@ -1,4 +1,4 @@
-Label = "Press left mouse"
+Label = "Press Left Mouse"
 Description = "Press the left mouse button once. Left click to stop."
 
 function Setup()    

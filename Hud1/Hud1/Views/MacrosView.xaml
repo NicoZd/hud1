@@ -26,7 +26,8 @@
                                             DockPanel.Dock="Right"
                                             Label="{Binding Path=RightLabel}"
                                             Selected="{Binding Path=Selected}"/>
-                                        <views:PanelLabel VerticalAlignment="Center" HorizontalAlignment="Left" Content="{Binding Path=Label}" />
+                                        <views:PanelLabel
+                                            VerticalAlignment="Center" HorizontalAlignment="Left" Content="{Binding Path=Label}" />
                                     </DockPanel>
                                 </StackPanel>
                                 <views:IgnoreWidthControl>

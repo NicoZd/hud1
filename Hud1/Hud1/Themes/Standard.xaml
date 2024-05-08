@@ -6,6 +6,7 @@
     <SolidColorBrush x:Key="BrushSeparator" Color="{DynamicResource ColorMed}" />
 
     <SolidColorBrush x:Key="BrushSolidSuperBright" Color="{DynamicResource ColorSuperBright}" />
+    <SolidColorBrush x:Key="BrushSolidBright" Color="{DynamicResource ColorBright}" />
     <SolidColorBrush x:Key="BrushTitle" Color="{DynamicResource ColorSuperBright}" />
     <SolidColorBrush x:Key="BrushLabel" Color="{DynamicResource ColorSuperBright}" />
     <SolidColorBrush x:Key="BrushInfoSecondary" Color="{DynamicResource ColorInfoSecondary}" />
@@ -43,7 +44,7 @@
         <Setter Property="Foreground" Value="{DynamicResource BrushLabel}"/>
         <Setter Property="FontFamily" Value="{DynamicResource FontFamily}"/>
         <Setter Property="FontSize" Value="12"/>
-        <Setter Property="Padding" Value="15,5,15,5"/>
+        <Setter Property="Padding" Value="15,4,15,4"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
        
     </Style>
