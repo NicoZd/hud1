@@ -13,9 +13,17 @@
     <Grid HorizontalAlignment="Right"
           DataContext="{Binding Path=ViewModel, RelativeSource={RelativeSource AncestorType=local:Hud}}"
           >
+        
         <Grid.Effect>
-            <DropShadowEffect ShadowDepth="3" Color="#008800" Opacity="0.5" BlurRadius="20" Direction="0" />
+            <DropShadowEffect
+                Color="{DynamicResource ColorBackgroundDark}"                              
+                ShadowDepth="1"
+                Opacity="0.5"
+                BlurRadius="5"
+                Direction="180"
+                />
         </Grid.Effect>
+        
         <views:GlassPanel>
             <StackPanel Margin="15,1,15,15">
                 <Label Content="Draco HUD" Style="{DynamicResource TitleLabel}" />
