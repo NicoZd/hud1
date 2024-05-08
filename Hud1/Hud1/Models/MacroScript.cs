@@ -70,7 +70,7 @@ namespace Hud1.Models
 
             var delay = 50;
             System.Timers.Timer timer = new(TimeSpan.FromMilliseconds(delay));
-            timer.Elapsed += async (sender, e) => update();
+            timer.Elapsed += (sender, e) => update();
             timer.AutoReset = false;
 
             _script.Globals["Print"] = (string a) =>
