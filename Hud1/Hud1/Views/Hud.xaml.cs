@@ -26,7 +26,7 @@ namespace Hud1.Views
         {
             if (!keyEvent.alt)
             {
-                if ((DataContext as MainWindowViewModel)!.Active)
+                if (MainWindowViewModel.Instance!.Active)
                 {
                     ViewModel.OnKeyPressed(keyEvent);
                 }

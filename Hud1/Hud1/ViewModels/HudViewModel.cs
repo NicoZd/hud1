@@ -162,7 +162,7 @@ namespace Hud1.ViewModels
              .InternalTransition(NavigationTriggers.UP, MacrosViewModel.OnUp)
              .InternalTransition(NavigationTriggers.DOWN, MacrosViewModel.OnDown)
              .Permit(NavigationTriggers.RETURN_UP, NavigationStates.MENU_MACRO)
-            .Permit(NavigationTriggers.RETURN_DOWN, NavigationStates.MACROS_FOLDER);
+             .Permit(NavigationTriggers.RETURN_DOWN, NavigationStates.MACROS_FOLDER);
 
             NavigationStates.MACROS_FOLDER.RightAction = () =>
             {
