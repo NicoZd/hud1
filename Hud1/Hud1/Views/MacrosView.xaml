@@ -16,11 +16,16 @@
                 Background="Transparent">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate >
-                        <Button Style="{StaticResource PanelButton}" Margin="0,0,0,8">
+                        <Button 
+                            Style="{StaticResource PanelButton}" 
+                            Margin="0,0,0,8"
+                            Command="{Binding PanelClickCommand}"
+                            >
                             <StackPanel>
                                 <StackPanel>
                                     <DockPanel>
                                         <views:GlowBorderLabel
+                                            Click="{Binding StartStopClickCommand}"
                                             Width="90"
                                             Margin="0,4,4,4"
                                             DockPanel.Dock="Right"

@@ -1,7 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Hud1.Helpers;
+using Hud1.ViewModels;
 using MoonSharp.Interpreter;
 using System.Diagnostics;
+using System.Windows;
 
 namespace Hud1.Models
 {
@@ -32,16 +35,33 @@ namespace Hud1.Models
         private string _path = "";
 
         private MacroScript? _macroScript;
+        private readonly MacrosViewModel _macros;
 
-        public Macro(String path)
+        public Macro(String path, MacrosViewModel macros)
         {
             Path = path;
-
             Label = System.IO.Path.GetFileName(Path);
             Description = "";
             RightLabel = "Start >";
 
+            _macros = macros;
+
             FetchProgramMetaData();
+        }
+
+        [RelayCommand]
+        private void PanelClick()
+        {
+            Debug.Print("PanelClick");
+            _macros.SelectMacro(this);
+        }
+
+        [RelayCommand]
+        private void StartStopClick()
+        {
+            Debug.Print("StartStopClick");
+            _macros.SelectMacro(this);
+            OnRight();
         }
 
         private void FetchProgramMetaData()
@@ -68,6 +88,7 @@ namespace Hud1.Models
 
         internal void OnRight()
         {
+            Debug.Print("OnRight");
             if (Running && _macroScript != null)
             {
                 RightLabel = "Stopping";

@@ -59,7 +59,7 @@ namespace Hud1.ViewModels
             var temp = new ObservableCollection<Macro>();
             foreach (string fileEntry in fileEntries)
             {
-                temp.Add(new Macro(fileEntry));
+                temp.Add(new Macro(fileEntry, this));
             }
 
             Macros.Clear();
@@ -150,6 +150,15 @@ namespace Hud1.ViewModels
             Macros[SelectedIndex].OnRight();
         }
 
+        internal void SelectMacro(Macro macro)
+        {
+            HudViewModel.SelectNavigationState(NavigationStates.MACROS);
+            var index = Macros.IndexOf(macro);
+            if (index >= 0)
+            {
+                SelectedIndex = index;
+            }
+        }
     }
 
 }

@@ -1,4 +1,6 @@
-﻿using System.Runtime.InteropServices;
+﻿using System.Diagnostics;
+using System.Runtime.InteropServices;
+using System.Windows;
 
 namespace Hud1.Helpers
 {
@@ -18,17 +20,37 @@ namespace Hud1.Helpers
 
         public static void MouseDown(MouseButton button)
         {
+            Debug.Print("MouseDown1");
             IgnoreNextEvent = true;
             mouse_event(((int)button), 0, 0, 0, 0);
-            IgnoreNextEvent = false;
+
+            ThreadPool.QueueUserWorkItem((_) =>
+            {
+                Thread.Sleep(1);
+                Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    IgnoreNextEvent = false;
+                    Debug.Print("MouseDown2");
+                }));
+            });
         }
 
         public static void MouseUp(MouseButton button)
         {
+            Debug.Print("MouseUp1");
             IgnoreNextEvent = true;
             mouse_event(((int)button) * 2, 0, 0, 0, 0);
-            IgnoreNextEvent = false;
-        }
 
+            ThreadPool.QueueUserWorkItem((_) =>
+            {
+                Thread.Sleep(1);
+                Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    IgnoreNextEvent = false;
+                    Debug.Print("MouseUp2");
+                }));
+
+            });
+        }
     }
 }

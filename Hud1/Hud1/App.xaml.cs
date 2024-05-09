@@ -1,15 +1,26 @@
-﻿using System.Windows;
+﻿using Hud1.Helpers;
+using System.Diagnostics;
+using System.Windows;
+using System.Windows.Input;
 
 namespace Hud1
 {
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
     public partial class App : Application
     {
         public App()
         {
             InitializeComponent();
+
+            EventManager.RegisterClassHandler(typeof(Window), Window.PreviewMouseDownEvent, new MouseButtonEventHandler(OnPreviewMouseDown));
+            EventManager.RegisterClassHandler(typeof(Window), Window.PreviewMouseUpEvent, new MouseButtonEventHandler(OnPreviewMouseDown));
+        }
+
+        static void OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (MouseService.IgnoreNextEvent)
+            {
+                e.Handled = true;
+            }
         }
 
         public static void SelectStyle(String name)
