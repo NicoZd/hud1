@@ -27,19 +27,18 @@
                             Focusable="False"
                             >
                             <StackPanel>
-                                <StackPanel>
-                                    <DockPanel>
-                                        <views:GlowBorderLabel
-                                            Click="{Binding StartStopClickCommand}"
-                                            Width="90"
-                                            Margin="0,4,4,4"
-                                            DockPanel.Dock="Right"
-                                            Label="{Binding Path=RightLabel}"
-                                            Selected="{Binding Path=Selected}"/>
-                                        <views:PanelLabel
-                                            VerticalAlignment="Center" HorizontalAlignment="Left" Content="{Binding Path=Label}" />
-                                    </DockPanel>
-                                </StackPanel>
+                                <DockPanel Margin="0,4,4,4">
+                                    <views:GlowBorderLabel
+                                        Click="{Binding StartStopClickCommand}"
+                                        Width="90"
+                                        DockPanel.Dock="Right"
+                                        Label="{Binding Path=RightLabel}"
+                                        Selected="{Binding Path=Selected}"/>
+                                    <views:PanelLabel
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Left" 
+                                        Content="{Binding Path=Label}" />
+                                </DockPanel>
                                 <views:IgnoreWidthControl>
                                     <Grid Background="{DynamicResource BrushColorMedLow}"
                                         Margin="4,0,4,4" >
