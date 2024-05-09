@@ -29,6 +29,13 @@ if (Directory.Exists(binDir))
     Directory.Delete(binDir, true);
 }
 Run(publish);
+
+var bak = binDir + "/Publish/hostfxr.dll.bak";
+if (File.Exists(bak))
+{
+    Console.WriteLine("Delete Folder");
+    File.Delete(bak);
+}
 Run(inno);
 
 Process.Start("explorer.exe", "C:\\Workspaces\\nico_2024\\hud1\\Hud1\\Hud1\\bin\\Installer");
