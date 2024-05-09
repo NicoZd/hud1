@@ -7,19 +7,24 @@
              xmlns:local="clr-namespace:Hud1.Views"
              mc:Ignorable="d"
              >
-    <Grid DataContext="{Binding Path=MacrosViewModel, RelativeSource={RelativeSource AncestorType=local:MacrosView}}">
+    <Grid 
+        DataContext="{Binding Path=MacrosViewModel, RelativeSource={RelativeSource AncestorType=local:MacrosView}}"
+        >
         <StackPanel views:Spacing.Vertical="8">
             <Label Content="Macros" Style="{DynamicResource TitleContent}"/>
             <ItemsControl ItemsSource="{Binding Macros}"
                 Margin="0,0,0,0"
                 BorderBrush="Transparent" BorderThickness="0"
-                Background="Transparent">
+                Background="Transparent"
+                Focusable="False"
+                >
                 <ItemsControl.ItemTemplate>
                     <DataTemplate >
                         <Button 
                             Style="{StaticResource PanelButton}" 
                             Margin="0,0,0,8"
                             Command="{Binding PanelClickCommand}"
+                            Focusable="False"
                             >
                             <StackPanel>
                                 <StackPanel>

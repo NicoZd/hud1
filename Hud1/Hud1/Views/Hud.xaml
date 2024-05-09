@@ -85,9 +85,11 @@
                 <Grid
                     VerticalAlignment="Center"
                     Background="{DynamicResource BrushColorMedLow}"
+                    Focusable="False"
                     >
-                    <views:IgnoreWidthControl Margin="0">
-                        <TextBlock      
+                    <views:IgnoreWidthControl Margin="0"  Focusable="False">
+                        <TextBlock   
+                            Focusable="false"
                             Margin="5,4,5,0"
                             Padding="0"
                             VerticalAlignment="Top"
