@@ -9,6 +9,7 @@
              d:DesignHeight="50" d:DesignWidth="300">
     <Button Style="{DynamicResource PanelButton}"
         DataContext="{Binding Path=NavigationState, RelativeSource={RelativeSource AncestorType=local:SelectionControl}}"
+        Command="{Binding Path=ClickCommand}"
         >
         <StackPanel>
             <views:PanelLabel/>

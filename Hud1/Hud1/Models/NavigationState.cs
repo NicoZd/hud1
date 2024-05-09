@@ -64,6 +64,12 @@ namespace Hud1.Models
             ExecuteRight();
         }
 
+        [RelayCommand]
+        private void Click()
+        {
+            HudViewModel.SelectNavigationState(this);
+        }
+
         public async void ExecuteLeft()
         {
             SelectLeft = true;

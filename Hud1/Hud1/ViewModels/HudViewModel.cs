@@ -174,7 +174,6 @@ namespace Hud1.ViewModels
 
 
             // MORE
-
             NavigationStates.ACTIVATE.RightAction = Activate;
             Navigation.Configure(NavigationStates.ACTIVATE)
                 .SubstateOf(NavigationStates.MORE_VISIBLE)
@@ -212,14 +211,13 @@ namespace Hud1.ViewModels
         [RelayCommand]
         private void Select(NavigationState navigationState)
         {
-            Debug.Print("Some {0}", navigationState);
+            // Debug.Print("Select {0}", navigationState);
             SelectNavigationState(navigationState);
         }
 
         private void Activate()
         {
             Debug.Print("Activate");
-
             MainWindowViewModel.Instance?.Activate();
         }
 

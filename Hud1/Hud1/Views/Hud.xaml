@@ -40,7 +40,7 @@
                     >
 
                     <views:GlowBorderLabel 
-                        Label="DISPLAY" 
+                        Label="Display" 
                         Selected="{Binding Path=States[MENU_DISPLAY].Selected}"
                         Highlighted="{Binding Path=States[DISPLAY_VISIBLE].Selected}"
                         Click="{Binding SelectCommand}"
@@ -48,7 +48,7 @@
                         />
 
                     <views:GlowBorderLabel 
-                        Label="AUDIO" 
+                        Label="Audio" 
                         Selected="{Binding Path=States[MENU_AUDIO].Selected}"
                         Highlighted="{Binding Path=States[AUDIO_VISIBLE].Selected}"
                         Click="{Binding SelectCommand}"
@@ -56,7 +56,7 @@
                         />
 
                     <views:GlowBorderLabel 
-                        Label="MACRO" 
+                        Label="Macro" 
                         Selected="{Binding Path=States[MENU_MACRO].Selected}"
                         Highlighted="{Binding Path=States[MACRO_VISIBLE].Selected}"
                         Click="{Binding SelectCommand}"
@@ -64,7 +64,7 @@
                         />
 
                     <views:GlowBorderLabel 
-                        Label="CROSSHAIR" 
+                        Label="Crosshair" 
                         Selected="{Binding Path=States[MENU_CROSSHAIR].Selected}"
                         Highlighted="{Binding Path=States[CROSSHAIR_VISIBLE].Selected}"
                         Click="{Binding SelectCommand}"
@@ -72,7 +72,7 @@
                         />
 
                     <views:GlowBorderLabel
-                        Label="MORE" 
+                        Label="More" 
                         Selected="{Binding Path=States[MENU_MORE].Selected}"
                         Highlighted="{Binding Path=States[MORE_VISIBLE].Selected}"
                         Click="{Binding SelectCommand}"

@@ -13,8 +13,9 @@
     <Button
         Style="{DynamicResource PanelButton}"
         DataContext="{Binding Path=NavigationState, RelativeSource={RelativeSource AncestorType=local:ButtonPanel}}"
+        Command="{Binding Path=ClickCommand}"
         >
-
+        
         <DockPanel Margin="0,4,4,4">
             <views:GlowBorderLabel     
                 DockPanel.Dock="Right"
