@@ -13,12 +13,6 @@
     <SolidColorBrush x:Key="BrushInfo" Color="{DynamicResource ColorInfo}" />
     <SolidColorBrush x:Key="BrushColorMedLow" Color="{DynamicResource ColorMedLow}" />
     <SolidColorBrush x:Key="BrushColorMed" Color="{DynamicResource ColorMed}" />
-    <!--
-    <FontFamily x:Key="FontFamily">Cascadia Code</FontFamily>
-    <FontFamily x:Key="FontFamily">DejaVu Sans Mono</FontFamily>
-    <FontFamily x:Key="FontFamily">Fira Code</FontFamily>
-    -->
-    <FontFamily x:Key="FontFamily">Fira Code</FontFamily>
 
     <!-- Title -->
     <Style TargetType="{x:Type Label}" x:Key="TitleLabel">
@@ -46,7 +40,7 @@
         <Setter Property="FontSize" Value="12"/>
         <Setter Property="Padding" Value="15,4,15,4"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
-       
+
     </Style>
 
     <!-- Info -->

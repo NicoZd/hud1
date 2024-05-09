@@ -38,6 +38,9 @@
     <Page Update="CrosshairWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Themes\Font.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Themes\Red.xaml">
       <SubType>Designer</SubType>
     </Page>

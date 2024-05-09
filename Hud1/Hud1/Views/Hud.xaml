@@ -157,6 +157,7 @@
                         <Label Content="Style" Style="{DynamicResource TitleContent}"/>
 
                         <views:SelectionControl NavigationState="{Binding Path=States[STYLE]}" />
+                        <views:SelectionControl NavigationState="{Binding Path=States[FONT]}" />
 
                         <Label Content="Help" Style="{DynamicResource TitleContent}"/>
 

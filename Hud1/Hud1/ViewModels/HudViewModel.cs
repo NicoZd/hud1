@@ -5,7 +5,11 @@ using Hud1.Models;
 using Stateless.Graph;
 using Stateless.Reflection;
 using System.Diagnostics;
+using System.Drawing.Text;
+using System.IO;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
 namespace Hud1.ViewModels
 {
     public partial class HudViewModel : ObservableObject
@@ -78,7 +82,7 @@ namespace Hud1.ViewModels
                 .Permit(NavigationTriggers.LEFT, NavigationStates.MENU_CROSSHAIR)
                 .Permit(NavigationTriggers.RIGHT, NavigationStates.MENU_DISPLAY)
                 .Permit(NavigationTriggers.DOWN, NavigationStates.ACTIVATE)
-                .Permit(NavigationTriggers.UP, NavigationStates.STYLE);
+                .Permit(NavigationTriggers.UP, NavigationStates.FONT);
 
             // DISPLAY
             NavigationStates.GAMMA.LeftAction = gammaViewModel.SelectPrevGama;
@@ -193,9 +197,18 @@ namespace Hud1.ViewModels
             Navigation.Configure(NavigationStates.STYLE)
                .SubstateOf(NavigationStates.MORE_VISIBLE)
                .Permit(NavigationTriggers.UP, NavigationStates.EXIT)
-               .Permit(NavigationTriggers.DOWN, NavigationStates.MENU_MORE)
+               .Permit(NavigationTriggers.DOWN, NavigationStates.FONT)
                .InternalTransition(NavigationTriggers.LEFT, NavigationStates.STYLE.ExecuteLeft)
                .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.STYLE.ExecuteRight);
+
+            NavigationStates.FONT.LeftAction = PrevFont;
+            NavigationStates.FONT.RightAction = NextFont;
+            Navigation.Configure(NavigationStates.FONT)
+               .SubstateOf(NavigationStates.MORE_VISIBLE)
+               .Permit(NavigationTriggers.UP, NavigationStates.STYLE)
+               .Permit(NavigationTriggers.DOWN, NavigationStates.MENU_MORE)
+               .InternalTransition(NavigationTriggers.LEFT, NavigationStates.FONT.ExecuteLeft)
+               .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.FONT.ExecuteRight);
 
             string graph = UmlDotGraph.Format(Navigation.GetInfo());
             //Debug.Print(graph);
@@ -273,7 +286,8 @@ namespace Hud1.ViewModels
             var currentStyleIndex = Array.IndexOf(Styles, NavigationStates.STYLE.SelectionLabel);
             var nextStyleIndex = (currentStyleIndex + 1) % Styles.Length;
             NavigationStates.STYLE.SelectionLabel = Styles[nextStyleIndex];
-            App.SelectStyle(NavigationStates.STYLE.SelectionLabel);
+            App.SelectStyle(NavigationStates.STYLE.SelectionLabel, NavigationStates.FONT.SelectionLabel);
+
         }
         void PrevStyle()
         {
@@ -281,7 +295,50 @@ namespace Hud1.ViewModels
             var currentStyleIndex = Array.IndexOf(Styles, NavigationStates.STYLE.SelectionLabel);
             var prevStyleIndex = (currentStyleIndex - 1 + Styles.Length) % Styles.Length;
             NavigationStates.STYLE.SelectionLabel = Styles[prevStyleIndex];
-            App.SelectStyle(NavigationStates.STYLE.SelectionLabel);
+            App.SelectStyle(NavigationStates.STYLE.SelectionLabel, NavigationStates.FONT.SelectionLabel);
+        }
+
+        string[] fontList()
+        {
+            var exeFolder = Path.GetDirectoryName(Process.GetCurrentProcess()!.MainModule!.FileName);
+            var fontsFolder = Path.Combine(exeFolder!, "Fonts");
+
+            string[] fileEntries = Directory.GetFiles(fontsFolder, "*.ttf");
+
+            Debug.Print("files {0}", fileEntries.Length);
+
+            List<string> fonts = [];
+            for (int i = 0; i < fileEntries.Length; i++)
+            {
+                PrivateFontCollection fontCol = new PrivateFontCollection();
+                fontCol.AddFontFile(fileEntries[i]);
+
+                Debug.Print("fontCol.Families[0].Name {0}", fontCol.Families[0].Name);
+                fonts.Add(fontCol.Families[0].Name);
+                fontCol.Dispose();
+            }
+
+            return fonts.ToArray();
+
+        }
+        void NextFont()
+        {
+            Debug.Print("NextFont");
+            var Fonts = fontList();
+            var currentStyleIndex = Array.IndexOf(Fonts, NavigationStates.FONT.SelectionLabel);
+            var nextStyleIndex = (currentStyleIndex + 1) % Fonts.Length;
+            NavigationStates.FONT.SelectionLabel = Fonts[nextStyleIndex];
+            App.SelectStyle(NavigationStates.STYLE.SelectionLabel, NavigationStates.FONT.SelectionLabel);
+
+        }
+        void PrevFont()
+        {
+            Debug.Print("PrevFont");
+            var Fonts = fontList();
+            var currentStyleIndex = Array.IndexOf(Fonts, NavigationStates.FONT.SelectionLabel);
+            var prevStyleIndex = (currentStyleIndex - 1 + Fonts.Length) % Fonts.Length;
+            NavigationStates.FONT.SelectionLabel = Fonts[prevStyleIndex];
+            App.SelectStyle(NavigationStates.STYLE.SelectionLabel, NavigationStates.FONT.SelectionLabel);
         }
 
         void UpdateModelFromStateless()
