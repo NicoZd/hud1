@@ -17,13 +17,10 @@
     SnapsToDevicePixels="True"
     Focusable="False"
     >
-
     <Window.Background>
         <SolidColorBrush Color="Transparent"/>
     </Window.Background>
 
-    <Grid>
-        <views:Hud Visibility="{Binding Path=HudVisibility}"/>
-    </Grid>
-
+    <views:Hud Visibility="{Binding Path=HudVisibility}"/>
+    
 </Window>

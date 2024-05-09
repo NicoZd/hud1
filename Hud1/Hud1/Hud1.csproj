@@ -1,77 +1,77 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net8.0-windows</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <UseWPF>true</UseWPF>
-    <StartupObject>Hud1.Helpers.CustomSplashScreen.Entry</StartupObject>
-    <ApplicationManifest>app.manifest</ApplicationManifest>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <Title>Draco HUD</Title>
-    <PackageIcon></PackageIcon>
-    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
-  </PropertyGroup>
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net8.0-windows</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<UseWPF>true</UseWPF>
+		<StartupObject>Hud1.Helpers.CustomSplashScreen.Entry</StartupObject>
+		<ApplicationManifest>app.manifest</ApplicationManifest>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<Title>Draco HUD</Title>
+		<PackageIcon></PackageIcon>
+		<SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="Images\**" />
-    <EmbeddedResource Remove="Images\**" />
-    <None Remove="Images\**" />
-    <Page Remove="Images\**" />
-  </ItemGroup>
+	<ItemGroup>
+		<Compile Remove="Images\**" />
+		<EmbeddedResource Remove="Images\**" />
+		<None Remove="Images\**" />
+		<Page Remove="Images\**" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <None Remove="Abstract-colorful-fluid-background-on-transparent-PNG.png" />
-    <None Remove="Assets\blue-noise.png" />
-    <None Remove="Assets\dragon.png" />
-    <None Remove="Assets\fluid-background-transparent.png" />
-    <None Remove="Fonts\Aurulent-Regular.ttf" />
-    <None Remove="Fonts\FiraCode-R.ttf" />
-    <None Remove="Fonts\JetBrainsMono-Regular.ttf" />
-    <None Remove="Fonts\SourceCodePro-Regular.ttf" />
-    <None Remove="Macros\press-left-mouse.lua" />
-    <None Remove="Macros\repeat-left-mouse-click.lua" />
-    <None Remove="Macros\test.lua" />
-  </ItemGroup>
+	<ItemGroup>
+		<None Remove="Abstract-colorful-fluid-background-on-transparent-PNG.png" />
+		<None Remove="Assets\blue-noise.png" />
+		<None Remove="Assets\dragon.png" />
+		<None Remove="Assets\fluid-background-transparent.png" />
+		<None Remove="Fonts\Aurulent-Regular.ttf" />
+		<None Remove="Fonts\FiraCode-R.ttf" />
+		<None Remove="Fonts\JetBrainsMono-Regular.ttf" />
+		<None Remove="Fonts\SourceCodePro-Regular.ttf" />
+		<None Remove="Macros\press-left-mouse.lua" />
+		<None Remove="Macros\repeat-left-mouse-click.lua" />
+		<None Remove="Macros\test.lua" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
-    <PackageReference Include="CoreAudio" Version="1.37.0" />
-    <PackageReference Include="MoonSharp" Version="2.0.0" />
-    <PackageReference Include="Stateless" Version="5.15.0" />
-    <PackageReference Include="System.Drawing.Common" Version="8.0.4" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+		<PackageReference Include="CoreAudio" Version="1.37.0" />
+		<PackageReference Include="MoonSharp" Version="2.0.0" />
+		<PackageReference Include="Stateless" Version="5.15.0" />
+		<PackageReference Include="System.Drawing.Common" Version="8.0.4" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Resource Include="Assets\dragon.png" />
-    <Resource Include="Assets\blue-noise.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\fluid-background-transparent.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Content Include="Fonts\Aurulent-Regular.ttf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Fonts\FiraCode-R.ttf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Fonts\JetBrainsMono-Regular.ttf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Fonts\SourceCodePro-Regular.ttf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Macros\test.lua">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Macros\press-left-mouse.lua">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Macros\repeat-left-mouse-click.lua">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
+	<ItemGroup>
+		<Resource Include="Assets\dragon.png" />
+		<Resource Include="Assets\blue-noise.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Assets\fluid-background-transparent.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Content Include="Fonts\Aurulent-Regular.ttf">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Fonts\FiraCode-R.ttf">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Fonts\JetBrainsMono-Regular.ttf">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Fonts\SourceCodePro-Regular.ttf">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Macros\test.lua">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Macros\press-left-mouse.lua">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Macros\repeat-left-mouse-click.lua">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
 
 </Project>

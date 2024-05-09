@@ -13,7 +13,6 @@
     <Grid HorizontalAlignment="Right"
           DataContext="{Binding Path=ViewModel, RelativeSource={RelativeSource AncestorType=local:Hud}}"
           >
-
         <Grid.Effect>
             <DropShadowEffect
                 Color="{DynamicResource ColorBackgroundDark}"                              
