@@ -24,6 +24,7 @@
 		<BeautyUsePatch>True</BeautyUsePatch>
 		<BeautyLogLevel>Info</BeautyLogLevel>
 		<BeautyGitCDN>https://gitee.com/liesauer/HostFXRPatcher</BeautyGitCDN>
+		<UseWindowsForms>False</UseWindowsForms>
 	</PropertyGroup>
 
 	<ItemGroup>

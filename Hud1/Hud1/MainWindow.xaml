@@ -16,11 +16,12 @@
     Unloaded="OnWindowUnloaded"
     SnapsToDevicePixels="True"
     Focusable="False"
+    ResizeMode="NoResize"
     >
     <Window.Background>
         <SolidColorBrush Color="Transparent"/>
     </Window.Background>
 
     <views:Hud Visibility="{Binding Path=HudVisibility}"/>
-    
+
 </Window>

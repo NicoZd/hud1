@@ -3,9 +3,11 @@ using Hud1.Helpers;
 using Hud1.Helpers.CustomSplashScreen;
 using Hud1.ViewModels;
 using System.Diagnostics;
+using System.Threading;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media.Animation;
+using WpfScreenHelper;
 
 namespace Hud1
 {
@@ -72,6 +74,8 @@ namespace Hud1
             this.Height = height;
             this.Left = 0;
             this.Top = 0;
+
+            this.SetWindowPosition(WpfScreenHelper.Enum.WindowPositions.Maximize, Screen.AllScreens.ElementAt(1));
 
             GlobalMouseHook.SystemHook();
 
