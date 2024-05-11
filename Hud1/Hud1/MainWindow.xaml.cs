@@ -65,16 +65,6 @@ namespace Hud1
                 | WindowsAPI.WS_EX_NOACTIVATE
                 );
 
-            int width = (int)SystemParameters.PrimaryScreenWidth;
-            int height = (int)SystemParameters.PrimaryScreenHeight;
-
-            Debug.WriteLine("Window_Loaded {0} {1}", width, height);
-
-            this.Width = width;
-            this.Height = height;
-            this.Left = 0;
-            this.Top = 0;
-
             this.SetWindowPosition(WpfScreenHelper.Enum.WindowPositions.Maximize, Screen.AllScreens.ElementAt(1));
 
             GlobalMouseHook.SystemHook();
