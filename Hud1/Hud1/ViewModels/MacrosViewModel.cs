@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Hud1.Helpers.CustomSplashScreen;
 using Hud1.Models;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -27,8 +28,7 @@ namespace Hud1.ViewModels
         {
             Macros = new ObservableCollection<Macro>();
 
-            var exeFolder = Path.GetDirectoryName(Process.GetCurrentProcess()!.MainModule!.FileName);
-            _path = Path.Combine(exeFolder!, "Macros");
+            _path = Path.Combine(Entry.VersionPath, "Macros");
 
             _watcher = new FileSystemWatcher(_path);
             _watcher.NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.CreationTime | NotifyFilters.FileName;

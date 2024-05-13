@@ -1,4 +1,5 @@
 ﻿using Hud1.Helpers;
+using Hud1.Helpers.CustomSplashScreen;
 using Hud1.Models;
 using Hud1.ViewModels;
 using System.Diagnostics;
@@ -34,36 +35,33 @@ namespace Hud1
         {
             NavigationStates.FONT.SelectionLabel = font;
 
-            var exeFolder = Path.GetDirectoryName(Process.GetCurrentProcess()!.MainModule!.FileName);
+            var fontFile = "";
 
-            var fontsFolder = Path.Combine(exeFolder!, "Fonts");
-            var fontFolder = "";
-
+            var fontsFolder = Path.Combine(Entry.VersionPath, "Fonts");
             string[] fileEntries = Directory.GetFiles(fontsFolder, "*.ttf");
-
-            Console.WriteLine("files {0}", fileEntries.Length);
-
-            List<string> fonts = [];
             for (int i = 0; i < fileEntries.Length; i++)
             {
-                PrivateFontCollection fontCol = new PrivateFontCollection();
-                fontCol.AddFontFile(fileEntries[i]);
-
-                Console.WriteLine("fontCol.Families[0].Name {0}", fontCol.Families[0].Name);
-
-                if (fontCol.Families[0].Name.Equals(font))
+                var ff = Fonts.GetFontFamilies(fileEntries[i]);
+                if (ff.Count > 0)
                 {
-                    fontFolder = Path.Combine(exeFolder!, fileEntries[i]);
+                    var y = ff.First();
+                    var k = y.Source.Split("#");
+                    var v = k[k.Length - 1];
+                    Console.WriteLine("fontCol.Families[0].Name {0}", v);
+                    if (v.Equals(font))
+                    {
+                        fontFile = fileEntries[i];
+                        break;
+                    }
                 }
-                fontCol.Dispose();
             }
 
-            Console.WriteLine("Found {0}", fontFolder);
-            var ff = new FontFamily(new Uri(fontFolder, UriKind.Absolute), "./#" + font);
+            Console.WriteLine("Found {0}", fontFile);
+            var ff2 = new FontFamily(new Uri(fontFile, UriKind.Absolute), "./#" + font);
 
 
             var x = new ResourceDictionary();
-            x.Add("FontFamily", ff);
+            x.Add("FontFamily", ff2);
 
             Application.Current.Resources.MergedDictionaries.Clear();
             Application.Current.Resources.MergedDictionaries.Add(x);

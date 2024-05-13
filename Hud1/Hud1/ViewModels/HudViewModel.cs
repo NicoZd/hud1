@@ -169,7 +169,6 @@ namespace Hud1.ViewModels
             {
                 Console.WriteLine("OPEN {0}", macrosViewModel._path);
                 Process.Start("explorer.exe", macrosViewModel._path);
-                Process.Start("explorer.exe", Entry.VersionPath);
             };
 
             Navigation.Configure(NavigationStates.MACROS_FOLDER)
@@ -302,31 +301,29 @@ namespace Hud1.ViewModels
 
         string[] fontList()
         {
-            var exeFolder = Path.GetDirectoryName(Process.GetCurrentProcess()!.MainModule!.FileName);
-            var fontsFolder = Path.Combine(exeFolder!, "Fonts");
-
+            var fontsFolder = Path.Combine(Entry.VersionPath, "Fonts");
             string[] fileEntries = Directory.GetFiles(fontsFolder, "*.ttf");
-
-            Console.WriteLine("files {0}", fileEntries.Length);
-
             List<string> fonts = [];
             for (int i = 0; i < fileEntries.Length; i++)
             {
-                PrivateFontCollection fontCol = new PrivateFontCollection();
-                fontCol.AddFontFile(fileEntries[i]);
-
-                Console.WriteLine("fontCol.Families[0].Name {0}", fontCol.Families[0].Name);
-                fonts.Add(fontCol.Families[0].Name);
-                fontCol.Dispose();
+                var ff = Fonts.GetFontFamilies(fileEntries[i]);
+                if (ff.Count > 0)
+                {
+                    var y = ff.First();
+                    var k = y.Source.Split("#");
+                    var v = k[k.Length - 1];
+                    Console.WriteLine("fontCol.Families[0].Name {0}", v);
+                    fonts.Add(v);
+                }
             }
-
             return fonts.ToArray();
-
         }
+
         void NextFont()
         {
             Console.WriteLine("NextFont");
             var Fonts = fontList();
+            if (Fonts.Length == 0) return;
             var currentStyleIndex = Array.IndexOf(Fonts, NavigationStates.FONT.SelectionLabel);
             var nextStyleIndex = (currentStyleIndex + 1) % Fonts.Length;
             NavigationStates.FONT.SelectionLabel = Fonts[nextStyleIndex];
@@ -337,6 +334,7 @@ namespace Hud1.ViewModels
         {
             Console.WriteLine("PrevFont");
             var Fonts = fontList();
+            if (Fonts.Length == 0) return;
             var currentStyleIndex = Array.IndexOf(Fonts, NavigationStates.FONT.SelectionLabel);
             var prevStyleIndex = (currentStyleIndex - 1 + Fonts.Length) % Fonts.Length;
             NavigationStates.FONT.SelectionLabel = Fonts[prevStyleIndex];
