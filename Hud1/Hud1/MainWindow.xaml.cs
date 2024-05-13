@@ -77,6 +77,8 @@ namespace Hud1
             GlobalKeyboardHook.SystemHook();
 
             FadeIn();
+
+            Entry.CheckLicense();
         }
         private void OnWindowUnloaded(object sender, RoutedEventArgs e)
         {

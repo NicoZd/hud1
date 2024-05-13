@@ -2,10 +2,12 @@
 using System.IO;
 using System.IO.Pipes;
 using System.Text;
+using System.Windows.Controls;
 using System.Windows.Threading;
 using Windows.ApplicationModel;
 using Windows.Foundation.Metadata;
 using Windows.Security.ExchangeActiveSyncProvisioning;
+using Windows.Services.Store;
 using Windows.Storage;
 
 namespace Hud1.Helpers.CustomSplashScreen
@@ -157,6 +159,18 @@ namespace Hud1.Helpers.CustomSplashScreen
 
             app.Run();
         }
+
+        public async static void CheckLicense()
+        {
+            Console.WriteLine("Check License...");
+            var context = StoreContext.GetDefault();
+            var appLicense = await context.GetAppLicenseAsync();
+
+            Console.WriteLine("Check License... IsActive {0}", appLicense.IsActive);
+            Console.WriteLine("Check License... IsTrial {0}", appLicense.IsTrial);
+            Console.WriteLine("Check License... ExpirationDate {0}", appLicense.ExpirationDate);
+        }
+
         private static void PumpDispatcherUntilPriority(DispatcherPriority dispatcherPriority)
         {
             var dispatcherFrame = new DispatcherFrame();

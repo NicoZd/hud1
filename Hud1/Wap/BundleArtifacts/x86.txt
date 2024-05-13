@@ -1,2 +1,2 @@
-MainPackage=C:\Workspaces\nico_2024\hud1\Hud1\Wap\bin\x86\Release\Wap_1.1.26.0_x86.msix
-SymbolPackage=C:\Workspaces\nico_2024\hud1\Hud1\Wap\obj\x86\Release\Symbols\Wap_1.1.26.0_x86.appxsym
+MainPackage=C:\Workspaces\nico_2024\hud1\Hud1\Wap\bin\x86\Release\Wap_1.1.28.0_x86.msix
+SymbolPackage=C:\Workspaces\nico_2024\hud1\Hud1\Wap\obj\x86\Release\Symbols\Wap_1.1.28.0_x86.appxsym

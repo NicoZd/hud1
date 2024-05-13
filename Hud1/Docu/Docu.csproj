@@ -34,6 +34,7 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Store.md" />
     <None Include="Persist.md" />
   </ItemGroup>
   <ItemGroup>
