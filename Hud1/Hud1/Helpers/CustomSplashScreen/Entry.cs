@@ -105,7 +105,7 @@ namespace Hud1.Helpers.CustomSplashScreen
             {
                 if (!Directory.Exists(VersionPath))
                 {
-                    Console.WriteLine("==============Creating Version", RootPath);
+                    Console.WriteLine("=== Creating New Version");
                     Directory.CreateDirectory(VersionPath);
 
                     Directory.CreateDirectory(Path.Combine(VersionPath, "Macros"));
@@ -115,7 +115,10 @@ namespace Hud1.Helpers.CustomSplashScreen
                         Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Macros"),
                         Path.Combine(VersionPath, "Macros")
                         );
-                    // copy all stuff
+                    CopyFilesRecursively(
+                        Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Fonts"),
+                        Path.Combine(VersionPath, "Fonts")
+                        );
                 }
             }
             catch (Exception e)
