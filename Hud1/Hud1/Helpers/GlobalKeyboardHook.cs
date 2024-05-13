@@ -47,7 +47,7 @@ namespace Hud1.Helpers
         {
 
 
-            // Debug.Print("nCode {0} {1} {2}", code, wParam, lParam);
+            // Console.WriteLine("nCode {0} {1} {2}", code, wParam, lParam);
 
             if (code >= 0)
             {
@@ -60,7 +60,7 @@ namespace Hud1.Helpers
                             keyEvent.repeated = keyEvent.key.Equals(_lastPressedKey);
                             _lastPressedKey = keyEvent.key;
                             KeyDown?.Invoke(keyEvent);
-                            // Debug.Print("WM_KEYDOWN vkCode:{0} blocked:{1}", vkCode, blocked);
+                            // Console.WriteLine("WM_KEYDOWN vkCode:{0} blocked:{1}", vkCode, blocked);
                             if (keyEvent.block)
                             {
                                 return 1;
@@ -70,14 +70,14 @@ namespace Hud1.Helpers
                     case WindowsAPI.WM_KEYUP:
                         {
                             int vkCode = Marshal.ReadInt32(lParam);
-                            // Debug.Print("WM_KEYUP vkCode:{0}", vkCode);
+                            // Console.WriteLine("WM_KEYUP vkCode:{0}", vkCode);
                             _lastPressedKey = null;
                             break;
                         }
                     case WindowsAPI.WM_SYSKEYDOWN:
                         {
                             int vkCode = Marshal.ReadInt32(lParam);
-                            // Debug.Print("WM_SYSKEYDOWN vkCode:{0}", vkCode);
+                            // Console.WriteLine("WM_SYSKEYDOWN vkCode:{0}", vkCode);
                             if (vkCode == (int)GlobalKey.VK_LMENU)
                             {
                                 IsDown[GlobalKey.VK_LMENU] = true;
@@ -85,7 +85,7 @@ namespace Hud1.Helpers
                             var keyEvent = new KeyEvent((GlobalKey)vkCode);
                             keyEvent.alt = IsDown.ContainsKey(GlobalKey.VK_LMENU) && IsDown[GlobalKey.VK_LMENU];
                             KeyDown?.Invoke(keyEvent);
-                            // Debug.Print("WM_KEYDOWN vkCode:{0} blocked:{1}", vkCode, blocked);
+                            // Console.WriteLine("WM_KEYDOWN vkCode:{0} blocked:{1}", vkCode, blocked);
                             if (keyEvent.block)
                             {
                                 return 1;
@@ -95,7 +95,7 @@ namespace Hud1.Helpers
                     case WindowsAPI.WM_SYSKEYUP:
                         {
                             int vkCode = Marshal.ReadInt32(lParam);
-                            // Debug.Print("WM_SYSKEYUP vkCode:{0}", vkCode);
+                            // Console.WriteLine("WM_SYSKEYUP vkCode:{0}", vkCode);
                             if (vkCode == (int)GlobalKey.VK_LMENU)
                             {
                                 IsDown[GlobalKey.VK_LMENU] = false;
@@ -104,7 +104,7 @@ namespace Hud1.Helpers
                         }
                     default:
                         {
-                            Debug.Print("UNKNOWN wParam:{0}", wParam);
+                            Console.WriteLine("UNKNOWN wParam:{0}", wParam);
                             break;
                         }
                 }

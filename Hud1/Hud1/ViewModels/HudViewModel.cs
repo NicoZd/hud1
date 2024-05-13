@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Hud1.Helpers;
+using Hud1.Helpers.CustomSplashScreen;
 using Hud1.Models;
 using Stateless.Graph;
 using Stateless.Reflection;
@@ -166,8 +167,9 @@ namespace Hud1.ViewModels
 
             NavigationStates.MACROS_FOLDER.RightAction = () =>
             {
-                Debug.Print("OPEN {0}", macrosViewModel._path);
+                Console.WriteLine("OPEN {0}", macrosViewModel._path);
                 Process.Start("explorer.exe", macrosViewModel._path);
+                Process.Start("explorer.exe", Entry.VersionPath);
             };
 
             Navigation.Configure(NavigationStates.MACROS_FOLDER)
@@ -211,11 +213,11 @@ namespace Hud1.ViewModels
                .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.FONT.ExecuteRight);
 
             string graph = UmlDotGraph.Format(Navigation.GetInfo());
-            //Debug.Print(graph);
+            //Console.WriteLine(graph);
 
             Navigation.OnUnhandledTrigger((state, trigger) =>
             {
-                Debug.Print("OnUnhandledTrigger {0} {1}", state, trigger);
+                Console.WriteLine("OnUnhandledTrigger {0} {1}", state, trigger);
             });
             Navigation.OnTransitionCompleted(a => UpdateModelFromStateless());
             UpdateModelFromStateless();
@@ -224,13 +226,13 @@ namespace Hud1.ViewModels
         [RelayCommand]
         private void Select(NavigationState navigationState)
         {
-            // Debug.Print("Select {0}", navigationState);
+            // Console.WriteLine("Select {0}", navigationState);
             SelectNavigationState(navigationState);
         }
 
         private void Activate()
         {
-            Debug.Print("Activate");
+            Console.WriteLine("Activate");
             MainWindowViewModel.Instance?.Activate();
         }
 
@@ -247,11 +249,11 @@ namespace Hud1.ViewModels
 
             if (NavigationState.Repeat && (!State!.AllowRepeat || isVerticalNavigation))
             {
-                //Debug.Print("Skip {0}", keyEvent.key);
+                //Console.WriteLine("Skip {0}", keyEvent.key);
                 return false;
             }
 
-            //Debug.Print("Execute {0} {1} {2}", State.Name, State.AllowRepeat, keyEvent.key);
+            //Console.WriteLine("Execute {0} {1} {2}", State.Name, State.AllowRepeat, keyEvent.key);
 
             if (key == GlobalKey.VK_LEFT)
             {
@@ -282,7 +284,7 @@ namespace Hud1.ViewModels
 
         void NextStyle()
         {
-            Debug.Print("NextStyle");
+            Console.WriteLine("NextStyle");
             var currentStyleIndex = Array.IndexOf(Styles, NavigationStates.STYLE.SelectionLabel);
             var nextStyleIndex = (currentStyleIndex + 1) % Styles.Length;
             NavigationStates.STYLE.SelectionLabel = Styles[nextStyleIndex];
@@ -291,7 +293,7 @@ namespace Hud1.ViewModels
         }
         void PrevStyle()
         {
-            Debug.Print("PrevStyle");
+            Console.WriteLine("PrevStyle");
             var currentStyleIndex = Array.IndexOf(Styles, NavigationStates.STYLE.SelectionLabel);
             var prevStyleIndex = (currentStyleIndex - 1 + Styles.Length) % Styles.Length;
             NavigationStates.STYLE.SelectionLabel = Styles[prevStyleIndex];
@@ -305,7 +307,7 @@ namespace Hud1.ViewModels
 
             string[] fileEntries = Directory.GetFiles(fontsFolder, "*.ttf");
 
-            Debug.Print("files {0}", fileEntries.Length);
+            Console.WriteLine("files {0}", fileEntries.Length);
 
             List<string> fonts = [];
             for (int i = 0; i < fileEntries.Length; i++)
@@ -313,7 +315,7 @@ namespace Hud1.ViewModels
                 PrivateFontCollection fontCol = new PrivateFontCollection();
                 fontCol.AddFontFile(fileEntries[i]);
 
-                Debug.Print("fontCol.Families[0].Name {0}", fontCol.Families[0].Name);
+                Console.WriteLine("fontCol.Families[0].Name {0}", fontCol.Families[0].Name);
                 fonts.Add(fontCol.Families[0].Name);
                 fontCol.Dispose();
             }
@@ -323,7 +325,7 @@ namespace Hud1.ViewModels
         }
         void NextFont()
         {
-            Debug.Print("NextFont");
+            Console.WriteLine("NextFont");
             var Fonts = fontList();
             var currentStyleIndex = Array.IndexOf(Fonts, NavigationStates.FONT.SelectionLabel);
             var nextStyleIndex = (currentStyleIndex + 1) % Fonts.Length;
@@ -333,7 +335,7 @@ namespace Hud1.ViewModels
         }
         void PrevFont()
         {
-            Debug.Print("PrevFont");
+            Console.WriteLine("PrevFont");
             var Fonts = fontList();
             var currentStyleIndex = Array.IndexOf(Fonts, NavigationStates.FONT.SelectionLabel);
             var prevStyleIndex = (currentStyleIndex - 1 + Fonts.Length) % Fonts.Length;
@@ -343,7 +345,7 @@ namespace Hud1.ViewModels
 
         void UpdateModelFromStateless()
         {
-            // Debug.Print("UpdateModelFromStateless {0} ", nav.State);
+            // Console.WriteLine("UpdateModelFromStateless {0} ", nav.State);
 
             State = Navigation.State;
 

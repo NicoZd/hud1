@@ -85,7 +85,7 @@ namespace Hud1
 
         private void HandleKeyDown(KeyEvent keyEvent)
         {
-            //Debug.Print("HandleKeyDown2 {0} {1}", keyEvent.key, keyEvent.alt);           
+            //Console.WriteLine("HandleKeyDown2 {0} {1}", keyEvent.key, keyEvent.alt);           
 
             if (!keyEvent.repeated)
             {

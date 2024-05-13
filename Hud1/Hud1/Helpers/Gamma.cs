@@ -63,10 +63,10 @@ namespace Hud1.Helpers
         {
             foreach (var screen in Screen.AllScreens)
             {
-                Debug.Print("DeviceName {0}", screen.DeviceName);
+                Console.WriteLine("DeviceName {0}", screen.DeviceName);
                 // just all 
 
-                Debug.Print("Here! {0} {1}", screen.DeviceName, screen.ScaleFactor);
+                Console.WriteLine("Here! {0} {1}", screen.DeviceName, screen.ScaleFactor);
 
 
                 Int32 hdc = CreateDC(screen.DeviceName, null, null, IntPtr.Zero).ToInt32();
@@ -76,7 +76,7 @@ namespace Hud1.Helpers
                 d.cb = Marshal.SizeOf(d);
                 EnumDisplayDevices(screen.DeviceName, 0, ref d, 0);
 
-                Debug.Print("!!!!!!!! {0}, {1}, {2}, {3}", d.DeviceName, d.DeviceString, d.DeviceID, d.DeviceKey);
+                Console.WriteLine("!!!!!!!! {0}, {1}, {2}, {3}", d.DeviceName, d.DeviceString, d.DeviceID, d.DeviceKey);
 
                 short* gArray = stackalloc short[3 * 256];
                 short* idx = gArray;

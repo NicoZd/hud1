@@ -115,7 +115,7 @@ namespace Hud1.Models
 
         internal void OnMouseDown()
         {
-            Debug.Print("OnMouseDown");
+            Console.WriteLine("OnMouseDown");
             _systemEvents.Enqueue(new SystemEvent());
         }
 

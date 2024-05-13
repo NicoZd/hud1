@@ -52,14 +52,14 @@ namespace Hud1.Models
         [RelayCommand]
         private void PanelClick()
         {
-            Debug.Print("PanelClick");
+            Console.WriteLine("PanelClick");
             _macros.SelectMacro(this);
         }
 
         [RelayCommand]
         private void StartStopClick()
         {
-            Debug.Print("StartStopClick");
+            Console.WriteLine("StartStopClick");
             _macros.SelectMacro(this);
             OnRight();
         }
@@ -88,7 +88,7 @@ namespace Hud1.Models
 
         internal void OnRight()
         {
-            Debug.Print("OnRight");
+            Console.WriteLine("OnRight");
             if (Running && _macroScript != null)
             {
                 RightLabel = "Stopping";
@@ -112,7 +112,7 @@ namespace Hud1.Models
                 }
                 catch (InterpreterException ex)
                 {
-                    Debug.Print("ERROR {0}", ex.DecoratedMessage);
+                    Console.WriteLine("ERROR {0}", ex.DecoratedMessage);
 
                     if (ex.DecoratedMessage != null)
                         Error = ex.DecoratedMessage;
@@ -140,13 +140,13 @@ namespace Hud1.Models
 
             private void OnMouseDown()
             {
-                Debug.Print("OnMouseDown");
+                Console.WriteLine("OnMouseDown");
                 _macroScript.OnMouseDown();
             }
 
             public void Dispose()
             {
-                Debug.Print("MACROHOOK Dispose");
+                Console.WriteLine("MACROHOOK Dispose");
                 GlobalMouseHook.MouseDown -= OnMouseDown;
             }
         }

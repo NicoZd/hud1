@@ -336,7 +336,7 @@ namespace WpfScreenHelper
 
             public bool Callback(IntPtr monitor, IntPtr hdc, IntPtr lprcMonitor, IntPtr lparam)
             {
-                Debug.Print("Call {0} {1}", monitor, hdc);
+                Console.WriteLine("Call {0} {1}", monitor, hdc);
                 this.Screens.Add(new Screen(monitor, hdc));
                 return true;
             }

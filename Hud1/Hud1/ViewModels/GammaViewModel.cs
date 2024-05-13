@@ -15,7 +15,7 @@ namespace Hud1.ViewModels
         }
         public void SelectPrevGama()
         {
-            Debug.Print("SelectPrevGama {0}", GammaIndex);
+            Console.WriteLine("SelectPrevGama {0}", GammaIndex);
             GammaIndex--;
             if (GammaIndex < 0)
                 GammaIndex = 0;
@@ -25,7 +25,7 @@ namespace Hud1.ViewModels
 
         public void SelectNextGama()
         {
-            Debug.Print("SelectPrevGama {0}", GammaIndex);
+            Console.WriteLine("SelectPrevGama {0}", GammaIndex);
             GammaIndex++;
             if (GammaIndex > Gammas.Length - 1)
                 GammaIndex = Gammas.Length - 1;

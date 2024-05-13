@@ -51,7 +51,7 @@ namespace Hud1.ViewModels
 
         private void UpdateFiles()
         {
-            Debug.Print("UpdateFiles");
+            Console.WriteLine("UpdateFiles");
             foreach (Macro macro in Macros)
                 macro.Running = false;
 
@@ -75,7 +75,7 @@ namespace Hud1.ViewModels
 
         partial void OnSelectedIndexChanged(int value)
         {
-            Debug.Print("OnSelectedIndexChanged", value);
+            Console.WriteLine("OnSelectedIndexChanged", value);
 
             for (var i = 0; i < Macros.Count; i++)
             {
@@ -90,7 +90,7 @@ namespace Hud1.ViewModels
 
         public void OnEntry()
         {
-            Debug.Print("OnEntry");
+            Console.WriteLine("OnEntry");
             Selected = true;
 
             if (Macros.Count == 0)
@@ -101,26 +101,26 @@ namespace Hud1.ViewModels
 
         public void OnExit()
         {
-            Debug.Print("OnExit");
+            Console.WriteLine("OnExit");
             Selected = false;
             SelectedIndex = -1;
         }
 
         public void OnEntryFromTop()
         {
-            Debug.Print("OnEntryFromTop");
+            Console.WriteLine("OnEntryFromTop");
             SelectedIndex = 0;
         }
 
         public void OnEntryFromBottom()
         {
-            Debug.Print("OnEntryFromBottom");
+            Console.WriteLine("OnEntryFromBottom");
             SelectedIndex = Macros.Count - 1;
         }
 
         public void OnUp()
         {
-            Debug.Print("OnUp {0}", SelectedIndex);
+            Console.WriteLine("OnUp {0}", SelectedIndex);
             if (SelectedIndex <= 0)
             {
                 Navigation?.Fire(NavigationTriggers.RETURN_UP);
@@ -130,7 +130,7 @@ namespace Hud1.ViewModels
         }
         public void OnDown()
         {
-            Debug.Print("OnDown {0}", SelectedIndex);
+            Console.WriteLine("OnDown {0}", SelectedIndex);
             if (SelectedIndex >= Macros.Count - 1)
             {
                 Navigation?.Fire(NavigationTriggers.RETURN_DOWN);
@@ -141,12 +141,12 @@ namespace Hud1.ViewModels
 
         public void OnLeft()
         {
-            Debug.Print("OnLeft");
+            Console.WriteLine("OnLeft");
             Macros[SelectedIndex].OnLeft();
         }
         public void OnRight()
         {
-            Debug.Print("OnRight");
+            Console.WriteLine("OnRight");
             Macros[SelectedIndex].OnRight();
         }
 

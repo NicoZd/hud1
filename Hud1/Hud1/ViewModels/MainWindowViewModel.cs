@@ -50,7 +50,7 @@ namespace Hud1.ViewModels
 
         internal void HandleKeyActivator()
         {
-            Debug.Print("HandleKeyActivator");
+            Console.WriteLine("HandleKeyActivator");
 
             if (Active)
             {

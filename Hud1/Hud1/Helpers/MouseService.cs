@@ -20,7 +20,7 @@ namespace Hud1.Helpers
 
         public static void MouseDown(MouseButton button)
         {
-            Debug.Print("MouseDown1");
+            Console.WriteLine("MouseDown1");
             IgnoreNextEvent = true;
             mouse_event(((int)button), 0, 0, 0, 0);
 
@@ -30,14 +30,14 @@ namespace Hud1.Helpers
                 Application.Current.Dispatcher.BeginInvoke(new Action(() =>
                 {
                     IgnoreNextEvent = false;
-                    Debug.Print("MouseDown2");
+                    Console.WriteLine("MouseDown2");
                 }));
             });
         }
 
         public static void MouseUp(MouseButton button)
         {
-            Debug.Print("MouseUp1");
+            Console.WriteLine("MouseUp1");
             IgnoreNextEvent = true;
             mouse_event(((int)button) * 2, 0, 0, 0, 0);
 
@@ -47,7 +47,7 @@ namespace Hud1.Helpers
                 Application.Current.Dispatcher.BeginInvoke(new Action(() =>
                 {
                     IgnoreNextEvent = false;
-                    Debug.Print("MouseUp2");
+                    Console.WriteLine("MouseUp2");
                 }));
 
             });

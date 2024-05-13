@@ -192,7 +192,7 @@ namespace Hud1.Models
 
         public void OnVolumeNotification(AudioVolumeNotificationData data)
         {
-            // Debug.Print("OnVolumeNotification: {0} {1}", data.MasterVolume, data.Muted);
+            // Console.WriteLine("OnVolumeNotification: {0} {1}", data.MasterVolume, data.Muted);
             Application.Current.Dispatcher.Invoke(new Action(() =>
             {
                 VolumeChanged?.Invoke();
@@ -203,12 +203,12 @@ namespace Hud1.Models
         {
             if (_updateRunning)
             {
-                //Debug.Print("SKIP UpdateDevices...");
+                //Console.WriteLine("SKIP UpdateDevices...");
                 _hasNextUpdate = true;
                 return;
             }
 
-            //Debug.Print("RUN UpdateDevices...");
+            //Console.WriteLine("RUN UpdateDevices...");
             _updateRunning = true;
 
             Application.Current.Dispatcher.Invoke(new Action(() =>
@@ -250,16 +250,16 @@ namespace Hud1.Models
 
         private void LogDevices()
         {
-            Debug.Print("LogDevices: =================================================== ");
-            Debug.Print("defaultPlaybackDeviceID: {0}", DefaultPlaybackDeviceId);
+            Console.WriteLine("LogDevices: =================================================== ");
+            Console.WriteLine("defaultPlaybackDeviceID: {0}", DefaultPlaybackDeviceId);
             foreach (var device in PlaybackDevices)
             {
-                Debug.Print("\t" + device.DeviceFriendlyName);
+                Console.WriteLine("\t" + device.DeviceFriendlyName);
             }
-            Debug.Print("defaultCaptureDeviceID: {0}", DefaultPlaybackDeviceId);
+            Console.WriteLine("defaultCaptureDeviceID: {0}", DefaultPlaybackDeviceId);
             foreach (var device in CaptureDevices)
             {
-                Debug.Print("\t" + device.DeviceFriendlyName);
+                Console.WriteLine("\t" + device.DeviceFriendlyName);
             }
         }
     }

@@ -76,7 +76,7 @@ namespace Hud1.Models
             _selectLeftCounter++;
             await Task.Delay(10);
             if (LeftAction != null)
-                try { LeftAction(); } catch (Exception ex) { Debug.Print("ExecuteLeft {0}", ex); }
+                try { LeftAction(); } catch (Exception ex) { Console.WriteLine("ExecuteLeft {0}", ex); }
             await Task.Delay(100);
             _selectLeftCounter--;
             if (_selectLeftCounter == 0)
@@ -89,7 +89,7 @@ namespace Hud1.Models
             _selectRightCounter++;
             await Task.Delay(10);
             if (RightAction != null)
-                try { RightAction(); } catch (Exception ex) { Debug.Print("ExecuteRight {0}", ex); }
+                try { RightAction(); } catch (Exception ex) { Console.WriteLine("ExecuteRight {0}", ex); }
             await Task.Delay(100);
             _selectRightCounter--;
             if (_selectRightCounter == 0)

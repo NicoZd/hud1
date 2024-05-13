@@ -10,26 +10,25 @@ namespace Hud1.Helpers.CustomSplashScreen
 {
     class DebugWriter : TextWriter
     {
-        internal StreamWriter streamwriter;
-        private string v;
+        internal StreamWriter streamWriter;
 
         public DebugWriter(string path)
         {
-            FileStream filestream = new FileStream(path, FileMode.Create);
-            streamwriter = new StreamWriter(filestream);
-            streamwriter.AutoFlush = true;
+            FileStream filestream = new(path, FileMode.Create);
+            streamWriter = new StreamWriter(filestream);
+            streamWriter.AutoFlush = true;
         }
 
         public override void WriteLine(string? value)
         {
             Debug.WriteLine(value);
-            streamwriter.WriteLine(value);
+            streamWriter.WriteLine(value);
         }
 
         public override void Write(string? value)
         {
             Debug.Write(value);
-            streamwriter.Write(value);
+            streamWriter.Write(value);
         }
 
         public override Encoding Encoding
@@ -64,7 +63,7 @@ namespace Hud1.Helpers.CustomSplashScreen
             Console.SetOut(writer);
             Console.SetError(writer);
 
-            Debug.Print("Debug");
+            Console.WriteLine("Debug");
             Console.WriteLine("==============Console {0}", RootPath);
             Console.WriteLine("==============Console {0}", VersionPath);
 
