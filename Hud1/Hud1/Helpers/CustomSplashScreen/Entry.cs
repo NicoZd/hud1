@@ -1,33 +1,39 @@
 ﻿using System.Diagnostics;
 using System.IO;
+using System.IO.Pipes;
 using System.Text;
 using System.Windows.Threading;
 using Windows.ApplicationModel;
+using Windows.Foundation.Metadata;
+using Windows.Security.ExchangeActiveSyncProvisioning;
 using Windows.Storage;
-using static CommunityToolkit.Mvvm.ComponentModel.__Internals.__TaskExtensions.TaskAwaitableWithoutEndValidation;
 
 namespace Hud1.Helpers.CustomSplashScreen
 {
     class DebugWriter : TextWriter
     {
-        internal StreamWriter streamWriter;
+        private string Path;
 
         public DebugWriter(string path)
         {
-            FileStream filestream = new(path, FileMode.Create);
-            streamWriter = new StreamWriter(filestream);
-            streamWriter.AutoFlush = true;
+            Path = path;
+            if (File.Exists(Path))
+                File.Delete(Path);
         }
 
         public override void WriteLine(string? value)
         {
             Debug.WriteLine(value);
+            using var fileStream = new FileStream(Path, FileMode.Append);
+            using var streamWriter = new StreamWriter(fileStream);
             streamWriter.WriteLine(value);
         }
 
         public override void Write(string? value)
         {
             Debug.Write(value);
+            using var fileStream = new FileStream(Path, FileMode.Append);
+            using var streamWriter = new StreamWriter(fileStream);
             streamWriter.Write(value);
         }
 
@@ -46,26 +52,54 @@ namespace Hud1.Helpers.CustomSplashScreen
 
         private static readonly App app = new();
 
+        private static void CopyFilesRecursively(string sourcePath, string targetPath)
+        {
+            Console.WriteLine("Copy {0}, {1}", sourcePath, targetPath);
+            //Now Create all of the directories
+            foreach (string dirPath in Directory.GetDirectories(sourcePath, "*", SearchOption.AllDirectories))
+            {
+                Directory.CreateDirectory(dirPath.Replace(sourcePath, targetPath));
+            }
+
+            //Copy all the files & Replaces any files with the same name
+            foreach (string newPath in Directory.GetFiles(sourcePath, "*.*", SearchOption.AllDirectories))
+            {
+                File.Copy(newPath, newPath.Replace(sourcePath, targetPath), true);
+            }
+        }
+
         [STAThread]
         public static void Main(string[] args)
         {
-            StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
-            RootPath = storageFolder.Path;
+            try
+            {
+                StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
+                RootPath = storageFolder.Path;
 
-            Package package = Package.Current;
-            PackageId packageId = package.Id;
-            PackageVersion version = packageId.Version;
-            var Version = string.Format("{0}.{1}.{2}.{3}", version.Major, version.Minor, version.Build, version.Revision);
+                Package package = Package.Current;
+                PackageId packageId = package.Id;
+                PackageVersion version = packageId.Version;
+                var Version = string.Format("{0}.{1}.{2}.{3}", version.Major, version.Minor, version.Build, version.Revision);
 
-            VersionPath = Path.Combine(RootPath, Version);
+                VersionPath = Path.Combine(RootPath, Version);
+            }
+            catch (Exception e)
+            {
+                RootPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Local");
+                if (!Directory.Exists(RootPath))
+                {
+                    Directory.CreateDirectory(RootPath);
+                }
+                VersionPath = Path.Combine(RootPath, "0.0.0.0");
+            }
 
             var writer = new DebugWriter(Path.Combine(RootPath, "log.txt"));
             Console.SetOut(writer);
             Console.SetError(writer);
 
-            Console.WriteLine("Debug");
-            Console.WriteLine("==============Console {0}", RootPath);
-            Console.WriteLine("==============Console {0}", VersionPath);
+            Console.WriteLine("=============================================================");
+            Console.WriteLine("=== RootPath {0}", RootPath);
+            Console.WriteLine("=== VersionPath {0}", VersionPath);
 
             try
             {
@@ -73,11 +107,21 @@ namespace Hud1.Helpers.CustomSplashScreen
                 {
                     Console.WriteLine("==============Creating Version", RootPath);
                     Directory.CreateDirectory(VersionPath);
+
+                    Directory.CreateDirectory(Path.Combine(VersionPath, "Macros"));
+                    Directory.CreateDirectory(Path.Combine(VersionPath, "Fonts"));
+
+                    CopyFilesRecursively(
+                        Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Macros"),
+                        Path.Combine(VersionPath, "Macros")
+                        );
                     // copy all stuff
                 }
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
+                Console.WriteLine("Error creating version");
+                Console.WriteLine(e);
                 Directory.Delete(VersionPath);
             }
 

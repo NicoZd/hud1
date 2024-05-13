@@ -15,7 +15,7 @@ namespace Hud1
 
         private void OnWindowLoaded(object sender, RoutedEventArgs e)
         {
-            Debug.WriteLine("OnWindowLoaded {0}");
+            Console.WriteLine("OnWindowLoaded {0}");
             var hwnd = new WindowInteropHelper(this).Handle;
 
             System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
@@ -36,7 +36,7 @@ namespace Hud1
             int width = (int)SystemParameters.PrimaryScreenWidth;
             int height = (int)SystemParameters.PrimaryScreenHeight;
 
-            Debug.WriteLine("Window_Loaded {0} {1}", width, height);
+            Console.WriteLine("Window_Loaded {0} {1}", width, height);
 
             this.Width = width;
             this.Height = height;

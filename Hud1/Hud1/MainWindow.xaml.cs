@@ -41,7 +41,7 @@ namespace Hud1
         }
         private void OnWindowActivated(object sender, EventArgs e)
         {
-            Debug.WriteLine("OnWindowActivated");
+            Console.WriteLine("OnWindowActivated");
             windowModel.Active = true;
         }
 
