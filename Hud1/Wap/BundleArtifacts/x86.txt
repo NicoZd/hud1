@@ -1,0 +1,2 @@
+MainPackage=C:\Workspaces\nico_2024\hud1\Hud1\Wap\bin\x86\Debug\Wap_1.1.23.0_x86_Debug.msix
+SymbolPackage=C:\Workspaces\nico_2024\hud1\Hud1\Wap\obj\x86\Debug\Symbols\Wap_1.1.23.0_x86_Debug.appxsym

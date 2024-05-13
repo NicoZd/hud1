@@ -32,9 +32,9 @@
                     <Grid.Background>
                         <ImageBrush                            
                             Opacity="0.035"
-                            ImageSource="../Assets/dragon.png"
+                            ImageSource="../Assets/ai-generated-8641785.png"
                             ViewportUnits="Absolute"
-                            Viewport="-400,150,1000,1000"
+                            Viewport="-150,200,500,500"
                             TileMode="None"
                             Stretch="Uniform"
                             />

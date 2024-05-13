@@ -5,7 +5,7 @@ namespace Hud1.Helpers.CustomSplashScreen
 
     class Entry
     {
-        private static readonly SplashScreenWrapper splashScreen = new(resourceName: "/Assets/fluid-background-transparent.png");
+        private static readonly SplashScreenWrapper splashScreen = new(resourceName: "/Assets/ai-generated-8641785-splash.png");
 
         private static readonly App app = new();
 

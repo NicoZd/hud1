@@ -3,10 +3,12 @@ using Hud1.Helpers;
 using Hud1.Helpers.CustomSplashScreen;
 using Hud1.ViewModels;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media.Animation;
+using Windows.Storage;
 using WpfScreenHelper;
 
 namespace Hud1
@@ -65,7 +67,9 @@ namespace Hud1
                 | WindowsAPI.WS_EX_NOACTIVATE
                 );
 
-            this.SetWindowPosition(WpfScreenHelper.Enum.WindowPositions.Maximize, Screen.AllScreens.ElementAt(1));
+
+            int index = Screen.AllScreens.Count();
+            this.SetWindowPosition(WpfScreenHelper.Enum.WindowPositions.Maximize, Screen.AllScreens.ElementAt(index - 1));
 
             GlobalMouseHook.SystemHook();
 

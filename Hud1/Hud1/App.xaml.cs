@@ -1,11 +1,14 @@
 ﻿using Hud1.Helpers;
 using Hud1.Models;
+using Hud1.ViewModels;
 using System.Diagnostics;
 using System.Drawing.Text;
 using System.IO;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+
+using Windows.Storage;
 
 namespace Hud1
 {
@@ -15,10 +18,61 @@ namespace Hud1
         {
             InitializeComponent();
 
+            //var dir = "C:\\Users\\nicoz\\AppData\\Local\\Hud1";
+            //if (!Directory.Exists(dir))
+            //{
+            //    Directory.CreateDirectory(dir);
+            //}
+            //var r = new Random();
+            //using (StreamWriter outputFile = new StreamWriter(Path.Combine(dir, "Write" + r.NextDouble() + "Lines.txt")))
+            //{
+            //    outputFile.WriteLine("line");
+            //}
+
+            //TestIO();
+
+
             //SelectStyle("Green", "Source Code Pro");
 
             EventManager.RegisterClassHandler(typeof(Window), Window.PreviewMouseDownEvent, new MouseButtonEventHandler(OnPreviewMouseDown));
             EventManager.RegisterClassHandler(typeof(Window), Window.PreviewMouseUpEvent, new MouseButtonEventHandler(OnPreviewMouseDown));
+        }
+
+        private async void TestIO()
+        {
+            StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
+            Debug.Print("storageFolder {0}", storageFolder);
+
+
+            StorageFile file = await storageFolder.CreateFileAsync("test.txt",
+                    CreationCollisionOption.OpenIfExists);
+
+            await FileIO.WriteTextAsync(file, "Example of writing a string\r\n");
+
+            // Append a list of strings, one per line, to the file
+            var listOfStrings = new List<string> { "line1", "line2", "line3" };
+            await FileIO.AppendLinesAsync(file, listOfStrings);
+
+            Process.Start("explorer.exe", storageFolder.Path);
+
+            StorageFile file2 = await storageFolder.CreateFileAsync("test2.txt",
+                   CreationCollisionOption.OpenIfExists);
+
+            using (StreamWriter outputFile = new StreamWriter(file2.Path))
+            {
+                outputFile.WriteLine("line");
+            }
+
+            var dir = Path.Combine(storageFolder.Path, "manual");
+            if (!Directory.Exists(dir))
+            {
+                Directory.CreateDirectory(dir);
+            }
+            var r = new Random();
+            using (StreamWriter outputFile = new StreamWriter(Path.Combine(dir, "Write" + r.NextDouble() + "Lines.txt")))
+            {
+                outputFile.WriteLine("line");
+            }
         }
 
         static void OnPreviewMouseDown(object sender, MouseButtonEventArgs e)

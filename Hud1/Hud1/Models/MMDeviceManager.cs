@@ -41,7 +41,7 @@ namespace Hud1.Models
 
         public MMDeviceManager()
         {
-            deviceEnumerator = new MMDeviceEnumerator(Guid.NewGuid());
+            deviceEnumerator = new MMDeviceEnumerator(Guid.Empty);
             client = new MMNotificationClient(deviceEnumerator);
             client.DefaultDeviceChanged += (s, e) =>
             {
