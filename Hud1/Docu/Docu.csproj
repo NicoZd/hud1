@@ -34,6 +34,9 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="License.md" />
+    <None Include="Marketing.md" />
+    <None Include="Testing.md" />
     <None Include="Store.md" />
     <None Include="Persist.md" />
   </ItemGroup>
