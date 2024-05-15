@@ -1,14 +1,18 @@
 ﻿using System.Diagnostics;
 using System.IO;
 using System.IO.Pipes;
+using System.Runtime.InteropServices;
 using System.Text;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Interop;
 using System.Windows.Threading;
 using Windows.ApplicationModel;
 using Windows.Foundation.Metadata;
 using Windows.Security.ExchangeActiveSyncProvisioning;
 using Windows.Services.Store;
 using Windows.Storage;
+using WpfScreenHelper;
 
 namespace Hud1.Helpers.CustomSplashScreen
 {
@@ -47,6 +51,11 @@ namespace Hud1.Helpers.CustomSplashScreen
 
     class Entry
     {
+
+        public static readonly UInt32 WM_GAME_DIRECT_SHOWME = WindowsAPI.RegisterWindowMessage("WM_GAME_DIRECT_SHOWME");
+
+        static Mutex mutex = new Mutex(true, "GAME_DIRECT");
+
         public static string RootPath = "";
         public static string VersionPath = "";
 
@@ -70,9 +79,38 @@ namespace Hud1.Helpers.CustomSplashScreen
             }
         }
 
+        public static void SendShutdown()
+        {
+            WindowsAPI.SendNotifyMessage(new IntPtr(-1), WM_GAME_DIRECT_SHOWME, 0, 0);
+        }
+
         [STAThread]
         public static void Main(string[] args)
         {
+            // try close exising apps
+            try
+            {
+                int startRount = 0;
+                while (!mutex.WaitOne(TimeSpan.Zero, true) && startRount < 10)
+                {
+                    Debug.Print("SendShutdown {0}", startRount);
+                    SendShutdown();
+                    Thread.Sleep(500);
+                    startRount++;
+                }
+            }
+            catch (AbandonedMutexException ex)
+            {
+            }
+
+            // never every start second time
+            if (!mutex.WaitOne(TimeSpan.Zero, true))
+            {
+                Debug.Print("Refuse to start...");
+                return;
+            }
+
+
             try
             {
                 StorageFolder storageFolder = ApplicationData.Current.LocalFolder;

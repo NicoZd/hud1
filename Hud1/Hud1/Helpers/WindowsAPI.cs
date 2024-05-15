@@ -93,5 +93,16 @@ namespace Hud1.Helpers
 
         [DllImport("user32.dll")]
         public static extern int SetWindowLong(IntPtr hwnd, int index, int newStyle);
+
+        // message
+
+        public const int HWND_BROADCAST = 0xffff;
+
+        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+        public static extern uint RegisterWindowMessage(string message);
+
+        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+        public static extern bool SendNotifyMessage(IntPtr hWnd, uint msg, int wParam, int lParam);
+
     }
 }

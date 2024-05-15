@@ -15,10 +15,8 @@ namespace Hud1
 {
     public partial class App : Application
     {
-        public App()
+        private void OnStartup(object sender, StartupEventArgs e)
         {
-            InitializeComponent();
-
             EventManager.RegisterClassHandler(typeof(Window), Window.PreviewMouseDownEvent, new MouseButtonEventHandler(OnPreviewMouseDown));
             EventManager.RegisterClassHandler(typeof(Window), Window.PreviewMouseUpEvent, new MouseButtonEventHandler(OnPreviewMouseDown));
         }

@@ -48,6 +48,9 @@ namespace Hud1
         private void OnWindowLoaded(object sender, RoutedEventArgs e)
         {
             hwnd = new WindowInteropHelper(this).Handle;
+            HwndSource source = HwndSource.FromHwnd(hwnd);
+            source.AddHook(WndProc);
+
             windowModel.Window = this;
             windowModel.Hwnd = hwnd;
 
@@ -80,6 +83,17 @@ namespace Hud1
 
             Entry.CheckLicense();
         }
+        private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        {
+            if (msg == Entry.WM_GAME_DIRECT_SHOWME)
+            {
+                Console.WriteLine("WndProc {0} {1}", msg, Entry.WM_GAME_DIRECT_SHOWME);
+                Application.Current.Shutdown();
+            }
+
+            return IntPtr.Zero;
+        }
+
         private void OnWindowUnloaded(object sender, RoutedEventArgs e)
         {
             GlobalKeyboardHook.SystemUnhook();
