@@ -74,6 +74,10 @@ namespace Hud1
             {
                 Source = new Uri("Themes/Buttons.xaml", UriKind.RelativeOrAbsolute)
             });
+            Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary()
+            {
+                Source = new Uri("Themes/ScrollViewer.xaml", UriKind.RelativeOrAbsolute)
+            });
         }
 
     }
