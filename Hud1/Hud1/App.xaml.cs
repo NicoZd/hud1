@@ -9,8 +9,6 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 
-using Windows.Storage;
-
 namespace Hud1
 {
     public partial class App : Application
