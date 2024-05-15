@@ -125,7 +125,7 @@
                         Visibility="{Binding Path=States[DISPLAY_VISIBLE].Visibility}"
                         views:TouchScrolling.IsEnabled="True"
                         >
-                        <StackPanel Margin="0,0,0,20" views:Spacing.Vertical="8">
+                        <StackPanel Margin="0,0,0,28" views:Spacing.Vertical="8">
                             <Label Content="Gamma" Style="{DynamicResource TitleContent}"/>
                             <views:SelectionControl NavigationState="{Binding Path=States[GAMMA]}" />
                         </StackPanel>
@@ -135,7 +135,7 @@
                         Visibility="{Binding Path=States[AUDIO_VISIBLE].Visibility}"
                         views:TouchScrolling.IsEnabled="True"
                         >
-                        <StackPanel Margin="0,0,0,20" views:Spacing.Vertical="8">
+                        <StackPanel Margin="0,0,0,28" views:Spacing.Vertical="8">
 
                             <Label Content="Playback" Style="{DynamicResource TitleContent}"/>
 
@@ -148,7 +148,7 @@
                             <views:SelectionControl NavigationState="{Binding Path=States[CAPTURE_DEVICE]}" />
                             <views:SelectionControl NavigationState="{Binding Path=States[CAPTURE_VOLUME]}" />
                             <views:SelectionControl NavigationState="{Binding Path=States[CAPTURE_MUTE]}" />
-                            
+
                         </StackPanel>
                     </ScrollViewer>
 
@@ -156,7 +156,7 @@
                         Visibility="{Binding Path=States[MACRO_VISIBLE].Visibility}"
                         views:TouchScrolling.IsEnabled="True"
                         >
-                        <StackPanel Margin="0,0,0,20" views:Spacing.Vertical="8">
+                        <StackPanel Margin="0,0,0,28" views:Spacing.Vertical="8">
                             <views:MacrosView MacrosViewModel="{Binding Path=MacrosViewModel}"/>
                             <Label Content="Functions" Style="{DynamicResource TitleContent}"/>
                             <views:ButtonPanel NavigationState="{Binding Path=States[MACROS_FOLDER]}"/>
@@ -167,7 +167,7 @@
                         Visibility="{Binding Path=States[CROSSHAIR_VISIBLE].Visibility}"
                         views:TouchScrolling.IsEnabled="True"
                         >
-                        <StackPanel Margin="0,0,0,20" views:Spacing.Vertical="8">
+                        <StackPanel Margin="0,0,0,28" views:Spacing.Vertical="8">
                             <Label Content="Crosshair" Style="{DynamicResource TitleContent}"/>
                             <!--<views:GlowBorderLabel Label="ON/OFF" Selected="{Binding Path=States[cross-visible].Selected}" />
                         <views:GlowBorderLabel Label="C" Selected="{Binding Path=States[cross-color].Selected}"/>
@@ -180,7 +180,7 @@
                         Visibility="{Binding Path=States[MORE_VISIBLE].Visibility}"
                         views:TouchScrolling.IsEnabled="True"
                         >
-                        <StackPanel Margin="0,0,0,20" views:Spacing.Vertical="8">
+                        <StackPanel Margin="0,0,0,28" views:Spacing.Vertical="8">
 
                             <Label Content="Functions" Style="{DynamicResource TitleContent}"/>
 
