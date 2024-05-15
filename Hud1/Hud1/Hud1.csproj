@@ -38,11 +38,9 @@
 
 	<ItemGroup>
 		<None Remove="Abstract-colorful-fluid-background-on-transparent-PNG.png" />
-		<None Remove="Assets\ai-generated-8641785-splash.png" />
-		<None Remove="Assets\ai-generated-8641785.png" />
 		<None Remove="Assets\blue-noise.png" />
-		<None Remove="Assets\dragon.png" />
-		<None Remove="Assets\fluid-background-transparent.png" />
+		<None Remove="Assets\splash.png" />
+		<None Remove="Assets\splash2.png" />
 		<None Remove="Fonts\Aurulent-Regular.ttf" />
 		<None Remove="Fonts\FiraCode-R.ttf" />
 		<None Remove="Fonts\JetBrainsMono-Regular.ttf" />
@@ -61,18 +59,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Resource Include="Assets\ai-generated-8641785-splash.png">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Resource>
-		<Resource Include="Assets\ai-generated-8641785.png">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Resource>
-		<Resource Include="Assets\dragon.png" />
 		<Resource Include="Assets\blue-noise.png">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Resource>
-		<Resource Include="Assets\fluid-background-transparent.png">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Resource Include="Assets\splash.png" />
+		<Resource Include="Assets\splash2.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Resource>
 		<Content Include="Fonts\Aurulent-Regular.ttf">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

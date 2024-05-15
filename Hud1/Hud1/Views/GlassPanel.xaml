@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Hud1.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="800" d:DesignWidth="400">
+             d:DesignHeight="800" d:DesignWidth="500">
     <UserControl.Template>
         <ControlTemplate>
             <Grid>
@@ -19,7 +19,7 @@
                 <Grid>
                     <Grid.Background>
                         <ImageBrush                            
-                            Opacity="0.04"
+                            Opacity="0.07"
                             ImageSource="../Assets/blue-noise.png"
                             ViewportUnits="Absolute"
                             Viewport="0,0,200,200"
@@ -28,17 +28,17 @@
                             />
                     </Grid.Background>
                 </Grid>
-                <Grid>
-                    <Grid.Background>
-                        <ImageBrush                            
-                            Opacity="0.035"
-                            ImageSource="../Assets/ai-generated-8641785.png"
-                            ViewportUnits="Absolute"
-                            Viewport="-150,200,500,500"
+                <Grid Background="{DynamicResource BrushInfo}" Opacity="0.025">
+                    <Grid.OpacityMask >
+                        <ImageBrush                      
+                          Opacity="1"
+                            ImageSource="../Assets/splash.png"                          
+                             ViewportUnits="Absolute"
+                            Viewport="-500,-370,1000,1000"
                             TileMode="None"
                             Stretch="Uniform"
                             />
-                    </Grid.Background>
+                    </Grid.OpacityMask>
                 </Grid>
                 <Border Padding="0" BorderThickness="1,1,1,1">
                     <Border.BorderBrush>

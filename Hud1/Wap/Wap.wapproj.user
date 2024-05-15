@@ -9,6 +9,14 @@
     <AppxShowAllApps>False</AppxShowAllApps>
     <AppxBuildConfigurationSelection>x86</AppxBuildConfigurationSelection>
     <PackageOptionalProjectsInIdeBuilds>False</PackageOptionalProjectsInIdeBuilds>
+    <LargeTileSource>C:\Users\nicoz\Downloads\Game Direct - NoBorder.png</LargeTileSource>
+    <Source>C:\Users\nicoz\Downloads\Game Direct.png</Source>
+    <SmallTileSource>C:\Users\nicoz\Downloads\Game Direct - NoBorder.png</SmallTileSource>
+    <MediumTileSource>C:\Users\nicoz\Downloads\Game Direct - NoBorder.png</MediumTileSource>
+    <WideTileSource>C:\Users\nicoz\Downloads\Game Direct.png</WideTileSource>
+    <AppIconSource>C:\Users\nicoz\Downloads\Game Direct - NoBorder.png</AppIconSource>
+    <SplashScreenSource>C:\Users\nicoz\Downloads\Game Direct.png</SplashScreenSource>
+    <PackageLogoSource>C:\Users\nicoz\Downloads\Game Direct - NoBorder.png</PackageLogoSource>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
     <DebuggerFlavor>AppHostLocalDebugger</DebuggerFlavor>

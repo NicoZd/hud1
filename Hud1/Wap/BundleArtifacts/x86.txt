@@ -1,2 +1,6 @@
-MainPackage=C:\Workspaces\nico_2024\hud1\Hud1\Wap\bin\x86\Release\Wap_1.2.34.0_x86.msix
-SymbolPackage=C:\Workspaces\nico_2024\hud1\Hud1\Wap\obj\x86\Release\Symbols\Wap_1.2.34.0_x86.appxsym
+MainPackage=C:\Workspaces\nico_2024\hud1\Hud1\Wap\bin\x86\Release\Wap_1.2.83.0_x86.msix
+SymbolPackage=C:\Workspaces\nico_2024\hud1\Hud1\Wap\obj\x86\Release\Symbols\Wap_1.2.83.0_x86.appxsym
+ResourcePack=C:\Workspaces\nico_2024\hud1\Hud1\Wap\bin\x86\Release\Wap_1.2.83.0_scale-100.msix
+ResourcePack=C:\Workspaces\nico_2024\hud1\Hud1\Wap\bin\x86\Release\Wap_1.2.83.0_scale-125.msix
+ResourcePack=C:\Workspaces\nico_2024\hud1\Hud1\Wap\bin\x86\Release\Wap_1.2.83.0_scale-150.msix
+ResourcePack=C:\Workspaces\nico_2024\hud1\Hud1\Wap\bin\x86\Release\Wap_1.2.83.0_scale-400.msix

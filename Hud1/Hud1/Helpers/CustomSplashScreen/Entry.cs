@@ -50,7 +50,7 @@ namespace Hud1.Helpers.CustomSplashScreen
         public static string RootPath = "";
         public static string VersionPath = "";
 
-        private static readonly SplashScreenWrapper splashScreen = new(resourceName: "/Assets/ai-generated-8641785-splash.png");
+        private static readonly SplashScreenWrapper splashScreen = new(resourceName: "/Assets/splash2.png");
 
         private static readonly App app = new();
 
@@ -76,7 +76,11 @@ namespace Hud1.Helpers.CustomSplashScreen
             try
             {
                 StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
-                RootPath = storageFolder.Path;
+                RootPath = Path.Combine(storageFolder.Path, "Game Direct");
+                if (!Directory.Exists(RootPath))
+                {
+                    Directory.CreateDirectory(RootPath);
+                }
 
                 Package package = Package.Current;
                 PackageId packageId = package.Id;
@@ -87,7 +91,7 @@ namespace Hud1.Helpers.CustomSplashScreen
             }
             catch (Exception e)
             {
-                RootPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Local");
+                RootPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Game Direct");
                 if (!Directory.Exists(RootPath))
                 {
                     Directory.CreateDirectory(RootPath);
