@@ -27,6 +27,7 @@
         </Grid.Effect>
 
         <views:GlassPanel>
+
             <DockPanel Margin="15,5,15,15" Height="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Border}},Path=ActualHeight}">
 
                 <StackPanel DockPanel.Dock="Top">
@@ -108,17 +109,33 @@
 
                 </StackPanel>
 
-                <Grid Margin="0,0,-15,15">
-                    
-                    <ScrollViewer Visibility="{Binding Path=States[DISPLAY_VISIBLE].Visibility}">
-                        <StackPanel views:Spacing.Vertical="8" HorizontalAlignment="Stretch">
+                <Grid Margin="0,10,-15,0">
+
+                    <Grid.OpacityMask>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                            <LinearGradientBrush.GradientStops>
+                                <GradientStop Offset="0" Color="Transparent"/>
+                                <GradientStop Offset="0.02" Color="Black"/>
+                                <GradientStop Offset="1" Color="Black"/>
+                            </LinearGradientBrush.GradientStops>
+                        </LinearGradientBrush>
+                    </Grid.OpacityMask>
+
+                    <ScrollViewer 
+                        Visibility="{Binding Path=States[DISPLAY_VISIBLE].Visibility}"
+                        views:TouchScrolling.IsEnabled="True"
+                        >
+                        <StackPanel Margin="0,0,0,20" views:Spacing.Vertical="8">
                             <Label Content="Gamma" Style="{DynamicResource TitleContent}"/>
                             <views:SelectionControl NavigationState="{Binding Path=States[GAMMA]}" />
                         </StackPanel>
                     </ScrollViewer>
 
-                    <ScrollViewer Visibility="{Binding Path=States[AUDIO_VISIBLE].Visibility}">
-                        <StackPanel views:Spacing.Vertical="8">
+                    <ScrollViewer 
+                        Visibility="{Binding Path=States[AUDIO_VISIBLE].Visibility}"
+                        views:TouchScrolling.IsEnabled="True"
+                        >
+                        <StackPanel Margin="0,0,0,20" views:Spacing.Vertical="8">
 
                             <Label Content="Playback" Style="{DynamicResource TitleContent}"/>
 
@@ -131,20 +148,26 @@
                             <views:SelectionControl NavigationState="{Binding Path=States[CAPTURE_DEVICE]}" />
                             <views:SelectionControl NavigationState="{Binding Path=States[CAPTURE_VOLUME]}" />
                             <views:SelectionControl NavigationState="{Binding Path=States[CAPTURE_MUTE]}" />
-
+                            
                         </StackPanel>
                     </ScrollViewer>
 
-                    <ScrollViewer Visibility="{Binding Path=States[MACRO_VISIBLE].Visibility}">
-                        <StackPanel Margin="0,0,0,0" views:Spacing.Vertical="8">
+                    <ScrollViewer 
+                        Visibility="{Binding Path=States[MACRO_VISIBLE].Visibility}"
+                        views:TouchScrolling.IsEnabled="True"
+                        >
+                        <StackPanel Margin="0,0,0,20" views:Spacing.Vertical="8">
                             <views:MacrosView MacrosViewModel="{Binding Path=MacrosViewModel}"/>
                             <Label Content="Functions" Style="{DynamicResource TitleContent}"/>
                             <views:ButtonPanel NavigationState="{Binding Path=States[MACROS_FOLDER]}"/>
                         </StackPanel>
                     </ScrollViewer>
 
-                    <ScrollViewer Visibility="{Binding Path=States[CROSSHAIR_VISIBLE].Visibility}">
-                        <StackPanel Margin="0,0,0,0" views:Spacing.Vertical="8">
+                    <ScrollViewer 
+                        Visibility="{Binding Path=States[CROSSHAIR_VISIBLE].Visibility}"
+                        views:TouchScrolling.IsEnabled="True"
+                        >
+                        <StackPanel Margin="0,0,0,20" views:Spacing.Vertical="8">
                             <Label Content="Crosshair" Style="{DynamicResource TitleContent}"/>
                             <!--<views:GlowBorderLabel Label="ON/OFF" Selected="{Binding Path=States[cross-visible].Selected}" />
                         <views:GlowBorderLabel Label="C" Selected="{Binding Path=States[cross-color].Selected}"/>
@@ -153,8 +176,11 @@
                         </StackPanel>
                     </ScrollViewer>
 
-                    <ScrollViewer Visibility="{Binding Path=States[MORE_VISIBLE].Visibility}">
-                        <StackPanel Margin="0,0,0,0" views:Spacing.Vertical="8">
+                    <ScrollViewer 
+                        Visibility="{Binding Path=States[MORE_VISIBLE].Visibility}"
+                        views:TouchScrolling.IsEnabled="True"
+                        >
+                        <StackPanel Margin="0,0,0,20" views:Spacing.Vertical="8">
 
                             <Label Content="Functions" Style="{DynamicResource TitleContent}"/>
 
@@ -176,9 +202,9 @@
 
                         </StackPanel>
                     </ScrollViewer>
-                    
+
                 </Grid>
-                
+
             </DockPanel>
         </views:GlassPanel>
     </Grid>
