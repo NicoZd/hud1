@@ -121,20 +121,14 @@
                         </LinearGradientBrush>
                     </Grid.OpacityMask>
 
-                    <ScrollViewer 
-                        Visibility="{Binding Path=States[DISPLAY_VISIBLE].Visibility}"
-                        views:TouchScrolling.IsEnabled="True"
-                        >
+                    <views:ScrollPanel Visibility="{Binding Path=States[DISPLAY_VISIBLE].Visibility}">
                         <StackPanel Margin="0,0,0,28" views:Spacing.Vertical="8">
                             <Label Content="Gamma" Style="{DynamicResource TitleContent}"/>
                             <views:SelectionControl NavigationState="{Binding Path=States[GAMMA]}" />
                         </StackPanel>
-                    </ScrollViewer>
+                    </views:ScrollPanel>
 
-                    <ScrollViewer 
-                        Visibility="{Binding Path=States[AUDIO_VISIBLE].Visibility}"
-                        views:TouchScrolling.IsEnabled="True"
-                        >
+                    <views:ScrollPanel Visibility="{Binding Path=States[AUDIO_VISIBLE].Visibility}">
                         <StackPanel Margin="0,0,0,28" views:Spacing.Vertical="8">
 
                             <Label Content="Playback" Style="{DynamicResource TitleContent}"/>
@@ -150,23 +144,17 @@
                             <views:SelectionControl NavigationState="{Binding Path=States[CAPTURE_MUTE]}" />
 
                         </StackPanel>
-                    </ScrollViewer>
+                    </views:ScrollPanel>
 
-                    <ScrollViewer 
-                        Visibility="{Binding Path=States[MACRO_VISIBLE].Visibility}"
-                        views:TouchScrolling.IsEnabled="True"
-                        >
+                    <views:ScrollPanel Visibility="{Binding Path=States[MACRO_VISIBLE].Visibility}">
                         <StackPanel Margin="0,0,0,28" views:Spacing.Vertical="8">
                             <views:MacrosView MacrosViewModel="{Binding Path=MacrosViewModel}"/>
                             <Label Content="Functions" Style="{DynamicResource TitleContent}"/>
                             <views:ButtonPanel NavigationState="{Binding Path=States[MACROS_FOLDER]}"/>
                         </StackPanel>
-                    </ScrollViewer>
+                    </views:ScrollPanel>
 
-                    <ScrollViewer 
-                        Visibility="{Binding Path=States[CROSSHAIR_VISIBLE].Visibility}"
-                        views:TouchScrolling.IsEnabled="True"
-                        >
+                    <views:ScrollPanel Visibility="{Binding Path=States[CROSSHAIR_VISIBLE].Visibility}">
                         <StackPanel Margin="0,0,0,28" views:Spacing.Vertical="8">
                             <Label Content="Crosshair" Style="{DynamicResource TitleContent}"/>
                             <!--<views:GlowBorderLabel Label="ON/OFF" Selected="{Binding Path=States[cross-visible].Selected}" />
@@ -174,18 +162,15 @@
                             <views:GlowBorderLabel Label="F" Selected="{Binding Path=States[cross-form].Selected}"/>
                             <views:GlowBorderLabel Label="S" Selected="{Binding Path=States[cross-size].Selected}"/>-->
                         </StackPanel>
-                    </ScrollViewer>
+                    </views:ScrollPanel>
 
-                    <ScrollViewer 
-                        Visibility="{Binding Path=States[MORE_VISIBLE].Visibility}"
-                        views:TouchScrolling.IsEnabled="True"
-                        >
+                    <views:ScrollPanel Visibility="{Binding Path=States[MORE_VISIBLE].Visibility}">
                         <StackPanel Margin="0,0,0,28" views:Spacing.Vertical="8">
 
                             <Label Content="Functions" Style="{DynamicResource TitleContent}"/>
-                            <views:ButtonPanel NavigationState="{Binding Path=States[ACTIVATE]}" />
-                            <views:ButtonPanel NavigationState="{Binding Path=States[EXIT]}" />
-                            
+                            <views:ButtonPanel NavigationState="{Binding Path=States[ACTIVATE]}"/>
+                            <views:ButtonPanel NavigationState="{Binding Path=States[EXIT]}"/>
+
                             <Label Content="Options" Style="{DynamicResource TitleContent}"/>
                             <views:SelectionControl NavigationState="{Binding Path=States[KEYBOARD_CONTROL]}" />
                             <views:SelectionControl NavigationState="{Binding Path=States[SHOW_HELP]}" />
@@ -214,7 +199,7 @@
                             </views:IgnoreWidthControl>
 
                         </StackPanel>
-                    </ScrollViewer>
+                    </views:ScrollPanel>
 
                 </Grid>
 

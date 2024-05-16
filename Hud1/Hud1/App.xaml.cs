@@ -2,6 +2,7 @@
 using Hud1.Helpers.CustomSplashScreen;
 using Hud1.Models;
 using Hud1.ViewModels;
+using Hud1.Views;
 using System.Diagnostics;
 using System.Drawing.Text;
 using System.IO;
@@ -58,6 +59,9 @@ namespace Hud1
                 }
             }
 
+            foreach (ScrollPanel sp in ScrollPanel.Instances)
+                sp.SaveScrollPosition();
+
             ReplaceResource(0, new ResourceDictionary
             {
                 { "FontFamily", new FontFamily(new Uri(fontFile, UriKind.Absolute), "./#" + font) }
@@ -82,6 +86,10 @@ namespace Hud1
             {
                 Source = new Uri("Themes/ScrollViewer.xaml", UriKind.RelativeOrAbsolute)
             });
+
+            foreach (ScrollPanel sp in ScrollPanel.Instances)
+                sp.RestoreScrollPosition();
+
         }
 
     }

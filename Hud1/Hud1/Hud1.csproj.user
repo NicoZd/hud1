@@ -30,6 +30,9 @@
     <Compile Update="Views\PanelTopBar.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\ScrollPanel.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\SelectionControl.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -75,6 +78,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="MainWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\ScrollPanel.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\SelectionControl.xaml">
