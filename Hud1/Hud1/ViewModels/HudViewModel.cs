@@ -179,6 +179,7 @@ namespace Hud1.ViewModels
 
 
             // MORE
+
             NavigationStates.ACTIVATE.RightAction = Activate;
             Navigation.Configure(NavigationStates.ACTIVATE)
                 .SubstateOf(NavigationStates.MORE_VISIBLE)
@@ -190,14 +191,24 @@ namespace Hud1.ViewModels
             Navigation.Configure(NavigationStates.EXIT)
                 .SubstateOf(NavigationStates.MORE_VISIBLE)
                 .Permit(NavigationTriggers.UP, NavigationStates.ACTIVATE)
-                .Permit(NavigationTriggers.DOWN, NavigationStates.STYLE)
+                .Permit(NavigationTriggers.DOWN, NavigationStates.KEYBOARD_CONTROL)
                 .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.EXIT.ExecuteRight);
+
+            Navigation.Configure(NavigationStates.KEYBOARD_CONTROL)
+                .SubstateOf(NavigationStates.MORE_VISIBLE)
+                .Permit(NavigationTriggers.UP, NavigationStates.EXIT)
+                .Permit(NavigationTriggers.DOWN, NavigationStates.SHOW_HELP);
+
+            Navigation.Configure(NavigationStates.SHOW_HELP)
+                .SubstateOf(NavigationStates.MORE_VISIBLE)
+                .Permit(NavigationTriggers.UP, NavigationStates.KEYBOARD_CONTROL)
+                .Permit(NavigationTriggers.DOWN, NavigationStates.STYLE);
 
             NavigationStates.STYLE.LeftAction = PrevStyle;
             NavigationStates.STYLE.RightAction = NextStyle;
             Navigation.Configure(NavigationStates.STYLE)
                .SubstateOf(NavigationStates.MORE_VISIBLE)
-               .Permit(NavigationTriggers.UP, NavigationStates.EXIT)
+               .Permit(NavigationTriggers.UP, NavigationStates.SHOW_HELP)
                .Permit(NavigationTriggers.DOWN, NavigationStates.FONT)
                .InternalTransition(NavigationTriggers.LEFT, NavigationStates.STYLE.ExecuteLeft)
                .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.STYLE.ExecuteRight);

@@ -34,11 +34,13 @@
 
         // MACRO
         public static readonly NavigationState MACROS = new() { };
-        public static readonly NavigationState MACROS_FOLDER = new() { Label = "Open Folder", Hint = "Open explorer.exe in Macros Folder.", SelectionRightLabel = " > " };
+        public static readonly NavigationState MACROS_FOLDER = new() { Label = "Open Folder", Hint = "Open explorer.exe in Macros Folder." };
 
         // MORE
-        public static readonly NavigationState ACTIVATE = new() { Label = "Activate", Hint = "Activate this Window to capture mouse once.", SelectionRightLabel = " > " };
-        public static readonly NavigationState EXIT = new() { Label = "Exit", Hint = "Exit HUD and terminate process.", SelectionRightLabel = " > " };
+        public static readonly NavigationState ACTIVATE = new() { Label = "Activate", Hint = "Activate this Window to capture mouse once." };
+        public static readonly NavigationState EXIT = new() { Label = "Exit", Hint = "Exit HUD and terminate process." };
+        public static readonly NavigationState KEYBOARD_CONTROL = new() { Label = "Keyboard Navigation", Hint = "Capture Cursor Keys to navigate this window." };
+        public static readonly NavigationState SHOW_HELP = new() { Label = "Show Help Contents", Hint = "Show hints and top help content." };
         public static readonly NavigationState STYLE = new() { SelectionLabel = "Green", Label = "Colors", Hint = "Adjust colors of this window." };
         public static readonly NavigationState FONT = new() { SelectionLabel = "Source Code Pro", Label = "Font", Hint = "Select Font" };
     }

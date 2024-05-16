@@ -182,13 +182,13 @@
                         >
                         <StackPanel Margin="0,0,0,28" views:Spacing.Vertical="8">
 
-                            <Label Content="Options" Style="{DynamicResource TitleContent}"/>
-                            <views:ButtonPanel NavigationState="{Binding Path=States[KEYBOARD_CONTROL]}" />
-                            <views:ButtonPanel NavigationState="{Binding Path=States[SHOW_HELP]}" />
-
                             <Label Content="Functions" Style="{DynamicResource TitleContent}"/>
                             <views:ButtonPanel NavigationState="{Binding Path=States[ACTIVATE]}" />
                             <views:ButtonPanel NavigationState="{Binding Path=States[EXIT]}" />
+                            
+                            <Label Content="Options" Style="{DynamicResource TitleContent}"/>
+                            <views:SelectionControl NavigationState="{Binding Path=States[KEYBOARD_CONTROL]}" />
+                            <views:SelectionControl NavigationState="{Binding Path=States[SHOW_HELP]}" />
 
                             <Label Content="Style" Style="{DynamicResource TitleContent}"/>
                             <views:SelectionControl NavigationState="{Binding Path=States[STYLE]}" />

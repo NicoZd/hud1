@@ -16,9 +16,10 @@
         Command="{Binding Path=ClickCommand}"
         Focusable="False"
         >
-        
+
         <DockPanel Margin="0,4,4,4">
             <views:GlowBorderLabel     
+                MinWidth="40"
                 DockPanel.Dock="Right"
                 Click="{Binding Path=RightCommand}"                    
                 Label="{Binding Path=SelectionRightLabel}"
