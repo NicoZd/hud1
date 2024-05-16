@@ -170,9 +170,9 @@
                         <StackPanel Margin="0,0,0,28" views:Spacing.Vertical="8">
                             <Label Content="Crosshair" Style="{DynamicResource TitleContent}"/>
                             <!--<views:GlowBorderLabel Label="ON/OFF" Selected="{Binding Path=States[cross-visible].Selected}" />
-                        <views:GlowBorderLabel Label="C" Selected="{Binding Path=States[cross-color].Selected}"/>
-                        <views:GlowBorderLabel Label="F" Selected="{Binding Path=States[cross-form].Selected}"/>
-                        <views:GlowBorderLabel Label="S" Selected="{Binding Path=States[cross-size].Selected}"/>-->
+                            <views:GlowBorderLabel Label="C" Selected="{Binding Path=States[cross-color].Selected}"/>
+                            <views:GlowBorderLabel Label="F" Selected="{Binding Path=States[cross-form].Selected}"/>
+                            <views:GlowBorderLabel Label="S" Selected="{Binding Path=States[cross-size].Selected}"/>-->
                         </StackPanel>
                     </ScrollViewer>
 
@@ -182,23 +182,36 @@
                         >
                         <StackPanel Margin="0,0,0,28" views:Spacing.Vertical="8">
 
-                            <Label Content="Functions" Style="{DynamicResource TitleContent}"/>
+                            <Label Content="Options" Style="{DynamicResource TitleContent}"/>
+                            <views:ButtonPanel NavigationState="{Binding Path=States[KEYBOARD_CONTROL]}" />
+                            <views:ButtonPanel NavigationState="{Binding Path=States[SHOW_HELP]}" />
 
+                            <Label Content="Functions" Style="{DynamicResource TitleContent}"/>
                             <views:ButtonPanel NavigationState="{Binding Path=States[ACTIVATE]}" />
                             <views:ButtonPanel NavigationState="{Binding Path=States[EXIT]}" />
 
                             <Label Content="Style" Style="{DynamicResource TitleContent}"/>
-
                             <views:SelectionControl NavigationState="{Binding Path=States[STYLE]}" />
                             <views:SelectionControl NavigationState="{Binding Path=States[FONT]}" />
 
-                            <Label Content="Help" Style="{DynamicResource TitleContent}"/>
-
-                            <StackPanel Orientation="Vertical" Margin="0,0,0,10">
-                                <Label Content="Keys to open and close this window:" Style="{DynamicResource InfoLabelSecondary}" />
-                                <Label Content="- F2, ALT-S, ALT-F or ALT-L" Style="{DynamicResource InfoLabelSecondary}" />
-                                <Label Content="Use cursor keys to navigate and select." Style="{DynamicResource InfoLabelSecondary}" />
-                            </StackPanel>
+                            <Label Content="Quickhelp" Style="{DynamicResource TitleContent}"/>
+                            <views:IgnoreWidthControl Margin="0"  Focusable="False">
+                                <TextBlock   
+                                    Focusable="false"
+                                    Margin="5,4,5,0"
+                                    Padding="0"
+                                    VerticalAlignment="Top"
+                                    HorizontalAlignment="Left"
+                                    TextWrapping="Wrap"
+                                    FontFamily="{DynamicResource FontFamily}"
+                                    Foreground="{DynamicResource BrushInfoSecondary}" 
+                                    FontSize="12"
+                                    >
+                                    • Keys to open and close this window:<LineBreak/>
+                                    &#160;&#160;&#160;• F2, ALT-S, ALT-F or ALT-L<LineBreak/>
+                                    • Use cursor keys, mouse or touch to navigate and select.
+                                </TextBlock>
+                            </views:IgnoreWidthControl>
 
                         </StackPanel>
                     </ScrollViewer>

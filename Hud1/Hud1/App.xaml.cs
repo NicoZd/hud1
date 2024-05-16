@@ -27,6 +27,12 @@ namespace Hud1
             }
         }
 
+        public static void ReplaceResource(int index, ResourceDictionary dictionary)
+        {
+            Application.Current.Resources.MergedDictionaries.Insert(index, dictionary);
+            Application.Current.Resources.MergedDictionaries.RemoveAt(index + 1);
+        }
+
         public static void SelectStyle(String style, String font)
         {
             NavigationStates.FONT.SelectionLabel = font;
@@ -52,29 +58,27 @@ namespace Hud1
                 }
             }
 
-            Console.WriteLine("Found {0}", fontFile);
-            var ff2 = new FontFamily(new Uri(fontFile, UriKind.Absolute), "./#" + font);
+            ReplaceResource(0, new ResourceDictionary
+            {
+                { "FontFamily", new FontFamily(new Uri(fontFile, UriKind.Absolute), "./#" + font) }
+            });
 
-
-            var x = new ResourceDictionary();
-            x.Add("FontFamily", ff2);
-
-            Application.Current.Resources.MergedDictionaries.Clear();
-            Application.Current.Resources.MergedDictionaries.Add(x);
-
-            Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary()
+            ReplaceResource(1, new ResourceDictionary
             {
                 Source = new Uri("Themes/" + style + ".xaml", UriKind.RelativeOrAbsolute)
             });
-            Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary()
+
+            ReplaceResource(2, new ResourceDictionary
             {
                 Source = new Uri("Themes/Standard.xaml", UriKind.RelativeOrAbsolute)
             });
-            Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary()
+
+            ReplaceResource(3, new ResourceDictionary
             {
                 Source = new Uri("Themes/Buttons.xaml", UriKind.RelativeOrAbsolute)
             });
-            Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary()
+
+            ReplaceResource(4, new ResourceDictionary
             {
                 Source = new Uri("Themes/ScrollViewer.xaml", UriKind.RelativeOrAbsolute)
             });
