@@ -117,13 +117,13 @@
                 </LinearGradientBrush>
             </Setter.Value>
         </Setter>
-        <Setter Property="views:Aquarium.HasFish" Value="False"/>
+        <Setter Property="views:BringIntoView.BringIntoView" Value="False"/>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Background" Value="{DynamicResource BrushColorMedLow}"/>
             </Trigger>
             <DataTrigger Binding="{Binding Path=Selected}" Value="True">
-                <Setter Property="views:Aquarium.HasFish" Value="True"/>
+                <Setter Property="views:BringIntoView.BringIntoView" Value="True"/>
                 <Setter Property="Background">
                     <Setter.Value>
                         <LinearGradientBrush StartPoint="0,0" EndPoint="0,0">
