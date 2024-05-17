@@ -12,6 +12,9 @@
     <Compile Update="CrosshairWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\BooleanPanel.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\ButtonPanel.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -57,6 +60,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Themes\Green.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\BooleanPanel.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\ButtonPanel.xaml">

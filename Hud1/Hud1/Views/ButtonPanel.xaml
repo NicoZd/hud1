@@ -5,14 +5,13 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     xmlns:views="clr-namespace:Hud1.Views"
-    xmlns:local="clr-namespace:Hud1.Views"
     mc:Ignorable="d" 
     d:DesignHeight="450" d:DesignWidth="800"
     >
 
     <Button
         Style="{DynamicResource PanelButton}"
-        DataContext="{Binding Path=NavigationState, RelativeSource={RelativeSource AncestorType=local:ButtonPanel}}"
+        DataContext="{Binding Path=NavigationState, RelativeSource={RelativeSource AncestorType=views:ButtonPanel}}"
         Command="{Binding Path=ClickCommand}"
         Focusable="False"
         >

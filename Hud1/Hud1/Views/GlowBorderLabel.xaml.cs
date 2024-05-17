@@ -22,6 +22,9 @@ namespace Hud1.Views
         private static readonly DependencyProperty PressedProperty =
             BindingHelper.CreateProperty<GlowBorderLabel, bool>("Pressed", false);
 
+        private static readonly DependencyProperty EnabledProperty =
+            BindingHelper.CreateProperty<GlowBorderLabel, bool>("Enabled", true);
+
         private static readonly DependencyProperty NavigationStateProperty =
             BindingHelper.CreateProperty<GlowBorderLabel, NavigationState>("NavigationState", null);
 
@@ -44,11 +47,15 @@ namespace Hud1.Views
             set => SetValue(SelectedProperty, value);
             get => (Boolean)GetValue(SelectedProperty);
         }
-
         public bool Pressed
         {
             set => SetValue(PressedProperty, value);
             get => (Boolean)GetValue(PressedProperty);
+        }
+        public bool Enabled
+        {
+            set => SetValue(EnabledProperty, value);
+            get => (Boolean)GetValue(EnabledProperty);
         }
         public ICommand Click
         {

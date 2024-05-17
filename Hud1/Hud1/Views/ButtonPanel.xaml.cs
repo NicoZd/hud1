@@ -5,7 +5,6 @@ using System.Windows.Controls;
 
 namespace Hud1.Views
 {
-
     public partial class ButtonPanel : UserControl
     {
         private static readonly DependencyProperty NavigationStateProperty =

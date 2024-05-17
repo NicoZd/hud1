@@ -201,7 +201,7 @@ namespace Hud1.ViewModels
 
             Navigation.Configure(NavigationStates.KEYBOARD_CONTROL)
                 .SubstateOf(NavigationStates.MORE_VISIBLE)
-                .Permit(NavigationTriggers.UP, NavigationStates.EXIT)
+                .Permit(NavigationTriggers.UP, NavigationStates.HUD_POSITION)
                 .Permit(NavigationTriggers.DOWN, NavigationStates.SHOW_HELP);
 
             Navigation.Configure(NavigationStates.SHOW_HELP)

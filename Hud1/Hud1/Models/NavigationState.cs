@@ -36,6 +36,9 @@ namespace Hud1.Models
         public string selectionLabel = "";
 
         [ObservableProperty]
+        public bool selectionBoolean = true;
+
+        [ObservableProperty]
         public string selectionLeftLabel = "<";
 
         [ObservableProperty]
