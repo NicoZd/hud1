@@ -202,12 +202,16 @@ namespace Hud1.ViewModels
             Navigation.Configure(NavigationStates.KEYBOARD_CONTROL)
                 .SubstateOf(NavigationStates.MORE_VISIBLE)
                 .Permit(NavigationTriggers.UP, NavigationStates.HUD_POSITION)
-                .Permit(NavigationTriggers.DOWN, NavigationStates.SHOW_HELP);
+                .Permit(NavigationTriggers.DOWN, NavigationStates.SHOW_HELP)
+                .InternalTransition(NavigationTriggers.LEFT, NavigationStates.KEYBOARD_CONTROL.ExecuteLeft)
+                .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.KEYBOARD_CONTROL.ExecuteRight);
 
             Navigation.Configure(NavigationStates.SHOW_HELP)
                 .SubstateOf(NavigationStates.MORE_VISIBLE)
                 .Permit(NavigationTriggers.UP, NavigationStates.KEYBOARD_CONTROL)
-                .Permit(NavigationTriggers.DOWN, NavigationStates.STYLE);
+                .Permit(NavigationTriggers.DOWN, NavigationStates.STYLE)
+                .InternalTransition(NavigationTriggers.LEFT, NavigationStates.SHOW_HELP.ExecuteLeft)
+                .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.SHOW_HELP.ExecuteRight);
 
             NavigationStates.STYLE.LeftAction = PrevStyle;
             NavigationStates.STYLE.RightAction = NextStyle;
