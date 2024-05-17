@@ -35,6 +35,7 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="License.md" />
+    <None Include="Startup.md" />
     <None Include="UX.md" />
     <None Include="Strategy.md" />
     <None Include="Marketing.md" />

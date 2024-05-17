@@ -1,5 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Hud1.Helpers.CustomSplashScreen;
+using Hud1.Helpers;
 using Hud1.Models;
 using System.Collections.ObjectModel;
 using System.Diagnostics;

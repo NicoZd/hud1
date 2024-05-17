@@ -1,7 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Hud1.Helpers;
-using Hud1.Helpers.CustomSplashScreen;
 using Hud1.Models;
 using Stateless.Graph;
 using Stateless.Reflection;

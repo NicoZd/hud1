@@ -14,7 +14,7 @@ using Windows.Services.Store;
 using Windows.Storage;
 using WpfScreenHelper;
 
-namespace Hud1.Helpers.CustomSplashScreen
+namespace Hud1.Helpers
 {
     class DebugWriter : TextWriter
     {
@@ -52,16 +52,12 @@ namespace Hud1.Helpers.CustomSplashScreen
     class Entry
     {
 
-        public static readonly UInt32 WM_GAME_DIRECT_SHOWME = WindowsAPI.RegisterWindowMessage("WM_GAME_DIRECT_SHOWME");
+        public static readonly uint WM_GAME_DIRECT_SHOWME = WindowsAPI.RegisterWindowMessage("WM_GAME_DIRECT_SHOWME");
 
         static Mutex mutex = new Mutex(true, "GAME_DIRECT");
 
         public static string RootPath = "";
         public static string VersionPath = "";
-
-        private static readonly SplashScreenWrapper splashScreen = new(resourceName: "/Assets/splash2.png");
-
-        private static readonly App app = new();
 
         private static void CopyFilesRecursively(string sourcePath, string targetPath)
         {
@@ -81,11 +77,11 @@ namespace Hud1.Helpers.CustomSplashScreen
 
         public static void SendShutdown()
         {
-            WindowsAPI.SendNotifyMessage(new IntPtr(-1), WM_GAME_DIRECT_SHOWME, 0, 0);
+            WindowsAPI.SendNotifyMessage(new nint(-1), WM_GAME_DIRECT_SHOWME, 0, 0);
         }
 
-        [STAThread]
-        public static void Main(string[] args)
+
+        public static void Main()
         {
             // try close exising apps
             try
@@ -110,32 +106,7 @@ namespace Hud1.Helpers.CustomSplashScreen
                 return;
             }
 
-
-            try
-            {
-                StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
-                RootPath = Path.Combine(storageFolder.Path, "Game Direct");
-                if (!Directory.Exists(RootPath))
-                {
-                    Directory.CreateDirectory(RootPath);
-                }
-
-                Package package = Package.Current;
-                PackageId packageId = package.Id;
-                PackageVersion version = packageId.Version;
-                var Version = string.Format("{0}.{1}.{2}.{3}", version.Major, version.Minor, version.Build, version.Revision);
-
-                VersionPath = Path.Combine(RootPath, Version);
-            }
-            catch (Exception)
-            {
-                RootPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Game Direct");
-                if (!Directory.Exists(RootPath))
-                {
-                    Directory.CreateDirectory(RootPath);
-                }
-                VersionPath = Path.Combine(RootPath, "0.0.0.0");
-            }
+            InitPaths();
 
             var writer = new DebugWriter(Path.Combine(RootPath, "log.txt"));
             Console.SetOut(writer);
@@ -172,34 +143,35 @@ namespace Hud1.Helpers.CustomSplashScreen
                 Directory.Delete(VersionPath);
             }
 
-            var showSplash = !args.Any(x => string.Equals("-nosplash", x, StringComparison.OrdinalIgnoreCase));
+        }
 
-            if (showSplash)
+        public static void InitPaths()
+        {
+            try
             {
-                splashScreen.Show(autoClose: false);
+                StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
+                RootPath = Path.Combine(storageFolder.Path, "Game Direct");
+                if (!Directory.Exists(RootPath))
+                {
+                    Directory.CreateDirectory(RootPath);
+                }
+
+                Package package = Package.Current;
+                PackageId packageId = package.Id;
+                PackageVersion version = packageId.Version;
+                var Version = string.Format("{0}.{1}.{2}.{3}", version.Major, version.Minor, version.Build, version.Revision);
+
+                VersionPath = Path.Combine(RootPath, Version);
             }
-
-            app.InitializeComponent();
-
-            if (showSplash)
+            catch (Exception)
             {
-                // pump until loaded
-                PumpDispatcherUntilPriority(DispatcherPriority.Loaded);
-
-                // start a timer, after which the splash can be closed
-                var splashTimer = new DispatcherTimer
+                RootPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Game Direct");
+                if (!Directory.Exists(RootPath))
                 {
-                    Interval = TimeSpan.FromSeconds(0.1)
-                };
-                splashTimer.Tick += (s, e) =>
-                {
-                    splashTimer.Stop();
-                    splashScreen.Close(TimeSpan.FromMilliseconds(150));
-                };
-                splashTimer.Start();
+                    Directory.CreateDirectory(RootPath);
+                }
+                VersionPath = Path.Combine(RootPath, "0.0.0.0");
             }
-
-            app.Run();
         }
 
         public async static void CheckLicense()

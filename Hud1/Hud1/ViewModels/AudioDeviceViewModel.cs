@@ -38,6 +38,7 @@ namespace Hud1.ViewModels
 
         public AudioDeviceViewModel()
         {
+            Console.WriteLine("AudioDeviceViewModel");
             MMDeviceManager.DevicesChanged += OnDevicesChanged;
             MMDeviceManager.VolumeChanged += OnVolumeChanged;
             OnDevicesChanged();

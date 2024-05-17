@@ -1,5 +1,4 @@
 ﻿using Hud1.Helpers;
-using Hud1.Helpers.CustomSplashScreen;
 using Hud1.Models;
 using Hud1.ViewModels;
 using Hud1.Views;
@@ -14,8 +13,15 @@ namespace Hud1
 {
     public partial class App : Application
     {
+        public App()
+        {
+            Debug.Print("App {0}", Hud1.Entry0.Millis());
+            InitializeComponent();
+        }
+
         private void OnStartup(object sender, StartupEventArgs e)
         {
+            Debug.Print("OnStartup {0}", Hud1.Entry0.Millis());
             EventManager.RegisterClassHandler(typeof(Window), Window.PreviewMouseDownEvent, new MouseButtonEventHandler(OnPreviewMouseDown));
             EventManager.RegisterClassHandler(typeof(Window), Window.PreviewMouseUpEvent, new MouseButtonEventHandler(OnPreviewMouseDown));
         }

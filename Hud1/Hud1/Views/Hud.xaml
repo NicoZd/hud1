@@ -114,7 +114,8 @@
                     <Grid.OpacityMask>
                         <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                             <LinearGradientBrush.GradientStops>
-                                <GradientStop Offset="0" Color="Transparent"/>
+                                <GradientStop Offset="0.0" Color="Transparent"/>
+                                <GradientStop Offset="0.011" Color="#66000000"/>
                                 <GradientStop Offset="0.02" Color="Black"/>
                                 <GradientStop Offset="1" Color="Black"/>
                             </LinearGradientBrush.GradientStops>

@@ -5,7 +5,7 @@
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<UseWPF>true</UseWPF>
-		<StartupObject>Hud1.Helpers.CustomSplashScreen.Entry</StartupObject>
+		<StartupObject>Hud1.Entry0</StartupObject>
 		<ApplicationManifest>app.manifest</ApplicationManifest>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<Title>Draco HUD</Title>
@@ -87,6 +87,12 @@
 		<Content Include="Macros\repeat-left-mouse-click.lua">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="SplashWindow.xaml.cs">
+	    <SubType>Code</SubType>
+	  </Compile>
 	</ItemGroup>
 
 </Project>

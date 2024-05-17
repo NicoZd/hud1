@@ -41,6 +41,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="SplashWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="CrosshairWindow.xaml">
       <SubType>Designer</SubType>
     </Page>

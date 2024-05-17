@@ -5,7 +5,7 @@
     <RemoteDebugEnabled>False</RemoteDebugEnabled>
   </PropertyGroup>
   <PropertyGroup>
-    <UapAppxPackageBuildMode>StoreAndSideload</UapAppxPackageBuildMode>
+    <UapAppxPackageBuildMode>SideloadOnly</UapAppxPackageBuildMode>
     <AppxShowAllApps>False</AppxShowAllApps>
     <AppxBuildConfigurationSelection>x86</AppxBuildConfigurationSelection>
     <PackageOptionalProjectsInIdeBuilds>False</PackageOptionalProjectsInIdeBuilds>

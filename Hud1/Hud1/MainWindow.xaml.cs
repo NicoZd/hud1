@@ -1,6 +1,5 @@
 ﻿//using Hud1.Service;
 using Hud1.Helpers;
-using Hud1.Helpers.CustomSplashScreen;
 using Hud1.ViewModels;
 using System.Diagnostics;
 using System.Linq;
@@ -26,6 +25,8 @@ namespace Hud1
             Opacity = 0;
 
             this.StateChanged += OnStateChanged;
+
+            InitializeComponent();
         }
 
         private void OnStateChanged(object? sender, EventArgs e)
@@ -59,7 +60,7 @@ namespace Hud1
             System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler((_, _) =>
             {
-                WindowsAPI.SetWindowPos(hwnd, SafeNativeMethods.HWND_TOP, 0, 0, 0, 0, SetWindowPosFlags.SWP_NOMOVE | SetWindowPosFlags.SWP_NOSIZE | SetWindowPosFlags.SWP_NOACTIVATE);
+                WindowsAPI.SetWindowPos(hwnd, WindowsAPI.HWND_TOP, 0, 0, 0, 0, WindowsAPI.SetWindowPosFlags.SWP_NOMOVE | WindowsAPI.SetWindowPosFlags.SWP_NOSIZE | WindowsAPI.SetWindowPosFlags.SWP_NOACTIVATE);
             });
             dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
             dispatcherTimer.Start();

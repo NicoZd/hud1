@@ -1,5 +1,4 @@
-﻿using Hud1.Helpers.CustomSplashScreen;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 
 namespace Hud1.Helpers
 {
@@ -21,6 +20,8 @@ namespace Hud1.Helpers
 
     public static class WindowsAPI
     {
+        public static readonly nint HWND_TOP = new nint(0);
+
         public const int WH_KEYBOARD_LL = 13;
         public const int WH_MOUSE_LL = 14;
 
@@ -67,10 +68,18 @@ namespace Hud1.Helpers
         [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         public static extern IntPtr GetModuleHandle(string lpModuleName);
 
-        [DllImport("user32.dll", ExactSpelling = true, SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
 
         // Windows
+
+        [Flags]
+        public enum SetWindowPosFlags : uint
+        {
+            SWP_NOACTIVATE = 0x0010,
+            SWP_NOMOVE = 0x0002,
+            SWP_NOSIZE = 0x0001
+        }
+        [DllImport("user32.dll", ExactSpelling = true, SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool SetWindowPos(nint hWnd, nint hWndInsertAfter, int X, int Y, int cx, int cy, SetWindowPosFlags uFlags);
 
         [DllImport("user32.dll")]
