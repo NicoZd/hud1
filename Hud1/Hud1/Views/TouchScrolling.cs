@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -50,8 +44,6 @@ namespace Hud1.Views
 
         static void target_Unloaded(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine("Target Unloaded");
-
             var target = sender as ScrollViewer;
             if (target == null) return;
 
@@ -88,8 +80,6 @@ namespace Hud1.Views
         {
             var target = sender as ScrollViewer;
             if (target == null) return;
-
-            System.Diagnostics.Debug.WriteLine("Target Loaded");
 
             target.Unloaded += target_Unloaded;
             target.PreviewMouseLeftButtonDown += target_PreviewMouseLeftButtonDown;

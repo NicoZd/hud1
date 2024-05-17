@@ -156,7 +156,7 @@ namespace WpfScreenHelper
         {
             get
             {
-                return MultiMonitorSupport ? AllScreens.FirstOrDefault(t => t.Primary) : new Screen((IntPtr)PRIMARY_MONITOR);
+                return MultiMonitorSupport ? AllScreens.FirstOrDefault(t => t.Primary)! : new Screen((IntPtr)PRIMARY_MONITOR);
             }
         }
 
@@ -294,7 +294,7 @@ namespace WpfScreenHelper
         /// </summary>
         /// <param name="obj">The object to compare to this Screen.</param>
         /// <returns>true if the specified object is equal to this Screen; otherwise, false.</returns>
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (obj is Screen monitor)
             {
@@ -307,36 +307,22 @@ namespace WpfScreenHelper
             return false;
         }
 
-        /// <summary>
-        /// Computes and retrieves a hash code for an object.
-        /// </summary>
-        /// <returns>A hash code for an object.</returns>
         public override int GetHashCode()
         {
             return this.monitorHandle.GetHashCode();
         }
 
-        /// <summary>
-        /// The monitor enum callback.
-        /// </summary>
         private class MonitorEnumCallback
         {
-            /// <summary>
-            /// Initializes a new instance of the <see cref="MonitorEnumCallback"/> class.
-            /// </summary>
             public MonitorEnumCallback()
             {
                 this.Screens = new ArrayList();
             }
 
-            /// <summary>
-            /// Gets the screens.
-            /// </summary>
             public ArrayList Screens { get; }
 
             public bool Callback(IntPtr monitor, IntPtr hdc, IntPtr lprcMonitor, IntPtr lparam)
             {
-                Console.WriteLine("Call {0} {1}", monitor, hdc);
                 this.Screens.Add(new Screen(monitor, hdc));
                 return true;
             }

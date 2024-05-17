@@ -99,7 +99,7 @@ namespace Hud1.Helpers.CustomSplashScreen
                     startRount++;
                 }
             }
-            catch (AbandonedMutexException ex)
+            catch (AbandonedMutexException)
             {
             }
 
@@ -127,7 +127,7 @@ namespace Hud1.Helpers.CustomSplashScreen
 
                 VersionPath = Path.Combine(RootPath, Version);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 RootPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Game Direct");
                 if (!Directory.Exists(RootPath))

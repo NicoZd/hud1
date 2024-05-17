@@ -11,7 +11,7 @@ namespace Hud1.Helpers
         private unsafe static extern bool SetDeviceGammaRamp(Int32 hdc, void* ramp);
 
         [DllImport("gdi32.dll")]
-        public static extern IntPtr CreateDC(string lpszDriver, string lpszDevice, string lpszOutput, IntPtr lpInitData);
+        public static extern IntPtr CreateDC(string lpszDriver, string? lpszDevice, string? lpszOutput, IntPtr lpInitData);
 
         [DllImport("gdi32.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
@@ -61,6 +61,8 @@ namespace Hud1.Helpers
 
         public static unsafe bool SetGamma(double gamma)
         {
+            short* gArray = stackalloc short[3 * 256];
+
             foreach (var screen in Screen.AllScreens)
             {
                 Console.WriteLine("DeviceName {0}", screen.DeviceName);
@@ -78,9 +80,7 @@ namespace Hud1.Helpers
 
                 Console.WriteLine("!!!!!!!! {0}, {1}, {2}, {3}", d.DeviceName, d.DeviceString, d.DeviceID, d.DeviceKey);
 
-                short* gArray = stackalloc short[3 * 256];
                 short* idx = gArray;
-
                 double offset = 0;
                 double range2 = 255;
 

@@ -83,7 +83,7 @@ namespace WpfScreenHelper
 
         [DllImport(ExternDll.User32, ExactSpelling = true)]
         [ResourceExposure(ResourceScope.None)]
-        public static extern bool EnumDisplayMonitors(HandleRef hdc, COMRECT rcClip, MonitorEnumProc lpfnEnum, IntPtr dwData);
+        public static extern bool EnumDisplayMonitors(HandleRef hdc, COMRECT? rcClip, MonitorEnumProc lpfnEnum, IntPtr dwData);
 
         [DllImport(ExternDll.User32, ExactSpelling = true)]
         [ResourceExposure(ResourceScope.None)]
