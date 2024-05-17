@@ -172,6 +172,7 @@
                             <views:ButtonPanel NavigationState="{Binding Path=States[EXIT]}"/>
 
                             <Label Content="Options" Style="{DynamicResource TitleContent}"/>
+                            <views:SelectionControl NavigationState="{Binding Path=States[HUD_POSITION]}" />
                             <views:SelectionControl NavigationState="{Binding Path=States[KEYBOARD_CONTROL]}" />
                             <views:SelectionControl NavigationState="{Binding Path=States[SHOW_HELP]}" />
 

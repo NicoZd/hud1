@@ -191,8 +191,13 @@ namespace Hud1.ViewModels
             Navigation.Configure(NavigationStates.EXIT)
                 .SubstateOf(NavigationStates.MORE_VISIBLE)
                 .Permit(NavigationTriggers.UP, NavigationStates.ACTIVATE)
-                .Permit(NavigationTriggers.DOWN, NavigationStates.KEYBOARD_CONTROL)
+                .Permit(NavigationTriggers.DOWN, NavigationStates.HUD_POSITION)
                 .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.EXIT.ExecuteRight);
+
+            Navigation.Configure(NavigationStates.HUD_POSITION)
+                .SubstateOf(NavigationStates.MORE_VISIBLE)
+                .Permit(NavigationTriggers.UP, NavigationStates.EXIT)
+                .Permit(NavigationTriggers.DOWN, NavigationStates.KEYBOARD_CONTROL);
 
             Navigation.Configure(NavigationStates.KEYBOARD_CONTROL)
                 .SubstateOf(NavigationStates.MORE_VISIBLE)
