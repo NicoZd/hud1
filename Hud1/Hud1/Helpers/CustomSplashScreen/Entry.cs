@@ -211,6 +211,19 @@ namespace Hud1.Helpers.CustomSplashScreen
             Console.WriteLine("Check License... IsActive {0}", appLicense.IsActive);
             Console.WriteLine("Check License... IsTrial {0}", appLicense.IsTrial);
             Console.WriteLine("Check License... ExpirationDate {0}", appLicense.ExpirationDate);
+
+            if (appLicense.IsActive)
+            {
+                if (MessageBox.Show("App License is inactive. Unfortunately the application must shutdown. Do you want to open the App in the Microsoft Store?", "Game Direct", MessageBoxButton.YesNo, MessageBoxImage.Asterisk) == MessageBoxResult.Yes)
+                {
+                    Process.Start(new ProcessStartInfo
+                    {
+                        FileName = "ms-windows-store://pdp/?productid=9NCQ2311M9XV",
+                        UseShellExecute = true
+                    });
+                }
+                Application.Current.Shutdown();
+            }
         }
 
         private static void PumpDispatcherUntilPriority(DispatcherPriority dispatcherPriority)
