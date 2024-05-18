@@ -1,24 +1,11 @@
-﻿using System.Diagnostics;
+﻿using Hud1.Helpers;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Pipes;
 using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Interop;
-using System.Windows.Threading;
-using Windows.ApplicationModel;
-
-using Windows.Foundation.Metadata;
-using Windows.Security.ExchangeActiveSyncProvisioning;
-using Windows.Services.Store;
-using Windows.Storage;
-using WpfScreenHelper;
-
 namespace Hud1
 {
-    class Entry0
+    class Startup
     {
         private static long _startMS;
 
@@ -31,10 +18,9 @@ namespace Hud1
 
         private static void RunApp()
         {
-            Debug.Print("RunApp {0}", Hud1.Entry0.Millis());
-
+            Debug.Print("RunApp {0}", Hud1.Startup.Millis());
             App app = new();
-            Debug.Print("A {0}", Hud1.Entry0.Millis());
+            Debug.Print("A {0}", Hud1.Startup.Millis());
             app.Run();
         }
 

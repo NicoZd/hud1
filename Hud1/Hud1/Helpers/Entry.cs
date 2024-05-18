@@ -81,7 +81,7 @@ namespace Hud1.Helpers
         }
 
 
-        public static void Main()
+        public static async Task Main()
         {
             // try close exising apps
             try

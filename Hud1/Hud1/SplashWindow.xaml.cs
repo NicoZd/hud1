@@ -1,26 +1,36 @@
-﻿using Hud1.Helpers;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Hud1.Helpers;
 using System;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Interop;
+using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using WpfScreenHelper;
 
 namespace Hud1
 {
+    [INotifyPropertyChanged]
     public partial class SplashWindow : Window
     {
+        public static SplashWindow Instance;
+
+        [ObservableProperty]
+        private string _splashText;
+
         public SplashWindow()
         {
-            Debug.Print("SplashWindow {0}", Hud1.Entry0.Millis());
+            Instance = this;
+            Debug.Print("SplashWindow {0}", Hud1.Startup.Millis());
             Opacity = 0;
-            InitializeComponent();
 
+            SplashText = "Start";
+            InitializeComponent();
         }
 
         private void OnWindowLoaded(object sender, RoutedEventArgs e)
         {
-            Debug.Print("SplashWindow OnWindowLoaded {0}", Hud1.Entry0.Millis());
+            Debug.Print("SplashWindow OnWindowLoaded {0}", Hud1.Startup.Millis());
             var hwnd = new WindowInteropHelper(this).Handle;
             var extendedStyle = WindowsAPI.GetWindowLong(hwnd, WindowsAPI.GWL_EXSTYLE);
             WindowsAPI.SetWindowLong(hwnd, WindowsAPI.GWL_EXSTYLE,
@@ -40,31 +50,30 @@ namespace Hud1
             Height = 396 / dpiScale.Height;
             this.SetWindowPosition(WpfScreenHelper.Enum.WindowPositions.Center, Screen.AllScreens.ElementAt(0));
 
-            Opacity = 1;
-
-            ThreadPool.QueueUserWorkItem((_) =>
+            var animation = new DoubleAnimation
             {
-                Debug.Print("Run Init {0}", Hud1.Entry0.Millis());
-                Entry.Main();
-                Debug.Print("Run Init Complete {0}", Hud1.Entry0.Millis());
+                To = 1,
+                BeginTime = TimeSpan.FromSeconds(0),
+                Duration = TimeSpan.FromSeconds(0.15),
+                FillBehavior = FillBehavior.Stop
+            };
+            animation.Completed += async (s, a) =>
+            {
+                this.Opacity = 1;
+
+                Debug.Print("Run Init {0}", Hud1.Startup.Millis());
+                await Entry.Main();
+                Debug.Print("Run Init Complete {0}", Hud1.Startup.Millis());
 
                 Application.Current?.Dispatcher.Invoke(new Action(() =>
                 {
-                    Debug.Print("Show Main {0}", Hud1.Entry0.Millis());
+                    Debug.Print("Show Main {0}", Hud1.Startup.Millis());
                     var mainWindow = new MainWindow();
                     mainWindow.Show();
-
-                    Debug.Print("Show Main Done {0}", Hud1.Entry0.Millis());
-                    ThreadPool.QueueUserWorkItem((_) =>
-                    {
-                        Thread.Sleep(1000);
-                        Application.Current?.Dispatcher.Invoke(new Action(() =>
-                        {
-                            this.Close();
-                        }));
-                    });
                 }));
-            });
+
+            };
+            this.BeginAnimation(UIElement.OpacityProperty, animation);
         }
     }
 }

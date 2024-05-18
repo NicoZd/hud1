@@ -19,19 +19,21 @@
     Width="400"
     Height="300"
     Loaded="OnWindowLoaded"
+    
+    DataContext="{Binding RelativeSource={RelativeSource Self}}"
     >
 
     <Window.Background>
         <SolidColorBrush Color="Transparent"/>
     </Window.Background>
 
-    <Grid>
+    <Grid >
         <Image Source="Assets/splash2.png" />
         <TextBlock
             Foreground="#9900ff00"
             Margin="20"
             VerticalAlignment="Bottom"
             HorizontalAlignment="Right"
-            Text="2dsfgs dfgs dfg2"/>
+            Text="{Binding Path=SplashText}"/>
     </Grid>
 </Window>

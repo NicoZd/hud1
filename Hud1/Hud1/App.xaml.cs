@@ -15,13 +15,13 @@ namespace Hud1
     {
         public App()
         {
-            Debug.Print("App {0}", Hud1.Entry0.Millis());
+            Debug.Print("App {0}", Hud1.Startup.Millis());
             InitializeComponent();
         }
 
         private void OnStartup(object sender, StartupEventArgs e)
         {
-            Debug.Print("OnStartup {0}", Hud1.Entry0.Millis());
+            Debug.Print("OnStartup {0}", Hud1.Startup.Millis());
             EventManager.RegisterClassHandler(typeof(Window), Window.PreviewMouseDownEvent, new MouseButtonEventHandler(OnPreviewMouseDown));
             EventManager.RegisterClassHandler(typeof(Window), Window.PreviewMouseUpEvent, new MouseButtonEventHandler(OnPreviewMouseDown));
         }
