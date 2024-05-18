@@ -51,13 +51,13 @@
                             NavigationState="{Binding Path=States[MENU_DISPLAY]}"
                             />
 
-                        <views:GlowBorderLabel 
+                        <!--<views:GlowBorderLabel 
                             Label="Audio" 
                             Selected="{Binding Path=States[MENU_AUDIO].Selected}"
                             Highlighted="{Binding Path=States[AUDIO_VISIBLE].Selected}"
                             Click="{Binding SelectCommand}"
                             NavigationState="{Binding Path=States[MENU_AUDIO]}"
-                            />
+                            />-->
 
                         <views:GlowBorderLabel 
                             Label="Macro" 
@@ -76,7 +76,8 @@
                             />
 
                         <views:GlowBorderLabel
-                            Label="More" 
+                            Margin="60,0,0,0"
+                            Label="⚙" 
                             Selected="{Binding Path=States[MENU_MORE].Selected}"
                             Highlighted="{Binding Path=States[MORE_VISIBLE].Selected}"
                             Click="{Binding SelectCommand}"

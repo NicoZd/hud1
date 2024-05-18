@@ -54,7 +54,7 @@ namespace Hud1.ViewModels
             Navigation.Configure(NavigationStates.MENU_DISPLAY)
                 .SubstateOf(NavigationStates.DISPLAY_VISIBLE)
                 .Permit(NavigationTriggers.LEFT, NavigationStates.MENU_MORE)
-                .Permit(NavigationTriggers.RIGHT, NavigationStates.MENU_AUDIO)
+                .Permit(NavigationTriggers.RIGHT, NavigationStates.MENU_MACRO)
                 .Permit(NavigationTriggers.DOWN, NavigationStates.GAMMA)
                 .Permit(NavigationTriggers.UP, NavigationStates.GAMMA);
 
@@ -67,7 +67,7 @@ namespace Hud1.ViewModels
 
             Navigation.Configure(NavigationStates.MENU_MACRO)
                 .SubstateOf(NavigationStates.MACRO_VISIBLE)
-                .Permit(NavigationTriggers.LEFT, NavigationStates.MENU_AUDIO)
+                .Permit(NavigationTriggers.LEFT, NavigationStates.MENU_DISPLAY)
                 .Permit(NavigationTriggers.RIGHT, NavigationStates.MENU_CROSSHAIR)
                 .Permit(NavigationTriggers.UP, NavigationStates.MACROS_FOLDER)
                 .Permit(NavigationTriggers.DOWN, NavigationStates.MACROS);

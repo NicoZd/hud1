@@ -30,19 +30,20 @@
     <Grid >
         <Image Source="Assets/splash2.png" />
 
-        <TextBlock
+        <Grid Margin="0,5,0,0">
+            <TextBlock
             Foreground="#9900ff00"
             Margin="0,230,0,0"
             VerticalAlignment="Top"
             HorizontalAlignment="Center"
             Text="Game Direct"/>
 
-        <TextBlock
+            <TextBlock
             Foreground="#99008800"
             Margin="0,246,0,0"
             VerticalAlignment="Top"
             HorizontalAlignment="Center"
             Text="sdfg"/>
-
+        </Grid>
     </Grid>
 </Window>
