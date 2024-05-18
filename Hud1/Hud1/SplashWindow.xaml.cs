@@ -39,15 +39,6 @@ namespace Hud1
                 | WindowsAPI.WS_EX_TRANSPARENT
                 );
 
-            var source = PresentationSource.FromVisual(this);
-
-            var dpiScale = new Size(
-                source.CompositionTarget.TransformToDevice.M11,
-                source.CompositionTarget.TransformToDevice.M22);
-
-            Debug.Print("dpiScale {0}", dpiScale);
-            Width = 676 / dpiScale.Width;
-            Height = 396 / dpiScale.Height;
             this.SetWindowPosition(WpfScreenHelper.Enum.WindowPositions.Center, Screen.AllScreens.ElementAt(0));
 
             var animation = new DoubleAnimation
@@ -57,20 +48,23 @@ namespace Hud1
                 Duration = TimeSpan.FromSeconds(0.15),
                 FillBehavior = FillBehavior.Stop
             };
-            animation.Completed += async (s, a) =>
+            animation.Completed += (s, a) =>
             {
                 this.Opacity = 1;
 
-                Debug.Print("Run Init {0}", Hud1.Startup.Millis());
-                await Entry.Main();
-                Debug.Print("Run Init Complete {0}", Hud1.Startup.Millis());
-
-                Application.Current?.Dispatcher.Invoke(new Action(() =>
+                ThreadPool.QueueUserWorkItem(async (_) =>
                 {
-                    Debug.Print("Show Main {0}", Hud1.Startup.Millis());
-                    var mainWindow = new MainWindow();
-                    mainWindow.Show();
-                }));
+                    Debug.Print("Run Init {0}", Hud1.Startup.Millis());
+                    await Entry.Main();
+                    Debug.Print("Run Init Complete {0}", Hud1.Startup.Millis());
+
+                    Application.Current?.Dispatcher.Invoke(new Action(() =>
+                    {
+                        Debug.Print("Show Main {0}", Hud1.Startup.Millis());
+                        var mainWindow = new MainWindow();
+                        mainWindow.Show();
+                    }));
+                });
 
             };
             this.BeginAnimation(UIElement.OpacityProperty, animation);

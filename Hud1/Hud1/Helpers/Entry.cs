@@ -83,6 +83,9 @@ namespace Hud1.Helpers
 
         public static async Task Main()
         {
+            SplashWindow.Instance.SplashText = "MAIN 1";
+            Thread.Sleep(100);
+
             // try close exising apps
             try
             {
@@ -143,6 +146,8 @@ namespace Hud1.Helpers
                 Directory.Delete(VersionPath);
             }
 
+            SplashWindow.Instance.SplashText += "MAIN Last";
+            Thread.Sleep(100);
         }
 
         public static void InitPaths()

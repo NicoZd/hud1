@@ -1,1 +1,4 @@
-﻿test1@jqxp.org 8e";7K*6)T9zxb^/
+﻿
+⚙Startup Options
+- directory
+- broken config
