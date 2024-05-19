@@ -48,27 +48,27 @@ namespace Hud1.ViewModels
 
         private void CreateNavigation()
         {
-            Navigation = new(NavigationStates.MENU_DISPLAY);
+            Navigation = new(NavigationStates.MENU_NIGHTVISION);
 
             Navigation.Configure(NavigationStates.ALL)
                 .PermitDynamic(NavigationTriggers.DIRECT, () => { return DirectNavigationStateTarget!; });
 
-            Navigation.Configure(NavigationStates.DISPLAY_VISIBLE).SubstateOf(NavigationStates.ALL);
+            Navigation.Configure(NavigationStates.NIGHTVISION_VISIBLE).SubstateOf(NavigationStates.ALL);
             Navigation.Configure(NavigationStates.MACRO_VISIBLE).SubstateOf(NavigationStates.ALL);
             Navigation.Configure(NavigationStates.CROSSHAIR_VISIBLE).SubstateOf(NavigationStates.ALL);
             Navigation.Configure(NavigationStates.MORE_VISIBLE).SubstateOf(NavigationStates.ALL);
 
             // MENU
-            Navigation.Configure(NavigationStates.MENU_DISPLAY)
-                .SubstateOf(NavigationStates.DISPLAY_VISIBLE)
+            Navigation.Configure(NavigationStates.MENU_NIGHTVISION)
+                .SubstateOf(NavigationStates.NIGHTVISION_VISIBLE)
                 .Permit(NavigationTriggers.LEFT, NavigationStates.MENU_MORE)
                 .Permit(NavigationTriggers.RIGHT, NavigationStates.MENU_MACRO)
-                .Permit(NavigationTriggers.DOWN, NavigationStates.GAMMA)
+                .Permit(NavigationTriggers.DOWN, NavigationStates.NIGHTVISION_ENABLED)
                 .Permit(NavigationTriggers.UP, NavigationStates.GAMMA);
 
             Navigation.Configure(NavigationStates.MENU_MACRO)
                 .SubstateOf(NavigationStates.MACRO_VISIBLE)
-                .Permit(NavigationTriggers.LEFT, NavigationStates.MENU_DISPLAY)
+                .Permit(NavigationTriggers.LEFT, NavigationStates.MENU_NIGHTVISION)
                 .Permit(NavigationTriggers.RIGHT, NavigationStates.MENU_CROSSHAIR)
                 .Permit(NavigationTriggers.UP, NavigationStates.MACROS_FOLDER)
                 .Permit(NavigationTriggers.DOWN, NavigationStates.MACROS);
@@ -81,17 +81,27 @@ namespace Hud1.ViewModels
             Navigation.Configure(NavigationStates.MENU_MORE)
                 .SubstateOf(NavigationStates.MORE_VISIBLE)
                 .Permit(NavigationTriggers.LEFT, NavigationStates.MENU_CROSSHAIR)
-                .Permit(NavigationTriggers.RIGHT, NavigationStates.MENU_DISPLAY)
+                .Permit(NavigationTriggers.RIGHT, NavigationStates.MENU_NIGHTVISION)
                 .Permit(NavigationTriggers.DOWN, NavigationStates.ACTIVATE)
                 .Permit(NavigationTriggers.UP, NavigationStates.FONT);
 
-            // DISPLAY
+            // NIGHTVISION
+
+            NavigationStates.NIGHTVISION_ENABLED.LeftAction = GammaViewModel.SelectPrevGama;
+            NavigationStates.NIGHTVISION_ENABLED.RightAction = GammaViewModel.SelectNextGama;
+            Navigation.Configure(NavigationStates.NIGHTVISION_ENABLED)
+               .SubstateOf(NavigationStates.NIGHTVISION_VISIBLE)
+               .Permit(NavigationTriggers.UP, NavigationStates.MENU_NIGHTVISION)
+               .Permit(NavigationTriggers.DOWN, NavigationStates.GAMMA)
+               .InternalTransition(NavigationTriggers.LEFT, NavigationStates.NIGHTVISION_ENABLED.ExecuteLeft)
+               .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.NIGHTVISION_ENABLED.ExecuteRight);
+
             NavigationStates.GAMMA.LeftAction = GammaViewModel.SelectPrevGama;
             NavigationStates.GAMMA.RightAction = GammaViewModel.SelectNextGama;
             Navigation.Configure(NavigationStates.GAMMA)
-               .SubstateOf(NavigationStates.DISPLAY_VISIBLE)
-               .Permit(NavigationTriggers.UP, NavigationStates.MENU_DISPLAY)
-               .Permit(NavigationTriggers.DOWN, NavigationStates.MENU_DISPLAY)
+               .SubstateOf(NavigationStates.NIGHTVISION_VISIBLE)
+               .Permit(NavigationTriggers.UP, NavigationStates.NIGHTVISION_ENABLED)
+               .Permit(NavigationTriggers.DOWN, NavigationStates.MENU_NIGHTVISION)
                .InternalTransition(NavigationTriggers.LEFT, NavigationStates.GAMMA.ExecuteLeft)
                .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.GAMMA.ExecuteRight);
 

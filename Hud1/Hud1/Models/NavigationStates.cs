@@ -5,8 +5,8 @@
         public static readonly NavigationState ALL = new();
 
         // MENU
-        public static readonly NavigationState MENU_DISPLAY = new() { Hint = "Use F3 to toogle Nightvision. Adjust Gamma Settings to select intensity." };
-        public static readonly NavigationState DISPLAY_VISIBLE = new();
+        public static readonly NavigationState MENU_NIGHTVISION = new() { Hint = "Use F3 anytime to toogle Nightvision. Adjust Gamma Settings to select intensity." };
+        public static readonly NavigationState NIGHTVISION_VISIBLE = new();
 
         public static readonly NavigationState MENU_MACRO = new() { Hint = "Start Mouse & Keyboard Macros." };
         public static readonly NavigationState MACRO_VISIBLE = new();
@@ -18,7 +18,8 @@
         public static readonly NavigationState MORE_VISIBLE = new();
 
         // NIGHTVISION
-        public static readonly NavigationState GAMMA = new() { Label = "Gamma", Hint = "Adjust Windows Desktop Gamma Settings.", AllowRepeat = true };
+        public static readonly NavigationState NIGHTVISION_ENABLED = new() { Label = "Toggle", Hint = "Use F3 anytime to toogle Nightvision.", SelectionLeftLabel = "< Off", SelectionRightLabel = "On >" };
+        public static readonly NavigationState GAMMA = new() { Label = "Gamma", Hint = "Adjust Windows Desktop Gamma while Nightvision toggled on.", AllowRepeat = true };
 
         // MACRO
         public static readonly NavigationState MACROS = new() { };

@@ -57,10 +57,10 @@
 
                             <views:GlowBorderLabel 
                                 Label="Nightvision" 
-                                Selected="{Binding Path=States[MENU_DISPLAY].Selected}"
-                                Highlighted="{Binding Path=States[DISPLAY_VISIBLE].Selected}"
+                                Selected="{Binding Path=States[MENU_NIGHTVISION].Selected}"
+                                Highlighted="{Binding Path=States[NIGHTVISION_VISIBLE].Selected}"
                                 Click="{Binding SelectCommand}"
-                                NavigationState="{Binding Path=States[MENU_DISPLAY]}"
+                                NavigationState="{Binding Path=States[MENU_NIGHTVISION]}"
                                 />
 
                             <views:GlowBorderLabel 
@@ -122,10 +122,10 @@
                         </LinearGradientBrush>
                     </Grid.OpacityMask>
 
-                    <views:ScrollPanel Visibility="{Binding Path=States[DISPLAY_VISIBLE].Visibility}">
+                    <views:ScrollPanel Visibility="{Binding Path=States[NIGHTVISION_VISIBLE].Visibility}">
                         <StackPanel Margin="0,0,0,28" views:Spacing.Vertical="8">
                             <Label Content="Nightvision" Style="{DynamicResource TitleContent}"/>
-                            <views:BooleanPanel NavigationState="{Binding Path=States[KEYBOARD_CONTROL]}" />
+                            <views:BooleanPanel NavigationState="{Binding Path=States[NIGHTVISION_ENABLED]}" />
                             <views:SelectionControl NavigationState="{Binding Path=States[GAMMA]}" />
                         </StackPanel>
                     </views:ScrollPanel>
