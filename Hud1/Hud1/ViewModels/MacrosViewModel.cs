@@ -28,7 +28,7 @@ namespace Hud1.ViewModels
         {
             Macros = new ObservableCollection<Macro>();
 
-            _path = Path.Combine(Entry.VersionPath, "Macros");
+            _path = Path.Combine(Startup.VersionPath, "Macros");
 
             _watcher = new FileSystemWatcher(_path);
             _watcher.NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.CreationTime | NotifyFilters.FileName;

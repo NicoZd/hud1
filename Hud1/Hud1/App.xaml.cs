@@ -15,13 +15,12 @@ namespace Hud1
     {
         public App()
         {
-            Debug.Print("App {0}", Hud1.Startup.Millis());
+            Debug.Print("App {0}", Hud1.Entry.Millis());
             InitializeComponent();
         }
 
         private void OnStartup(object sender, StartupEventArgs e)
         {
-            Debug.Print("OnStartup {0}", Hud1.Startup.Millis());
             EventManager.RegisterClassHandler(typeof(Window), Window.PreviewMouseDownEvent, new MouseButtonEventHandler(OnPreviewMouseDown));
             EventManager.RegisterClassHandler(typeof(Window), Window.PreviewMouseUpEvent, new MouseButtonEventHandler(OnPreviewMouseDown));
         }
@@ -46,7 +45,7 @@ namespace Hud1
 
             var fontFile = "";
 
-            var fontsFolder = Path.Combine(Entry.VersionPath, "Fonts");
+            var fontsFolder = Path.Combine(Hud1.Startup.VersionPath, "Fonts");
             string[] fileEntries = Directory.GetFiles(fontsFolder, "*.ttf");
             for (int i = 0; i < fileEntries.Length; i++)
             {

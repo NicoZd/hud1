@@ -5,7 +5,7 @@
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<UseWPF>true</UseWPF>
-		<StartupObject>Hud1.Startup</StartupObject>
+		<StartupObject>Hud1.Entry</StartupObject>
 		<ApplicationManifest>app.manifest</ApplicationManifest>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<Title>Draco HUD</Title>
@@ -63,7 +63,7 @@
 		</Resource>
 		<Resource Include="Assets\splash.png" />
 		<Resource Include="Assets\splash2.png">
-		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Resource>
 		<Content Include="Fonts\Aurulent-Regular.ttf">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -89,9 +89,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="SplashWindow.xaml.cs">
-	    <SubType>Code</SubType>
-	  </Compile>
+		<Compile Update="SplashWindow.xaml.cs">
+			<SubType>Code</SubType>
+		</Compile>
 	</ItemGroup>
 
 </Project>

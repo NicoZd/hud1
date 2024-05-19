@@ -178,7 +178,7 @@ namespace Hud1.ViewModels
                 var item = list[i];
                 Navigation.Configure(item).SubstateOf(visible);
 
-                if (item == NavigationStates.MENU_MACRO)
+                if (item == NavigationStates.MACROS)
                     continue;
 
                 if (item == first)
@@ -281,7 +281,7 @@ namespace Hud1.ViewModels
 
         string[] fontList()
         {
-            var fontsFolder = Path.Combine(Entry.VersionPath, "Fonts");
+            var fontsFolder = Path.Combine(Startup.VersionPath, "Fonts");
             string[] fileEntries = Directory.GetFiles(fontsFolder, "*.ttf");
             List<string> fonts = [];
             for (int i = 0; i < fileEntries.Length; i++)

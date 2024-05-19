@@ -40,6 +40,7 @@ namespace Hud1
                 this.Topmost = true;
             }
         }
+
         private void OnWindowActivated(object sender, EventArgs e)
         {
             Console.WriteLine("OnWindowActivated");
@@ -81,14 +82,12 @@ namespace Hud1
             GlobalKeyboardHook.SystemHook();
 
             FadeIn();
-
-            Entry.CheckLicense();
         }
         private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
-            if (msg == Entry.WM_GAME_DIRECT_SHOWME)
+            if (msg == Startup.WM_GAME_DIRECT_SHOWME)
             {
-                Console.WriteLine("WndProc {0} {1}", msg, Entry.WM_GAME_DIRECT_SHOWME);
+                Console.WriteLine("WndProc {0} {1}", msg, Startup.WM_GAME_DIRECT_SHOWME);
                 Application.Current.Shutdown();
             }
 
@@ -158,6 +157,7 @@ namespace Hud1
                     this.Opacity = 1;
                 };
 
+                Console.WriteLine("MainWindow FadeIn {0}", Entry.Millis());
                 this.BeginAnimation(UIElement.OpacityProperty, animation);
                 crosshairWindow.BeginAnimation(UIElement.OpacityProperty, animation);
 

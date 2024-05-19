@@ -20,8 +20,9 @@ namespace Hud1
 
         public SplashWindow()
         {
+            Debug.Print("SplashWindow {0}", Hud1.Entry.Millis());
+
             Instance = this;
-            Debug.Print("SplashWindow {0}", Hud1.Startup.Millis());
             Opacity = 0;
 
             SplashText = "Start";
@@ -30,7 +31,7 @@ namespace Hud1
 
         private void OnWindowLoaded(object sender, RoutedEventArgs e)
         {
-            Debug.Print("SplashWindow OnWindowLoaded {0}", Hud1.Startup.Millis());
+            Debug.Print("SplashWindow OnWindowLoaded {0}", Hud1.Entry.Millis());
             var hwnd = new WindowInteropHelper(this).Handle;
             var extendedStyle = WindowsAPI.GetWindowLong(hwnd, WindowsAPI.GWL_EXSTYLE);
             WindowsAPI.SetWindowLong(hwnd, WindowsAPI.GWL_EXSTYLE,
@@ -48,26 +49,26 @@ namespace Hud1
                 Duration = TimeSpan.FromSeconds(0.15),
                 FillBehavior = FillBehavior.Stop
             };
-            animation.Completed += (s, a) =>
+            animation.Completed += async (s, a) =>
             {
+                Debug.Print("SplashWindow Animation In Complete {0}", Hud1.Entry.Millis());
                 this.Opacity = 1;
-
-                ThreadPool.QueueUserWorkItem((_) =>
+                try
                 {
-                    Debug.Print("Run Init {0}", Hud1.Startup.Millis());
-                    Entry.Main();
-                    Debug.Print("Run Init Complete {0}", Hud1.Startup.Millis());
-
-                    Application.Current?.Dispatcher.Invoke(new Action(() =>
-                    {
-                        Debug.Print("Show Main {0}", Hud1.Startup.Millis());
-                        var mainWindow = new MainWindow();
-                        mainWindow.Show();
-                    }));
-                });
-
+                    await Startup.Run();
+                    var mainWindow = new MainWindow();
+                    mainWindow.Show();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                    this.Close();
+                    MessageBox.Show("Wooo - there was a fatal startup error:\n\n" + ex.ToString(), "Game Direct", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             };
             this.BeginAnimation(UIElement.OpacityProperty, animation);
         }
+
+
     }
 }
