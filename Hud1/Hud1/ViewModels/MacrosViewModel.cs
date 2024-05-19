@@ -1,7 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Hud1.Helpers;
 using Hud1.Models;
-using Hud1.Services;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
@@ -51,7 +49,7 @@ namespace Hud1.ViewModels
 
         public void BuildNavigation()
         {
-            var Navigation = NavigationService.Instance.Navigation;
+            var Navigation = NavigationViewModel.Instance.Navigation;
 
             Navigation.Configure(NavigationStates.MACROS)
                 .OnEntryFrom(NavigationTriggers.UP, OnEntryFromBottom)
@@ -74,7 +72,7 @@ namespace Hud1.ViewModels
             Navigation.Configure(NavigationStates.MACROS_FOLDER)
                 .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.MACROS_FOLDER.ExecuteRight);
 
-            NavigationService.MakeNav(NavigationStates.MENU_MACRO, NavigationStates.MACRO_VISIBLE,
+            NavigationViewModel.MakeNav(NavigationStates.MENU_MACRO, NavigationStates.MACRO_VISIBLE,
                 [NavigationStates.MACROS, NavigationStates.MACROS_FOLDER]);
         }
 
@@ -132,7 +130,7 @@ namespace Hud1.ViewModels
 
             if (Macros.Count == 0)
             {
-                NavigationService.Instance.Navigation.Fire(NavigationTriggers.RETURN_UP);
+                NavigationViewModel.Instance.Navigation.Fire(NavigationTriggers.RETURN_UP);
             }
         }
 
@@ -160,7 +158,7 @@ namespace Hud1.ViewModels
             Console.WriteLine("OnUp {0}", SelectedIndex);
             if (SelectedIndex <= 0)
             {
-                NavigationService.Instance.Navigation.Fire(NavigationTriggers.RETURN_UP);
+                NavigationViewModel.Instance.Navigation.Fire(NavigationTriggers.RETURN_UP);
                 return;
             }
             SelectedIndex--;
@@ -170,7 +168,7 @@ namespace Hud1.ViewModels
             Console.WriteLine("OnDown {0}", SelectedIndex);
             if (SelectedIndex >= Macros.Count - 1)
             {
-                NavigationService.Instance.Navigation.Fire(NavigationTriggers.RETURN_DOWN);
+                NavigationViewModel.Instance.Navigation.Fire(NavigationTriggers.RETURN_DOWN);
                 return;
             }
             SelectedIndex++;
@@ -189,7 +187,7 @@ namespace Hud1.ViewModels
 
         internal void SelectMacro(Macro macro)
         {
-            NavigationService.SelectNavigationState(NavigationStates.MACROS);
+            NavigationViewModel.SelectNavigationState(NavigationStates.MACROS);
             var index = Macros.IndexOf(macro);
             if (index >= 0)
             {

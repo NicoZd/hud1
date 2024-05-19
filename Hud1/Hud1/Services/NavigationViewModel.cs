@@ -1,23 +1,22 @@
 ﻿using CommunityToolkit.Mvvm.DependencyInjection;
 using Hud1.Models;
 
-namespace Hud1.Services
+namespace Hud1.ViewModels
 {
-    public class NavigationService
+    public class NavigationViewModel
     {
-        public static readonly NavigationService Instance = new NavigationService();
+        public static readonly NavigationViewModel Instance = new NavigationViewModel();
 
         public readonly Stateless.StateMachine<NavigationState, NavigationTrigger> Navigation;
 
         private NavigationState? _directNavigationStateTarget = null;
 
-        private NavigationService()
+        private NavigationViewModel()
         {
             Navigation = new(NavigationStates.MENU_NIGHTVISION);
-            BuildNavigation();
         }
 
-        private void BuildNavigation()
+        public void BuildNavigation()
         {
             Navigation.Configure(NavigationStates.ALL)
                 .PermitDynamic(NavigationTriggers.DIRECT, () => { return _directNavigationStateTarget!; });
@@ -47,16 +46,16 @@ namespace Hud1.Services
 
         public static void SelectNavigationState(NavigationState navigationState)
         {
-            if (!NavigationService.Instance.Navigation.IsInState(navigationState))
+            if (!NavigationViewModel.Instance.Navigation.IsInState(navigationState))
             {
-                NavigationService.Instance._directNavigationStateTarget = navigationState;
-                NavigationService.Instance.Navigation.Fire(NavigationTriggers.DIRECT);
+                NavigationViewModel.Instance._directNavigationStateTarget = navigationState;
+                NavigationViewModel.Instance.Navigation.Fire(NavigationTriggers.DIRECT);
             }
         }
 
         public static void MakeNav(NavigationState menu, NavigationState visible, NavigationState[] list)
         {
-            var Navigation = NavigationService.Instance.Navigation;
+            var Navigation = NavigationViewModel.Instance.Navigation;
 
             if (list.Length < 2)
                 throw new Exception("List Length mist be at least 2.");

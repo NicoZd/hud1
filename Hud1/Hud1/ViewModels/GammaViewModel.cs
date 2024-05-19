@@ -1,9 +1,6 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Hud1.Helpers;
+﻿using Hud1.Helpers;
 using Hud1.Models;
-using Hud1.Services;
-using Stateless;
-using System.Diagnostics;
+
 namespace Hud1.ViewModels
 {
     public class GammaViewModel
@@ -22,7 +19,7 @@ namespace Hud1.ViewModels
 
         public void BuildNavigation()
         {
-            var Navigation = NavigationService.Instance.Navigation;
+            var Navigation = NavigationViewModel.Instance.Navigation;
 
             NavigationStates.NIGHTVISION_ENABLED.LeftAction = SelectPrevGama;
             NavigationStates.NIGHTVISION_ENABLED.RightAction = SelectNextGama;
@@ -36,7 +33,7 @@ namespace Hud1.ViewModels
                .InternalTransition(NavigationTriggers.LEFT, NavigationStates.GAMMA.ExecuteLeft)
                .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.GAMMA.ExecuteRight);
 
-            NavigationService.MakeNav(NavigationStates.MENU_NIGHTVISION, NavigationStates.NIGHTVISION_VISIBLE,
+            NavigationViewModel.MakeNav(NavigationStates.MENU_NIGHTVISION, NavigationStates.NIGHTVISION_VISIBLE,
                 [NavigationStates.NIGHTVISION_ENABLED, NavigationStates.GAMMA]);
         }
 

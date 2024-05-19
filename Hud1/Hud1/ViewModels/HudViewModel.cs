@@ -1,16 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
 using Hud1.Helpers;
 using Hud1.Models;
-using Hud1.Services;
-using Stateless.Graph;
 using Stateless.Reflection;
 using System.Diagnostics;
-using System.Drawing.Text;
 using System.IO;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace Hud1.ViewModels
@@ -42,7 +37,7 @@ namespace Hud1.ViewModels
         private void BuildNavigation()
         {
             Debug.Print("HudViewModel BuildNavigation");
-            var Navigation = NavigationService.Instance.Navigation;
+            var Navigation = NavigationViewModel.Instance.Navigation;
 
             NavigationStates.EXIT.RightAction = Application.Current.Shutdown;
             Navigation.Configure(NavigationStates.EXIT)
@@ -73,7 +68,7 @@ namespace Hud1.ViewModels
                .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.FONT.ExecuteRight);
 
 
-            NavigationService.MakeNav(NavigationStates.MENU_MORE, NavigationStates.MORE_VISIBLE,
+            NavigationViewModel.MakeNav(NavigationStates.MENU_MORE, NavigationStates.MORE_VISIBLE,
                 [NavigationStates.EXIT, NavigationStates.ACTIVATE, NavigationStates.HUD_POSITION,
                 NavigationStates.KEYBOARD_CONTROL, NavigationStates.STYLE, NavigationStates.FONT]);
 
@@ -89,7 +84,7 @@ namespace Hud1.ViewModels
         private void Select(NavigationState navigationState)
         {
             // Console.WriteLine("Select {0}", navigationState);
-            NavigationService.SelectNavigationState(navigationState);
+            NavigationViewModel.SelectNavigationState(navigationState);
         }
 
         private void Activate()
@@ -119,25 +114,25 @@ namespace Hud1.ViewModels
 
             if (key == GlobalKey.VK_LEFT)
             {
-                NavigationService.Instance.Navigation.Fire(NavigationTriggers.LEFT);
+                NavigationViewModel.Instance.Navigation.Fire(NavigationTriggers.LEFT);
                 return true;
             }
 
             if (key == GlobalKey.VK_RIGHT)
             {
-                NavigationService.Instance.Navigation.Fire(NavigationTriggers.RIGHT);
+                NavigationViewModel.Instance.Navigation.Fire(NavigationTriggers.RIGHT);
                 return true;
             }
 
             if (key == GlobalKey.VK_UP)
             {
-                NavigationService.Instance.Navigation.Fire(NavigationTriggers.UP);
+                NavigationViewModel.Instance.Navigation.Fire(NavigationTriggers.UP);
                 return true;
             }
 
             if (key == GlobalKey.VK_DOWN)
             {
-                NavigationService.Instance.Navigation.Fire(NavigationTriggers.DOWN);
+                NavigationViewModel.Instance.Navigation.Fire(NavigationTriggers.DOWN);
                 return true;
             }
 
@@ -208,7 +203,7 @@ namespace Hud1.ViewModels
         {
             // Console.WriteLine("UpdateModelFromStateless {0} ", nav.State);
 
-            var Navigation = NavigationService.Instance.Navigation;
+            var Navigation = NavigationViewModel.Instance.Navigation;
 
             State = Navigation.State;
 

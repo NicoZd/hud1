@@ -1,6 +1,5 @@
 ﻿using Hud1.Helpers;
 using Hud1.Models;
-using Hud1.Services;
 using Hud1.ViewModels;
 using System.Diagnostics;
 using System.IO;
@@ -56,6 +55,7 @@ namespace Hud1
 
             UserConfig.Current.someString = "loaded";
 
+            NavigationViewModel.Instance.BuildNavigation();
             GammaViewModel.Instance.BuildNavigation();
             MacrosViewModel.Instance.BuildNavigation();
         }
