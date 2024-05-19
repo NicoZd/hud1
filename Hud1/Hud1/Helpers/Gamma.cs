@@ -84,12 +84,17 @@ namespace Hud1.Helpers
                 double offset = 0;
                 double range2 = 255;
 
+                double[] gammas = new double[3];
+                gammas[0] = 1 + (gamma - 1) * 1;
+                gammas[1] = 1 + (gamma - 1) * 1;
+                gammas[2] = 1 + (gamma - 1) * 1;
+
                 for (int j = 0; j < 3; j++)
                 {
                     for (var i = 0; i < 256; i++)
                     {
                         var factor = ((double)i + offset) / range2;
-                        factor = Math.Pow(factor, 1 / gamma);
+                        factor = Math.Pow(factor, 1 / (gammas[j]));
                         int arrayVal = (int)(factor * 0xffff);
                         if (arrayVal > 65535)
                             arrayVal = 65535;

@@ -21,9 +21,6 @@ namespace Hud1.ViewModels
         public Dictionary<string, NavigationState> states = new Dictionary<string, NavigationState> { };
 
         [ObservableProperty]
-        public AudioDeviceViewModel audioDeviceViewModel = new();
-
-        [ObservableProperty]
         public GammaViewModel gammaViewModel = new();
 
         [ObservableProperty]
@@ -39,13 +36,24 @@ namespace Hud1.ViewModels
         public HudViewModel()
         {
             Instance = this;
+            CreateNavigation();
+
+            //string graph = UmlDotGraph.Format(Navigation.GetInfo());
+            //Console.WriteLine(graph);
+
+            MacrosViewModel.Navigation = Navigation;
+
+            UpdateModelFromMavigation();
+        }
+
+        private void CreateNavigation()
+        {
             Navigation = new(NavigationStates.MENU_DISPLAY);
 
             Navigation.Configure(NavigationStates.ALL)
                 .PermitDynamic(NavigationTriggers.DIRECT, () => { return DirectNavigationStateTarget!; });
 
             Navigation.Configure(NavigationStates.DISPLAY_VISIBLE).SubstateOf(NavigationStates.ALL);
-            Navigation.Configure(NavigationStates.AUDIO_VISIBLE).SubstateOf(NavigationStates.ALL);
             Navigation.Configure(NavigationStates.MACRO_VISIBLE).SubstateOf(NavigationStates.ALL);
             Navigation.Configure(NavigationStates.CROSSHAIR_VISIBLE).SubstateOf(NavigationStates.ALL);
             Navigation.Configure(NavigationStates.MORE_VISIBLE).SubstateOf(NavigationStates.ALL);
@@ -57,13 +65,6 @@ namespace Hud1.ViewModels
                 .Permit(NavigationTriggers.RIGHT, NavigationStates.MENU_MACRO)
                 .Permit(NavigationTriggers.DOWN, NavigationStates.GAMMA)
                 .Permit(NavigationTriggers.UP, NavigationStates.GAMMA);
-
-            Navigation.Configure(NavigationStates.MENU_AUDIO)
-                .SubstateOf(NavigationStates.AUDIO_VISIBLE)
-                .Permit(NavigationTriggers.LEFT, NavigationStates.MENU_DISPLAY)
-                .Permit(NavigationTriggers.RIGHT, NavigationStates.MENU_MACRO)
-                .Permit(NavigationTriggers.DOWN, NavigationStates.PLAYBACK_DEVICE)
-                .Permit(NavigationTriggers.UP, NavigationStates.CAPTURE_MUTE);
 
             Navigation.Configure(NavigationStates.MENU_MACRO)
                 .SubstateOf(NavigationStates.MACRO_VISIBLE)
@@ -85,8 +86,8 @@ namespace Hud1.ViewModels
                 .Permit(NavigationTriggers.UP, NavigationStates.FONT);
 
             // DISPLAY
-            NavigationStates.GAMMA.LeftAction = gammaViewModel.SelectPrevGama;
-            NavigationStates.GAMMA.RightAction = gammaViewModel.SelectNextGama;
+            NavigationStates.GAMMA.LeftAction = GammaViewModel.SelectPrevGama;
+            NavigationStates.GAMMA.RightAction = GammaViewModel.SelectNextGama;
             Navigation.Configure(NavigationStates.GAMMA)
                .SubstateOf(NavigationStates.DISPLAY_VISIBLE)
                .Permit(NavigationTriggers.UP, NavigationStates.MENU_DISPLAY)
@@ -94,62 +95,6 @@ namespace Hud1.ViewModels
                .InternalTransition(NavigationTriggers.LEFT, NavigationStates.GAMMA.ExecuteLeft)
                .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.GAMMA.ExecuteRight);
 
-            // SOUND
-            NavigationStates.PLAYBACK_DEVICE.LeftAction = audioDeviceViewModel.SelectPrevPlaybackDevice;
-            NavigationStates.PLAYBACK_DEVICE.RightAction = audioDeviceViewModel.SelectNextPlaybackDevice;
-            Navigation.Configure(NavigationStates.PLAYBACK_DEVICE)
-               .SubstateOf(NavigationStates.AUDIO_VISIBLE)
-               .Permit(NavigationTriggers.UP, NavigationStates.MENU_AUDIO)
-               .Permit(NavigationTriggers.DOWN, NavigationStates.PLAYBACK_VOLUME)
-               .InternalTransition(NavigationTriggers.LEFT, NavigationStates.PLAYBACK_DEVICE.ExecuteLeft)
-               .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.PLAYBACK_DEVICE.ExecuteRight);
-
-            NavigationStates.PLAYBACK_VOLUME.LeftAction = audioDeviceViewModel.PlaybackVolumeDown;
-            NavigationStates.PLAYBACK_VOLUME.RightAction = audioDeviceViewModel.PlaybackVolumeUp;
-            Navigation.Configure(NavigationStates.PLAYBACK_VOLUME)
-               .SubstateOf(NavigationStates.AUDIO_VISIBLE)
-               .Permit(NavigationTriggers.UP, NavigationStates.PLAYBACK_DEVICE)
-               .Permit(NavigationTriggers.DOWN, NavigationStates.PLAYBACK_MUTE)
-               .InternalTransition(NavigationTriggers.LEFT, NavigationStates.PLAYBACK_VOLUME.ExecuteLeft)
-               .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.PLAYBACK_VOLUME.ExecuteRight);
-
-            NavigationStates.PLAYBACK_MUTE.LeftAction = audioDeviceViewModel.PlaybackMute;
-            NavigationStates.PLAYBACK_MUTE.RightAction = audioDeviceViewModel.PlaybackUnmute;
-            Navigation.Configure(NavigationStates.PLAYBACK_MUTE)
-               .SubstateOf(NavigationStates.AUDIO_VISIBLE)
-               .Permit(NavigationTriggers.UP, NavigationStates.PLAYBACK_VOLUME)
-               .Permit(NavigationTriggers.DOWN, NavigationStates.CAPTURE_DEVICE)
-               .InternalTransition(NavigationTriggers.LEFT, NavigationStates.PLAYBACK_MUTE.ExecuteLeft)
-               .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.PLAYBACK_MUTE.ExecuteRight);
-
-            NavigationStates.CAPTURE_DEVICE.LeftAction = audioDeviceViewModel.SelectPrevCaptureDevice;
-            NavigationStates.CAPTURE_DEVICE.RightAction = audioDeviceViewModel.SelectNextCaptureDevice;
-            Navigation.Configure(NavigationStates.CAPTURE_DEVICE)
-              .SubstateOf(NavigationStates.AUDIO_VISIBLE)
-              .Permit(NavigationTriggers.UP, NavigationStates.PLAYBACK_MUTE)
-              .Permit(NavigationTriggers.DOWN, NavigationStates.CAPTURE_VOLUME)
-              .InternalTransition(NavigationTriggers.LEFT, NavigationStates.CAPTURE_DEVICE.ExecuteLeft)
-              .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.CAPTURE_DEVICE.ExecuteRight);
-
-            NavigationStates.CAPTURE_VOLUME.LeftAction = audioDeviceViewModel.CaptureVolumeDown;
-            NavigationStates.CAPTURE_VOLUME.RightAction = audioDeviceViewModel.CaptureVolumeUp;
-            Navigation.Configure(NavigationStates.CAPTURE_VOLUME)
-              .SubstateOf(NavigationStates.AUDIO_VISIBLE)
-              .Permit(NavigationTriggers.UP, NavigationStates.CAPTURE_DEVICE)
-              .Permit(NavigationTriggers.DOWN, NavigationStates.CAPTURE_MUTE)
-              .InternalTransition(NavigationTriggers.LEFT, NavigationStates.CAPTURE_VOLUME.ExecuteLeft)
-              .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.CAPTURE_VOLUME.ExecuteRight);
-
-            NavigationStates.CAPTURE_MUTE.LeftAction = audioDeviceViewModel.CaptureMute;
-            NavigationStates.CAPTURE_MUTE.RightAction = audioDeviceViewModel.CaptureUnmute;
-            Navigation.Configure(NavigationStates.CAPTURE_MUTE)
-              .SubstateOf(NavigationStates.AUDIO_VISIBLE)
-              .Permit(NavigationTriggers.UP, NavigationStates.CAPTURE_VOLUME)
-              .Permit(NavigationTriggers.DOWN, NavigationStates.MENU_AUDIO)
-              .InternalTransition(NavigationTriggers.LEFT, NavigationStates.CAPTURE_MUTE.ExecuteLeft)
-              .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.CAPTURE_MUTE.ExecuteRight);
-
-            MacrosViewModel.Navigation = Navigation;
             // MACROS
             Navigation.Configure(NavigationStates.MACROS)
              .SubstateOf(NavigationStates.MACRO_VISIBLE)
@@ -166,8 +111,8 @@ namespace Hud1.ViewModels
 
             NavigationStates.MACROS_FOLDER.RightAction = () =>
             {
-                Console.WriteLine("OPEN {0}", macrosViewModel._path);
-                Process.Start("explorer.exe", macrosViewModel._path);
+                Console.WriteLine("OPEN {0}", MacrosViewModel._path);
+                Process.Start("explorer.exe", MacrosViewModel._path);
             };
 
             Navigation.Configure(NavigationStates.MACROS_FOLDER)
@@ -175,7 +120,6 @@ namespace Hud1.ViewModels
                 .Permit(NavigationTriggers.UP, NavigationStates.MACROS)
                 .Permit(NavigationTriggers.DOWN, NavigationStates.MENU_MACRO)
                 .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.MACROS_FOLDER.ExecuteRight);
-
 
             // MORE
 
@@ -201,22 +145,15 @@ namespace Hud1.ViewModels
             Navigation.Configure(NavigationStates.KEYBOARD_CONTROL)
                 .SubstateOf(NavigationStates.MORE_VISIBLE)
                 .Permit(NavigationTriggers.UP, NavigationStates.HUD_POSITION)
-                .Permit(NavigationTriggers.DOWN, NavigationStates.SHOW_HELP)
+                .Permit(NavigationTriggers.DOWN, NavigationStates.STYLE)
                 .InternalTransition(NavigationTriggers.LEFT, NavigationStates.KEYBOARD_CONTROL.ExecuteLeft)
                 .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.KEYBOARD_CONTROL.ExecuteRight);
-
-            Navigation.Configure(NavigationStates.SHOW_HELP)
-                .SubstateOf(NavigationStates.MORE_VISIBLE)
-                .Permit(NavigationTriggers.UP, NavigationStates.KEYBOARD_CONTROL)
-                .Permit(NavigationTriggers.DOWN, NavigationStates.STYLE)
-                .InternalTransition(NavigationTriggers.LEFT, NavigationStates.SHOW_HELP.ExecuteLeft)
-                .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.SHOW_HELP.ExecuteRight);
 
             NavigationStates.STYLE.LeftAction = PrevStyle;
             NavigationStates.STYLE.RightAction = NextStyle;
             Navigation.Configure(NavigationStates.STYLE)
                .SubstateOf(NavigationStates.MORE_VISIBLE)
-               .Permit(NavigationTriggers.UP, NavigationStates.SHOW_HELP)
+               .Permit(NavigationTriggers.UP, NavigationStates.KEYBOARD_CONTROL)
                .Permit(NavigationTriggers.DOWN, NavigationStates.FONT)
                .InternalTransition(NavigationTriggers.LEFT, NavigationStates.STYLE.ExecuteLeft)
                .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.STYLE.ExecuteRight);
@@ -230,15 +167,12 @@ namespace Hud1.ViewModels
                .InternalTransition(NavigationTriggers.LEFT, NavigationStates.FONT.ExecuteLeft)
                .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.FONT.ExecuteRight);
 
-            string graph = UmlDotGraph.Format(Navigation.GetInfo());
-            //Console.WriteLine(graph);
-
             Navigation.OnUnhandledTrigger((state, trigger) =>
             {
                 Console.WriteLine("OnUnhandledTrigger {0} {1}", state, trigger);
             });
-            Navigation.OnTransitionCompleted(a => UpdateModelFromStateless());
-            UpdateModelFromStateless();
+
+            Navigation.OnTransitionCompleted(a => UpdateModelFromMavigation());
         }
 
         [RelayCommand]
@@ -360,7 +294,7 @@ namespace Hud1.ViewModels
             App.SelectStyle(NavigationStates.STYLE.SelectionLabel, NavigationStates.FONT.SelectionLabel);
         }
 
-        void UpdateModelFromStateless()
+        void UpdateModelFromMavigation()
         {
             // Console.WriteLine("UpdateModelFromStateless {0} ", nav.State);
 

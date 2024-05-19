@@ -1,19 +1,16 @@
-﻿using CoreAudio;
-using Hud1.Helpers;
+﻿using Hud1.Helpers;
 using MoonSharp.Interpreter;
-using System.Diagnostics;
 using System.IO;
-using System.Timers;
 using System.Windows;
 
 namespace Hud1.Models
 {
     public class MacroScript
     {
-        private Macro _macro;
-        private Script _script;
+        private readonly Macro _macro;
+        private readonly Script _script;
 
-        private Queue<SystemEvent> _systemEvents = [];
+        private readonly Queue<SystemEvent> _systemEvents = [];
 
         public MacroScript(Macro macro)
         {
