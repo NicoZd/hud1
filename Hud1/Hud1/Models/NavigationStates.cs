@@ -5,7 +5,7 @@
         public static readonly NavigationState ALL = new();
 
         // MENU
-        public static readonly NavigationState MENU_DISPLAY = new() { Hint = "Adjust Gamma Settings. Use F3 to toogle Nightvision." };
+        public static readonly NavigationState MENU_DISPLAY = new() { Hint = "Use F3 to toogle Nightvision. Adjust Gamma Settings to select intensity." };
         public static readonly NavigationState DISPLAY_VISIBLE = new();
 
         public static readonly NavigationState MENU_MACRO = new() { Hint = "Start Mouse & Keyboard Macros." };

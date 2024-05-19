@@ -94,7 +94,7 @@
                         <views:IgnoreWidthControl Margin="0"  Focusable="False">
                             <TextBlock   
                                 Focusable="false"
-                                Margin="5,4,5,0"
+                                Margin="5,3,5,2"
                                 Padding="0"
                                 VerticalAlignment="Top"
                                 Height="33"
