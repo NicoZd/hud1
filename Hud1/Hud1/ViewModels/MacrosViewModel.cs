@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Hud1.Helpers;
 using Hud1.Models;
+using Hud1.Services;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
@@ -10,25 +11,32 @@ namespace Hud1.ViewModels
 {
     public partial class MacrosViewModel : ObservableObject
     {
-        public ObservableCollection<Macro> Macros { get; set; } = new();
-
-        public Stateless.StateMachine<NavigationState, NavigationTrigger>? Navigation;
+        public static readonly MacrosViewModel Instance = new();
 
         [ObservableProperty]
-        public int selectedIndex = -1;
+        private ObservableCollection<Macro> _macros = [];
 
         [ObservableProperty]
-        public bool selected = false;
+        private int _selectedIndex = -1;
+
+        [ObservableProperty]
+        private bool _selected = false;
 
         private FileSystemWatcher _watcher;
 
         public String _path = "";
 
-        public MacrosViewModel()
+        private MacrosViewModel()
         {
             Macros = new ObservableCollection<Macro>();
 
             _path = Path.Combine(Startup.VersionPath, "Macros");
+
+            // fallback for vs studio xaml viewer;
+            if (!Directory.Exists(_path))
+            {
+                _path = ".";
+            }
 
             _watcher = new FileSystemWatcher(_path);
             _watcher.NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.CreationTime | NotifyFilters.FileName;
@@ -39,6 +47,35 @@ namespace Hud1.ViewModels
             _watcher.EnableRaisingEvents = true;
 
             UpdateFiles();
+        }
+
+        public void BuildNavigation()
+        {
+            var Navigation = NavigationService.Instance.Navigation;
+
+            Navigation.Configure(NavigationStates.MACROS)
+                .OnEntryFrom(NavigationTriggers.UP, OnEntryFromBottom)
+                .OnEntryFrom(NavigationTriggers.DOWN, OnEntryFromTop)
+                .OnEntry(OnEntry)
+                .OnExit(OnExit)
+                .InternalTransition(NavigationTriggers.LEFT, OnLeft)
+                .InternalTransition(NavigationTriggers.RIGHT, OnRight)
+                .InternalTransition(NavigationTriggers.UP, OnUp)
+                .InternalTransition(NavigationTriggers.DOWN, OnDown)
+                .Permit(NavigationTriggers.RETURN_UP, NavigationStates.MENU_MACRO)
+                .Permit(NavigationTriggers.RETURN_DOWN, NavigationStates.MACROS_FOLDER);
+
+            NavigationStates.MACROS_FOLDER.RightAction = () =>
+            {
+                Console.WriteLine("OPEN {0}", _path);
+                Process.Start("explorer.exe", _path);
+            };
+
+            Navigation.Configure(NavigationStates.MACROS_FOLDER)
+                .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.MACROS_FOLDER.ExecuteRight);
+
+            NavigationService.MakeNav(NavigationStates.MENU_MACRO, NavigationStates.MACRO_VISIBLE,
+                [NavigationStates.MACROS, NavigationStates.MACROS_FOLDER]);
         }
 
         private void OnDirectoryChanged(object sender, FileSystemEventArgs e)
@@ -55,7 +92,7 @@ namespace Hud1.ViewModels
             foreach (Macro macro in Macros)
                 macro.Running = false;
 
-            string[] fileEntries = Directory.GetFiles(_path);
+            string[] fileEntries = Directory.GetFiles(_path, "*.lua");
             var temp = new ObservableCollection<Macro>();
             foreach (string fileEntry in fileEntries)
             {
@@ -95,7 +132,7 @@ namespace Hud1.ViewModels
 
             if (Macros.Count == 0)
             {
-                Navigation!.Fire(NavigationTriggers.RETURN_UP);
+                NavigationService.Instance.Navigation.Fire(NavigationTriggers.RETURN_UP);
             }
         }
 
@@ -123,7 +160,7 @@ namespace Hud1.ViewModels
             Console.WriteLine("OnUp {0}", SelectedIndex);
             if (SelectedIndex <= 0)
             {
-                Navigation?.Fire(NavigationTriggers.RETURN_UP);
+                NavigationService.Instance.Navigation.Fire(NavigationTriggers.RETURN_UP);
                 return;
             }
             SelectedIndex--;
@@ -133,7 +170,7 @@ namespace Hud1.ViewModels
             Console.WriteLine("OnDown {0}", SelectedIndex);
             if (SelectedIndex >= Macros.Count - 1)
             {
-                Navigation?.Fire(NavigationTriggers.RETURN_DOWN);
+                NavigationService.Instance.Navigation.Fire(NavigationTriggers.RETURN_DOWN);
                 return;
             }
             SelectedIndex++;
@@ -152,7 +189,7 @@ namespace Hud1.ViewModels
 
         internal void SelectMacro(Macro macro)
         {
-            HudViewModel.SelectNavigationState(NavigationStates.MACROS);
+            NavigationService.SelectNavigationState(NavigationStates.MACROS);
             var index = Macros.IndexOf(macro);
             if (index >= 0)
             {

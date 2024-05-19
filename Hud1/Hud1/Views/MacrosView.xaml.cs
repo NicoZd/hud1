@@ -10,15 +10,6 @@ namespace Hud1.Views
     /// </summary>
     public partial class MacrosView : UserControl
     {
-        private static readonly DependencyProperty MacrosViewModelProperty =
-           BindingHelper.CreateProperty<MacrosView, MacrosViewModel>("MacrosViewModel", null);
-
-        public MacrosViewModel MacrosViewModel
-        {
-            get { return (MacrosViewModel)GetValue(MacrosViewModelProperty); }
-            set { SetValue(MacrosViewModelProperty, value); }
-        }
-
         public MacrosView()
         {
             InitializeComponent();

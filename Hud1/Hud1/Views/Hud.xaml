@@ -6,6 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     xmlns:views="clr-namespace:Hud1.Views"
+    xmlns:viewModels="clr-namespace:Hud1.ViewModels"
     xmlns:local="clr-namespace:Hud1.Views"
     mc:Ignorable="d"
     Loaded="OnWindowLoaded"             
@@ -70,7 +71,7 @@
                                 Click="{Binding SelectCommand}"
                                 NavigationState="{Binding Path=States[MENU_CROSSHAIR]}"
                                 />
-                            
+
                             <views:GlowBorderLabel 
                                 Label="Macros" 
                                 Selected="{Binding Path=States[MENU_MACRO].Selected}"
@@ -132,7 +133,7 @@
 
                     <views:ScrollPanel Visibility="{Binding Path=States[MACRO_VISIBLE].Visibility}">
                         <StackPanel Margin="0,0,0,28" views:Spacing.Vertical="8">
-                            <views:MacrosView MacrosViewModel="{Binding Path=MacrosViewModel}"/>
+                            <views:MacrosView />
                             <Label Content="Functions" Style="{DynamicResource TitleContent}"/>
                             <views:ButtonPanel NavigationState="{Binding Path=States[MACROS_FOLDER]}"/>
                         </StackPanel>

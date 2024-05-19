@@ -1,7 +1,9 @@
 ﻿using Hud1.Helpers;
+using Hud1.Models;
+using Hud1.Services;
+using Hud1.ViewModels;
 using System.Diagnostics;
 using System.IO;
-using System.Text;
 using System.Windows;
 using Windows.ApplicationModel;
 using Windows.Services.Store;
@@ -9,7 +11,7 @@ using Windows.Storage;
 
 namespace Hud1
 {
-    class Startup
+    public class Startup
     {
         public static readonly uint WM_GAME_DIRECT_SHOWME = WindowsAPI.RegisterWindowMessage("WM_GAME_DIRECT_SHOWME");
 
@@ -30,22 +32,39 @@ namespace Hud1
             SetupLogging();
             Console.WriteLine("Startup Log starts at {0} {1}", DateTime.Now, Entry.Millis());
 
-            await ShowSplash("Check Version");
-            LazyCreateVersion();
-
             await ShowSplash("Single Instance");
             await EnforceSingleInstance();
 
             await ShowSplash("Check License");
             await CheckLicense();
 
+            await ShowSplash("Check Version");
+            LazyCreateVersion();
+
+            await ShowSplash("Apply Config");
+            await ApplyConfig();
+
             await ShowSplash("Complete");
+        }
+
+        private static async Task ApplyConfig()
+        {
+            await Task.Delay(0);
+
+            // load config
+            // var config = new UserConfig();
+
+            UserConfig.Current.someString = "loaded";
+
+            GammaViewModel.Instance.BuildNavigation();
+            MacrosViewModel.Instance.BuildNavigation();
         }
 
         private static async Task ShowSplash(string text)
         {
             Console.WriteLine($"Startup ShowSplash: {text} {Entry.Millis()}");
-            SplashWindow.Instance!.SplashText = text;
+            if (SplashWindow.Instance != null)
+                SplashWindow.Instance.SplashText = text;
             await Task.Delay(TimeSpan.FromMilliseconds(20));
         }
 
@@ -56,7 +75,7 @@ namespace Hud1
                 int startRount = 0;
                 while (!mutex.WaitOne(TimeSpan.Zero, true) && startRount <= 10)
                 {
-                    await ShowSplash("Startup Shutdown existing window (attempt: " + startRount + "/10)");
+                    Console.WriteLine("Startup Shutdown existing window (attempt: " + startRount + "/10)");
                     WindowsAPI.SendNotifyMessage(new nint(-1), WM_GAME_DIRECT_SHOWME, 0, 0);
                     await Task.Delay(500);
                     startRount++;

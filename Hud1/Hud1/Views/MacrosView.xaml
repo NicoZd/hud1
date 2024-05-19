@@ -4,12 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:views="clr-namespace:Hud1.Views"
+             xmlns:viewModels="clr-namespace:Hud1.ViewModels"
              xmlns:local="clr-namespace:Hud1.Views"
              mc:Ignorable="d"
              >
-    <Grid 
-        DataContext="{Binding Path=MacrosViewModel, RelativeSource={RelativeSource AncestorType=local:MacrosView}}"
-        >
+    <Grid DataContext="{Binding Source={x:Static viewModels:MacrosViewModel.Instance}}" >
         <StackPanel views:Spacing.Vertical="8">
             <Label Content="Macros" Style="{DynamicResource TitleContent}"/>
             <ItemsControl ItemsSource="{Binding Macros}"

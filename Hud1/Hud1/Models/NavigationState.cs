@@ -1,9 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Hud1.Services;
 using Hud1.ViewModels;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows;
+
 
 namespace Hud1.Models
 {
@@ -56,21 +58,21 @@ namespace Hud1.Models
         [RelayCommand]
         private void Left()
         {
-            HudViewModel.SelectNavigationState(this);
+            NavigationService.SelectNavigationState(this);
             ExecuteLeft();
         }
 
         [RelayCommand]
         private void Right()
         {
-            HudViewModel.SelectNavigationState(this);
+            NavigationService.SelectNavigationState(this);
             ExecuteRight();
         }
 
         [RelayCommand]
         private void Click()
         {
-            HudViewModel.SelectNavigationState(this);
+            NavigationService.SelectNavigationState(this);
         }
 
         public async void ExecuteLeft()
