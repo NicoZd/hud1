@@ -90,7 +90,7 @@ namespace Hud1
             {
                 await ShowSplash("Could not stop existing window - shutting down.. :(");
                 await Task.Delay(1000);
-                SplashWindow.Instance!.Close();
+                SplashWindow.Instance?.Close();
             }
         }
 
@@ -193,7 +193,7 @@ namespace Hud1
 
             if (!appLicense.IsActive)
             {
-                SplashWindow.Instance!.Close();
+                SplashWindow.Instance?.Close();
                 if (MessageBox.Show("App License is inactive. Unfortunately the application must shutdown. Do you want to open the App in the Microsoft Store?", "Game Direct", MessageBoxButton.YesNo, MessageBoxImage.Asterisk) == MessageBoxResult.Yes)
                 {
                     Process.Start(new ProcessStartInfo
