@@ -126,7 +126,7 @@ namespace Hud1
 
         }
 
-        private async void FadeIn()
+        private void FadeIn()
         {
             var animation = new DoubleAnimation
             {
@@ -138,7 +138,7 @@ namespace Hud1
             animation.Completed += (s, a) =>
             {
                 this.Opacity = 0;
-                SplashWindow.Instance.Close();
+                SplashWindow.Instance!.Close();
 
                 var crosshairWindow = new CrosshairWindow();
                 crosshairWindow.Opacity = 0;
@@ -162,7 +162,7 @@ namespace Hud1
                 crosshairWindow.BeginAnimation(UIElement.OpacityProperty, animation);
 
             };
-            SplashWindow.Instance.BeginAnimation(UIElement.OpacityProperty, animation);
+            SplashWindow.Instance!.BeginAnimation(UIElement.OpacityProperty, animation);
         }
     }
 }

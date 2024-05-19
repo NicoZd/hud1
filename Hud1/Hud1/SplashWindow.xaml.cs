@@ -13,7 +13,7 @@ namespace Hud1
     [INotifyPropertyChanged]
     public partial class SplashWindow : Window
     {
-        public static SplashWindow Instance;
+        public static SplashWindow? Instance;
 
         [ObservableProperty]
         private string _splashText;
@@ -52,10 +52,10 @@ namespace Hud1
             {
                 this.Opacity = 1;
 
-                ThreadPool.QueueUserWorkItem(async (_) =>
+                ThreadPool.QueueUserWorkItem((_) =>
                 {
                     Debug.Print("Run Init {0}", Hud1.Startup.Millis());
-                    await Entry.Main();
+                    Entry.Main();
                     Debug.Print("Run Init Complete {0}", Hud1.Startup.Millis());
 
                     Application.Current?.Dispatcher.Invoke(new Action(() =>

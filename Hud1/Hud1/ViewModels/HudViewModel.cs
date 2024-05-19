@@ -36,7 +36,9 @@ namespace Hud1.ViewModels
         public HudViewModel()
         {
             Instance = this;
-            CreateNavigation();
+            Navigation = new(NavigationStates.MENU_NIGHTVISION);
+
+            BuildNavigation();
 
             //string graph = UmlDotGraph.Format(Navigation.GetInfo());
             //Console.WriteLine(graph);
@@ -46,10 +48,8 @@ namespace Hud1.ViewModels
             UpdateModelFromMavigation();
         }
 
-        private void CreateNavigation()
+        private void BuildNavigation()
         {
-            Navigation = new(NavigationStates.MENU_NIGHTVISION);
-
             Navigation.Configure(NavigationStates.ALL)
                 .PermitDynamic(NavigationTriggers.DIRECT, () => { return DirectNavigationStateTarget!; });
 
@@ -60,54 +60,41 @@ namespace Hud1.ViewModels
 
             // MENU
             Navigation.Configure(NavigationStates.MENU_NIGHTVISION)
-                .SubstateOf(NavigationStates.NIGHTVISION_VISIBLE)
                 .Permit(NavigationTriggers.LEFT, NavigationStates.MENU_MORE)
-                .Permit(NavigationTriggers.RIGHT, NavigationStates.MENU_MACRO)
-                .Permit(NavigationTriggers.DOWN, NavigationStates.NIGHTVISION_ENABLED)
-                .Permit(NavigationTriggers.UP, NavigationStates.GAMMA);
-
-            Navigation.Configure(NavigationStates.MENU_MACRO)
-                .SubstateOf(NavigationStates.MACRO_VISIBLE)
-                .Permit(NavigationTriggers.LEFT, NavigationStates.MENU_NIGHTVISION)
-                .Permit(NavigationTriggers.RIGHT, NavigationStates.MENU_CROSSHAIR)
-                .Permit(NavigationTriggers.UP, NavigationStates.MACROS_FOLDER)
-                .Permit(NavigationTriggers.DOWN, NavigationStates.MACROS);
+                .Permit(NavigationTriggers.RIGHT, NavigationStates.MENU_CROSSHAIR);
 
             Navigation.Configure(NavigationStates.MENU_CROSSHAIR)
                 .SubstateOf(NavigationStates.CROSSHAIR_VISIBLE)
-                .Permit(NavigationTriggers.LEFT, NavigationStates.MENU_MACRO)
+                .Permit(NavigationTriggers.LEFT, NavigationStates.MENU_NIGHTVISION)
+                .Permit(NavigationTriggers.RIGHT, NavigationStates.MENU_MACRO);
+
+            Navigation.Configure(NavigationStates.MENU_MACRO)
+                .Permit(NavigationTriggers.LEFT, NavigationStates.MENU_CROSSHAIR)
                 .Permit(NavigationTriggers.RIGHT, NavigationStates.MENU_MORE);
 
             Navigation.Configure(NavigationStates.MENU_MORE)
-                .SubstateOf(NavigationStates.MORE_VISIBLE)
-                .Permit(NavigationTriggers.LEFT, NavigationStates.MENU_CROSSHAIR)
-                .Permit(NavigationTriggers.RIGHT, NavigationStates.MENU_NIGHTVISION)
-                .Permit(NavigationTriggers.DOWN, NavigationStates.ACTIVATE)
-                .Permit(NavigationTriggers.UP, NavigationStates.FONT);
+                .Permit(NavigationTriggers.LEFT, NavigationStates.MENU_MACRO)
+                .Permit(NavigationTriggers.RIGHT, NavigationStates.MENU_NIGHTVISION);
 
             // NIGHTVISION
 
             NavigationStates.NIGHTVISION_ENABLED.LeftAction = GammaViewModel.SelectPrevGama;
             NavigationStates.NIGHTVISION_ENABLED.RightAction = GammaViewModel.SelectNextGama;
             Navigation.Configure(NavigationStates.NIGHTVISION_ENABLED)
-               .SubstateOf(NavigationStates.NIGHTVISION_VISIBLE)
-               .Permit(NavigationTriggers.UP, NavigationStates.MENU_NIGHTVISION)
-               .Permit(NavigationTriggers.DOWN, NavigationStates.GAMMA)
                .InternalTransition(NavigationTriggers.LEFT, NavigationStates.NIGHTVISION_ENABLED.ExecuteLeft)
                .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.NIGHTVISION_ENABLED.ExecuteRight);
 
             NavigationStates.GAMMA.LeftAction = GammaViewModel.SelectPrevGama;
             NavigationStates.GAMMA.RightAction = GammaViewModel.SelectNextGama;
             Navigation.Configure(NavigationStates.GAMMA)
-               .SubstateOf(NavigationStates.NIGHTVISION_VISIBLE)
-               .Permit(NavigationTriggers.UP, NavigationStates.NIGHTVISION_ENABLED)
-               .Permit(NavigationTriggers.DOWN, NavigationStates.MENU_NIGHTVISION)
                .InternalTransition(NavigationTriggers.LEFT, NavigationStates.GAMMA.ExecuteLeft)
                .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.GAMMA.ExecuteRight);
 
+            MakeNav(NavigationStates.MENU_NIGHTVISION, NavigationStates.NIGHTVISION_VISIBLE,
+                [NavigationStates.NIGHTVISION_ENABLED, NavigationStates.GAMMA]);
+
             // MACROS
             Navigation.Configure(NavigationStates.MACROS)
-             .SubstateOf(NavigationStates.MACRO_VISIBLE)
              .OnEntryFrom(NavigationTriggers.UP, MacrosViewModel.OnEntryFromBottom)
              .OnEntryFrom(NavigationTriggers.DOWN, MacrosViewModel.OnEntryFromTop)
              .OnEntry(MacrosViewModel.OnEntry)
@@ -124,58 +111,46 @@ namespace Hud1.ViewModels
                 Console.WriteLine("OPEN {0}", MacrosViewModel._path);
                 Process.Start("explorer.exe", MacrosViewModel._path);
             };
-
             Navigation.Configure(NavigationStates.MACROS_FOLDER)
-                .SubstateOf(NavigationStates.MACRO_VISIBLE)
-                .Permit(NavigationTriggers.UP, NavigationStates.MACROS)
-                .Permit(NavigationTriggers.DOWN, NavigationStates.MENU_MACRO)
                 .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.MACROS_FOLDER.ExecuteRight);
+
+            MakeNav(NavigationStates.MENU_MACRO, NavigationStates.MACRO_VISIBLE,
+                [NavigationStates.MACROS, NavigationStates.MACROS_FOLDER]);
 
             // MORE
 
-            NavigationStates.ACTIVATE.RightAction = Activate;
-            Navigation.Configure(NavigationStates.ACTIVATE)
-                .SubstateOf(NavigationStates.MORE_VISIBLE)
-                .Permit(NavigationTriggers.UP, NavigationStates.MENU_MORE)
-                .Permit(NavigationTriggers.DOWN, NavigationStates.EXIT)
-                .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.ACTIVATE.ExecuteRight);
-
             NavigationStates.EXIT.RightAction = Application.Current.Shutdown;
             Navigation.Configure(NavigationStates.EXIT)
-                .SubstateOf(NavigationStates.MORE_VISIBLE)
-                .Permit(NavigationTriggers.UP, NavigationStates.ACTIVATE)
-                .Permit(NavigationTriggers.DOWN, NavigationStates.HUD_POSITION)
                 .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.EXIT.ExecuteRight);
 
+            NavigationStates.ACTIVATE.RightAction = Activate;
+            Navigation.Configure(NavigationStates.ACTIVATE)
+                .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.ACTIVATE.ExecuteRight);
+
             Navigation.Configure(NavigationStates.HUD_POSITION)
-                .SubstateOf(NavigationStates.MORE_VISIBLE)
-                .Permit(NavigationTriggers.UP, NavigationStates.EXIT)
-                .Permit(NavigationTriggers.DOWN, NavigationStates.KEYBOARD_CONTROL);
+               .InternalTransition(NavigationTriggers.LEFT, NavigationStates.HUD_POSITION.ExecuteLeft)
+               .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.HUD_POSITION.ExecuteRight);
 
             Navigation.Configure(NavigationStates.KEYBOARD_CONTROL)
-                .SubstateOf(NavigationStates.MORE_VISIBLE)
-                .Permit(NavigationTriggers.UP, NavigationStates.HUD_POSITION)
-                .Permit(NavigationTriggers.DOWN, NavigationStates.STYLE)
                 .InternalTransition(NavigationTriggers.LEFT, NavigationStates.KEYBOARD_CONTROL.ExecuteLeft)
                 .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.KEYBOARD_CONTROL.ExecuteRight);
 
             NavigationStates.STYLE.LeftAction = PrevStyle;
             NavigationStates.STYLE.RightAction = NextStyle;
             Navigation.Configure(NavigationStates.STYLE)
-               .SubstateOf(NavigationStates.MORE_VISIBLE)
-               .Permit(NavigationTriggers.UP, NavigationStates.KEYBOARD_CONTROL)
-               .Permit(NavigationTriggers.DOWN, NavigationStates.FONT)
                .InternalTransition(NavigationTriggers.LEFT, NavigationStates.STYLE.ExecuteLeft)
                .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.STYLE.ExecuteRight);
 
             NavigationStates.FONT.LeftAction = PrevFont;
             NavigationStates.FONT.RightAction = NextFont;
             Navigation.Configure(NavigationStates.FONT)
-               .SubstateOf(NavigationStates.MORE_VISIBLE)
-               .Permit(NavigationTriggers.UP, NavigationStates.STYLE)
-               .Permit(NavigationTriggers.DOWN, NavigationStates.MENU_MORE)
                .InternalTransition(NavigationTriggers.LEFT, NavigationStates.FONT.ExecuteLeft)
                .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.FONT.ExecuteRight);
+
+
+            MakeNav(NavigationStates.MENU_MORE, NavigationStates.MORE_VISIBLE,
+                [NavigationStates.EXIT, NavigationStates.ACTIVATE, NavigationStates.HUD_POSITION,
+                NavigationStates.KEYBOARD_CONTROL, NavigationStates.STYLE, NavigationStates.FONT]);
 
             Navigation.OnUnhandledTrigger((state, trigger) =>
             {
@@ -183,6 +158,48 @@ namespace Hud1.ViewModels
             });
 
             Navigation.OnTransitionCompleted(a => UpdateModelFromMavigation());
+        }
+
+        private void MakeNav(NavigationState menu, NavigationState visible, NavigationState[] list)
+        {
+            if (list.Length < 2)
+                throw new Exception("List Length mist be at least 2.");
+
+            var first = list[0];
+            var last = list[list.Length - 1];
+
+            Navigation.Configure(menu)
+                .SubstateOf(visible)
+                .Permit(NavigationTriggers.UP, last)
+                .Permit(NavigationTriggers.DOWN, first);
+
+            for (var i = 0; i < list.Length; i++)
+            {
+                var item = list[i];
+                Navigation.Configure(item).SubstateOf(visible);
+
+                if (item == NavigationStates.MENU_MACRO)
+                    continue;
+
+                if (item == first)
+                {
+                    Navigation.Configure(item)
+                        .Permit(NavigationTriggers.UP, menu)
+                        .Permit(NavigationTriggers.DOWN, list[i + 1]);
+                }
+                else if (item == last)
+                {
+                    Navigation.Configure(item)
+                        .Permit(NavigationTriggers.UP, list[i - 1])
+                        .Permit(NavigationTriggers.DOWN, menu);
+                }
+                else
+                {
+                    Navigation.Configure(item)
+                        .Permit(NavigationTriggers.UP, list[i - 1])
+                        .Permit(NavigationTriggers.DOWN, list[i + 1]);
+                }
+            }
         }
 
         [RelayCommand]

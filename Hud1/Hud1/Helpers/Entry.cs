@@ -80,10 +80,9 @@ namespace Hud1.Helpers
             WindowsAPI.SendNotifyMessage(new nint(-1), WM_GAME_DIRECT_SHOWME, 0, 0);
         }
 
-
-        public static async Task Main()
+        public static void Main()
         {
-            SplashWindow.Instance.SplashText = "MAIN 1";
+            SplashWindow.Instance!.SplashText = "MAIN 1";
             Thread.Sleep(100);
 
             // try close exising apps
@@ -149,6 +148,9 @@ namespace Hud1.Helpers
             SplashWindow.Instance.SplashText += "MAIN Last";
             Thread.Sleep(100);
         }
+
+        [DllImport("user32.dll")]
+        static extern bool IsAppInstanceInOtherProcess(IntPtr hWnd);
 
         public static void InitPaths()
         {
