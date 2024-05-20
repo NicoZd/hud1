@@ -14,7 +14,7 @@ namespace Hud1.ViewModels
     {
         private readonly string[] Styles = ["Green", "Red"];
 
-        public readonly static HudViewModel Instance = new HudViewModel();
+        public readonly static HudViewModel Instance = new();
 
         [ObservableProperty]
         public NavigationState? state;
@@ -24,7 +24,6 @@ namespace Hud1.ViewModels
 
         private HudViewModel()
         {
-            UpdateModelFromMavigation();
         }
 
         public void BuildNavigation()
@@ -71,6 +70,8 @@ namespace Hud1.ViewModels
             });
 
             Navigation.OnTransitionCompleted(a => UpdateModelFromMavigation());
+
+            UpdateModelFromMavigation();
         }
 
         [RelayCommand]

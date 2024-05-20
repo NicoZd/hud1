@@ -9,7 +9,7 @@ namespace Hud1.ViewModels
 {
     public partial class MainWindowViewModel : ObservableObject
     {
-        public static MainWindowViewModel? Instance;
+        public static readonly MainWindowViewModel Instance = new();
 
         [ObservableProperty]
         public Boolean _active = true;
@@ -20,9 +20,8 @@ namespace Hud1.ViewModels
         public MainWindow? Window;
         internal nint Hwnd;
 
-        public MainWindowViewModel()
+        private MainWindowViewModel()
         {
-            Instance = this;
         }
 
         public void ActivateWindow()

@@ -61,8 +61,8 @@ namespace Hud1
             MacrosViewModel.Instance.BuildNavigation();
             HudViewModel.Instance.BuildNavigation();
 
-            string graph = UmlDotGraph.Format(NavigationViewModel.Instance.Navigation.GetInfo());
-            Console.WriteLine(graph);
+            // string graph = UmlDotGraph.Format(NavigationViewModel.Instance.Navigation.GetInfo());
+            // Console.WriteLine(graph);
         }
 
         private static async Task ShowSplash(string text)

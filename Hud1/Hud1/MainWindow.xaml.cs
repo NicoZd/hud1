@@ -14,37 +14,19 @@ namespace Hud1
 {
     public partial class MainWindow : Window
     {
-        MainWindowViewModel windowModel = new MainWindowViewModel();
         nint hwnd;
 
         public MainWindow()
         {
-            Thread.CurrentThread.Name = "MainWindow";
-            this.DataContext = windowModel;
-
             Opacity = 0;
 
-            this.StateChanged += OnStateChanged;
-
             InitializeComponent();
-        }
-
-        private void OnStateChanged(object? sender, EventArgs e)
-        {
-            Debug.WriteLine("OnStateChanged {0}", this.WindowState);
-
-            if (this.WindowState != WindowState.Normal)
-            {
-                this.WindowState = WindowState.Normal;
-                this.ShowInTaskbar = false;
-                this.Topmost = true;
-            }
         }
 
         private void OnWindowActivated(object sender, EventArgs e)
         {
             Console.WriteLine("OnWindowActivated");
-            windowModel.Active = true;
+            MainWindowViewModel.Instance.Active = true;
         }
 
         private void OnWindowLoaded(object sender, RoutedEventArgs e)
@@ -53,8 +35,8 @@ namespace Hud1
             HwndSource source = HwndSource.FromHwnd(hwnd);
             source.AddHook(WndProc);
 
-            windowModel.Window = this;
-            windowModel.Hwnd = hwnd;
+            MainWindowViewModel.Instance.Window = this;
+            MainWindowViewModel.Instance.Hwnd = hwnd;
 
             Debug.WriteLine("OnWindowLoaded {0}", hwnd);
 
@@ -109,7 +91,7 @@ namespace Hud1
                 {
                     if (keyEvent.key == GlobalKey.VK_S || keyEvent.key == GlobalKey.VK_F || keyEvent.key == GlobalKey.VK_L)
                     {
-                        windowModel.HandleKeyActivator();
+                        MainWindowViewModel.Instance.HandleKeyActivator();
                         keyEvent.block = true;
                     }
                 }
@@ -117,7 +99,7 @@ namespace Hud1
                 {
                     if (keyEvent.key == GlobalKey.VK_F2)
                     {
-                        windowModel.HandleKeyActivator();
+                        MainWindowViewModel.Instance.HandleKeyActivator();
                         keyEvent.block = true;
                     }
                 }
