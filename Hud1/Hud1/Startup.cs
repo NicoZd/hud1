@@ -56,9 +56,14 @@ namespace Hud1
 
             UserConfig.Current.someString = "loaded";
 
+            // create navgation
             NavigationViewModel.Instance.BuildNavigation();
+
+            // add to navgation
             GammaViewModel.Instance.BuildNavigation();
             MacrosViewModel.Instance.BuildNavigation();
+
+            // finish navidation
             HudViewModel.Instance.BuildNavigation();
 
             // string graph = UmlDotGraph.Format(NavigationViewModel.Instance.Navigation.GetInfo());
@@ -185,14 +190,10 @@ namespace Hud1
 
         private static async Task CheckLicense()
         {
-            Console.WriteLine("Startup Check License... {0}", Entry.Millis());
-
             var context = StoreContext.GetDefault();
             var appLicense = await context.GetAppLicenseAsync();
 
-            Console.WriteLine("Startup Check License... IsActive {0}", appLicense.IsActive);
-            Console.WriteLine("Startup Check License... IsTrial {0}", appLicense.IsTrial);
-            Console.WriteLine("Startup Check License... ExpirationDate {0}", appLicense.ExpirationDate);
+            Console.WriteLine("Startup Check License... IsActive {0} IsTrial {0} ExpirationDate {0}", appLicense.IsActive, appLicense.IsTrial, appLicense.ExpirationDate);
 
             Console.WriteLine("Startup Check License Complete {0}", Entry.Millis());
 
