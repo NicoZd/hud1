@@ -1,19 +1,30 @@
-﻿using Hud1.Models;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Hud1.Models;
+using System.ComponentModel;
 using System.IO;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using WpfScreenHelper;
 
 namespace Hud1.ViewModels
 {
-    public class MoreViewModel
+    public partial class MoreViewModel : ObservableObject
     {
         private readonly string[] Styles = ["Green", "Red"];
 
         public static readonly MoreViewModel Instance = new();
 
+        [ObservableProperty]
+        private string _hudPosition = "0:Right";
+
+        [ObservableProperty]
+        private string _hudAlignment = "Right";
+
         private MoreViewModel()
         {
+            _hudPosition = UserConfig.Current.HudPosition;
+            ComputeNextHudPosition(0);
         }
 
         public void BuildNavigation()
@@ -28,6 +39,8 @@ namespace Hud1.ViewModels
             Navigation.Configure(NavigationStates.ACTIVATE)
                 .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.ACTIVATE.ExecuteRight);
 
+            NavigationStates.HUD_POSITION.LeftAction = SelectHudPos(-1);
+            NavigationStates.HUD_POSITION.RightAction = SelectHudPos(1);
             Navigation.Configure(NavigationStates.HUD_POSITION)
                .InternalTransition(NavigationTriggers.LEFT, NavigationStates.HUD_POSITION.ExecuteLeft)
                .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.HUD_POSITION.ExecuteRight);
@@ -51,6 +64,48 @@ namespace Hud1.ViewModels
             NavigationViewModel.MakeNav(NavigationStates.MENU_MORE, NavigationStates.MORE_VISIBLE,
                 [NavigationStates.EXIT, NavigationStates.ACTIVATE, NavigationStates.HUD_POSITION,
                 NavigationStates.KEYBOARD_CONTROL, NavigationStates.STYLE, NavigationStates.FONT]);
+        }
+
+        private Action SelectHudPos(int dir)
+        {
+            return () =>
+            {
+                ComputeNextHudPosition(dir);
+            };
+        }
+
+        private void ComputeNextHudPosition(int dir)
+        {
+            Console.WriteLine("Compute Hud Pos {0}", dir);
+            var screenCount = Screen.AllScreens.Count();
+            string[] positions = ["Left", "Right"];
+
+            List<string> options = [];
+            for (int screenIndex = 0; screenIndex < screenCount; screenIndex++)
+            {
+                for (int positionIndex = 0; positionIndex < positions.Length; positionIndex++)
+                {
+                    var name = screenIndex + ":" + positions[positionIndex];
+                    options.Add(name);
+                    Console.WriteLine("perm {0}", name);
+                }
+            }
+
+            var currentOptionIndex = options.IndexOf(HudPosition);
+            if (currentOptionIndex == -1)
+            {
+                currentOptionIndex = 0;
+            }
+            else
+            {
+                currentOptionIndex += dir;
+            }
+            var newIndex = Math.Min(Math.Max(currentOptionIndex, 0), options.Count - 1);
+
+            HudPosition = options[newIndex];
+            HudAlignment = HudPosition.Split(":")[1];
+
+            NavigationStates.HUD_POSITION.SelectionLabel = "Display: " + HudPosition.Split(":")[0] + ", Position: " + HudAlignment;
         }
 
         private void Activate()

@@ -17,7 +17,7 @@ namespace Hud1.Models
             someInt = 1;
             someString = "two";
 
-            HudPosition = "0:right";
+            HudPosition = "0:Right";
             GammaIndex = 4;
         }
 

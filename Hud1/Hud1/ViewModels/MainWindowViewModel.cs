@@ -17,7 +17,6 @@ namespace Hud1.ViewModels
         [ObservableProperty]
         public Visibility _hudVisibility = Visibility.Visible;
 
-        public MainWindow? Window;
         internal nint Hwnd;
 
         private MainWindowViewModel()

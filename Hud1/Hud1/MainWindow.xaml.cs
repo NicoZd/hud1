@@ -1,6 +1,8 @@
 ﻿//using Hud1.Service;
 using Hud1.Helpers;
 using Hud1.ViewModels;
+using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
@@ -19,8 +21,48 @@ namespace Hud1
         public MainWindow()
         {
             Opacity = 0;
+            MoreViewModel.Instance.PropertyChanged += OnPropertyChanged;
 
             InitializeComponent();
+        }
+
+        private void OnPropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(MoreViewModel.Instance.HudPosition))
+            {
+                _ = ApplyHudPosition(true);
+            }
+        }
+
+        private async Task ApplyHudPosition(bool animate)
+        {
+            var screenIndex = Int32.Parse(MoreViewModel.Instance.HudPosition.Split(":")[0]);
+
+            if (animate)
+                Opacity = 0;
+
+            await Task.Delay(30);
+
+            this.SetWindowPosition(WpfScreenHelper.Enum.WindowPositions.Maximize, Screen.AllScreens.ElementAt(screenIndex));
+
+            await Task.Delay(30);
+
+            if (animate)
+            {
+                var animation = new DoubleAnimation
+                {
+                    To = 1,
+                    BeginTime = TimeSpan.FromSeconds(0.0),
+                    Duration = TimeSpan.FromSeconds(0.15),
+                    FillBehavior = FillBehavior.Stop
+                };
+
+                animation.Completed += (s, a) =>
+                {
+                    this.Opacity = 1;
+                };
+                this.BeginAnimation(UIElement.OpacityProperty, animation);
+            }
         }
 
         private void OnWindowActivated(object sender, EventArgs e)
@@ -35,7 +77,6 @@ namespace Hud1
             HwndSource source = HwndSource.FromHwnd(hwnd);
             source.AddHook(WndProc);
 
-            MainWindowViewModel.Instance.Window = this;
             MainWindowViewModel.Instance.Hwnd = hwnd;
 
             Debug.WriteLine("OnWindowLoaded {0}", hwnd);
@@ -54,9 +95,7 @@ namespace Hud1
                 | WindowsAPI.WS_EX_NOACTIVATE
                 );
 
-
-            int index = Screen.AllScreens.Count();
-            this.SetWindowPosition(WpfScreenHelper.Enum.WindowPositions.Maximize, Screen.AllScreens.ElementAt(index - 1));
+            _ = ApplyHudPosition(false);
 
             GlobalMouseHook.SystemHook();
 
