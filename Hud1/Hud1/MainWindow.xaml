@@ -19,7 +19,8 @@
     ShowActivated="False"
     Focusable="False"
     ResizeMode="NoResize"
-    DataContext="{Binding Source={x:Static viewModels:MainWindowViewModel.Instance}}"
+    DataContext="{Binding Source={x:Static viewModels:MainWindowViewModel.Instance}}"    
+    d:DesignHeight="800"
     >
     <Window.Background>
         <SolidColorBrush Color="Transparent"/>
