@@ -47,6 +47,12 @@ namespace Hud1
             await ShowSplash("Complete");
         }
 
+        public static void Shutdown()
+        {
+            Console.WriteLine("ReleaseMutex");
+            mutex.ReleaseMutex();
+        }
+
         private static async Task ApplyConfig()
         {
             await Task.Delay(0);

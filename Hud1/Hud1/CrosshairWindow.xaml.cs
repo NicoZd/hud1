@@ -13,7 +13,6 @@ namespace Hud1
 
         private void OnWindowLoaded(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine("OnWindowLoaded {0}");
             var hwnd = new WindowInteropHelper(this).Handle;
 
             System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();

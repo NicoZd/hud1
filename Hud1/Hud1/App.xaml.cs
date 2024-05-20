@@ -24,6 +24,12 @@ namespace Hud1
             EventManager.RegisterClassHandler(typeof(Window), Window.PreviewMouseUpEvent, new MouseButtonEventHandler(OnPreviewMouseDown));
         }
 
+        private void OnExit(object sender, ExitEventArgs e)
+        {
+            Debug.Print("Exit {0}", Hud1.Entry.Millis());
+            Hud1.Startup.Shutdown();
+        }
+
         static void OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             if (MouseService.IgnoreNextEvent)
