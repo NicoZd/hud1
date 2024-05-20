@@ -3,15 +3,15 @@ using Hud1.Models;
 
 namespace Hud1.ViewModels
 {
-    public class GammaViewModel
+    public class NightvisionViewModel
     {
         public static readonly double[] Gammas = [1.25, 1.5, 2, 2.5, 3, 3.5, 4.2];
 
-        public static readonly GammaViewModel Instance = new();
+        public static readonly NightvisionViewModel Instance = new();
 
         public int GammaIndex = 0;
 
-        private GammaViewModel()
+        private NightvisionViewModel()
         {
             GammaIndex = UserConfig.Current.GammaIndex;
             SelectIndex();

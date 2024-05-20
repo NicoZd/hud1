@@ -4,7 +4,7 @@ namespace Hud1
 {
     class Entry
     {
-        private static long _startMS = DateTimeOffset.Now.ToUnixTimeMilliseconds();
+        private static readonly long _startMS = DateTimeOffset.Now.ToUnixTimeMilliseconds();
 
         [STAThread]
         public static void Main(string[] args)

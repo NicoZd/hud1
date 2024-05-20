@@ -60,8 +60,9 @@ namespace Hud1
             NavigationViewModel.Instance.BuildNavigation();
 
             // add to navgation
-            GammaViewModel.Instance.BuildNavigation();
+            NightvisionViewModel.Instance.BuildNavigation();
             MacrosViewModel.Instance.BuildNavigation();
+            MoreViewModel.Instance.BuildNavigation();
 
             // finish navidation
             HudViewModel.Instance.BuildNavigation();
