@@ -6,12 +6,8 @@ using System.Windows.Controls;
 
 namespace Hud1.Views
 {
-    [INotifyPropertyChanged]
     public partial class Hud : UserControl
     {
-        [ObservableProperty]
-        public HudViewModel viewModel = new();
-
         public Hud()
         {
             InitializeComponent();
@@ -28,7 +24,7 @@ namespace Hud1.Views
             {
                 if (MainWindowViewModel.Instance!.Active)
                 {
-                    ViewModel.OnKeyPressed(keyEvent);
+                    HudViewModel.Instance.OnKeyPressed(keyEvent);
                 }
             }
         }

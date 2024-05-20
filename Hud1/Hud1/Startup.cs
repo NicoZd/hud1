@@ -1,6 +1,7 @@
 ﻿using Hud1.Helpers;
 using Hud1.Models;
 using Hud1.ViewModels;
+using Stateless.Graph;
 using System.Diagnostics;
 using System.IO;
 using System.Windows;
@@ -58,6 +59,10 @@ namespace Hud1
             NavigationViewModel.Instance.BuildNavigation();
             GammaViewModel.Instance.BuildNavigation();
             MacrosViewModel.Instance.BuildNavigation();
+            HudViewModel.Instance.BuildNavigation();
+
+            string graph = UmlDotGraph.Format(NavigationViewModel.Instance.Navigation.GetInfo());
+            Console.WriteLine(graph);
         }
 
         private static async Task ShowSplash(string text)

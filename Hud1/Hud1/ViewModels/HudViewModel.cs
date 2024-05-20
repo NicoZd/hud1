@@ -12,29 +12,22 @@ namespace Hud1.ViewModels
 {
     public partial class HudViewModel : ObservableObject
     {
+        private readonly string[] Styles = ["Green", "Red"];
+
+        public readonly static HudViewModel Instance = new HudViewModel();
+
         [ObservableProperty]
         public NavigationState? state;
 
         [ObservableProperty]
         public Dictionary<string, NavigationState> states = new Dictionary<string, NavigationState> { };
 
-        private readonly string[] Styles = ["Green", "Red"];
-
-        public static HudViewModel? Instance;
-
-        public HudViewModel()
+        private HudViewModel()
         {
-            Instance = this;
-
-            BuildNavigation();
-
-            //string graph = UmlDotGraph.Format(Navigation.GetInfo());
-            //Console.WriteLine(graph);
-
             UpdateModelFromMavigation();
         }
 
-        private void BuildNavigation()
+        public void BuildNavigation()
         {
             Debug.Print("HudViewModel BuildNavigation");
             var Navigation = NavigationViewModel.Instance.Navigation;
