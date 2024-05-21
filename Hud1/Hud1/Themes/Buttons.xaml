@@ -102,7 +102,7 @@
                 <Setter Property="Background" >
                     <Setter.Value>
                         <LinearGradientBrush StartPoint="0,0" EndPoint="0,0">
-                            <GradientStop Color="{DynamicResource ColorBackgroundDark}" Offset="0.0"/>
+                            <GradientStop Color="{DynamicResource ColorBackgroundDarkMedUp}" Offset="0.0"/>
                         </LinearGradientBrush>
                     </Setter.Value>
                 </Setter>
