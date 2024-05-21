@@ -14,6 +14,9 @@
 		<Configurations>Debug;Release;Hot</Configurations>
 		<Platforms>x86</Platforms>
 	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Hot|x86'">
+	  <DefineConstants>$(DefineConstants);DEBUG</DefineConstants>
+	</PropertyGroup>
 
 	<ItemGroup>
 		<Compile Remove="Images\**" />
