@@ -31,7 +31,7 @@ namespace Hud1.ViewModels
         {
             var Navigation = NavigationViewModel.Instance.Navigation;
 
-            NavigationStates.EXIT.RightAction = Application.Current.Shutdown;
+            NavigationStates.EXIT.RightAction = () => { Application.Current.Shutdown(); };
             Navigation.Configure(NavigationStates.EXIT)
                 .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.EXIT.ExecuteRight);
 

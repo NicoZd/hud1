@@ -46,6 +46,9 @@ namespace Hud1
 
         public static void SelectStyle(String style, String font)
         {
+            // for testing
+            if (Application.Current == null) return;
+
             NavigationStates.FONT.SelectionLabel = font;
 
             var fontFile = "";

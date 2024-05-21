@@ -17,14 +17,11 @@ namespace Hud1.Models.Tests
         [TestMethod()]
         public void CreateDefault()
         {
-            var file = new { someInt = 2, someNone = 2 };
+            var file = new { GammaIndex = 2, someNone = 2 };
             string jsonString = JsonSerializer.Serialize(file);
             Debug.Print("File {0}", jsonString);
 
             var config = new UserConfig();
-
-            config.someString = "fromSystem";
-
 
             var loaded = JsonSerializer.Deserialize<UserConfig>(jsonString);
 
@@ -38,8 +35,8 @@ namespace Hud1.Models.Tests
                 }
             }
 
-            Assert.AreEqual(config.someInt, 2);
-            Assert.AreEqual(config.someString, "two");
+            Assert.AreEqual(config.GammaIndex, 2);
+            Assert.AreEqual(config.Style, "Green");
 
 
             Debug.Print("hello6");
