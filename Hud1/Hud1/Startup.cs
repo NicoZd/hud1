@@ -94,10 +94,10 @@ namespace Hud1
             NavigationStates.KEYBOARD_CONTROL.SelectionBoolean = UserConfig.Current.KeyboardNavigationEnabled;
 
             NavigationStates.STYLE.SelectionLabel = UserConfig.Current.Style;
-            MoreViewModel.Instance.SelectStyle(0);
+            // MoreViewModel.Instance.SelectStyle(0);
 
             NavigationStates.FONT.SelectionLabel = UserConfig.Current.Font;
-            MoreViewModel.Instance.SelectFont(0);
+            // MoreViewModel.Instance.SelectFont(0);
 
             // create navgation
             NavigationViewModel.Instance.BuildNavigation();

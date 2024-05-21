@@ -126,6 +126,18 @@
                     </Setter.Value>
                 </Setter>
             </DataTrigger>
+            <DataTrigger Binding="{Binding Path=Enabled}" Value="False">
+                <Setter Property="BorderBrush" Value="{DynamicResource BrushColorMedLow}" />
+                <Setter Property="Effect">
+                    <Setter.Value>
+                        <DropShadowEffect 
+                            ShadowDepth="0"
+                            BlurRadius="10" 
+                            Color="{DynamicResource ColorMedLow}"
+                            Opacity="0.0"/> 
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
         </Style.Triggers>
     </Style>
 

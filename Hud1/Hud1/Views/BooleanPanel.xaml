@@ -36,7 +36,7 @@
             </views:GlowBorderLabel>
 
             <views:GlowBorderLabel     
-                Margin="0,0,4,0"
+                Margin="0,0,0,0"
                 Width="70"
                 DockPanel.Dock="Right"
                 Click="{Binding Path=LeftCommand}"                    
