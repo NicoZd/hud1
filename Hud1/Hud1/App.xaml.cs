@@ -54,31 +54,39 @@ namespace Hud1
             var fontFile = "";
 
             var fontsFolder = Path.Combine(Hud1.Startup.VersionPath, "Fonts");
-            string[] fileEntries = Directory.GetFiles(fontsFolder, "*.ttf");
-            for (int i = 0; i < fileEntries.Length; i++)
+            if (Directory.Exists(fontsFolder))
             {
-                var ff = Fonts.GetFontFamilies(fileEntries[i]);
-                if (ff.Count > 0)
+                string[] fileEntries = Directory.GetFiles(fontsFolder, "*.*").Where(s => s.EndsWith(".ttf") || s.EndsWith(".otf")).ToArray();
+                for (int i = 0; i < fileEntries.Length; i++)
                 {
-                    var y = ff.First();
-                    var k = y.Source.Split("#");
-                    var v = k[k.Length - 1];
-                    Console.WriteLine("fontCol.Families[0].Name {0}", v);
-                    if (v.Equals(font))
+                    var ff = Fonts.GetFontFamilies(fileEntries[i]);
+                    if (ff.Count > 0)
                     {
-                        fontFile = fileEntries[i];
-                        break;
+                        var y = ff.First();
+                        var k = y.Source.Split("#");
+                        var v = k[k.Length - 1];
+                        Console.WriteLine("fontCol.Families[0].Name {0}", v);
+                        if (v.Equals(font))
+                        {
+                            fontFile = fileEntries[i];
+                            break;
+                        }
                     }
                 }
             }
 
+
             foreach (ScrollPanel sp in ScrollPanel.Instances)
                 sp.SaveScrollPosition();
 
-            ReplaceResource(0, new ResourceDictionary
+            if (fontFile != "")
+            {
+
+                ReplaceResource(0, new ResourceDictionary
             {
                 { "FontFamily", new FontFamily(new Uri(fontFile, UriKind.Absolute), "./#" + font) }
             });
+            }
 
             ReplaceResource(1, new ResourceDictionary
             {

@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Hud1.Models;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Input;
@@ -115,7 +116,7 @@ namespace Hud1.ViewModels
             HudPosition = options[newIndex];
             HudAlignment = HudPosition.Split(":")[1];
 
-            NavigationStates.HUD_POSITION.SelectionLabel = "Display: " + HudPosition.Split(":")[0] + ", Position: " + HudAlignment;
+            NavigationStates.HUD_POSITION.SelectionLabel = "Display " + HudPosition.Split(":")[0] + ", " + HudAlignment;
         }
 
         private void Activate()
@@ -150,11 +151,14 @@ namespace Hud1.ViewModels
         string[] FontList()
         {
             var fontsFolder = Path.Combine(Startup.VersionPath, "Fonts");
-            string[] fileEntries = Directory.GetFiles(fontsFolder, "*.ttf");
+            if (!Directory.Exists(fontsFolder))
+                return [];
+            string[] fileEntries = Directory.GetFiles(fontsFolder, "*.*").Where(s => s.EndsWith(".ttf") || s.EndsWith(".otf")).ToArray();
             List<string> fonts = [];
             for (int i = 0; i < fileEntries.Length; i++)
             {
                 var ff = Fonts.GetFontFamilies(fileEntries[i]);
+                Debug.Print(" DDDD {0}", fileEntries[i]);
                 if (ff.Count > 0)
                 {
                     var y = ff.First();

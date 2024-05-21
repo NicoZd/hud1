@@ -9,7 +9,7 @@
   <Identity
     Name="keo3qt.Hud1"
     Publisher="CN=84D61EB5-8F6C-4EDC-B427-EE134BC16367"
-    Version="1.2.91.0" />
+    Version="1.2.92.0" />
 
   <Properties>
     <DisplayName>Game Direct</DisplayName>

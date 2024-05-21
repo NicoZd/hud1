@@ -41,9 +41,11 @@
 		<None Remove="Assets\blue-noise.png" />
 		<None Remove="Assets\splash.png" />
 		<None Remove="Assets\splash2.png" />
-		<None Remove="Fonts\Aurulent-Regular.ttf" />
 		<None Remove="Fonts\FiraCode-R.ttf" />
+		<None Remove="Fonts\HitmarkerNormal-Regular.ttf" />
+		<None Remove="Fonts\HitmarkerText-Regular.ttf" />
 		<None Remove="Fonts\JetBrainsMono-Regular.ttf" />
+		<None Remove="Fonts\neuropolitical rg.otf" />
 		<None Remove="Fonts\SourceCodePro-Regular.ttf" />
 		<None Remove="Macros\press-left-mouse.lua" />
 		<None Remove="Macros\repeat-left-mouse-click.lua" />
@@ -65,14 +67,20 @@
 		<Resource Include="Assets\splash2.png">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Resource>
-		<Content Include="Fonts\Aurulent-Regular.ttf">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</Content>
 		<Content Include="Fonts\FiraCode-R.ttf">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
+		<Content Include="Fonts\HitmarkerNormal-Regular.ttf">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Fonts\HitmarkerText-Regular.ttf">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
 		<Content Include="Fonts\JetBrainsMono-Regular.ttf">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Fonts\neuropolitical rg.otf">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Fonts\SourceCodePro-Regular.ttf">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
