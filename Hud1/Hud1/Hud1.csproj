@@ -11,23 +11,9 @@
 		<Title>Draco HUD</Title>
 		<PackageIcon></PackageIcon>
 		<SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+		<Configurations>Debug;Release;Hot</Configurations>
+		<Platforms>x86</Platforms>
 	</PropertyGroup>
-
-	<PropertyGroup>
-		<BeautySharedRuntimeMode>False</BeautySharedRuntimeMode>
-		<BeautyLibsDir>./Libraries</BeautyLibsDir>
-		<DisableBeauty>False</DisableBeauty>
-		<BeautyOnPublishOnly>False</BeautyOnPublishOnly>
-		<BeautyNoRuntimeInfo>False</BeautyNoRuntimeInfo>
-		<BeautyEnableDebugging>False</BeautyEnableDebugging>
-		<BeautyUsePatch>True</BeautyUsePatch>
-		<BeautyLogLevel>Info</BeautyLogLevel>
-		<BeautyGitCDN>https://gitee.com/liesauer/HostFXRPatcher</BeautyGitCDN>
-		<UseWindowsForms>False</UseWindowsForms>
-		<PlatformTarget>x86</PlatformTarget>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'" />
 
 	<ItemGroup>
 		<Compile Remove="Images\**" />
@@ -71,16 +57,16 @@
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Fonts\HitmarkerNormal-Regular.ttf">
-		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Fonts\HitmarkerText-Regular.ttf">
-		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Fonts\JetBrainsMono-Regular.ttf">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Fonts\neuropolitical rg.otf">
-		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Fonts\SourceCodePro-Regular.ttf">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
