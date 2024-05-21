@@ -147,7 +147,7 @@ namespace Hud1.ViewModels
             App.SelectStyle(NavigationStates.STYLE.SelectionLabel, NavigationStates.FONT.SelectionLabel);
         }
 
-        string[] fontList()
+        string[] FontList()
         {
             var fontsFolder = Path.Combine(Startup.VersionPath, "Fonts");
             string[] fileEntries = Directory.GetFiles(fontsFolder, "*.ttf");
@@ -164,27 +164,30 @@ namespace Hud1.ViewModels
                     fonts.Add(v);
                 }
             }
-            return fonts.ToArray();
+            return [.. fonts];
         }
 
         void NextFont()
         {
-            Console.WriteLine("NextFont");
-            var Fonts = fontList();
-            if (Fonts.Length == 0) return;
-            var currentStyleIndex = Array.IndexOf(Fonts, NavigationStates.FONT.SelectionLabel);
-            var nextStyleIndex = (currentStyleIndex + 1) % Fonts.Length;
-            NavigationStates.FONT.SelectionLabel = Fonts[nextStyleIndex];
-            App.SelectStyle(NavigationStates.STYLE.SelectionLabel, NavigationStates.FONT.SelectionLabel);
-
+            SelectFont(1);
         }
+
         void PrevFont()
         {
-            Console.WriteLine("PrevFont");
-            var Fonts = fontList();
+            SelectFont(-1);
+        }
+
+        public void SelectFont(int dir)
+        {
+            var Fonts = FontList();
             if (Fonts.Length == 0) return;
             var currentStyleIndex = Array.IndexOf(Fonts, NavigationStates.FONT.SelectionLabel);
-            var prevStyleIndex = (currentStyleIndex - 1 + Fonts.Length) % Fonts.Length;
+            if (currentStyleIndex == -1)
+            {
+                currentStyleIndex = 0;
+                dir = 0;
+            }
+            var prevStyleIndex = (currentStyleIndex + dir + Fonts.Length) % Fonts.Length;
             NavigationStates.FONT.SelectionLabel = Fonts[prevStyleIndex];
             App.SelectStyle(NavigationStates.STYLE.SelectionLabel, NavigationStates.FONT.SelectionLabel);
         }

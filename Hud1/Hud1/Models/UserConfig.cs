@@ -21,8 +21,8 @@ namespace Hud1.Models
             GammaIndex = 4;
             KeyboardNavigationEnabled = true;
 
-            Style = "";
-            Font = "";
+            Style = "Green";
+            Font = "Source Code Pro";
         }
 
 

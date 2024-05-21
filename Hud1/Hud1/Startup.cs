@@ -92,8 +92,12 @@ namespace Hud1
 
             // apply config
             NavigationStates.KEYBOARD_CONTROL.SelectionBoolean = UserConfig.Current.KeyboardNavigationEnabled;
+
             NavigationStates.STYLE.SelectionLabel = UserConfig.Current.Style;
             MoreViewModel.Instance.SelectStyle(0);
+
+            NavigationStates.FONT.SelectionLabel = UserConfig.Current.Font;
+            MoreViewModel.Instance.SelectFont(0);
 
             // create navgation
             NavigationViewModel.Instance.BuildNavigation();
@@ -130,6 +134,10 @@ namespace Hud1
             NavigationStates.STYLE.PropertyChanged += OnConfigChanged(
                 nameof(NavigationStates.STYLE.SelectionLabel),
                 nameof(UserConfig.Current.Style));
+
+            NavigationStates.FONT.PropertyChanged += OnConfigChanged(
+                nameof(NavigationStates.FONT.SelectionLabel),
+                nameof(UserConfig.Current.Font));
         }
 
         private static PropertyChangedEventHandler OnConfigChanged(string propertyName, string userConfigPropertyName)
