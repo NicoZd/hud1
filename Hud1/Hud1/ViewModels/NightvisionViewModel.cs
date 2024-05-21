@@ -1,16 +1,18 @@
-﻿using Hud1.Helpers;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Hud1.Helpers;
 using Hud1.Models;
 using System.Diagnostics;
 
 namespace Hud1.ViewModels
 {
-    public class NightvisionViewModel
+    public partial class NightvisionViewModel : ObservableObject
     {
         public static readonly double[] Gammas = [1.25, 1.5, 2, 2.5, 3, 3.5, 4.2];
 
         public static readonly NightvisionViewModel Instance = new();
 
-        public int GammaIndex = 0;
+        [ObservableProperty]
+        private int _gammaIndex = 0;
 
         private NightvisionViewModel()
         {

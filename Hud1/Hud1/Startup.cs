@@ -2,8 +2,11 @@
 using Hud1.Models;
 using Hud1.ViewModels;
 using Stateless.Graph;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
+using System.Reflection;
+using System.Text.Json;
 using System.Windows;
 using Windows.ApplicationModel;
 using Windows.Services.Store;
@@ -19,6 +22,7 @@ namespace Hud1
 
         public static string RootPath = "";
         public static string VersionPath = "";
+        public static string UserConfigFile = "";
 
         public static async Task Run()
         {
@@ -56,12 +60,40 @@ namespace Hud1
         private static async Task ApplyConfig()
         {
             await Task.Delay(0);
+            try
+            {
+                if (File.Exists(UserConfigFile))
+                {
+                    string userConfigString = File.ReadAllText(UserConfigFile);
+                    var loaded = JsonSerializer.Deserialize<UserConfig>(userConfigString);
 
-            // load config
-            // var config = new UserConfig();
+                    var config = UserConfig.Current;
+                    foreach (PropertyInfo prop in config.GetType().GetProperties())
+                    {
+                        var value = prop.GetValue(loaded, null);
+                        if (value != null)
+                        {
+                            Debug.Print("Set {0} to {1}", prop.Name, value);
+                            prop.SetValue(config, value);
+                        }
+                    }
+                    Console.WriteLine("UserConfigString {0}", userConfigString);
+                }
+                else
+                {
+                    Console.WriteLine("No UserConfig File {0}", UserConfigFile);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error Loading UserConfig:");
+                Console.WriteLine(ex.ToString());
+            }
 
-            UserConfig.Current.GammaIndex = 4;
-            UserConfig.Current.HudPosition = "0:Right";
+            // apply config
+            NavigationStates.KEYBOARD_CONTROL.SelectionBoolean = UserConfig.Current.KeyboardNavigationEnabled;
+            NavigationStates.STYLE.SelectionLabel = UserConfig.Current.Style;
+            MoreViewModel.Instance.SelectStyle(0);
 
             // create navgation
             NavigationViewModel.Instance.BuildNavigation();
@@ -74,8 +106,65 @@ namespace Hud1
             // finish navidation
             HudViewModel.Instance.BuildNavigation();
 
-            // string graph = UmlDotGraph.Format(NavigationViewModel.Instance.Navigation.GetInfo());
-            // Console.WriteLine(graph);
+            var showGraph = false;
+            if (showGraph)
+            {
+                string graph = UmlDotGraph.Format(NavigationViewModel.Instance.Navigation.GetInfo());
+                Console.WriteLine(graph);
+            }
+
+            // add change listeners
+
+            NavigationStates.KEYBOARD_CONTROL.PropertyChanged += OnConfigChanged(
+                    nameof(NavigationStates.KEYBOARD_CONTROL.SelectionBoolean),
+                    nameof(UserConfig.Current.KeyboardNavigationEnabled));
+
+            NightvisionViewModel.Instance.PropertyChanged += OnConfigChanged(
+                    nameof(NightvisionViewModel.Instance.GammaIndex),
+                    nameof(UserConfig.Current.GammaIndex));
+
+            MoreViewModel.Instance.PropertyChanged += OnConfigChanged(
+                    nameof(MoreViewModel.Instance.HudPosition),
+                    nameof(UserConfig.Current.HudPosition));
+
+            NavigationStates.STYLE.PropertyChanged += OnConfigChanged(
+                nameof(NavigationStates.STYLE.SelectionLabel),
+                nameof(UserConfig.Current.Style));
+        }
+
+        private static PropertyChangedEventHandler OnConfigChanged(string propertyName, string userConfigPropertyName)
+        {
+            return (object? sender, PropertyChangedEventArgs e) =>
+            {
+                if (propertyName == e.PropertyName)
+                {
+                    ThreadPool.QueueUserWorkItem((_) =>
+                    {
+                        try
+                        {
+                            Debug.Print("Save OnConfigChanged {0} {1}", e.PropertyName, sender);
+
+                            Thread.Sleep(100);
+                            var src = sender!;
+                            var value = src.GetType().GetProperty(propertyName)!.GetValue(src, null);
+
+                            var dest = UserConfig.Current;
+                            dest.GetType().GetProperty(userConfigPropertyName)!.SetValue(dest, value);
+
+                            var options = new JsonSerializerOptions { WriteIndented = true };
+                            string jsonString = JsonSerializer.Serialize(UserConfig.Current, options);
+
+                            Debug.Print(jsonString);
+                            File.WriteAllText(UserConfigFile, jsonString);
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine("Save Error:");
+                            Console.WriteLine(ex.ToString());
+                        }
+                    });
+                }
+            };
         }
 
         private static async Task ShowSplash(string text)
@@ -188,11 +277,14 @@ namespace Hud1
                 PackageVersion version = packageId.Version;
                 var Version = string.Format("{0}.{1}.{2}.{3}", version.Major, version.Minor, version.Build, version.Revision);
                 VersionPath = Path.Combine(RootPath, Version);
+                UserConfigFile = Path.Combine(VersionPath, "UserConfig.json");
+
             }
             catch (Exception)
             {
                 RootPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Game Direct");
                 VersionPath = Path.Combine(RootPath, "0.0.0.0");
+                UserConfigFile = Path.Combine(VersionPath, "UserConfig.json");
             }
         }
 

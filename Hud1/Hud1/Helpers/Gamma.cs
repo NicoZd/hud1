@@ -63,22 +63,12 @@ namespace Hud1.Helpers
         {
             short* gArray = stackalloc short[3 * 256];
 
+            // just all 
             foreach (var screen in Screen.AllScreens)
             {
-                Console.WriteLine("DeviceName {0}", screen.DeviceName);
-                // just all 
-
-                Console.WriteLine("Here! {0} {1}", screen.DeviceName, screen.ScaleFactor);
-
+                Console.WriteLine("Set Gamma for DeviceName {0}", screen.DeviceName);
 
                 Int32 hdc = CreateDC(screen.DeviceName, null, null, IntPtr.Zero).ToInt32();
-                //var hdc = Graphics.FromHwnd(IntPtr.Zero).GetHdc().ToInt32();
-
-                DISPLAY_DEVICE d = new DISPLAY_DEVICE();
-                d.cb = Marshal.SizeOf(d);
-                EnumDisplayDevices(screen.DeviceName, 0, ref d, 0);
-
-                Console.WriteLine("!!!!!!!! {0}, {1}, {2}, {3}", d.DeviceName, d.DeviceString, d.DeviceID, d.DeviceKey);
 
                 short* idx = gArray;
                 double offset = 0;
@@ -93,7 +83,7 @@ namespace Hud1.Helpers
                 {
                     for (var i = 0; i < 256; i++)
                     {
-                        var factor = ((double)i + offset) / range2;
+                        var factor = (i + offset) / range2;
                         factor = Math.Pow(factor, 1 / (gammas[j]));
                         int arrayVal = (int)(factor * 0xffff);
                         if (arrayVal > 65535)

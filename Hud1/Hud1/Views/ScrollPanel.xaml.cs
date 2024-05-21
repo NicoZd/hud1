@@ -3,24 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.PerformanceData;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Hud1.Views
 {
-    /// <summary>
-    /// Interaction logic for ScrollPanel.xaml
-    /// </summary>
     public partial class ScrollPanel : UserControl
     {
         public static List<ScrollPanel> Instances = new();
@@ -35,15 +21,24 @@ namespace Hud1.Views
 
         internal void SaveScrollPosition()
         {
-            var c = (ScrollViewer)GetVisualChild(0);
-            _storedPosition = c.VerticalOffset;
-
+            if (VisualChildrenCount > 0)
+            {
+                var c = (ScrollViewer)GetVisualChild(0);
+                _storedPosition = c.VerticalOffset;
+            }
+            else
+            {
+                _storedPosition = 0;
+            }
         }
 
         internal void RestoreScrollPosition()
         {
-            var c = (ScrollViewer)GetVisualChild(0);
-            c.ScrollToVerticalOffset(_storedPosition);
+            if (VisualChildrenCount > 0)
+            {
+                var c = (ScrollViewer)GetVisualChild(0);
+                c.ScrollToVerticalOffset(_storedPosition);
+            }
         }
 
     }

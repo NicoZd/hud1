@@ -47,11 +47,13 @@ namespace Hud1.ViewModels
         }
 
 
-        public bool OnKeyPressed(KeyEvent keyEvent)
+        public void OnKeyPressed(KeyEvent keyEvent)
         {
-            //Debug.WriteLine("ListenerOnKeyPressed {0}", key);
+            if (!NavigationStates.KEYBOARD_CONTROL.SelectionBoolean)
+                return;
+
             if (keyEvent.alt)
-                return false;
+                return;
 
             var key = keyEvent.key;
 
@@ -61,7 +63,7 @@ namespace Hud1.ViewModels
             if (NavigationState.Repeat && (!State!.AllowRepeat || isVerticalNavigation))
             {
                 //Console.WriteLine("Skip {0}", keyEvent.key);
-                return false;
+                return;
             }
 
             //Console.WriteLine("Execute {0} {1} {2}", State.Name, State.AllowRepeat, keyEvent.key);
@@ -69,28 +71,22 @@ namespace Hud1.ViewModels
             if (key == GlobalKey.VK_LEFT)
             {
                 NavigationViewModel.Instance.Navigation.Fire(NavigationTriggers.LEFT);
-                return true;
             }
 
             if (key == GlobalKey.VK_RIGHT)
             {
                 NavigationViewModel.Instance.Navigation.Fire(NavigationTriggers.RIGHT);
-                return true;
             }
 
             if (key == GlobalKey.VK_UP)
             {
                 NavigationViewModel.Instance.Navigation.Fire(NavigationTriggers.UP);
-                return true;
             }
 
             if (key == GlobalKey.VK_DOWN)
             {
                 NavigationViewModel.Instance.Navigation.Fire(NavigationTriggers.DOWN);
-                return true;
             }
-
-            return false;
         }
 
         void UpdateModelFromMavigation()

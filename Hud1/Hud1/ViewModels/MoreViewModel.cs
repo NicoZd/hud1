@@ -45,6 +45,8 @@ namespace Hud1.ViewModels
                .InternalTransition(NavigationTriggers.LEFT, NavigationStates.HUD_POSITION.ExecuteLeft)
                .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.HUD_POSITION.ExecuteRight);
 
+            NavigationStates.KEYBOARD_CONTROL.LeftAction = EnableCursorNav(false);
+            NavigationStates.KEYBOARD_CONTROL.RightAction = EnableCursorNav(true);
             Navigation.Configure(NavigationStates.KEYBOARD_CONTROL)
                 .InternalTransition(NavigationTriggers.LEFT, NavigationStates.KEYBOARD_CONTROL.ExecuteLeft)
                 .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.KEYBOARD_CONTROL.ExecuteRight);
@@ -64,6 +66,14 @@ namespace Hud1.ViewModels
             NavigationViewModel.MakeNav(NavigationStates.MENU_MORE, NavigationStates.MORE_VISIBLE,
                 [NavigationStates.EXIT, NavigationStates.ACTIVATE, NavigationStates.HUD_POSITION,
                 NavigationStates.KEYBOARD_CONTROL, NavigationStates.STYLE, NavigationStates.FONT]);
+        }
+
+        private static Action? EnableCursorNav(bool v)
+        {
+            return () =>
+            {
+                NavigationStates.KEYBOARD_CONTROL.SelectionBoolean = v;
+            };
         }
 
         private Action SelectHudPos(int dir)
@@ -116,18 +126,23 @@ namespace Hud1.ViewModels
 
         void NextStyle()
         {
-            Console.WriteLine("NextStyle");
-            var currentStyleIndex = Array.IndexOf(Styles, NavigationStates.STYLE.SelectionLabel);
-            var nextStyleIndex = (currentStyleIndex + 1) % Styles.Length;
-            NavigationStates.STYLE.SelectionLabel = Styles[nextStyleIndex];
-            App.SelectStyle(NavigationStates.STYLE.SelectionLabel, NavigationStates.FONT.SelectionLabel);
+            SelectStyle(1);
 
         }
         void PrevStyle()
         {
-            Console.WriteLine("PrevStyle");
+            SelectStyle(-1);
+        }
+
+        public void SelectStyle(int dir)
+        {
             var currentStyleIndex = Array.IndexOf(Styles, NavigationStates.STYLE.SelectionLabel);
-            var prevStyleIndex = (currentStyleIndex - 1 + Styles.Length) % Styles.Length;
+            if (currentStyleIndex == -1)
+            {
+                currentStyleIndex = 0;
+                dir = 0;
+            }
+            var prevStyleIndex = (currentStyleIndex + dir + Styles.Length) % Styles.Length;
             NavigationStates.STYLE.SelectionLabel = Styles[prevStyleIndex];
             App.SelectStyle(NavigationStates.STYLE.SelectionLabel, NavigationStates.FONT.SelectionLabel);
         }
@@ -173,6 +188,5 @@ namespace Hud1.ViewModels
             NavigationStates.FONT.SelectionLabel = Fonts[prevStyleIndex];
             App.SelectStyle(NavigationStates.STYLE.SelectionLabel, NavigationStates.FONT.SelectionLabel);
         }
-
     }
 }

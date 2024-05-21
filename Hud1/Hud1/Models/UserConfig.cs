@@ -19,6 +19,10 @@ namespace Hud1.Models
 
             HudPosition = "0:Right";
             GammaIndex = 4;
+            KeyboardNavigationEnabled = true;
+
+            Style = "";
+            Font = "";
         }
 
 
@@ -29,5 +33,11 @@ namespace Hud1.Models
         public int GammaIndex { get; set; }
 
         public string HudPosition { get; set; }
+
+        public bool KeyboardNavigationEnabled { get; set; }
+
+        public string Style { get; set; }
+
+        public string Font { get; set; }
     }
 }
