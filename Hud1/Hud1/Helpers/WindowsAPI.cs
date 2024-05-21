@@ -12,6 +12,7 @@ namespace Hud1.Helpers
         VK_DOWN = 0x28,
 
         VK_F2 = 0x71,
+        VK_F3 = 0x72,
 
         VK_F = 0x46,
         VK_L = 0x4C,

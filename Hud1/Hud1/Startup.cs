@@ -60,8 +60,8 @@ namespace Hud1
             // load config
             // var config = new UserConfig();
 
-            UserConfig.Current.GammaIndex = 3;
-            UserConfig.Current.HudPosition = "1:Left";
+            UserConfig.Current.GammaIndex = 4;
+            UserConfig.Current.HudPosition = "0:Right";
 
             // create navgation
             NavigationViewModel.Instance.BuildNavigation();

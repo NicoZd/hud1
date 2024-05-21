@@ -14,7 +14,7 @@
          >
 
         <DockPanel Margin="0,4,4,4">
-            
+
             <views:GlowBorderLabel     
                 Width="70"                
                 DockPanel.Dock="Right"
@@ -22,9 +22,19 @@
                 Label="{Binding Path=SelectionRightLabel}"
                 Selected="{Binding Path=Selected}"
                 Pressed="{Binding Path=SelectRight}"
-                Enabled="True"
-                />
-            
+                >
+                <views:GlowBorderLabel.Style>
+                    <Style TargetType="views:GlowBorderLabel">
+                        <Setter Property="Enabled" Value="False"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=SelectionBoolean}" Value="True">
+                                <Setter Property="Enabled" Value="True"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </views:GlowBorderLabel.Style>
+            </views:GlowBorderLabel>
+
             <views:GlowBorderLabel     
                 Margin="0,0,4,0"
                 Width="70"
@@ -33,9 +43,19 @@
                 Label="{Binding Path=SelectionLeftLabel}"
                 Selected="{Binding Path=Selected}"
                 Pressed="{Binding Path=SelectLeft}"
-                Enabled="False"
-                />
-            
+                >
+                <views:GlowBorderLabel.Style>
+                    <Style TargetType="views:GlowBorderLabel">
+                        <Setter Property="Enabled" Value="False"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=SelectionBoolean}" Value="False">
+                                <Setter Property="Enabled" Value="True"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </views:GlowBorderLabel.Style>
+            </views:GlowBorderLabel>
+
             <views:PanelLabel VerticalAlignment="Center"/>
         </DockPanel>
 

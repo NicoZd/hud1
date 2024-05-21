@@ -1,5 +1,6 @@
 ﻿using Hud1.Helpers;
 using Hud1.Models;
+using System.Diagnostics;
 
 namespace Hud1.ViewModels
 {
@@ -15,14 +16,28 @@ namespace Hud1.ViewModels
         {
             GammaIndex = UserConfig.Current.GammaIndex;
             SelectIndex();
+
+            NavigationStates.NIGHTVISION_ENABLED.SelectionBoolean = false;
+
+            GlobalKeyboardHook.KeyDown += HandleKeyDown;
+        }
+
+        private void HandleKeyDown(KeyEvent keyEvent)
+        {
+            if (!keyEvent.alt && keyEvent.key == GlobalKey.VK_F3)
+            {
+                keyEvent.block = true;
+                EnableNightVision(
+                    !NavigationStates.NIGHTVISION_ENABLED.SelectionBoolean)();
+            }
         }
 
         public void BuildNavigation()
         {
             var Navigation = NavigationViewModel.Instance.Navigation;
 
-            NavigationStates.NIGHTVISION_ENABLED.LeftAction = SelectPrevGama;
-            NavigationStates.NIGHTVISION_ENABLED.RightAction = SelectNextGama;
+            NavigationStates.NIGHTVISION_ENABLED.LeftAction = EnableNightVision(false);
+            NavigationStates.NIGHTVISION_ENABLED.RightAction = EnableNightVision(true);
             Navigation.Configure(NavigationStates.NIGHTVISION_ENABLED)
             .InternalTransition(NavigationTriggers.LEFT, NavigationStates.NIGHTVISION_ENABLED.ExecuteLeft)
             .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.NIGHTVISION_ENABLED.ExecuteRight);
@@ -37,10 +52,26 @@ namespace Hud1.ViewModels
                 [NavigationStates.NIGHTVISION_ENABLED, NavigationStates.GAMMA]);
         }
 
+        private static Action EnableNightVision(bool enabled)
+        {
+            return () =>
+            {
+                NavigationStates.NIGHTVISION_ENABLED.SelectionBoolean = enabled;
+                if (enabled)
+                {
+                    NightvisionViewModel.Instance.ApplyGamma();
+                }
+                else
+                {
+                    Gamma.SetGamma(1);
+                }
+            };
+        }
         private void SelectPrevGama()
         {
             Console.WriteLine("SelectPrevGama {0}", GammaIndex);
             GammaIndex--;
+            NavigationStates.NIGHTVISION_ENABLED.SelectionBoolean = true;
             SelectIndex();
             ApplyGamma();
         }
@@ -49,6 +80,7 @@ namespace Hud1.ViewModels
         {
             Console.WriteLine("SelectPrevGama {0}", GammaIndex);
             GammaIndex++;
+            NavigationStates.NIGHTVISION_ENABLED.SelectionBoolean = true;
             SelectIndex();
             ApplyGamma();
         }
