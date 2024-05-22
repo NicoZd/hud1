@@ -142,10 +142,11 @@
                     <views:ScrollPanel Visibility="{Binding Path=States[CROSSHAIR_VISIBLE].Visibility}">
                         <StackPanel Margin="0,0,0,28" views:Spacing.Vertical="8">
                             <Label Content="Crosshair" Style="{DynamicResource TitleContent}"/>
-                            <!--<views:GlowBorderLabel Label="ON/OFF" Selected="{Binding Path=States[cross-visible].Selected}" />
-                            <views:GlowBorderLabel Label="C" Selected="{Binding Path=States[cross-color].Selected}"/>
-                            <views:GlowBorderLabel Label="F" Selected="{Binding Path=States[cross-form].Selected}"/>
-                            <views:GlowBorderLabel Label="S" Selected="{Binding Path=States[cross-size].Selected}"/>-->
+                            <views:BooleanPanel NavigationState="{Binding Path=States[CROSSHAIR_ENABLED]}" />
+                            <views:SelectionControl NavigationState="{Binding Path=States[CROSSHAIR_FORM]}" />
+                            <views:SelectionControl NavigationState="{Binding Path=States[CROSSHAIR_COLOR]}" />
+                            <views:SelectionControl NavigationState="{Binding Path=States[CROSSHAIR_SIZE]}" />
+                            <views:BooleanPanel NavigationState="{Binding Path=States[CROSSHAIR_OUTLINE]}" />
                         </StackPanel>
                     </views:ScrollPanel>
 

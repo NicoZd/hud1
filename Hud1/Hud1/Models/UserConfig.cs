@@ -8,7 +8,7 @@
         {
             HudPosition = "0:Right";
             GammaIndex = 4;
-            KeyboardNavigationEnabled = true;
+            KeyboardNavigationEnabled = false;
 
             Style = "Green";
             Font = "Source Code Pro";

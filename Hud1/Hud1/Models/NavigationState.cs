@@ -47,6 +47,7 @@ namespace Hud1.Models
         public Action? LeftAction { get; set; }
 
         public Action? RightAction { get; set; }
+        public List<string> Options = [];
 
         public NavigationState([CallerMemberName] string Name = "")
         {
@@ -102,6 +103,39 @@ namespace Hud1.Models
         public override string? ToString()
         {
             return Name;
+        }
+
+        public void OptionLeft()
+        {
+            OptionSelect(-1);
+        }
+
+        public void OptionRight()
+        {
+            OptionSelect(1);
+        }
+
+        public void OptionSelect(int dir)
+        {
+            var currentIndex = Options.IndexOf(SelectionLabel);
+            if (currentIndex == -1)
+            {
+                currentIndex = 0;
+                dir = 0;
+            }
+
+            var nextIndex = Math.Min(Math.Max(currentIndex + dir, 0), Options.Count - 1);
+            SelectionLabel = Options[nextIndex];
+        }
+
+        internal void BooleanLeft()
+        {
+            SelectionBoolean = false;
+        }
+
+        internal void BooleanRight()
+        {
+            SelectionBoolean = true;
         }
     }
 }

@@ -21,6 +21,13 @@
         public static readonly NavigationState NIGHTVISION_ENABLED = new() { Label = "Toggle", Hint = "Use F3 anytime to toogle Nightvision.", SelectionLeftLabel = "< Off", SelectionRightLabel = "On >" };
         public static readonly NavigationState GAMMA = new() { Label = "Gamma", Hint = "Adjust Windows Desktop Gamma while Nightvision toggled on.", AllowRepeat = true };
 
+        // CROSSHAIR
+        public static readonly NavigationState CROSSHAIR_ENABLED = new() { Label = "Toggle", SelectionLeftLabel = "< Off", SelectionRightLabel = "On >" };
+        public static readonly NavigationState CROSSHAIR_FORM = new() { Label = "Form" };
+        public static readonly NavigationState CROSSHAIR_COLOR = new() { Label = "Color" };
+        public static readonly NavigationState CROSSHAIR_SIZE = new() { Label = "Size" };
+        public static readonly NavigationState CROSSHAIR_OUTLINE = new() { Label = "Outline", SelectionLeftLabel = "< Off", SelectionRightLabel = "On >" };
+
         // MACRO
         public static readonly NavigationState MACROS = new() { };
         public static readonly NavigationState MACROS_FOLDER = new() { Label = "Open Folder", Hint = "Open explorer.exe in Macros Folder." };

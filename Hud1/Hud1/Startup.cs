@@ -108,6 +108,7 @@ namespace Hud1
 
             // add to navgation
             NightvisionViewModel.Instance.BuildNavigation();
+            CrosshairViewModel.Instance.BuildNavigation();
             MacrosViewModel.Instance.BuildNavigation();
             MoreViewModel.Instance.BuildNavigation();
 
