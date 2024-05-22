@@ -19,32 +19,42 @@ public class CrosshairViewModel
     {
         var Navigation = NavigationViewModel.Instance.Navigation;
 
-        Navigation.Configure(NavigationStates.CROSSHAIR_ENABLED);
         NavigationStates.CROSSHAIR_ENABLED.LeftAction = NavigationStates.CROSSHAIR_ENABLED.BooleanLeft;
         NavigationStates.CROSSHAIR_ENABLED.RightAction = NavigationStates.CROSSHAIR_ENABLED.BooleanRight;
+        Navigation.Configure(NavigationStates.CROSSHAIR_ENABLED)
+           .InternalTransition(NavigationTriggers.LEFT, NavigationStates.CROSSHAIR_ENABLED.ExecuteLeft)
+           .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.CROSSHAIR_ENABLED.ExecuteRight);
 
-        Navigation.Configure(NavigationStates.CROSSHAIR_FORM);
         NavigationStates.CROSSHAIR_FORM.SelectionLabel = "circle";
         NavigationStates.CROSSHAIR_FORM.Options = ["dot", "circle", "cross", "diagonal", "3 dots"];
         NavigationStates.CROSSHAIR_FORM.LeftAction = NavigationStates.CROSSHAIR_FORM.OptionLeft;
         NavigationStates.CROSSHAIR_FORM.RightAction = NavigationStates.CROSSHAIR_FORM.OptionRight;
+        Navigation.Configure(NavigationStates.CROSSHAIR_FORM)
+          .InternalTransition(NavigationTriggers.LEFT, NavigationStates.CROSSHAIR_FORM.ExecuteLeft)
+          .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.CROSSHAIR_FORM.ExecuteRight);
 
-        Navigation.Configure(NavigationStates.CROSSHAIR_COLOR);
         NavigationStates.CROSSHAIR_COLOR.SelectionLabel = "red";
         NavigationStates.CROSSHAIR_COLOR.Options = ["red", "green", "blue", "white"];
         NavigationStates.CROSSHAIR_COLOR.LeftAction = NavigationStates.CROSSHAIR_COLOR.OptionLeft;
         NavigationStates.CROSSHAIR_COLOR.RightAction = NavigationStates.CROSSHAIR_COLOR.OptionRight;
+        Navigation.Configure(NavigationStates.CROSSHAIR_COLOR)
+           .InternalTransition(NavigationTriggers.LEFT, NavigationStates.CROSSHAIR_COLOR.ExecuteLeft)
+           .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.CROSSHAIR_COLOR.ExecuteRight);
 
-        Navigation.Configure(NavigationStates.CROSSHAIR_SIZE);
         NavigationStates.CROSSHAIR_SIZE.SelectionLabel = "2";
         NavigationStates.CROSSHAIR_SIZE.Options = ["1", "2", "3"];
         NavigationStates.CROSSHAIR_SIZE.LeftAction = NavigationStates.CROSSHAIR_SIZE.OptionLeft;
         NavigationStates.CROSSHAIR_SIZE.RightAction = NavigationStates.CROSSHAIR_SIZE.OptionRight;
+        Navigation.Configure(NavigationStates.CROSSHAIR_SIZE)
+           .InternalTransition(NavigationTriggers.LEFT, NavigationStates.CROSSHAIR_SIZE.ExecuteLeft)
+           .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.CROSSHAIR_SIZE.ExecuteRight);
 
-        Navigation.Configure(NavigationStates.CROSSHAIR_OUTLINE);
         NavigationStates.CROSSHAIR_OUTLINE.SelectionBoolean = true;
         NavigationStates.CROSSHAIR_OUTLINE.LeftAction = NavigationStates.CROSSHAIR_OUTLINE.BooleanLeft;
         NavigationStates.CROSSHAIR_OUTLINE.RightAction = NavigationStates.CROSSHAIR_OUTLINE.BooleanRight;
+        Navigation.Configure(NavigationStates.CROSSHAIR_OUTLINE)
+           .InternalTransition(NavigationTriggers.LEFT, NavigationStates.CROSSHAIR_OUTLINE.ExecuteLeft)
+           .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.CROSSHAIR_OUTLINE.ExecuteRight);
 
         NavigationViewModel.MakeNav(NavigationStates.MENU_CROSSHAIR, NavigationStates.CROSSHAIR_VISIBLE,
             [
@@ -75,11 +85,11 @@ public class CrosshairViewModel
         var scale = Double.Parse(NavigationStates.CROSSHAIR_SIZE.SelectionLabel);
         var color = colors[NavigationStates.CROSSHAIR_COLOR.SelectionLabel];
 
-        var renderFunctions = new Dictionary<string, Func<double, Brush, bool, GeometryDrawing>>
+        var renderFunctions = new Dictionary<string, Func<double, Brush, bool, Drawing>>
         {
             { "dot", CrosshairForms.RenderDot },
             { "circle", CrosshairForms.RenderCircle },
-            { "cross", CrosshairForms.RenderDot },
+            { "cross", CrosshairForms.RenderCross },
             { "diagonal", CrosshairForms.RenderDot },
             { "3 dots", CrosshairForms.RenderDot },
         };
@@ -108,7 +118,10 @@ public class CrosshairViewModel
             RenderTransform = new ScaleTransform(dpiScale, dpiScale, geometryImage.Width / 2.0, geometryImage.Height / 2.0)
         };
 
+
         grid.Children.Clear();
         grid.Children.Add(image);
+
+        grid.RenderTransform = new TranslateTransform(200, 280);
     }
 }
