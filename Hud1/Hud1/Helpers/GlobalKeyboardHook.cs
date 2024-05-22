@@ -1,116 +1,115 @@
 ﻿using System.Diagnostics;
 using System.Runtime.InteropServices;
 
-namespace Hud1.Helpers
+namespace Hud1.Helpers;
+
+public class KeyEvent
 {
-    public class KeyEvent
+    public bool alt = false;
+    public bool block = false;
+    public bool repeated = false;
+
+    public GlobalKey key;
+
+    public KeyEvent(GlobalKey key)
     {
-        public bool alt = false;
-        public bool block = false;
-        public bool repeated = false;
+        this.key = key;
+    }
+}
 
-        public GlobalKey key;
+public static class GlobalKeyboardHook
+{
+    public delegate void KeyDownHandler(KeyEvent keyEvent);
+    public static event KeyDownHandler? KeyDown;
 
-        public KeyEvent(GlobalKey key)
+    private static IntPtr HookID = IntPtr.Zero;
+
+    private static Dictionary<GlobalKey, bool> IsDown = new Dictionary<GlobalKey, bool>();
+    private static GlobalKey? _lastPressedKey;
+
+    public static void SystemHook()
+    {
+        using (Process curProcess = Process.GetCurrentProcess())
         {
-            this.key = key;
+            using (ProcessModule curModule = curProcess.MainModule!)
+            {
+                HookID = WindowsAPI.SetWindowsHookEx(WindowsAPI.WH_KEYBOARD_LL, HookCallback, WindowsAPI.GetModuleHandle(curModule.ModuleName), 0);
+            }
         }
     }
 
-    public static class GlobalKeyboardHook
+    public static void SystemUnhook()
     {
-        public delegate void KeyDownHandler(KeyEvent keyEvent);
-        public static event KeyDownHandler? KeyDown;
+        WindowsAPI.UnhookWindowsHookEx(HookID);
+    }
 
-        private static IntPtr HookID = IntPtr.Zero;
+    private static IntPtr HookCallback(int code, IntPtr wParam, IntPtr lParam)
+    {
 
-        private static Dictionary<GlobalKey, bool> IsDown = new Dictionary<GlobalKey, bool>();
-        private static GlobalKey? _lastPressedKey;
 
-        public static void SystemHook()
+        // Console.WriteLine("nCode {0} {1} {2}", code, wParam, lParam);
+
+        if (code >= 0)
         {
-            using (Process curProcess = Process.GetCurrentProcess())
+            switch (wParam)
             {
-                using (ProcessModule curModule = curProcess.MainModule!)
-                {
-                    HookID = WindowsAPI.SetWindowsHookEx(WindowsAPI.WH_KEYBOARD_LL, HookCallback, WindowsAPI.GetModuleHandle(curModule.ModuleName), 0);
-                }
+                case WindowsAPI.WM_KEYDOWN:
+                    {
+                        int vkCode = Marshal.ReadInt32(lParam);
+                        var keyEvent = new KeyEvent((GlobalKey)vkCode);
+                        keyEvent.repeated = keyEvent.key.Equals(_lastPressedKey);
+                        _lastPressedKey = keyEvent.key;
+                        KeyDown?.Invoke(keyEvent);
+                        // Console.WriteLine("WM_KEYDOWN vkCode:{0} blocked:{1}", vkCode, blocked);
+                        if (keyEvent.block)
+                        {
+                            return 1;
+                        }
+                        break;
+                    }
+                case WindowsAPI.WM_KEYUP:
+                    {
+                        int vkCode = Marshal.ReadInt32(lParam);
+                        // Console.WriteLine("WM_KEYUP vkCode:{0}", vkCode);
+                        _lastPressedKey = null;
+                        break;
+                    }
+                case WindowsAPI.WM_SYSKEYDOWN:
+                    {
+                        int vkCode = Marshal.ReadInt32(lParam);
+                        // Console.WriteLine("WM_SYSKEYDOWN vkCode:{0}", vkCode);
+                        if (vkCode == (int)GlobalKey.VK_LMENU)
+                        {
+                            IsDown[GlobalKey.VK_LMENU] = true;
+                        }
+                        var keyEvent = new KeyEvent((GlobalKey)vkCode);
+                        keyEvent.alt = IsDown.ContainsKey(GlobalKey.VK_LMENU) && IsDown[GlobalKey.VK_LMENU];
+                        KeyDown?.Invoke(keyEvent);
+                        // Console.WriteLine("WM_KEYDOWN vkCode:{0} blocked:{1}", vkCode, blocked);
+                        if (keyEvent.block)
+                        {
+                            return 1;
+                        }
+                        break;
+                    }
+                case WindowsAPI.WM_SYSKEYUP:
+                    {
+                        int vkCode = Marshal.ReadInt32(lParam);
+                        // Console.WriteLine("WM_SYSKEYUP vkCode:{0}", vkCode);
+                        if (vkCode == (int)GlobalKey.VK_LMENU)
+                        {
+                            IsDown[GlobalKey.VK_LMENU] = false;
+                        }
+                        break;
+                    }
+                default:
+                    {
+                        Console.WriteLine("UNKNOWN wParam:{0}", wParam);
+                        break;
+                    }
             }
         }
 
-        public static void SystemUnhook()
-        {
-            WindowsAPI.UnhookWindowsHookEx(HookID);
-        }
-
-        private static IntPtr HookCallback(int code, IntPtr wParam, IntPtr lParam)
-        {
-
-
-            // Console.WriteLine("nCode {0} {1} {2}", code, wParam, lParam);
-
-            if (code >= 0)
-            {
-                switch (wParam)
-                {
-                    case WindowsAPI.WM_KEYDOWN:
-                        {
-                            int vkCode = Marshal.ReadInt32(lParam);
-                            var keyEvent = new KeyEvent((GlobalKey)vkCode);
-                            keyEvent.repeated = keyEvent.key.Equals(_lastPressedKey);
-                            _lastPressedKey = keyEvent.key;
-                            KeyDown?.Invoke(keyEvent);
-                            // Console.WriteLine("WM_KEYDOWN vkCode:{0} blocked:{1}", vkCode, blocked);
-                            if (keyEvent.block)
-                            {
-                                return 1;
-                            }
-                            break;
-                        }
-                    case WindowsAPI.WM_KEYUP:
-                        {
-                            int vkCode = Marshal.ReadInt32(lParam);
-                            // Console.WriteLine("WM_KEYUP vkCode:{0}", vkCode);
-                            _lastPressedKey = null;
-                            break;
-                        }
-                    case WindowsAPI.WM_SYSKEYDOWN:
-                        {
-                            int vkCode = Marshal.ReadInt32(lParam);
-                            // Console.WriteLine("WM_SYSKEYDOWN vkCode:{0}", vkCode);
-                            if (vkCode == (int)GlobalKey.VK_LMENU)
-                            {
-                                IsDown[GlobalKey.VK_LMENU] = true;
-                            }
-                            var keyEvent = new KeyEvent((GlobalKey)vkCode);
-                            keyEvent.alt = IsDown.ContainsKey(GlobalKey.VK_LMENU) && IsDown[GlobalKey.VK_LMENU];
-                            KeyDown?.Invoke(keyEvent);
-                            // Console.WriteLine("WM_KEYDOWN vkCode:{0} blocked:{1}", vkCode, blocked);
-                            if (keyEvent.block)
-                            {
-                                return 1;
-                            }
-                            break;
-                        }
-                    case WindowsAPI.WM_SYSKEYUP:
-                        {
-                            int vkCode = Marshal.ReadInt32(lParam);
-                            // Console.WriteLine("WM_SYSKEYUP vkCode:{0}", vkCode);
-                            if (vkCode == (int)GlobalKey.VK_LMENU)
-                            {
-                                IsDown[GlobalKey.VK_LMENU] = false;
-                            }
-                            break;
-                        }
-                    default:
-                        {
-                            Console.WriteLine("UNKNOWN wParam:{0}", wParam);
-                            break;
-                        }
-                }
-            }
-
-            return WindowsAPI.CallNextHookEx(HookID, code, wParam, lParam);
-        }
+        return WindowsAPI.CallNextHookEx(HookID, code, wParam, lParam);
     }
 }

@@ -1,12 +1,11 @@
 ﻿using System.Windows.Controls;
 
-namespace Hud1.Views
+namespace Hud1.Views;
+
+public partial class GlassPanel : UserControl
 {
-    public partial class GlassPanel : UserControl
+    public GlassPanel()
     {
-        public GlassPanel()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

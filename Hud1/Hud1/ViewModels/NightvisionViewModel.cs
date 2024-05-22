@@ -2,99 +2,98 @@
 using Hud1.Helpers;
 using Hud1.Models;
 
-namespace Hud1.ViewModels
+namespace Hud1.ViewModels;
+
+public partial class NightvisionViewModel : ObservableObject
 {
-    public partial class NightvisionViewModel : ObservableObject
+    public static readonly double[] Gammas = [1.25, 1.5, 2, 2.5, 3, 3.5, 4.2];
+
+    public static readonly NightvisionViewModel Instance = new();
+
+    [ObservableProperty]
+    private int _gammaIndex = 0;
+
+    private NightvisionViewModel()
     {
-        public static readonly double[] Gammas = [1.25, 1.5, 2, 2.5, 3, 3.5, 4.2];
+        GammaIndex = UserConfig.Current.GammaIndex;
+        SelectIndex();
 
-        public static readonly NightvisionViewModel Instance = new();
+        NavigationStates.NIGHTVISION_ENABLED.SelectionBoolean = false;
 
-        [ObservableProperty]
-        private int _gammaIndex = 0;
+        GlobalKeyboardHook.KeyDown += HandleKeyDown;
+    }
 
-        private NightvisionViewModel()
+    private void HandleKeyDown(KeyEvent keyEvent)
+    {
+        if (!keyEvent.alt && keyEvent.key == GlobalKey.VK_F3)
         {
-            GammaIndex = UserConfig.Current.GammaIndex;
-            SelectIndex();
-
-            NavigationStates.NIGHTVISION_ENABLED.SelectionBoolean = false;
-
-            GlobalKeyboardHook.KeyDown += HandleKeyDown;
+            keyEvent.block = true;
+            EnableNightVision(
+                !NavigationStates.NIGHTVISION_ENABLED.SelectionBoolean)();
         }
+    }
 
-        private void HandleKeyDown(KeyEvent keyEvent)
+    public void BuildNavigation()
+    {
+        var Navigation = NavigationViewModel.Instance.Navigation;
+
+        NavigationStates.NIGHTVISION_ENABLED.LeftAction = EnableNightVision(false);
+        NavigationStates.NIGHTVISION_ENABLED.RightAction = EnableNightVision(true);
+        Navigation.Configure(NavigationStates.NIGHTVISION_ENABLED)
+        .InternalTransition(NavigationTriggers.LEFT, NavigationStates.NIGHTVISION_ENABLED.ExecuteLeft)
+        .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.NIGHTVISION_ENABLED.ExecuteRight);
+
+        NavigationStates.GAMMA.LeftAction = SelectPrevGama;
+        NavigationStates.GAMMA.RightAction = SelectNextGama;
+        Navigation.Configure(NavigationStates.GAMMA)
+           .InternalTransition(NavigationTriggers.LEFT, NavigationStates.GAMMA.ExecuteLeft)
+           .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.GAMMA.ExecuteRight);
+
+        NavigationViewModel.MakeNav(NavigationStates.MENU_NIGHTVISION, NavigationStates.NIGHTVISION_VISIBLE,
+            [NavigationStates.NIGHTVISION_ENABLED, NavigationStates.GAMMA]);
+    }
+
+    private static Action EnableNightVision(bool enabled)
+    {
+        return () =>
         {
-            if (!keyEvent.alt && keyEvent.key == GlobalKey.VK_F3)
+            NavigationStates.NIGHTVISION_ENABLED.SelectionBoolean = enabled;
+            if (enabled)
             {
-                keyEvent.block = true;
-                EnableNightVision(
-                    !NavigationStates.NIGHTVISION_ENABLED.SelectionBoolean)();
+                NightvisionViewModel.Instance.ApplyGamma();
             }
-        }
-
-        public void BuildNavigation()
-        {
-            var Navigation = NavigationViewModel.Instance.Navigation;
-
-            NavigationStates.NIGHTVISION_ENABLED.LeftAction = EnableNightVision(false);
-            NavigationStates.NIGHTVISION_ENABLED.RightAction = EnableNightVision(true);
-            Navigation.Configure(NavigationStates.NIGHTVISION_ENABLED)
-            .InternalTransition(NavigationTriggers.LEFT, NavigationStates.NIGHTVISION_ENABLED.ExecuteLeft)
-            .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.NIGHTVISION_ENABLED.ExecuteRight);
-
-            NavigationStates.GAMMA.LeftAction = SelectPrevGama;
-            NavigationStates.GAMMA.RightAction = SelectNextGama;
-            Navigation.Configure(NavigationStates.GAMMA)
-               .InternalTransition(NavigationTriggers.LEFT, NavigationStates.GAMMA.ExecuteLeft)
-               .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.GAMMA.ExecuteRight);
-
-            NavigationViewModel.MakeNav(NavigationStates.MENU_NIGHTVISION, NavigationStates.NIGHTVISION_VISIBLE,
-                [NavigationStates.NIGHTVISION_ENABLED, NavigationStates.GAMMA]);
-        }
-
-        private static Action EnableNightVision(bool enabled)
-        {
-            return () =>
+            else
             {
-                NavigationStates.NIGHTVISION_ENABLED.SelectionBoolean = enabled;
-                if (enabled)
-                {
-                    NightvisionViewModel.Instance.ApplyGamma();
-                }
-                else
-                {
-                    Gamma.SetGamma(1);
-                }
-            };
-        }
-        private void SelectPrevGama()
-        {
-            Console.WriteLine("SelectPrevGama {0}", GammaIndex);
-            GammaIndex--;
-            NavigationStates.NIGHTVISION_ENABLED.SelectionBoolean = true;
-            SelectIndex();
-            ApplyGamma();
-        }
+                Gamma.SetGamma(1);
+            }
+        };
+    }
+    private void SelectPrevGama()
+    {
+        Console.WriteLine("SelectPrevGama {0}", GammaIndex);
+        GammaIndex--;
+        NavigationStates.NIGHTVISION_ENABLED.SelectionBoolean = true;
+        SelectIndex();
+        ApplyGamma();
+    }
 
-        private void SelectNextGama()
-        {
-            Console.WriteLine("SelectPrevGama {0}", GammaIndex);
-            GammaIndex++;
-            NavigationStates.NIGHTVISION_ENABLED.SelectionBoolean = true;
-            SelectIndex();
-            ApplyGamma();
-        }
+    private void SelectNextGama()
+    {
+        Console.WriteLine("SelectPrevGama {0}", GammaIndex);
+        GammaIndex++;
+        NavigationStates.NIGHTVISION_ENABLED.SelectionBoolean = true;
+        SelectIndex();
+        ApplyGamma();
+    }
 
-        private void ApplyGamma()
-        {
-            Gamma.SetGamma(Gammas[GammaIndex]);
-        }
+    private void ApplyGamma()
+    {
+        Gamma.SetGamma(Gammas[GammaIndex]);
+    }
 
-        private void SelectIndex()
-        {
-            GammaIndex = Math.Min(Math.Max(GammaIndex, 0), Gammas.Length - 1);
-            NavigationStates.GAMMA.SelectionLabel = "" + Gammas[GammaIndex];
-        }
+    private void SelectIndex()
+    {
+        GammaIndex = Math.Min(Math.Max(GammaIndex, 0), Gammas.Length - 1);
+        NavigationStates.GAMMA.SelectionLabel = "" + Gammas[GammaIndex];
     }
 }

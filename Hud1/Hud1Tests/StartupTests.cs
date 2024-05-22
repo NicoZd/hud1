@@ -1,26 +1,17 @@
-﻿using Hud1;
-using Hud1.ViewModels;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 
-namespace Hud1.Tests
+namespace Hud1.Tests;
+
+[TestClass()]
+public class StartupTests
 {
-    [TestClass()]
-    public class StartupTests
+    [TestMethod()]
+    public async Task RunTest_ShouldCompleteSuccessfully()
     {
-        [TestMethod()]
-        public async Task RunTest_ShouldCompleteSuccessfully()
-        {
-            Debug.WriteLine("Source:  StartupTests.cs  line 5");
+        Debug.WriteLine("Source:  StartupTests.cs  line 5");
 
-            await Startup.Run();
+        await Startup.Run();
 
-            Assert.IsTrue(true);
-        }
+        Assert.IsTrue(true);
     }
 }

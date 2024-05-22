@@ -6,111 +6,109 @@ using Stateless.Reflection;
 using System.Diagnostics;
 using System.IO;
 using System.Windows;
-using System.Windows.Media;
 
-namespace Hud1.ViewModels
+namespace Hud1.ViewModels;
+
+public partial class HudViewModel : ObservableObject
 {
-    public partial class HudViewModel : ObservableObject
+    public readonly static HudViewModel Instance = new();
+
+    [ObservableProperty]
+    public NavigationState? state;
+
+    [ObservableProperty]
+    public Dictionary<string, NavigationState> states = new Dictionary<string, NavigationState> { };
+
+    private HudViewModel()
     {
-        public readonly static HudViewModel Instance = new();
+    }
 
-        [ObservableProperty]
-        public NavigationState? state;
+    public void BuildNavigation()
+    {
+        Debug.Print("HudViewModel BuildNavigation");
+        var Navigation = NavigationViewModel.Instance.Navigation;
 
-        [ObservableProperty]
-        public Dictionary<string, NavigationState> states = new Dictionary<string, NavigationState> { };
-
-        private HudViewModel()
+        Navigation.OnUnhandledTrigger((state, trigger) =>
         {
+            Console.WriteLine("OnUnhandledTrigger {0} {1}", state, trigger);
+        });
+
+        Navigation.OnTransitionCompleted(a => UpdateModelFromMavigation());
+
+        UpdateModelFromMavigation();
+    }
+
+    [RelayCommand]
+    private void Select(NavigationState navigationState)
+    {
+        // Console.WriteLine("Select {0}", navigationState);
+        NavigationViewModel.SelectNavigationState(navigationState);
+    }
+
+
+    public void OnKeyPressed(KeyEvent keyEvent)
+    {
+        if (!NavigationStates.KEYBOARD_CONTROL.SelectionBoolean)
+            return;
+
+        if (keyEvent.alt)
+            return;
+
+        var key = keyEvent.key;
+
+        NavigationState.Repeat = keyEvent.repeated;
+        var isVerticalNavigation = key == GlobalKey.VK_UP || key == GlobalKey.VK_DOWN;
+
+        if (NavigationState.Repeat && (!State!.AllowRepeat || isVerticalNavigation))
+        {
+            //Console.WriteLine("Skip {0}", keyEvent.key);
+            return;
         }
 
-        public void BuildNavigation()
+        //Console.WriteLine("Execute {0} {1} {2}", State.Name, State.AllowRepeat, keyEvent.key);
+
+        if (key == GlobalKey.VK_LEFT)
         {
-            Debug.Print("HudViewModel BuildNavigation");
-            var Navigation = NavigationViewModel.Instance.Navigation;
-
-            Navigation.OnUnhandledTrigger((state, trigger) =>
-            {
-                Console.WriteLine("OnUnhandledTrigger {0} {1}", state, trigger);
-            });
-
-            Navigation.OnTransitionCompleted(a => UpdateModelFromMavigation());
-
-            UpdateModelFromMavigation();
+            NavigationViewModel.Instance.Navigation.Fire(NavigationTriggers.LEFT);
         }
 
-        [RelayCommand]
-        private void Select(NavigationState navigationState)
+        if (key == GlobalKey.VK_RIGHT)
         {
-            // Console.WriteLine("Select {0}", navigationState);
-            NavigationViewModel.SelectNavigationState(navigationState);
+            NavigationViewModel.Instance.Navigation.Fire(NavigationTriggers.RIGHT);
         }
 
-
-        public void OnKeyPressed(KeyEvent keyEvent)
+        if (key == GlobalKey.VK_UP)
         {
-            if (!NavigationStates.KEYBOARD_CONTROL.SelectionBoolean)
-                return;
-
-            if (keyEvent.alt)
-                return;
-
-            var key = keyEvent.key;
-
-            NavigationState.Repeat = keyEvent.repeated;
-            var isVerticalNavigation = key == GlobalKey.VK_UP || key == GlobalKey.VK_DOWN;
-
-            if (NavigationState.Repeat && (!State!.AllowRepeat || isVerticalNavigation))
-            {
-                //Console.WriteLine("Skip {0}", keyEvent.key);
-                return;
-            }
-
-            //Console.WriteLine("Execute {0} {1} {2}", State.Name, State.AllowRepeat, keyEvent.key);
-
-            if (key == GlobalKey.VK_LEFT)
-            {
-                NavigationViewModel.Instance.Navigation.Fire(NavigationTriggers.LEFT);
-            }
-
-            if (key == GlobalKey.VK_RIGHT)
-            {
-                NavigationViewModel.Instance.Navigation.Fire(NavigationTriggers.RIGHT);
-            }
-
-            if (key == GlobalKey.VK_UP)
-            {
-                NavigationViewModel.Instance.Navigation.Fire(NavigationTriggers.UP);
-            }
-
-            if (key == GlobalKey.VK_DOWN)
-            {
-                NavigationViewModel.Instance.Navigation.Fire(NavigationTriggers.DOWN);
-            }
+            NavigationViewModel.Instance.Navigation.Fire(NavigationTriggers.UP);
         }
 
-        void UpdateModelFromMavigation()
+        if (key == GlobalKey.VK_DOWN)
         {
-            // Console.WriteLine("UpdateModelFromStateless {0} ", nav.State);
-
-            var Navigation = NavigationViewModel.Instance.Navigation;
-
-            State = Navigation.State;
-
-            var newStates = new Dictionary<string, NavigationState> { };
-
-            var info = Navigation.GetInfo();
-            foreach (StateInfo stateInfo in info.States)
-            {
-                var navigationState = (NavigationState)stateInfo.UnderlyingState;
-                var isInState = Navigation.IsInState(navigationState);
-                navigationState.Selected = isInState;
-                navigationState.Visibility = isInState ? Visibility.Visible : Visibility.Collapsed;
-
-                newStates[navigationState.Name] = navigationState;
-            }
-
-            States = newStates;
+            NavigationViewModel.Instance.Navigation.Fire(NavigationTriggers.DOWN);
         }
+    }
+
+    void UpdateModelFromMavigation()
+    {
+        // Console.WriteLine("UpdateModelFromStateless {0} ", nav.State);
+
+        var Navigation = NavigationViewModel.Instance.Navigation;
+
+        State = Navigation.State;
+
+        var newStates = new Dictionary<string, NavigationState> { };
+
+        var info = Navigation.GetInfo();
+        foreach (StateInfo stateInfo in info.States)
+        {
+            var navigationState = (NavigationState)stateInfo.UnderlyingState;
+            var isInState = Navigation.IsInState(navigationState);
+            navigationState.Selected = isInState;
+            navigationState.Visibility = isInState ? Visibility.Visible : Visibility.Collapsed;
+
+            newStates[navigationState.Name] = navigationState;
+        }
+
+        States = newStates;
     }
 }

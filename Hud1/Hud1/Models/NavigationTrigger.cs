@@ -1,19 +1,18 @@
 ﻿using System.Runtime.CompilerServices;
 
-namespace Hud1.Models
+namespace Hud1.Models;
+
+public class NavigationTrigger
 {
-    public class NavigationTrigger
+    public string Label { get; set; }
+
+    public NavigationTrigger([CallerMemberName] string label = "")
     {
-        public string Label { get; set; }
+        this.Label = label;
+    }
 
-        public NavigationTrigger([CallerMemberName] string label = "")
-        {
-            this.Label = label;
-        }
-
-        public override string? ToString()
-        {
-            return Label;
-        }
+    public override string? ToString()
+    {
+        return Label;
     }
 }

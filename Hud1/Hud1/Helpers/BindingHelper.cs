@@ -1,15 +1,14 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace Hud1.Helpers
+namespace Hud1.Helpers;
+
+public class BindingHelper
 {
-    public class BindingHelper
+    public static DependencyProperty CreateProperty<TControl, TValue>(string name, TValue? defaultValue, Action<TControl, TValue>? propertyChangedAction = null)
+    where TControl : UserControl
     {
-        public static DependencyProperty CreateProperty<TControl, TValue>(string name, TValue? defaultValue, Action<TControl, TValue>? propertyChangedAction = null)
-        where TControl : UserControl
-        {
-            return DependencyProperty.Register(name, typeof(TValue), typeof(TControl),
-                new PropertyMetadata(defaultValue, propertyChangedAction == null ? null : new PropertyChangedCallback((d, e) => propertyChangedAction((TControl)d, (TValue)e.NewValue))));
-        }
+        return DependencyProperty.Register(name, typeof(TValue), typeof(TControl),
+            new PropertyMetadata(defaultValue, propertyChangedAction == null ? null : new PropertyChangedCallback((d, e) => propertyChangedAction((TControl)d, (TValue)e.NewValue))));
     }
 }

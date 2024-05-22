@@ -4,9 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hud1.Helpers
+namespace Hud1.Helpers;
+
+internal class AnimationHelper
 {
-    internal class AnimationHelper
-    {
-    }
 }

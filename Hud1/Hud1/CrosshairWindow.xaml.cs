@@ -6,51 +6,50 @@ using System.Windows;
 using System.Windows.Interop;
 using WpfScreenHelper;
 
-namespace Hud1
+namespace Hud1;
+
+public partial class CrosshairWindow : Window
 {
-    public partial class CrosshairWindow : Window
+    public CrosshairWindow()
     {
-        public CrosshairWindow()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
+    }
 
-        private void OnWindowLoaded(object sender, RoutedEventArgs e)
-        {
-            var hwnd = new WindowInteropHelper(this).Handle;
+    private void OnWindowLoaded(object sender, RoutedEventArgs e)
+    {
+        var hwnd = new WindowInteropHelper(this).Handle;
 
-            System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
-            dispatcherTimer.Tick += new EventHandler((_, _) =>
-            {
-                WindowsAPI.SetWindowPos(hwnd, WindowsAPI.HWND_TOP, 0, 0, 0, 0, WindowsAPI.SetWindowPosFlags.SWP_NOMOVE | WindowsAPI.SetWindowPosFlags.SWP_NOSIZE | WindowsAPI.SetWindowPosFlags.SWP_NOACTIVATE);
+        System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+        dispatcherTimer.Tick += new EventHandler((_, _) =>
+        {
+            WindowsAPI.SetWindowPos(hwnd, WindowsAPI.HWND_TOP, 0, 0, 0, 0, WindowsAPI.SetWindowPosFlags.SWP_NOMOVE | WindowsAPI.SetWindowPosFlags.SWP_NOSIZE | WindowsAPI.SetWindowPosFlags.SWP_NOACTIVATE);
 #if HOT
-                CrosshairViewModel.Instance.Redraw(Container);
+            CrosshairViewModel.Instance.Redraw(Container);
 #endif
-            });
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
-            dispatcherTimer.Start();
+        });
+        dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
+        dispatcherTimer.Start();
 
-            var extendedStyle = WindowsAPI.GetWindowLong(hwnd, WindowsAPI.GWL_EXSTYLE);
-            WindowsAPI.SetWindowLong(hwnd, WindowsAPI.GWL_EXSTYLE,
-                extendedStyle
-                | WindowsAPI.WS_EX_NOACTIVATE
-                | WindowsAPI.WS_EX_TRANSPARENT
-                );
+        var extendedStyle = WindowsAPI.GetWindowLong(hwnd, WindowsAPI.GWL_EXSTYLE);
+        WindowsAPI.SetWindowLong(hwnd, WindowsAPI.GWL_EXSTYLE,
+            extendedStyle
+            | WindowsAPI.WS_EX_NOACTIVATE
+            | WindowsAPI.WS_EX_TRANSPARENT
+            );
 
-            this.SetWindowPosition(WpfScreenHelper.Enum.WindowPositions.Maximize, Screen.AllScreens.ElementAt(0));
+        this.SetWindowPosition(WpfScreenHelper.Enum.WindowPositions.Maximize, Screen.AllScreens.ElementAt(0));
 
-            CrosshairViewModel.Instance.Redraw(Container);
+        CrosshairViewModel.Instance.Redraw(Container);
 
-            NavigationStates.CROSSHAIR_ENABLED.PropertyChanged += UpdateCrosshair;
-            NavigationStates.CROSSHAIR_FORM.PropertyChanged += UpdateCrosshair;
-            NavigationStates.CROSSHAIR_COLOR.PropertyChanged += UpdateCrosshair;
-            NavigationStates.CROSSHAIR_SIZE.PropertyChanged += UpdateCrosshair;
-            NavigationStates.CROSSHAIR_OUTLINE.PropertyChanged += UpdateCrosshair;
-        }
+        NavigationStates.CROSSHAIR_ENABLED.PropertyChanged += UpdateCrosshair;
+        NavigationStates.CROSSHAIR_FORM.PropertyChanged += UpdateCrosshair;
+        NavigationStates.CROSSHAIR_COLOR.PropertyChanged += UpdateCrosshair;
+        NavigationStates.CROSSHAIR_SIZE.PropertyChanged += UpdateCrosshair;
+        NavigationStates.CROSSHAIR_OUTLINE.PropertyChanged += UpdateCrosshair;
+    }
 
-        private void UpdateCrosshair(object? sender, PropertyChangedEventArgs e)
-        {
-            CrosshairViewModel.Instance.Redraw(Container);
-        }
+    private void UpdateCrosshair(object? sender, PropertyChangedEventArgs e)
+    {
+        CrosshairViewModel.Instance.Redraw(Container);
     }
 }

@@ -1,18 +1,11 @@
-﻿using Hud1.Helpers;
-using Hud1.ViewModels;
-using System.Windows;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 
-namespace Hud1.Views
+namespace Hud1.Views;
+
+public partial class MacrosView : UserControl
 {
-    /// <summary>
-    /// Interaction logic for MacrosView.xaml
-    /// </summary>
-    public partial class MacrosView : UserControl
+    public MacrosView()
     {
-        public MacrosView()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }
