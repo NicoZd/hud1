@@ -9,7 +9,7 @@
              >
     <UserControl.Template>
         <ControlTemplate>
-            <views:DraggableScrollViewer>
+            <views:DraggableScrollViewer Margin="0,0,2,0" Padding="0,0,3,0" Style="{DynamicResource PanelScrollViewer}">
                 <ContentPresenter Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content}" />
             </views:DraggableScrollViewer>
         </ControlTemplate>
