@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Diagnostics;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -12,9 +13,7 @@ namespace Hud1.Views
         private const int longPressDurationMilliseconds = 25;
         private Point startPoint;
         private bool isDragging = false;
-
         private double virtualVerticalOffset = 0;
-        private double target = 0;
 
         protected override void OnPreviewMouseMove(MouseEventArgs e)
         {
@@ -30,6 +29,7 @@ namespace Hud1.Views
                         Point currentPoint = e.GetPosition(this);
                         Vector offset = startPoint - currentPoint;
                         virtualVerticalOffset += offset.Y;
+                        virtualVerticalOffset = Math.Min(Math.Max(virtualVerticalOffset, 0), ScrollableHeight);
                         startPoint = currentPoint;
                     }
                 }
