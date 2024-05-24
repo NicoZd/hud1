@@ -42,7 +42,7 @@ namespace Hud1.Views
             isDragging = false;
             isPressed = false;
             ReleaseMouseCapture();
-            CompositionTarget.Rendering -= UpdateColor;
+            CompositionTarget.Rendering -= UpdatePosition;
 
         }
 
@@ -58,15 +58,14 @@ namespace Hud1.Views
             pressStartTime = DateTime.Now;
             isPressed = true;
             virtualVerticalOffset = VerticalOffset;
-            CompositionTarget.Rendering += UpdateColor;
+            CompositionTarget.Rendering += UpdatePosition;
         }
 
-        private void UpdateColor(object? sender, EventArgs e)
+        private void UpdatePosition(object? sender, EventArgs e)
         {
             var target = VerticalOffset + (virtualVerticalOffset - VerticalOffset) * 0.3;
             ScrollToVerticalOffset(target);
         }
-
 
     }
 }
