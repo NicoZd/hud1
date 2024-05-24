@@ -9,9 +9,9 @@
              >
     <UserControl.Template>
         <ControlTemplate>
-            <ScrollViewer views:TouchScrolling.IsEnabled="True" >
+            <views:DraggableScrollViewer>
                 <ContentPresenter Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content}" />
-            </ScrollViewer>
+            </views:DraggableScrollViewer>
         </ControlTemplate>
     </UserControl.Template>
 </UserControl>
