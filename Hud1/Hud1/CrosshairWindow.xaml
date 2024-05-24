@@ -21,40 +21,6 @@
         <SolidColorBrush Color="Transparent"/>
     </Window.Background>
 
-    <Grid x:Name="Container">
-        <Image Width="100" Height="100" IsHitTestVisible="false" >
+    <Grid x:Name="Container" VerticalAlignment="Center"/>
 
-            <Image.Source>
-                <DrawingImage>
-                    <DrawingImage.Drawing>
-
-                        <GeometryDrawing>
-                            <GeometryDrawing.Geometry>
-
-                                <!-- Create a composite shape. -->
-                                <GeometryGroup>
-                                    <EllipseGeometry Center="50,50" RadiusX="50" RadiusY="50" />
-                                    <EllipseGeometry Center="50,50" RadiusX="30" RadiusY="30" />
-                                </GeometryGroup>
-                            </GeometryDrawing.Geometry>
-                            <GeometryDrawing.Brush>
-
-                                <!-- Paint the drawing with a gradient. -->
-                                <LinearGradientBrush>
-                                    <GradientStop Offset="0.0" Color="Blue" />
-                                    <GradientStop Offset="1.0" Color="#CCCCFF" />
-                                </LinearGradientBrush>
-                            </GeometryDrawing.Brush>
-                            <GeometryDrawing.Pen>
-
-                                <!-- Outline the drawing with a solid color. -->
-                                <Pen Thickness="1" Brush="Black" />
-                            </GeometryDrawing.Pen>
-                        </GeometryDrawing>
-                    </DrawingImage.Drawing>
-                </DrawingImage>
-            </Image.Source>
-        </Image>
-
-    </Grid>
 </Window>

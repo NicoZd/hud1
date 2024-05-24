@@ -23,6 +23,8 @@ public partial class CrosshairWindow : Window
         dispatcherTimer.Tick += new EventHandler((_, _) =>
         {
             WindowsAPI.SetWindowPos(hwnd, WindowsAPI.HWND_TOP, 0, 0, 0, 0, WindowsAPI.SetWindowPosFlags.SWP_NOMOVE | WindowsAPI.SetWindowPosFlags.SWP_NOSIZE | WindowsAPI.SetWindowPosFlags.SWP_NOACTIVATE);
+            //this.SetWindowPosition(WpfScreenHelper.Enum.WindowPositions.Maximize, Screen.AllScreens.ElementAt(0));
+
 #if HOT
             CrosshairViewModel.Instance.Redraw(Container);
 #endif
@@ -38,6 +40,10 @@ public partial class CrosshairWindow : Window
             );
 
         this.SetWindowPosition(WpfScreenHelper.Enum.WindowPositions.Maximize, Screen.AllScreens.ElementAt(0));
+        //this.Top = 0;
+        //this.Left = 0;
+        //this.Width = 1280;
+        //this.Height = 720;
 
         CrosshairViewModel.Instance.Redraw(Container);
 
