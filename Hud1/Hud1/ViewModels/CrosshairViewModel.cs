@@ -69,8 +69,6 @@ public class CrosshairViewModel
 {
     public static readonly CrosshairViewModel Instance = new();
 
-    public static readonly List<string> Forms = ["a", "b", "c"];
-
     private CrosshairViewModel() { }
 
     public void BuildNavigation()
@@ -83,23 +81,23 @@ public class CrosshairViewModel
            .InternalTransition(NavigationTriggers.LEFT, NavigationStates.CROSSHAIR_ENABLED.ExecuteLeft)
            .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.CROSSHAIR_ENABLED.ExecuteRight);
 
-        NavigationStates.CROSSHAIR_FORM.SelectionLabel = "3 dots";
-        NavigationStates.CROSSHAIR_FORM.Options = ["dot", "ring", "cross", "diagonal", "3 dots"];
+        NavigationStates.CROSSHAIR_FORM.SelectionLabel = "Cross";
+        NavigationStates.CROSSHAIR_FORM.Options = ["Dot", "Ring", "Cross", "Diagonal", "3 Dots"];
         NavigationStates.CROSSHAIR_FORM.LeftAction = NavigationStates.CROSSHAIR_FORM.OptionLeft;
         NavigationStates.CROSSHAIR_FORM.RightAction = NavigationStates.CROSSHAIR_FORM.OptionRight;
         Navigation.Configure(NavigationStates.CROSSHAIR_FORM)
           .InternalTransition(NavigationTriggers.LEFT, NavigationStates.CROSSHAIR_FORM.ExecuteLeft)
           .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.CROSSHAIR_FORM.ExecuteRight);
 
-        NavigationStates.CROSSHAIR_COLOR.SelectionLabel = "white";
-        NavigationStates.CROSSHAIR_COLOR.Options = ["red", "green", "blue", "white"];
+        NavigationStates.CROSSHAIR_COLOR.SelectionLabel = "White";
+        NavigationStates.CROSSHAIR_COLOR.Options = ["Red", "Green", "Blue", "White"];
         NavigationStates.CROSSHAIR_COLOR.LeftAction = NavigationStates.CROSSHAIR_COLOR.OptionLeft;
         NavigationStates.CROSSHAIR_COLOR.RightAction = NavigationStates.CROSSHAIR_COLOR.OptionRight;
         Navigation.Configure(NavigationStates.CROSSHAIR_COLOR)
            .InternalTransition(NavigationTriggers.LEFT, NavigationStates.CROSSHAIR_COLOR.ExecuteLeft)
            .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.CROSSHAIR_COLOR.ExecuteRight);
 
-        NavigationStates.CROSSHAIR_SIZE.SelectionLabel = "1";
+        NavigationStates.CROSSHAIR_SIZE.SelectionLabel = "3";
         NavigationStates.CROSSHAIR_SIZE.Options = ["1", "2", "3", "4", "5"];
         NavigationStates.CROSSHAIR_SIZE.LeftAction = NavigationStates.CROSSHAIR_SIZE.OptionLeft;
         NavigationStates.CROSSHAIR_SIZE.RightAction = NavigationStates.CROSSHAIR_SIZE.OptionRight;
@@ -134,10 +132,10 @@ public class CrosshairViewModel
 
         var colors = new Dictionary<string, Brush>
         {
-            { "red", Brushes.Red },
-            { "green", (SolidColorBrush)new BrushConverter().ConvertFromString("#ff00ff00")! },
-            { "blue", Brushes.Blue },
-            { "white", Brushes.White }
+            { "Red", Brushes.Red },
+            { "Green", (SolidColorBrush)new BrushConverter().ConvertFromString("#ff00ff00")! },
+            { "Blue", Brushes.Blue },
+            { "White", Brushes.White }
         };
 
         var scale = Int32.Parse(NavigationStates.CROSSHAIR_SIZE.SelectionLabel);
@@ -145,11 +143,11 @@ public class CrosshairViewModel
 
         var renderFunctions = new Dictionary<string, Func<int, Brush, bool, Drawing>>
         {
-            { "dot", CrosshairForms.RenderDot },
-            { "ring", CrosshairForms.RenderRing },
-            { "cross", CrosshairForms.RenderCross },
-            { "diagonal", CrosshairForms.RenderDiagonal },
-            { "3 dots", CrosshairForms.ThreeDots },
+            { "Dot", CrosshairForms.RenderDot },
+            { "Ring", CrosshairForms.RenderRing },
+            { "Cross", CrosshairForms.RenderCross },
+            { "Diagonal", CrosshairForms.RenderDiagonal },
+            { "3 Dots", CrosshairForms.ThreeDots },
         };
 
         if (!renderFunctions.ContainsKey(NavigationStates.CROSSHAIR_FORM.SelectionLabel))
@@ -179,7 +177,7 @@ public class CrosshairViewModel
 
         grid.Children.Clear();
 
-        var renderBackground = true;
+        var renderBackground = false;
         if (renderBackground)
         {
             PixelatedImage debugImage = new()
