@@ -68,8 +68,10 @@ public partial class NavigationState : ObservableObject
     public Action? RightAction { get; set; }
 
     [ObservableProperty]
+    private ObservableCollection<Option> _options = [];
 
-    public ObservableCollection<Option> _options = [];
+    [ObservableProperty]
+    private int _spacing = 4;
 
     public NavigationState([CallerMemberName] string Name = "")
     {

@@ -90,7 +90,7 @@
                                 <ItemsPanelTemplate>
                                     <StackPanel 
                                         Orientation="Horizontal" 
-                                        views:Spacing.Horizontal="4"                                        />
+                                        views:Spacing.Horizontal="{Binding Spacing}"                                        />
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>

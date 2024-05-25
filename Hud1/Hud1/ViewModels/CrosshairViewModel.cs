@@ -44,21 +44,39 @@ public class CrosshairViewModel
             { "3 Dots", CrosshairForms.ThreeDots },
         };
 
-        NavigationStates.CROSSHAIR_COLOR.SelectionLabel = "White";
-        NavigationStates.CROSSHAIR_COLOR.Options = [new Option("Red"), new Option("Green"), new Option("Blue"), new Option("White")];
+        NavigationStates.CROSSHAIR_COLOR.SelectionLabel = "#ffffff";
+        NavigationStates.CROSSHAIR_COLOR.Spacing = 0;
+        NavigationStates.CROSSHAIR_COLOR.Options = [
+
+            new Option("#ff1010"),
+            new Option("#10ff10"),
+            new Option("#1010ff"),
+
+            new Option("#800000"),
+            new Option("#008000"),
+            new Option("#000080"),
+
+            new Option("#ffffff"),
+
+            new Option("#40ffff"),
+            new Option("#ff40ff"),
+            new Option("#ffff40"),
+
+            new Option("#008080"),
+            new Option("#800080"),
+            new Option("#808000"),
+            ];
         NavigationStates.CROSSHAIR_COLOR.SelectOption();
         NavigationStates.CROSSHAIR_COLOR.LeftAction = NavigationStates.CROSSHAIR_COLOR.OptionLeft;
         NavigationStates.CROSSHAIR_COLOR.RightAction = NavigationStates.CROSSHAIR_COLOR.OptionRight;
         Navigation.Configure(NavigationStates.CROSSHAIR_COLOR)
            .InternalTransition(NavigationTriggers.LEFT, NavigationStates.CROSSHAIR_COLOR.ExecuteLeft)
            .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.CROSSHAIR_COLOR.ExecuteRight);
-        ColorOptions = new Dictionary<string, Brush>
+
+        foreach (var option in NavigationStates.CROSSHAIR_COLOR.Options)
         {
-            { "Red", Brushes.Red },
-            { "Green", (SolidColorBrush)new BrushConverter().ConvertFromString("#ff00ff00")! },
-            { "Blue", Brushes.Blue },
-            { "White", Brushes.White }
-        };
+            ColorOptions.Add(option.Value, (SolidColorBrush)new BrushConverter().ConvertFromString(option.Value)!);
+        }
 
         NavigationStates.CROSSHAIR_SIZE.SelectionLabel = "3";
         NavigationStates.CROSSHAIR_SIZE.Options = [new Option("1"), new Option("2"), new Option("3"), new Option("4"), new Option("5")];
@@ -142,6 +160,7 @@ public class CrosshairViewModel
                 Stretch = Stretch.None,
                 RenderTransform = new ScaleTransform(dpiScale, dpiScale, drawingImage.Width / 2, drawingImage.Height / 2),
             };
+            image.Margin = new Thickness(4, 0, 4, 0);
 
             option.Image = image;
         }
@@ -149,9 +168,15 @@ public class CrosshairViewModel
         foreach (var option in NavigationStates.CROSSHAIR_COLOR.Options)
         {
             var colorOption = ColorOptions[option.Value];
-            var geometryDrawing = GetGeometryDrawing(5, colorOption, formFunction);
+            //var geometryDrawing = GetGeometryDrawing(5, colorOption, formFunction);
 
-            DrawingImage drawingImage = new(geometryDrawing);
+
+            GeometryGroup areaGroup = new();
+            areaGroup.Children.Add(new RectangleGeometry(new Rect(-10, -10, 20, 20)));
+
+            GeometryDrawing foregroundDrawing = new() { Geometry = areaGroup, Brush = colorOption };
+
+            DrawingImage drawingImage = new(foregroundDrawing);
             drawingImage.Freeze();
 
             Image image = new()
@@ -160,6 +185,8 @@ public class CrosshairViewModel
                 Stretch = Stretch.None,
                 RenderTransform = new ScaleTransform(dpiScale, dpiScale, drawingImage.Width / 2, drawingImage.Height / 2),
             };
+            image.Margin = new Thickness(0, 2, 0, 0);
+
 
             option.Image = image;
         }
@@ -178,6 +205,8 @@ public class CrosshairViewModel
                 Stretch = Stretch.None,
                 RenderTransform = new ScaleTransform(dpiScale, dpiScale, drawingImage.Width / 2, drawingImage.Height / 2),
             };
+            image.Margin = new Thickness(4, 0, 4, 0);
+
 
             option.Image = image;
         }
@@ -192,6 +221,9 @@ public class CrosshairViewModel
         areaGroup.Children.Add(new RectangleGeometry(new Rect(-12, -12, 24, 24)));
 
         drawingWithFixedSize.Children.Insert(0, new GeometryDrawing() { Geometry = areaGroup, Brush = Brushes.Transparent });
+        //        drawingWithFixedSize.Children.Insert(0, new GeometryDrawing() { Geometry = areaGroup, Brush = Brushes.Red });
+
+        drawingWithFixedSize.Opacity = 0.8;
 
         return drawingWithFixedSize;
     }

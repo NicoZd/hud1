@@ -152,7 +152,7 @@
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="0 0 0 2"
                             />
-                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="4,2,4,4"/>
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,2,0,4"/>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

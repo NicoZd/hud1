@@ -204,15 +204,15 @@ class CrosshairForms
         }
         else if (size == 4)
         {
-            geometryGroup.Children.Add(new EllipseGeometry(new Point(0, -6), 2, 2));
-            geometryGroup.Children.Add(new EllipseGeometry(new Point(-6, 4), 2, 2));
-            geometryGroup.Children.Add(new EllipseGeometry(new Point(6, 4), 2, 2));
+            geometryGroup.Children.Add(new EllipseGeometry(new Point(0, -6), 3, 3));
+            geometryGroup.Children.Add(new EllipseGeometry(new Point(-6, 4), 3, 3));
+            geometryGroup.Children.Add(new EllipseGeometry(new Point(6, 4), 3, 3));
         }
         else if (size == 5)
         {
-            geometryGroup.Children.Add(new EllipseGeometry(new Point(0, -8), 3, 3));
-            geometryGroup.Children.Add(new EllipseGeometry(new Point(-8, 5), 3, 3));
-            geometryGroup.Children.Add(new EllipseGeometry(new Point(8, 5), 3, 3));
+            geometryGroup.Children.Add(new EllipseGeometry(new Point(0, -7), 3.5, 3.5));
+            geometryGroup.Children.Add(new EllipseGeometry(new Point(-7, 6), 3.5, 3.5));
+            geometryGroup.Children.Add(new EllipseGeometry(new Point(7, 6), 3.5, 3.5));
         }
 
         GeometryDrawing outlineDrawing = new()
