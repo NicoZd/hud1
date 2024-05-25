@@ -44,27 +44,25 @@ public class CrosshairViewModel
             { "3 Dots", CrosshairForms.ThreeDots },
         };
 
-        NavigationStates.CROSSHAIR_COLOR.SelectionLabel = "#ffffff";
+        NavigationStates.CROSSHAIR_COLOR.SelectionLabel = "#FFFFFF";
         NavigationStates.CROSSHAIR_COLOR.Spacing = 0;
         NavigationStates.CROSSHAIR_COLOR.Options = [
 
-            new Option("#ff1010"),
-            new Option("#10ff10"),
-            new Option("#1010ff"),
+            new Option("#00C000"),
+            new Option("#00FF00"),
+            new Option("#B2FF00"),
+            new Option("#FFFF00"),
+            new Option("#FFAC00"),
 
-            new Option("#800000"),
-            new Option("#008000"),
-            new Option("#000080"),
+            new Option("#FF3100"),
+            new Option("#D10133"),
+            new Option("#FF00FF"),
+            new Option("#C000FF"),
+            new Option("#0000FF"),
 
-            new Option("#ffffff"),
-
-            new Option("#40ffff"),
-            new Option("#ff40ff"),
-            new Option("#ffff40"),
-
-            new Option("#008080"),
-            new Option("#800080"),
-            new Option("#808000"),
+            new Option("#0080FF"),
+            new Option("#00FFFF"),
+            new Option("#FFFFFF"),
             ];
         NavigationStates.CROSSHAIR_COLOR.SelectOption();
         NavigationStates.CROSSHAIR_COLOR.LeftAction = NavigationStates.CROSSHAIR_COLOR.OptionLeft;
