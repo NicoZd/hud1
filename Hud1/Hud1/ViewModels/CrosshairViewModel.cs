@@ -9,65 +9,10 @@ using WpfScreenHelper;
 
 namespace Hud1.ViewModels;
 
-public class PixelatedImage : FrameworkElement
-{
-    public Drawing? Drawing { get; set; }
-
-    protected override void OnRender(DrawingContext drawingContext)
-    {
-        base.OnRender(drawingContext);
-
-        var visual = new DrawingVisual();
-        using (DrawingContext dc = visual.RenderOpen())
-        {
-            dc.DrawDrawing(Drawing);
-            dc.Close();
-        }
-
-        visual.Transform = new TranslateTransform(25, 25);
-        var size = 50;
-        var dpi = 96;
-
-        RenderTargetBitmap target = new RenderTargetBitmap(size, size, dpi, dpi, PixelFormats.Pbgra32);
-        target.Render(visual);
-
-        int stride = (int)target.PixelWidth * (target.Format.BitsPerPixel / 8);
-        byte[] pixels = new byte[(int)target.PixelHeight * stride];
-        target.CopyPixels(pixels, stride, 0);
-
-        int scaleFactor = 7;
-
-        for (int y = 0; y < target.PixelHeight; y++)
-        {
-            for (int x = 0; x < target.PixelWidth; x++)
-            {
-                var offset = (y * target.PixelWidth + x) * 4;
-
-                var drawBackground = true;
-                if (drawBackground)
-                {
-                    drawingContext.DrawRectangle( //bgra
-                        new SolidColorBrush(Color.FromArgb(245, 60, 60, 60)),
-                        null,
-                        new Rect(x * scaleFactor, y * scaleFactor, scaleFactor, scaleFactor)
-                        );
-                }
-
-                drawingContext.DrawRectangle( //bgra
-                    new SolidColorBrush(Color.FromArgb(
-                        pixels[offset + 3], pixels[offset + 2], pixels[offset + 1], pixels[offset + 0]
-                        )),
-                    null,
-                    new Rect(x * scaleFactor, y * scaleFactor, scaleFactor, scaleFactor)
-                    );
-            }
-        }
-    }
-}
-
 public class CrosshairViewModel
 {
     public static readonly CrosshairViewModel Instance = new();
+    private Dictionary<string, Func<int, Brush, bool, Drawing>> FormRenderFunctions = [];
 
     private CrosshairViewModel() { }
 
@@ -82,15 +27,25 @@ public class CrosshairViewModel
            .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.CROSSHAIR_ENABLED.ExecuteRight);
 
         NavigationStates.CROSSHAIR_FORM.SelectionLabel = "Cross";
-        NavigationStates.CROSSHAIR_FORM.Options = ["Dot", "Ring", "Cross", "Diagonal", "3 Dots"];
+        NavigationStates.CROSSHAIR_FORM.Options = [new Option("Dot"), new Option("Ring"), new Option("Cross"), new Option("Diagonal"), new Option("3 Dots")];
+        NavigationStates.CROSSHAIR_FORM.SelectOption();
         NavigationStates.CROSSHAIR_FORM.LeftAction = NavigationStates.CROSSHAIR_FORM.OptionLeft;
         NavigationStates.CROSSHAIR_FORM.RightAction = NavigationStates.CROSSHAIR_FORM.OptionRight;
         Navigation.Configure(NavigationStates.CROSSHAIR_FORM)
           .InternalTransition(NavigationTriggers.LEFT, NavigationStates.CROSSHAIR_FORM.ExecuteLeft)
           .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.CROSSHAIR_FORM.ExecuteRight);
+        FormRenderFunctions = new Dictionary<string, Func<int, Brush, bool, Drawing>>
+        {
+            { "Dot", CrosshairForms.RenderDot },
+            { "Ring", CrosshairForms.RenderRing },
+            { "Cross", CrosshairForms.RenderCross },
+            { "Diagonal", CrosshairForms.RenderDiagonal },
+            { "3 Dots", CrosshairForms.ThreeDots },
+        };
 
         NavigationStates.CROSSHAIR_COLOR.SelectionLabel = "White";
-        NavigationStates.CROSSHAIR_COLOR.Options = ["Red", "Green", "Blue", "White"];
+        NavigationStates.CROSSHAIR_COLOR.Options = [new Option("Red"), new Option("Green"), new Option("Blue"), new Option("White")];
+        NavigationStates.CROSSHAIR_COLOR.SelectOption();
         NavigationStates.CROSSHAIR_COLOR.LeftAction = NavigationStates.CROSSHAIR_COLOR.OptionLeft;
         NavigationStates.CROSSHAIR_COLOR.RightAction = NavigationStates.CROSSHAIR_COLOR.OptionRight;
         Navigation.Configure(NavigationStates.CROSSHAIR_COLOR)
@@ -98,7 +53,8 @@ public class CrosshairViewModel
            .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.CROSSHAIR_COLOR.ExecuteRight);
 
         NavigationStates.CROSSHAIR_SIZE.SelectionLabel = "3";
-        NavigationStates.CROSSHAIR_SIZE.Options = ["1", "2", "3", "4", "5"];
+        NavigationStates.CROSSHAIR_SIZE.Options = [new Option("1"), new Option("2"), new Option("3"), new Option("4"), new Option("5")];
+        NavigationStates.CROSSHAIR_SIZE.SelectOption();
         NavigationStates.CROSSHAIR_SIZE.LeftAction = NavigationStates.CROSSHAIR_SIZE.OptionLeft;
         NavigationStates.CROSSHAIR_SIZE.RightAction = NavigationStates.CROSSHAIR_SIZE.OptionRight;
         Navigation.Configure(NavigationStates.CROSSHAIR_SIZE)
@@ -141,23 +97,14 @@ public class CrosshairViewModel
         var scale = Int32.Parse(NavigationStates.CROSSHAIR_SIZE.SelectionLabel);
         var color = colors[NavigationStates.CROSSHAIR_COLOR.SelectionLabel];
 
-        var renderFunctions = new Dictionary<string, Func<int, Brush, bool, Drawing>>
-        {
-            { "Dot", CrosshairForms.RenderDot },
-            { "Ring", CrosshairForms.RenderRing },
-            { "Cross", CrosshairForms.RenderCross },
-            { "Diagonal", CrosshairForms.RenderDiagonal },
-            { "3 Dots", CrosshairForms.ThreeDots },
-        };
-
-        if (!renderFunctions.ContainsKey(NavigationStates.CROSSHAIR_FORM.SelectionLabel))
+        if (!FormRenderFunctions.ContainsKey(NavigationStates.CROSSHAIR_FORM.SelectionLabel))
         {
             Debug.Print("Form is null {0}", NavigationStates.CROSSHAIR_FORM.SelectionLabel);
             return;
         }
 
-        var formFunction = renderFunctions[NavigationStates.CROSSHAIR_FORM.SelectionLabel];
-        var geometryDrawing = formFunction(scale, color, NavigationStates.CROSSHAIR_OUTLINE.SelectionBoolean);
+        var formFunction = FormRenderFunctions[NavigationStates.CROSSHAIR_FORM.SelectionLabel];
+        var geometryDrawing = GetGeometryDrawing(scale, color, formFunction);
 
         var screen = Screen.AllScreens.ElementAt(0);
         var dpiScale = 1 / screen.ScaleFactor;
@@ -169,28 +116,45 @@ public class CrosshairViewModel
         {
             Source = drawingImage,
             Stretch = Stretch.None,
-            VerticalAlignment = VerticalAlignment.Center,
-            HorizontalAlignment = HorizontalAlignment.Center,
-            RenderTransform = new ScaleTransform(dpiScale, dpiScale, drawingImage.Width / 2, drawingImage.Width / 2),
+            RenderTransform = new ScaleTransform(dpiScale, dpiScale, drawingImage.Width / 2, drawingImage.Height / 2),
         };
-        image.SnapsToDevicePixels = true;
 
         grid.Children.Clear();
-
-        var renderBackground = false;
-        if (renderBackground)
-        {
-            PixelatedImage debugImage = new()
-            {
-                Drawing = drawingImage.Drawing,
-                VerticalAlignment = VerticalAlignment.Center,
-                HorizontalAlignment = HorizontalAlignment.Center,
-                Margin = new Thickness(300, -300, 0, 0),
-                RenderTransform = new ScaleTransform(dpiScale, dpiScale, 0, 0),
-            };
-            grid.Children.Add(debugImage);
-        }
-
         grid.Children.Add(image);
+
+        UpdateAllOptions(scale, color, formFunction, dpiScale);
+    }
+
+    private void UpdateAllOptions(int scale, Brush color, Func<int, Brush, bool, Drawing> formFunction, double dpiScale)
+    {
+        foreach (var option in NavigationStates.CROSSHAIR_FORM.Options)
+        {
+            var optionFormFunction = FormRenderFunctions[option.Value];
+            var geometryDrawing = GetGeometryDrawing(scale, color, optionFormFunction);
+
+            DrawingImage drawingImage = new(geometryDrawing);
+            drawingImage.Freeze();
+
+            Image image = new()
+            {
+                Source = drawingImage,
+                Stretch = Stretch.None,
+                RenderTransform = new ScaleTransform(dpiScale, dpiScale, drawingImage.Width / 2, drawingImage.Height / 2),
+            };
+
+            option.Image = image;
+        }
+    }
+
+    private static Drawing GetGeometryDrawing(int scale, Brush color, Func<int, Brush, bool, Drawing> optionFormFunction)
+    {
+        var drawingWithFixedSize = (DrawingGroup)optionFormFunction(scale, color, NavigationStates.CROSSHAIR_OUTLINE.SelectionBoolean);
+
+        GeometryGroup areaGroup = new();
+        areaGroup.Children.Add(new RectangleGeometry(new Rect(-12, -12, 24, 24)));
+
+        drawingWithFixedSize.Children.Insert(0, new GeometryDrawing() { Geometry = areaGroup, Brush = Brushes.Transparent });
+
+        return drawingWithFixedSize;
     }
 }

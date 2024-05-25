@@ -17,7 +17,7 @@
         DataContext="{Binding Source={x:Static viewModels:HudViewModel.Instance}}"
         >
 
-        <Grid.Effect>
+        <!--<Grid.Effect>
             <DropShadowEffect
                 Color="{DynamicResource ColorBackgroundDark}"                              
                 ShadowDepth="1"
@@ -25,8 +25,8 @@
                 BlurRadius="5"
                 Direction="180"
                 />
-        </Grid.Effect>
-
+        </Grid.Effect>-->
+        
         <views:GlassPanel>
 
             <DockPanel Margin="15,5,15,15" Height="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Border}},Path=ActualHeight}">

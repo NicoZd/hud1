@@ -7,13 +7,14 @@
              xmlns:local="clr-namespace:Hud1.Views"
              mc:Ignorable="d"
              d:DesignHeight="50" d:DesignWidth="300">
-    <Button Style="{DynamicResource PanelButton}"
+    <Button
         DataContext="{Binding Path=NavigationState, RelativeSource={RelativeSource AncestorType=local:SelectionControl}}"
+        Style="{DynamicResource PanelButton}"
         Command="{Binding Path=ClickCommand}"
         Focusable="False"
         >
         <StackPanel>
-            <views:PanelLabel/>
+            <views:PanelLabel />
 
             <DockPanel Margin="0,0,0,4" views:MarginSetter.Margin="4,0,4,0">
                 <views:GlowBorderLabel 
@@ -29,46 +30,86 @@
                     Selected="{Binding Path=Selected}"
                     Pressed="{Binding Path=SelectRight}"/>
                 <Grid>
-                    <Grid.Style>
-                        <Style TargetType="Grid">
-                            <Setter Property="Background">
-                                <Setter.Value>
-                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,0">
-                                        <GradientStop Color="{DynamicResource ColorMedLow}" Offset="0"/>
-                                    </LinearGradientBrush>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </Grid.Style>
-                    <TextBlock 
-                        MaxWidth="250"
-                        TextTrimming="CharacterEllipsis"
-                        FontFamily="{DynamicResource FontFamily}"
-                        FontSize="12" 
-                        VerticalAlignment="Center"
-                        TextAlignment="Center"
-                        Text="{Binding Path=SelectionLabel}">
-                        <TextBlock.Style>
-                            <Style TargetType="TextBlock">
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Path=Selected}" Value="False">
-                                        <Setter Property="Foreground">
-                                            <Setter.Value>
-                                                <SolidColorBrush Color="{DynamicResource ColorBright}"></SolidColorBrush>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding Path=Selected}" Value="True">
-                                        <Setter Property="Foreground">
-                                            <Setter.Value>
-                                                <SolidColorBrush Color="{DynamicResource ColorSuperBright}"></SolidColorBrush>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </DataTrigger>
-                                </Style.Triggers>
+                    <Grid>
+                        <Grid.Style>
+                            <Style TargetType="Grid">
+                                <Setter Property="Background">
+                                    <Setter.Value>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,0">
+                                            <GradientStop Color="{DynamicResource ColorMedLow}" Offset="0"/>
+                                        </LinearGradientBrush>
+                                    </Setter.Value>
+                                </Setter>
                             </Style>
-                        </TextBlock.Style>
-                    </TextBlock>
+                        </Grid.Style>
+                        <TextBlock 
+                            MaxWidth="250"
+                            TextTrimming="CharacterEllipsis"
+                            FontFamily="{DynamicResource FontFamily}"
+                            FontSize="12" 
+                            VerticalAlignment="Center"
+                            TextAlignment="Center"
+                            Text="{Binding Path=SelectionLabel}">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Visibility" Value="Hidden"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Path=Selected}" Value="False">
+                                            <Setter Property="Foreground">
+                                                <Setter.Value>
+                                                    <SolidColorBrush Color="{DynamicResource ColorBright}"></SolidColorBrush>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Path=Selected}" Value="True">
+                                            <Setter Property="Foreground">
+                                                <Setter.Value>
+                                                    <SolidColorBrush Color="{DynamicResource ColorSuperBright}"></SolidColorBrush>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Path=Options.Count}" Value="0">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </Grid>
+                    <Grid 
+                        HorizontalAlignment="Center" 
+                        >
+                        <ItemsControl ItemsSource="{Binding Options}"
+                            Margin="2"
+                            BorderBrush="Transparent"
+                            BorderThickness="0"
+                            Background="Transparent"
+                            Focusable="False"
+                            >
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel 
+                                        SnapsToDevicePixels="True"
+                                        Orientation="Horizontal" 
+                                        views:Spacing.Horizontal="4" 
+                                        VerticalAlignment="Bottom"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Button
+                                        Background="Transparent"
+                                        BorderBrush="Transparent"                                        
+                                        Focusable="False"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"
+                                        Content="{Binding Image}"
+                                        >
+                                    </Button>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Grid>
                 </Grid>
             </DockPanel>
         </StackPanel>

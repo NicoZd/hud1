@@ -1,11 +1,30 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Hud1.ViewModels;
+using System.Collections.ObjectModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using System.Windows.Controls;
 
 
 namespace Hud1.Models;
+
+public partial class Option : ObservableObject
+{
+    [ObservableProperty]
+    private string _value = "";
+
+    [ObservableProperty]
+    private Image _image = null;
+
+    [ObservableProperty]
+    public bool _selected = false;
+
+    public Option(string value)
+    {
+        this.Value = value;
+    }
+}
 
 public partial class NavigationState : ObservableObject
 {
@@ -47,7 +66,10 @@ public partial class NavigationState : ObservableObject
     public Action? LeftAction { get; set; }
 
     public Action? RightAction { get; set; }
-    public List<string> Options = [];
+
+    [ObservableProperty]
+
+    public ObservableCollection<Option> _options = [];
 
     public NavigationState([CallerMemberName] string Name = "")
     {
@@ -117,7 +139,14 @@ public partial class NavigationState : ObservableObject
 
     public void OptionSelect(int dir)
     {
-        var currentIndex = Options.IndexOf(SelectionLabel);
+        var currentIndex = -1;
+
+        try
+        {
+            currentIndex = Options.Select((item, index) => new { Item = item, Index = index }).First(i => i.Item.Selected).Index;
+        }
+        catch (Exception) { };
+
         if (currentIndex == -1)
         {
             currentIndex = 0;
@@ -125,7 +154,20 @@ public partial class NavigationState : ObservableObject
         }
 
         var nextIndex = Math.Min(Math.Max(currentIndex + dir, 0), Options.Count - 1);
-        SelectionLabel = Options[nextIndex];
+        Options[currentIndex].Selected = false;
+        Options[nextIndex].Selected = true;
+        SelectionLabel = Options[nextIndex].Value;
+    }
+
+    internal void SelectOption()
+    {
+        var currentIndex = 0;
+        try
+        {
+            currentIndex = Options.Select((item, index) => new { Item = item, Index = index }).First(i => i.Item.Value == SelectionLabel).Index;
+        }
+        catch (Exception) { };
+        Options[currentIndex].Selected = true;
     }
 
     internal void BooleanLeft()

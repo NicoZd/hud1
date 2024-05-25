@@ -38,17 +38,17 @@ class CrosshairForms
     {
         public double radiusOuter;
         public double radiusInner;
-        public bool hasInnerOutline;
     }
+
     public static Drawing RenderRing(int size, Brush brush, bool outline)
     {
         var circleSizes = new Dictionary<int, RingStruct>
         {
-            { 1, new() { radiusOuter = 2.4, radiusInner = 1.8, hasInnerOutline = false } },
-            { 2, new() { radiusOuter = 2.6, radiusInner = 1.7, hasInnerOutline = true } },
-            { 3, new() { radiusOuter = 4, radiusInner = 3.0, hasInnerOutline = true } },
-            { 4, new() { radiusOuter = 6, radiusInner = 4.5, hasInnerOutline = true } },
-            { 5, new() { radiusOuter = 10, radiusInner = 8.5, hasInnerOutline = true } },
+            { 1, new() { radiusOuter = 2, radiusInner = 1 } },
+            { 2, new() { radiusOuter = 2.6, radiusInner = 1.7 } },
+            { 3, new() { radiusOuter = 4, radiusInner = 3.0 } },
+            { 4, new() { radiusOuter = 6, radiusInner = 4.5 } },
+            { 5, new() { radiusOuter = 10, radiusInner = 8.5 } },
         };
         var config = circleSizes[size];
 
@@ -58,7 +58,7 @@ class CrosshairForms
 
         GeometryGroup outlineGroup = new();
         outlineGroup.Children.Add(new EllipseGeometry(new Point(0, 0), config.radiusOuter, config.radiusOuter));
-        if (config.hasInnerOutline)
+        if (size > 1)
             outlineGroup.Children.Add(new EllipseGeometry(new Point(0, 0), config.radiusInner, config.radiusInner));
 
         GeometryDrawing outlineDrawing = new()
@@ -154,9 +154,11 @@ class CrosshairForms
         }
         else if (size >= 2)
         {
-            var x = RenderCross(size, brush, outline) as DrawingGroup;
-            x.Transform = new RotateTransform(45);
-            return x;
+            DrawingGroup unRotatedCrossGroup = new();
+            var rotated = (DrawingGroup)RenderCross(size, brush, outline);
+            rotated.Transform = new RotateTransform(45);
+            unRotatedCrossGroup.Children.Add(rotated);
+            return unRotatedCrossGroup;
         }
 
         GeometryDrawing outlineDrawing = new()
