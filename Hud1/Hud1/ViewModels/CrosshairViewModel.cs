@@ -130,7 +130,8 @@ public class CrosshairViewModel
         foreach (var option in NavigationStates.CROSSHAIR_FORM.Options)
         {
             var optionFormFunction = FormRenderFunctions[option.Value];
-            var geometryDrawing = GetGeometryDrawing(scale, color, optionFormFunction);
+            var brush = new SolidColorBrush(((SolidColorBrush)App.Current.FindResource("BrushSolidSuperBright")).Color);
+            var geometryDrawing = GetGeometryDrawing(5, brush, optionFormFunction);
 
             DrawingImage drawingImage = new(geometryDrawing);
             drawingImage.Freeze();
@@ -148,7 +149,7 @@ public class CrosshairViewModel
         foreach (var option in NavigationStates.CROSSHAIR_COLOR.Options)
         {
             var colorOption = ColorOptions[option.Value];
-            var geometryDrawing = GetGeometryDrawing(scale, colorOption, formFunction);
+            var geometryDrawing = GetGeometryDrawing(5, colorOption, formFunction);
 
             DrawingImage drawingImage = new(geometryDrawing);
             drawingImage.Freeze();

@@ -80,7 +80,7 @@
                         HorizontalAlignment="Center" 
                         >
                         <ItemsControl ItemsSource="{Binding Options}"
-                            Margin="2"
+                            Margin="0"
                             BorderBrush="Transparent"
                             BorderThickness="0"
                             Background="Transparent"
@@ -89,20 +89,15 @@
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <StackPanel 
-                                        SnapsToDevicePixels="True"
                                         Orientation="Horizontal" 
-                                        views:Spacing.Horizontal="4" 
-                                        VerticalAlignment="Bottom"/>
+                                        views:Spacing.Horizontal="4"                                        />
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <Button
-                                        Background="Transparent"
-                                        BorderBrush="Transparent"                                        
+                                        Style="{StaticResource OptionButton}"                                    
                                         Focusable="False"
-                                        VerticalAlignment="Center"
-                                        HorizontalAlignment="Center"
                                         Content="{Binding Image}"
                                         >
                                     </Button>
