@@ -174,6 +174,60 @@ class CrosshairForms
         return group;
     }
 
+    public static Drawing ThreeDots(int size, Brush brush, bool outline)
+    {
+        GeometryGroup geometryGroup = new();
+
+        // center
+        //geometryGroup.Children.Add(new RectangleGeometry(new Rect(-1, -1, 2, 2)));
+        //geometryGroup.Children.Add(new RectangleGeometry(new Rect(0, 0, 1, 1)));
+
+        if (size == 1)
+        {
+            geometryGroup.Children.Add(new RectangleGeometry(new Rect(0, -2, 1, 1)));
+            geometryGroup.Children.Add(new RectangleGeometry(new Rect(-2, 2, 1, 1)));
+            geometryGroup.Children.Add(new RectangleGeometry(new Rect(2, 2, 1, 1)));
+        }
+        else if (size == 2)
+        {
+            geometryGroup.Children.Add(new RectangleGeometry(new Rect(-1, -3, 2, 2)));
+            geometryGroup.Children.Add(new RectangleGeometry(new Rect(-4, 3, 2, 2)));
+            geometryGroup.Children.Add(new RectangleGeometry(new Rect(2, 3, 2, 2)));
+        }
+        else if (size == 3)
+        {
+            geometryGroup.Children.Add(new EllipseGeometry(new Point(0, -5), 2, 2));
+            geometryGroup.Children.Add(new EllipseGeometry(new Point(-5, 3), 2, 2));
+            geometryGroup.Children.Add(new EllipseGeometry(new Point(5, 3), 2, 2));
+        }
+        else if (size == 4)
+        {
+            geometryGroup.Children.Add(new EllipseGeometry(new Point(0, -6), 2, 2));
+            geometryGroup.Children.Add(new EllipseGeometry(new Point(-6, 4), 2, 2));
+            geometryGroup.Children.Add(new EllipseGeometry(new Point(6, 4), 2, 2));
+        }
+        else if (size == 5)
+        {
+            geometryGroup.Children.Add(new EllipseGeometry(new Point(0, -8), 3, 3));
+            geometryGroup.Children.Add(new EllipseGeometry(new Point(-8, 5), 3, 3));
+            geometryGroup.Children.Add(new EllipseGeometry(new Point(8, 5), 3, 3));
+        }
+
+        GeometryDrawing outlineDrawing = new()
+        {
+            Geometry = geometryGroup,
+            Pen = MakePen(outline)
+        };
+
+        GeometryDrawing foregroundDrawing = new() { Geometry = geometryGroup, Brush = brush, };
+
+        DrawingGroup group = new();
+        group.Children.Add(outlineDrawing);
+        group.Children.Add(foregroundDrawing);
+
+        return group;
+    }
+
     private static Pen MakePen(bool outline)
     {
         return new Pen(new SolidColorBrush(Color.FromArgb(outline ? (byte)200 : (byte)0, 0, 0, 0)), 2);

@@ -83,7 +83,7 @@ public class CrosshairViewModel
            .InternalTransition(NavigationTriggers.LEFT, NavigationStates.CROSSHAIR_ENABLED.ExecuteLeft)
            .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.CROSSHAIR_ENABLED.ExecuteRight);
 
-        NavigationStates.CROSSHAIR_FORM.SelectionLabel = "cross";
+        NavigationStates.CROSSHAIR_FORM.SelectionLabel = "3 dots";
         NavigationStates.CROSSHAIR_FORM.Options = ["dot", "ring", "cross", "diagonal", "3 dots"];
         NavigationStates.CROSSHAIR_FORM.LeftAction = NavigationStates.CROSSHAIR_FORM.OptionLeft;
         NavigationStates.CROSSHAIR_FORM.RightAction = NavigationStates.CROSSHAIR_FORM.OptionRight;
@@ -149,7 +149,7 @@ public class CrosshairViewModel
             { "ring", CrosshairForms.RenderRing },
             { "cross", CrosshairForms.RenderCross },
             { "diagonal", CrosshairForms.RenderDiagonal },
-            { "3 dots", CrosshairForms.RenderDot },
+            { "3 dots", CrosshairForms.ThreeDots },
         };
 
         if (!renderFunctions.ContainsKey(NavigationStates.CROSSHAIR_FORM.SelectionLabel))
