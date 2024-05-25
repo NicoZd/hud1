@@ -181,7 +181,7 @@ public class CrosshairViewModel
             {
                 Source = drawingImage,
                 Stretch = Stretch.None,
-                RenderTransform = new ScaleTransform(dpiScale, dpiScale, drawingImage.Width / 2, drawingImage.Height / 2),
+                //RenderTransform = new ScaleTransform(dpiScale, dpiScale, drawingImage.Width / 2, drawingImage.Height / 2),
             };
             image.Margin = new Thickness(0, 2, 0, 0);
 
