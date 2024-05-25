@@ -13,6 +13,7 @@ public class CrosshairViewModel
 {
     public static readonly CrosshairViewModel Instance = new();
     private Dictionary<string, Func<int, Brush, bool, Drawing>> FormRenderFunctions = [];
+    private Dictionary<string, Brush> ColorOptions = [];
 
     private CrosshairViewModel() { }
 
@@ -51,6 +52,13 @@ public class CrosshairViewModel
         Navigation.Configure(NavigationStates.CROSSHAIR_COLOR)
            .InternalTransition(NavigationTriggers.LEFT, NavigationStates.CROSSHAIR_COLOR.ExecuteLeft)
            .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.CROSSHAIR_COLOR.ExecuteRight);
+        ColorOptions = new Dictionary<string, Brush>
+        {
+            { "Red", Brushes.Red },
+            { "Green", (SolidColorBrush)new BrushConverter().ConvertFromString("#ff00ff00")! },
+            { "Blue", Brushes.Blue },
+            { "White", Brushes.White }
+        };
 
         NavigationStates.CROSSHAIR_SIZE.SelectionLabel = "3";
         NavigationStates.CROSSHAIR_SIZE.Options = [new Option("1"), new Option("2"), new Option("3"), new Option("4"), new Option("5")];
@@ -86,16 +94,8 @@ public class CrosshairViewModel
         Debug.Print("Color {0}", NavigationStates.CROSSHAIR_COLOR.SelectionLabel);
         Debug.Print("Outline {0}", NavigationStates.CROSSHAIR_OUTLINE.SelectionBoolean);
 
-        var colors = new Dictionary<string, Brush>
-        {
-            { "Red", Brushes.Red },
-            { "Green", (SolidColorBrush)new BrushConverter().ConvertFromString("#ff00ff00")! },
-            { "Blue", Brushes.Blue },
-            { "White", Brushes.White }
-        };
-
         var scale = Int32.Parse(NavigationStates.CROSSHAIR_SIZE.SelectionLabel);
-        var color = colors[NavigationStates.CROSSHAIR_COLOR.SelectionLabel];
+        var color = ColorOptions[NavigationStates.CROSSHAIR_COLOR.SelectionLabel];
 
         if (!FormRenderFunctions.ContainsKey(NavigationStates.CROSSHAIR_FORM.SelectionLabel))
         {
@@ -144,6 +144,43 @@ public class CrosshairViewModel
 
             option.Image = image;
         }
+
+        foreach (var option in NavigationStates.CROSSHAIR_COLOR.Options)
+        {
+            var colorOption = ColorOptions[option.Value];
+            var geometryDrawing = GetGeometryDrawing(scale, colorOption, formFunction);
+
+            DrawingImage drawingImage = new(geometryDrawing);
+            drawingImage.Freeze();
+
+            Image image = new()
+            {
+                Source = drawingImage,
+                Stretch = Stretch.None,
+                RenderTransform = new ScaleTransform(dpiScale, dpiScale, drawingImage.Width / 2, drawingImage.Height / 2),
+            };
+
+            option.Image = image;
+        }
+
+        foreach (var option in NavigationStates.CROSSHAIR_SIZE.Options)
+        {
+            var sizeOption = Int32.Parse(option.Value);
+            var geometryDrawing = GetGeometryDrawing(sizeOption, color, formFunction);
+
+            DrawingImage drawingImage = new(geometryDrawing);
+            drawingImage.Freeze();
+
+            Image image = new()
+            {
+                Source = drawingImage,
+                Stretch = Stretch.None,
+                RenderTransform = new ScaleTransform(dpiScale, dpiScale, drawingImage.Width / 2, drawingImage.Height / 2),
+            };
+
+            option.Image = image;
+        }
+
     }
 
     private static Drawing GetGeometryDrawing(int scale, Brush color, Func<int, Brush, bool, Drawing> optionFormFunction)
