@@ -79,12 +79,23 @@
                     <Grid 
                         HorizontalAlignment="Center" 
                         >
+                        <Grid.Style>
+                            <Style TargetType="Grid">
+                                <Setter Property="Visibility" Value="Visible"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Path=Options.Count}" Value="0">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Grid.Style>
                         <ItemsControl ItemsSource="{Binding Options}"
                             Margin="0"
                             BorderBrush="Transparent"
                             BorderThickness="0"
                             Background="Transparent"
                             Focusable="False"
+                            Height="32"
                             >
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>

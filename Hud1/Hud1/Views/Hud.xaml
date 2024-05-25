@@ -26,7 +26,7 @@
                 Direction="180"
                 />
         </Grid.Effect>-->
-        
+
         <views:GlassPanel>
 
             <DockPanel Margin="15,5,15,15" Height="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Border}},Path=ActualHeight}">
@@ -153,7 +153,7 @@
                     <views:ScrollPanel Visibility="{Binding Path=States[MORE_VISIBLE].Visibility}">
                         <StackPanel Margin="0,0,0,28" views:Spacing.Vertical="8">
 
-                            <Label Content="Functons" Style="{DynamicResource TitleContent}"/>
+                            <Label Content="Functions" Style="{DynamicResource TitleContent}"/>
                             <views:ButtonPanel NavigationState="{Binding Path=States[EXIT]}"/>
                             <views:ButtonPanel NavigationState="{Binding Path=States[ACTIVATE]}"/>
 
