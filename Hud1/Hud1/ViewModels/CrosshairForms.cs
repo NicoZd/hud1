@@ -22,7 +22,7 @@ class CrosshairForms
         GeometryDrawing outlineDrawing = new()
         {
             Geometry = geometryGroup,
-            Pen = new Pen(new SolidColorBrush(Color.FromArgb(200, 0, 0, 0)), outline ? 2 : 0)
+            Pen = MakePen(outline)
         };
 
         GeometryDrawing foregroundDrawing = new() { Geometry = geometryGroup, Brush = brush, };
@@ -34,15 +34,15 @@ class CrosshairForms
         return group;
     }
 
-    public struct CircleStruct
+    public struct RingStruct
     {
         public double radiusOuter;
         public double radiusInner;
         public bool hasInnerOutline;
     }
-    public static Drawing RenderCircle(int size, Brush brush, bool outline)
+    public static Drawing RenderRing(int size, Brush brush, bool outline)
     {
-        var circleSizes = new Dictionary<int, CircleStruct>
+        var circleSizes = new Dictionary<int, RingStruct>
         {
             { 1, new() { radiusOuter = 2.4, radiusInner = 1.8, hasInnerOutline = false } },
             { 2, new() { radiusOuter = 2.6, radiusInner = 1.7, hasInnerOutline = true } },
@@ -64,7 +64,7 @@ class CrosshairForms
         GeometryDrawing outlineDrawing = new()
         {
             Geometry = outlineGroup,
-            Pen = new Pen(new SolidColorBrush(Color.FromArgb(200, 0, 0, 0)), outline ? 2 : 0)
+            Pen = MakePen(outline)
         };
 
         GeometryDrawing foregroundDrawing = new() { Geometry = foregroundGroup, Brush = brush, };
@@ -87,7 +87,7 @@ class CrosshairForms
     public static Drawing RenderCross(int size, Brush brush, bool outline)
     {
 
-        var circleSizes = new Dictionary<int, CrossStruct>
+        var crosses = new Dictionary<int, CrossStruct>
         {
             {1, new() { offs = 0.5, length = 1, thickness = 1, centerSpace = 2, extraOffset = 1 } },
             {2, new() { offs = 0.5, length = 2, thickness = 1, centerSpace = 3, extraOffset = 1 } },
@@ -96,11 +96,11 @@ class CrosshairForms
             {5, new() { offs = 0.0, length = 6, thickness = 2, centerSpace = 5, extraOffset = 0 } },
         };
 
-        double offs = circleSizes[size].offs;
-        double length = circleSizes[size].length;
-        double thickness = circleSizes[size].thickness;
-        double centerSpace = circleSizes[size].centerSpace;
-        double extraOffset = circleSizes[size].extraOffset;
+        double offs = crosses[size].offs;
+        double length = crosses[size].length;
+        double thickness = crosses[size].thickness;
+        double centerSpace = crosses[size].centerSpace;
+        double extraOffset = crosses[size].extraOffset;
 
         GeometryGroup geometryGroup = new();
 
@@ -117,7 +117,7 @@ class CrosshairForms
         GeometryDrawing outlineDrawing = new()
         {
             Geometry = geometryGroup,
-            Pen = new Pen(new SolidColorBrush(Color.FromArgb(200, 0, 0, 0)), outline ? 2 : 0)
+            Pen = MakePen(outline)
         };
 
         GeometryDrawing foregroundDrawing = new() { Geometry = geometryGroup, Brush = brush, };
@@ -127,6 +127,56 @@ class CrosshairForms
         group.Children.Add(foregroundDrawing);
 
         return group;
+    }
+
+    public static Drawing RenderDiagonal(int size, Brush brush, bool outline)
+    {
+        GeometryGroup geometryGroup = new();
+
+        if (size == 1)
+        {
+            geometryGroup.Children.Add(new RectangleGeometry(new Rect(-2, -2, 1, 1)));
+            geometryGroup.Children.Add(new RectangleGeometry(new Rect(2, -2, 1, 1)));
+            geometryGroup.Children.Add(new RectangleGeometry(new Rect(2, 2, 1, 1)));
+            geometryGroup.Children.Add(new RectangleGeometry(new Rect(-2, 2, 1, 1)));
+        }
+        else if (size == 2)
+        {
+            geometryGroup.Children.Add(new RectangleGeometry(new Rect(-2, -2, 1, 1)));
+            geometryGroup.Children.Add(new RectangleGeometry(new Rect(2, -2, 1, 1)));
+            geometryGroup.Children.Add(new RectangleGeometry(new Rect(2, 2, 1, 1)));
+            geometryGroup.Children.Add(new RectangleGeometry(new Rect(-2, 2, 1, 1)));
+
+            geometryGroup.Children.Add(new RectangleGeometry(new Rect(-3, -3, 1, 1)));
+            geometryGroup.Children.Add(new RectangleGeometry(new Rect(3, -3, 1, 1)));
+            geometryGroup.Children.Add(new RectangleGeometry(new Rect(3, 3, 1, 1)));
+            geometryGroup.Children.Add(new RectangleGeometry(new Rect(-3, 3, 1, 1)));
+        }
+        else if (size >= 2)
+        {
+            var x = RenderCross(size, brush, outline) as DrawingGroup;
+            x.Transform = new RotateTransform(45);
+            return x;
+        }
+
+        GeometryDrawing outlineDrawing = new()
+        {
+            Geometry = geometryGroup,
+            Pen = MakePen(outline)
+        };
+
+        GeometryDrawing foregroundDrawing = new() { Geometry = geometryGroup, Brush = brush, };
+
+        DrawingGroup group = new();
+        group.Children.Add(outlineDrawing);
+        group.Children.Add(foregroundDrawing);
+
+        return group;
+    }
+
+    private static Pen MakePen(bool outline)
+    {
+        return new Pen(new SolidColorBrush(Color.FromArgb(outline ? (byte)200 : (byte)0, 0, 0, 0)), 2);
     }
 }
 

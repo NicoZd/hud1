@@ -84,7 +84,7 @@ public class CrosshairViewModel
            .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.CROSSHAIR_ENABLED.ExecuteRight);
 
         NavigationStates.CROSSHAIR_FORM.SelectionLabel = "cross";
-        NavigationStates.CROSSHAIR_FORM.Options = ["dot", "circle", "cross", "diagonal", "3 dots"];
+        NavigationStates.CROSSHAIR_FORM.Options = ["dot", "ring", "cross", "diagonal", "3 dots"];
         NavigationStates.CROSSHAIR_FORM.LeftAction = NavigationStates.CROSSHAIR_FORM.OptionLeft;
         NavigationStates.CROSSHAIR_FORM.RightAction = NavigationStates.CROSSHAIR_FORM.OptionRight;
         Navigation.Configure(NavigationStates.CROSSHAIR_FORM)
@@ -146,9 +146,9 @@ public class CrosshairViewModel
         var renderFunctions = new Dictionary<string, Func<int, Brush, bool, Drawing>>
         {
             { "dot", CrosshairForms.RenderDot },
-            { "circle", CrosshairForms.RenderCircle },
+            { "ring", CrosshairForms.RenderRing },
             { "cross", CrosshairForms.RenderCross },
-            { "diagonal", CrosshairForms.RenderDot },
+            { "diagonal", CrosshairForms.RenderDiagonal },
             { "3 dots", CrosshairForms.RenderDot },
         };
 
