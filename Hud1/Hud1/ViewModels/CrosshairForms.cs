@@ -19,17 +19,17 @@ class CrosshairForms
         GeometryGroup geometryGroup = new();
         geometryGroup.Children.Add(geoms[size]);
 
-        GeometryDrawing foregroundDrawing = new()
+        GeometryDrawing outlineDrawing = new()
         {
             Geometry = geometryGroup,
-            Pen = new Pen(new SolidColorBrush(Color.FromArgb(125, 0, 0, 0)), outline ? 2 : 0)
+            Pen = new Pen(new SolidColorBrush(Color.FromArgb(200, 0, 0, 0)), outline ? 2 : 0)
         };
 
-        GeometryDrawing outlineDrawing = new() { Geometry = geometryGroup, Brush = brush, };
+        GeometryDrawing foregroundDrawing = new() { Geometry = geometryGroup, Brush = brush, };
 
         DrawingGroup group = new();
-        group.Children.Add(foregroundDrawing);
         group.Children.Add(outlineDrawing);
+        group.Children.Add(foregroundDrawing);
 
         return group;
     }
@@ -38,34 +38,40 @@ class CrosshairForms
     {
         public double radiusOuter;
         public double radiusInner;
+        public bool hasInnerOutline;
     }
     public static Drawing RenderCircle(int size, Brush brush, bool outline)
     {
         var circleSizes = new Dictionary<int, CircleStruct>
         {
-            { 1, new() { radiusOuter = 2.4, radiusInner = 1.8 } },
-            { 2, new() { radiusOuter = 2.6, radiusInner = 1.7 } },
-            { 3, new() { radiusOuter = 4, radiusInner = 3.0 } },
-            { 4, new() { radiusOuter = 6, radiusInner = 4.5 } },
-            { 5, new() { radiusOuter = 10, radiusInner = 8.5 } },
+            { 1, new() { radiusOuter = 2.4, radiusInner = 1.8, hasInnerOutline = false } },
+            { 2, new() { radiusOuter = 2.6, radiusInner = 1.7, hasInnerOutline = true } },
+            { 3, new() { radiusOuter = 4, radiusInner = 3.0, hasInnerOutline = true } },
+            { 4, new() { radiusOuter = 6, radiusInner = 4.5, hasInnerOutline = true } },
+            { 5, new() { radiusOuter = 10, radiusInner = 8.5, hasInnerOutline = true } },
         };
         var config = circleSizes[size];
 
-        GeometryGroup geometryGroup = new();
-        geometryGroup.Children.Add(new EllipseGeometry(new Point(0, 0), config.radiusOuter, config.radiusOuter));
-        geometryGroup.Children.Add(new EllipseGeometry(new Point(0, 0), config.radiusInner, config.radiusInner));
+        GeometryGroup foregroundGroup = new();
+        foregroundGroup.Children.Add(new EllipseGeometry(new Point(0, 0), config.radiusOuter, config.radiusOuter));
+        foregroundGroup.Children.Add(new EllipseGeometry(new Point(0, 0), config.radiusInner, config.radiusInner));
 
-        GeometryDrawing foregroundDrawing = new()
+        GeometryGroup outlineGroup = new();
+        outlineGroup.Children.Add(new EllipseGeometry(new Point(0, 0), config.radiusOuter, config.radiusOuter));
+        if (config.hasInnerOutline)
+            outlineGroup.Children.Add(new EllipseGeometry(new Point(0, 0), config.radiusInner, config.radiusInner));
+
+        GeometryDrawing outlineDrawing = new()
         {
-            Geometry = geometryGroup,
-            Pen = new Pen(new SolidColorBrush(Color.FromArgb(125, 0, 0, 0)), outline ? 2 : 0)
+            Geometry = outlineGroup,
+            Pen = new Pen(new SolidColorBrush(Color.FromArgb(200, 0, 0, 0)), outline ? 2 : 0)
         };
 
-        GeometryDrawing outlineDrawing = new() { Geometry = geometryGroup, Brush = brush, };
+        GeometryDrawing foregroundDrawing = new() { Geometry = foregroundGroup, Brush = brush, };
 
         DrawingGroup group = new();
-        group.Children.Add(foregroundDrawing);
         group.Children.Add(outlineDrawing);
+        group.Children.Add(foregroundDrawing);
 
         return group;
     }
@@ -108,17 +114,17 @@ class CrosshairForms
         geometryGroup.Children.Add(new RectangleGeometry(new Rect(centerSpace, -thickness / 2 + offs, length, thickness)));
         geometryGroup.Children.Add(new RectangleGeometry(new Rect(-(length + centerSpace) + extraOffset, -thickness / 2 + offs, length, thickness)));
 
-        GeometryDrawing foregroundDrawing = new()
+        GeometryDrawing outlineDrawing = new()
         {
             Geometry = geometryGroup,
-            Pen = new Pen(new SolidColorBrush(Color.FromArgb(125, 0, 0, 0)), outline ? 2 : 0)
+            Pen = new Pen(new SolidColorBrush(Color.FromArgb(200, 0, 0, 0)), outline ? 2 : 0)
         };
 
-        GeometryDrawing outlineDrawing = new() { Geometry = geometryGroup, Brush = brush, };
+        GeometryDrawing foregroundDrawing = new() { Geometry = geometryGroup, Brush = brush, };
 
         DrawingGroup group = new();
-        group.Children.Add(foregroundDrawing);
         group.Children.Add(outlineDrawing);
+        group.Children.Add(foregroundDrawing);
 
         return group;
     }

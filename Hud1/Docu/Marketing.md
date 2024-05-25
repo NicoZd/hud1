@@ -22,6 +22,7 @@ What's good?
 - GUD is a simple App without any services
 - It's low on memory, gpu and gpu resources
 - It's easy to use and unobtrustive in different game environments
+- Pixel Perfect Crosshairs
 
 Style:
 - HUD Style (red, green) can be selected
