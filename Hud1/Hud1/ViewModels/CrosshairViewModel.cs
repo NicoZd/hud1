@@ -47,7 +47,7 @@ public class PixelatedImage : FrameworkElement
                 if (drawBackground)
                 {
                     drawingContext.DrawRectangle( //bgra
-                        new SolidColorBrush(Color.FromArgb(255, 60, 60, 60)),
+                        new SolidColorBrush(Color.FromArgb(245, 60, 60, 60)),
                         null,
                         new Rect(x * scaleFactor, y * scaleFactor, scaleFactor, scaleFactor)
                         );
@@ -100,7 +100,7 @@ public class CrosshairViewModel
            .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.CROSSHAIR_COLOR.ExecuteRight);
 
         NavigationStates.CROSSHAIR_SIZE.SelectionLabel = "1";
-        NavigationStates.CROSSHAIR_SIZE.Options = ["1", "2", "3"];
+        NavigationStates.CROSSHAIR_SIZE.Options = ["1", "2", "3", "4", "5"];
         NavigationStates.CROSSHAIR_SIZE.LeftAction = NavigationStates.CROSSHAIR_SIZE.OptionLeft;
         NavigationStates.CROSSHAIR_SIZE.RightAction = NavigationStates.CROSSHAIR_SIZE.OptionRight;
         Navigation.Configure(NavigationStates.CROSSHAIR_SIZE)
@@ -140,10 +140,10 @@ public class CrosshairViewModel
             { "white", Brushes.White }
         };
 
-        var scale = Double.Parse(NavigationStates.CROSSHAIR_SIZE.SelectionLabel);
+        var scale = Int32.Parse(NavigationStates.CROSSHAIR_SIZE.SelectionLabel);
         var color = colors[NavigationStates.CROSSHAIR_COLOR.SelectionLabel];
 
-        var renderFunctions = new Dictionary<string, Func<double, Brush, bool, Drawing>>
+        var renderFunctions = new Dictionary<string, Func<int, Brush, bool, Drawing>>
         {
             { "dot", CrosshairForms.RenderDot },
             { "circle", CrosshairForms.RenderCircle },
@@ -187,7 +187,7 @@ public class CrosshairViewModel
                 Drawing = drawingImage.Drawing,
                 VerticalAlignment = VerticalAlignment.Center,
                 HorizontalAlignment = HorizontalAlignment.Center,
-                Margin = new Thickness(100, -300, 0, 0),
+                Margin = new Thickness(300, -300, 0, 0),
                 RenderTransform = new ScaleTransform(dpiScale, dpiScale, 0, 0),
             };
             grid.Children.Add(debugImage);

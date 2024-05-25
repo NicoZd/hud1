@@ -2,14 +2,18 @@
 using Hud1.Models;
 using Hud1.ViewModels;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Interop;
+using Windows.Gaming.Input.ForceFeedback;
 using WpfScreenHelper;
 
 namespace Hud1;
 
 public partial class CrosshairWindow : Window
 {
+    string lastRedrawScreenConfig = "";
+
     public CrosshairWindow()
     {
         InitializeComponent();
@@ -23,10 +27,10 @@ public partial class CrosshairWindow : Window
         dispatcherTimer.Tick += new EventHandler((_, _) =>
         {
             WindowsAPI.SetWindowPos(hwnd, WindowsAPI.HWND_TOP, 0, 0, 0, 0, WindowsAPI.SetWindowPosFlags.SWP_NOMOVE | WindowsAPI.SetWindowPosFlags.SWP_NOSIZE | WindowsAPI.SetWindowPosFlags.SWP_NOACTIVATE);
-            //this.SetWindowPosition(WpfScreenHelper.Enum.WindowPositions.Maximize, Screen.AllScreens.ElementAt(0));
-
 #if HOT
-            CrosshairViewModel.Instance.Redraw(Container);
+            Redraw(force: true);
+#else
+            Redraw(force: false);
 #endif
         });
         dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
@@ -40,12 +44,8 @@ public partial class CrosshairWindow : Window
             );
 
         this.SetWindowPosition(WpfScreenHelper.Enum.WindowPositions.Maximize, Screen.AllScreens.ElementAt(0));
-        //this.Top = 0;
-        //this.Left = 0;
-        //this.Width = 1280;
-        //this.Height = 720;
 
-        CrosshairViewModel.Instance.Redraw(Container);
+        Redraw(force: true);
 
         NavigationStates.CROSSHAIR_ENABLED.PropertyChanged += UpdateCrosshair;
         NavigationStates.CROSSHAIR_FORM.PropertyChanged += UpdateCrosshair;
@@ -54,8 +54,24 @@ public partial class CrosshairWindow : Window
         NavigationStates.CROSSHAIR_OUTLINE.PropertyChanged += UpdateCrosshair;
     }
 
+
+    private void Redraw(bool force)
+    {
+        // current screen
+        var screen = Screen.AllScreens.ElementAt(0);
+
+        var currentRedrawConfig = screen.ScaleFactor + " " + screen.Bounds.Width + " " + screen.Bounds.Height;
+
+        if (currentRedrawConfig != lastRedrawScreenConfig || force)
+        {
+            lastRedrawScreenConfig = currentRedrawConfig;
+            CrosshairViewModel.Instance.Redraw(Container);
+        }
+    }
+
+
     private void UpdateCrosshair(object? sender, PropertyChangedEventArgs e)
     {
-        CrosshairViewModel.Instance.Redraw(Container);
+        Redraw(force: true);
     }
 }
