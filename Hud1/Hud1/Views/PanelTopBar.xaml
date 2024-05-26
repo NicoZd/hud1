@@ -3,18 +3,30 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:viewModels="clr-namespace:Hud1.ViewModels"
              xmlns:local="clr-namespace:Hud1.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
     <Canvas Height="8">
-        <Canvas.Background>
-            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                <GradientStop Color="{DynamicResource ColorBright}" Offset="0.0"/>
-                <GradientStop Color="{DynamicResource ColorBright}" Offset="0.9"/>
-                <GradientStop Color="{DynamicResource ColorBright}" Offset="1"/>
-            </LinearGradientBrush>
-        </Canvas.Background>
+        <Canvas.Style>
+            <Style TargetType="Canvas">
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <SolidColorBrush Color="{DynamicResource ColorInfo}"/>
+                    </Setter.Value>
+                </Setter>
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Source={x:Static viewModels:MainWindowViewModel.Instance}, Path=IsForeground}" Value="False">
+                        <Setter Property="Background">
+                            <Setter.Value>
+                                <SolidColorBrush Color="{DynamicResource ColorBright}"/>
+                            </Setter.Value>
+                        </Setter>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </Canvas.Style>
     </Canvas>
 
 </UserControl>

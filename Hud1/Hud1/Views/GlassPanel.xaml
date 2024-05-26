@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:viewModels="clr-namespace:Hud1.ViewModels"
              xmlns:local="clr-namespace:Hud1.Views"
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="500">
@@ -16,7 +17,7 @@
                         <GradientStop Color="{DynamicResource ColorBackgroundDarkTrans}" Offset="0.7"/>
                     </LinearGradientBrush>
                 </Grid.Background>
-                
+
                 <Grid>
                     <Grid.Background>
                         <ImageBrush                            
@@ -51,6 +52,7 @@
                         </DrawingBrush>
                     </Border.BorderBrush>
                 </Border>
+                
                 <StackPanel>
                     <local:PanelTopBar />
                     <ContentPresenter Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content}" />

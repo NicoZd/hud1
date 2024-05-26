@@ -156,7 +156,6 @@ public partial class MoreViewModel : ObservableObject
         for (int i = 0; i < fileEntries.Length; i++)
         {
             var ff = Fonts.GetFontFamilies(fileEntries[i]);
-            Debug.Print(" DDDD {0}", fileEntries[i]);
             if (ff.Count > 0)
             {
                 var y = ff.First();
