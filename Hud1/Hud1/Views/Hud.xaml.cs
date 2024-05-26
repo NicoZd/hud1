@@ -22,7 +22,7 @@ public partial class Hud : UserControl
     {
         if (!keyEvent.alt)
         {
-            if (MainWindowViewModel.Instance!.Active)
+            if (MainWindowViewModel.Instance.Active && MainWindowViewModel.Instance.IsForeground)
             {
                 HudViewModel.Instance.OnKeyPressed(keyEvent);
             }

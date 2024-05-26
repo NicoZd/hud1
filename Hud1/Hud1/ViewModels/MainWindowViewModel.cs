@@ -43,6 +43,14 @@ public partial class MainWindowViewModel : ObservableObject
         winEventDelegate = new WinEventDelegate(WinEventProc);
         SetWinEventHook(EVENT_SYSTEM_FOREGROUND, EVENT_SYSTEM_FOREGROUND, IntPtr.Zero, winEventDelegate, 0, 0, WINEVENT_OUTOFCONTEXT);
         ComputeIsForeground();
+
+        System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+        dispatcherTimer.Tick += new EventHandler((_, _) =>
+        {
+            ComputeIsForeground();
+        });
+        dispatcherTimer.Interval = TimeSpan.FromSeconds(1);
+        dispatcherTimer.Start();
     }
 
     public void WinEventProc(IntPtr hWinEventHook, uint eventType, IntPtr hwnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime)
@@ -53,7 +61,7 @@ public partial class MainWindowViewModel : ObservableObject
     private void ComputeIsForeground()
     {
         var foreground = WindowsAPI.GetForegroundWindow();
-        IsForeground = foreground == this.Hwnd;
+        IsForeground = (foreground == this.Hwnd) || WindowsAPI.IsMouseHidden();
     }
 
     public void ActivateWindow()

@@ -114,4 +114,39 @@ public static class WindowsAPI
     [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
     public static extern bool SendNotifyMessage(IntPtr hWnd, uint msg, int wParam, int lParam);
 
+    // cursor
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct CURSORINFO
+    {
+        public Int32 cbSize;
+        public Int32 flags;
+        public IntPtr hCursor;
+        public POINTAPI ptScreenPos;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct POINTAPI
+    {
+        public int x;
+        public int y;
+    }
+
+    public const Int32 CURSOR_SHOWING = 0x00000001;
+    [DllImport("user32.dll")]
+    public static extern bool GetCursorInfo(out CURSORINFO pci);
+
+    public static bool IsMouseHidden()
+    {
+        CURSORINFO pci;
+        pci.cbSize = Marshal.SizeOf(typeof(CURSORINFO));
+        if (GetCursorInfo(out pci))
+        {
+            if (pci.flags == 0)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 }

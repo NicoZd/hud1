@@ -37,7 +37,7 @@ public class NavigationStates
     public static readonly NavigationState ACTIVATE = new() { Label = "Capture Mouse", Hint = "Activate this Window to capture mouse once." };
 
     public static readonly NavigationState HUD_POSITION = new() { Label = "HUD Position", Hint = "Select Position of the HUD" };
-    public static readonly NavigationState KEYBOARD_CONTROL = new() { Label = "Keyboard Navigation", Hint = "Capture Cursor Keys to navigate this window.", SelectionLeftLabel = "< Off", SelectionRightLabel = "On >" };
+    public static readonly NavigationState KEYBOARD_CONTROL = new() { Label = "Touch Mode", Hint = "Don't activate this window on mouse or touch interaction.", SelectionLeftLabel = "< Off", SelectionRightLabel = "On >" };
 
     public static readonly NavigationState STYLE = new() { SelectionLabel = "Green", Label = "Colors", Hint = "Adjust colors of this window." };
     public static readonly NavigationState FONT = new() { SelectionLabel = "Source Code Pro", Label = "Font", Hint = "Select Font" };

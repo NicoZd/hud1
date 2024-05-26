@@ -48,12 +48,6 @@ public partial class HudViewModel : ObservableObject
 
     public void OnKeyPressed(KeyEvent keyEvent)
     {
-        if (!NavigationStates.KEYBOARD_CONTROL.SelectionBoolean)
-            return;
-
-        if (keyEvent.alt)
-            return;
-
         var key = keyEvent.key;
 
         NavigationState.Repeat = keyEvent.repeated;

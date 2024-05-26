@@ -155,7 +155,7 @@
 
                             <Label Content="Functions" Style="{DynamicResource TitleContent}"/>
                             <views:ButtonPanel NavigationState="{Binding Path=States[EXIT]}"/>
-                            <views:ButtonPanel NavigationState="{Binding Path=States[ACTIVATE]}"/>
+                            <!--<views:ButtonPanel NavigationState="{Binding Path=States[ACTIVATE]}"/>-->
 
                             <Label Content="Settings" Style="{DynamicResource TitleContent}"/>
                             <views:SelectionControl NavigationState="{Binding Path=States[HUD_POSITION]}" />
