@@ -205,41 +205,28 @@ public partial class MainWindow : Window
 
     private void FadeIn()
     {
+        this.Opacity = 0;
+
+        var crosshairWindow = new CrosshairWindow();
+        crosshairWindow.Opacity = 0;
+        crosshairWindow.Show();
+
         var animation = new DoubleAnimation
         {
-            To = 0,
-            BeginTime = TimeSpan.FromSeconds(0),
+            To = 1,
+            BeginTime = TimeSpan.FromSeconds(0.15),
             Duration = TimeSpan.FromSeconds(0.15),
             FillBehavior = FillBehavior.Stop
         };
+
         animation.Completed += (s, a) =>
         {
-            this.Opacity = 0;
-            SplashWindow.Instance!.Close();
-
-            var crosshairWindow = new CrosshairWindow();
-            crosshairWindow.Opacity = 0;
-            crosshairWindow.Show();
-
-            var animation = new DoubleAnimation
-            {
-                To = 1,
-                BeginTime = TimeSpan.FromSeconds(0),
-                Duration = TimeSpan.FromSeconds(0.15),
-                FillBehavior = FillBehavior.Stop
-            };
-
-            animation.Completed += (s, a) =>
-            {
-                crosshairWindow.Opacity = 1;
-                this.Opacity = 1;
-            };
-
-            Console.WriteLine("MainWindow FadeIn {0}", Entry.Millis());
-            this.BeginAnimation(UIElement.OpacityProperty, animation);
-            crosshairWindow.BeginAnimation(UIElement.OpacityProperty, animation);
-
+            crosshairWindow.Opacity = 1;
+            this.Opacity = 1;
         };
-        SplashWindow.Instance!.BeginAnimation(UIElement.OpacityProperty, animation);
+
+        Console.WriteLine("MainWindow FadeIn {0}", Entry.Millis());
+        this.BeginAnimation(UIElement.OpacityProperty, animation);
+        crosshairWindow.BeginAnimation(UIElement.OpacityProperty, animation);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Hud1.Helpers;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Interop;
@@ -41,6 +42,11 @@ public partial class SplashWindow : Window
 
         this.SetWindowPosition(WpfScreenHelper.Enum.WindowPositions.Center, Screen.AllScreens.ElementAt(0));
 
+        FadeIn();
+    }
+
+    private void FadeIn()
+    {
         var animation = new DoubleAnimation
         {
             To = 1,
@@ -52,25 +58,27 @@ public partial class SplashWindow : Window
         {
             Debug.Print("SplashWindow Animation In Complete {0}", Hud1.Entry.Millis());
             this.Opacity = 1;
-            try
-            {
-                await Startup.Run();
-                //throw new Exception("ds");
-                MainWindow.Create();
-                this.Close();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-                this.Opacity = 0;
-                MessageBox.Show("Wooo - there was a fatal startup error:\n\n" + ex.ToString(), "Game Direct", MessageBoxButton.OK, MessageBoxImage.Error);
-                this.Close();
-            }
+            await StartupAndShowMainWindow();
 
-            //await Task.Delay(500);
-            //CloseWithAnimation();
         };
         this.BeginAnimation(UIElement.OpacityProperty, animation);
+    }
+
+    private async Task StartupAndShowMainWindow()
+    {
+        try
+        {
+            await Startup.Run();
+            MainWindow.Create();
+            CloseWithAnimation();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            this.Opacity = 0;
+            MessageBox.Show("Wooo - there was a fatal startup error:\n\n" + ex.ToString(), "Game Direct", MessageBoxButton.OK, MessageBoxImage.Error);
+            this.Close();
+        }
     }
 
     private void CloseWithAnimation()

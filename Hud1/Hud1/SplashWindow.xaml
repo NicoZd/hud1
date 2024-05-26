@@ -18,14 +18,10 @@
     Focusable="False"        
     Width="676"
     Height="396"
-    Loaded="OnWindowLoaded"
-    
+    Loaded="OnWindowLoaded"    
     DataContext="{Binding RelativeSource={RelativeSource Self}}"
+    Background="Transparent"
     >
-
-    <Window.Background>
-        <SolidColorBrush Color="Transparent"/>
-    </Window.Background>
 
     <Grid >
         <Image Source="Assets/splash.png" />
