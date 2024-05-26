@@ -1,10 +1,12 @@
 ﻿using Hud1.Helpers;
 using Hud1.Models;
 using Hud1.ViewModels;
+using Hud1.Views;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Interop;
+using System.Windows.Media;
 using System.Windows.Media.Animation;
 using WpfScreenHelper;
 
@@ -46,7 +48,9 @@ public partial class MainWindow : Window
         await Task.Delay(30);
 
         var aligmnent = MoreViewModel.Instance.HudAlignment == "Left" ? WpfScreenHelper.Enum.WindowPositions.Left2 : WpfScreenHelper.Enum.WindowPositions.Right2;
-        this.SetWindowPosition(aligmnent, Screen.AllScreens.ElementAt(screenIndex));
+
+        var screen = Screen.AllScreens.ElementAt(screenIndex);
+        this.SetWindowPosition(aligmnent, screen);
 
         await Task.Delay(30);
 
@@ -84,7 +88,6 @@ public partial class MainWindow : Window
         source.AddHook(WndProc);
 
         MainWindowViewModel.Instance.InitWindow(hwnd);
-
 
         System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
         dispatcherTimer.Tick += new EventHandler((_, _) =>

@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Interop;
+using System.Windows.Media;
 using System.Windows.Media.Animation;
 using WpfScreenHelper;
 
@@ -40,7 +41,7 @@ public partial class SplashWindow : Window
             | WindowsAPI.WS_EX_TRANSPARENT
             );
 
-        this.SetWindowPosition(WpfScreenHelper.Enum.WindowPositions.Center, Screen.AllScreens.ElementAt(0));
+        this.SetWindowPosition(WpfScreenHelper.Enum.WindowPositions.Center, Screen.PrimaryScreen);
 
         FadeIn();
     }

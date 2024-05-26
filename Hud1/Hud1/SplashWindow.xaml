@@ -28,18 +28,18 @@
 
         <Grid Margin="0,5,0,0">
             <TextBlock
-            Foreground="#9900ff00"
-            Margin="0,230,0,0"
-            VerticalAlignment="Top"
-            HorizontalAlignment="Center"
-            Text="Game Direct"/>
+                Foreground="#9900ff00"
+                Margin="0,230,0,0"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Center"
+                Text="Game Direct"/>
 
             <TextBlock
-            Foreground="#99008800"
-            Margin="0,246,0,0"
-            VerticalAlignment="Top"
-            HorizontalAlignment="Center"
-            Text="{Binding SplashText, FallbackValue=...}"/>
+                Foreground="#99008800"
+                Margin="0,246,0,0"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Center"
+                Text="{Binding SplashText, FallbackValue=...}"/>
         </Grid>
     </Grid>
 </Window>
