@@ -60,6 +60,7 @@
 		<Resource Include="Assets\splash.png">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Resource>
+		<Resource Include="Assets\icon.ico" />
 		<Content Include="Assets\icon.ico" />
 		<Content Include="Fonts\FiraCode-R.ttf">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
