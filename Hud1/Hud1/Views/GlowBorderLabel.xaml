@@ -11,6 +11,7 @@
             Command="{Binding Path=Click}"
             CommandParameter="{Binding Path=NavigationState}"
             Style="{StaticResource LabelButton}"
+            MinHeight="26"
             >
         <Label Content="{Binding Path=Label}">
             <Label.Style>

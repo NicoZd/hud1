@@ -175,40 +175,8 @@
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Background" Value="{DynamicResource BrushColorMedLow}"/>
             </Trigger>
-            <DataTrigger Binding="{Binding Path=Enabled}" Value="False">
-                <Setter Property="Background" >
-                    <Setter.Value>
-                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,0">
-                            <GradientStop Color="{DynamicResource ColorBackgroundDark}" Offset="0.0"/>
-                        </LinearGradientBrush>
-                    </Setter.Value>
-                </Setter>
-                <Setter Property="BorderBrush" Value="{DynamicResource BrushColorMedLow}" />
-            </DataTrigger>
             <DataTrigger Binding="{Binding Path=Selected}" Value="True">
                 <Setter Property="BorderBrush" Value="{DynamicResource BrushInfo}" />
-            </DataTrigger>
-            <DataTrigger Binding="{Binding Path=Enabled}" Value="False">
-                <Setter Property="Background" >
-                    <Setter.Value>
-                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,0">
-                            <GradientStop Color="{DynamicResource ColorBackgroundDarkMedUp}" Offset="0.0"/>
-                        </LinearGradientBrush>
-                    </Setter.Value>
-                </Setter>
-            </DataTrigger>
-            <DataTrigger Binding="{Binding Path=Pressed}" Value="True">
-                <Setter Property="Background" >
-                    <Setter.Value>
-                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,0">
-                            <GradientStop Color="{DynamicResource ColorBright}" Offset="0.0"/>
-                        </LinearGradientBrush>
-                    </Setter.Value>
-                </Setter>
-                <Setter Property="BorderBrush" Value="{DynamicResource BrushInfo}" />
-            </DataTrigger>
-            <DataTrigger Binding="{Binding Path=Enabled}" Value="False">
-                <Setter Property="BorderBrush" Value="{DynamicResource BrushColorMedLow}" />
             </DataTrigger>
         </Style.Triggers>
     </Style>

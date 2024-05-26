@@ -7,7 +7,7 @@
     xmlns:views="clr-namespace:Hud1.Views"
     xmlns:viewModels="clr-namespace:Hud1.ViewModels"
     mc:Ignorable="d"
-    Title="MainWindow"
+    Title="Game Direct"
     AllowsTransparency="True"
     WindowStyle="None"
     Topmost="True"
@@ -21,10 +21,9 @@
     ResizeMode="NoResize"
     DataContext="{Binding Source={x:Static viewModels:MainWindowViewModel.Instance}}"    
     d:DesignHeight="800"
+    Width="450"
+    Background="Transparent"
     >
-    <Window.Background>
-        <SolidColorBrush Color="Transparent"/>
-    </Window.Background>
 
     <views:Hud Visibility="{Binding Path=HudVisibility}"/>
 

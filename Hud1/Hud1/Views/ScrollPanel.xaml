@@ -6,10 +6,11 @@
              xmlns:views="clr-namespace:Hud1.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
+             Focusable="False"
              >
     <UserControl.Template>
         <ControlTemplate>
-            <views:DraggableScrollViewer Style="{StaticResource PanelScrollViewer}">
+            <views:DraggableScrollViewer Focusable="False" Style="{StaticResource PanelScrollViewer}">
                 <ContentPresenter Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content}" />
             </views:DraggableScrollViewer>
         </ControlTemplate>

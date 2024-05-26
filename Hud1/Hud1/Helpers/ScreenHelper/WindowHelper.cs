@@ -87,6 +87,11 @@ public static class WindowHelper
                     return new Rect(screen.WpfBounds.X * screen.ScaleFactor, y * screen.ScaleFactor, window.Width * screen.ScaleFactor, window.Height * screen.ScaleFactor);
                 }
 
+            case WindowPositions.Left2:
+                {
+                    return new Rect(screen.WpfBounds.X * screen.ScaleFactor, screen.WpfBounds.Y * screen.ScaleFactor, window.Width * screen.ScaleFactor, screen.WpfBounds.Height * screen.ScaleFactor);
+                }
+
             case WindowPositions.Top:
                 {
                     var x = screen.WpfBounds.X + (screen.WpfBounds.Width - window.Width) / 2.0;
@@ -100,6 +105,12 @@ public static class WindowHelper
                     var y = screen.WpfBounds.Y + (screen.WpfBounds.Height - window.Height) / 2.0;
 
                     return new Rect(x * screen.ScaleFactor, y * screen.ScaleFactor, window.Width * screen.ScaleFactor, window.Height * screen.ScaleFactor);
+                }
+
+            case WindowPositions.Right2:
+                {
+                    var x = screen.WpfBounds.X + (screen.WpfBounds.Width - window.Width);
+                    return new Rect(x * screen.ScaleFactor, screen.WpfBounds.Y * screen.ScaleFactor, window.Width * screen.ScaleFactor, screen.WpfBounds.Height * screen.ScaleFactor);
                 }
 
             case WindowPositions.Bottom:

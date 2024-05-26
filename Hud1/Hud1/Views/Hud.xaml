@@ -13,7 +13,7 @@
     >
 
     <Grid
-        HorizontalAlignment="{Binding Source={x:Static viewModels:MoreViewModel.Instance}, Path=HudAlignment}"
+        HorizontalAlignment="Stretch"
         DataContext="{Binding Source={x:Static viewModels:HudViewModel.Instance}}"
         >
 
