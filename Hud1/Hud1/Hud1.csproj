@@ -13,6 +13,8 @@
 		<SatelliteResourceLanguages>en</SatelliteResourceLanguages>
 		<Configurations>Debug;Release;Hot</Configurations>
 		<Platforms>x86</Platforms>
+		<AssemblyName>Game Direct</AssemblyName>
+		<ApplicationIcon>Assets\icon.ico</ApplicationIcon>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Hot|x86'">
 	  <DefineConstants>$(DefineConstants);DEBUG</DefineConstants>
@@ -28,6 +30,7 @@
 	<ItemGroup>
 		<None Remove="Abstract-colorful-fluid-background-on-transparent-PNG.png" />
 		<None Remove="Assets\blue-noise.png" />
+		<None Remove="Assets\logo.png" />
 		<None Remove="Assets\splash.png" />
 		<None Remove="Fonts\FiraCode-R.ttf" />
 		<None Remove="Fonts\HitmarkerNormal-Regular.ttf" />
@@ -51,9 +54,13 @@
 		<Resource Include="Assets\blue-noise.png">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Resource>
+		<Resource Include="Assets\logo.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
 		<Resource Include="Assets\splash.png">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Resource>
+		<Content Include="Assets\icon.ico" />
 		<Content Include="Fonts\FiraCode-R.ttf">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>

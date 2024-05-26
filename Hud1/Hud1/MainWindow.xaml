@@ -7,7 +7,7 @@
     xmlns:views="clr-namespace:Hud1.Views"
     xmlns:viewModels="clr-namespace:Hud1.ViewModels"
     mc:Ignorable="d"
-    Title="Game Direct"
+    Title="HUD Main Window"
     AllowsTransparency="True"
     WindowStyle="None"
     Topmost="True"
