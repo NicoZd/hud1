@@ -13,7 +13,7 @@ public partial class App : Application
 {
     public App()
     {
-        Debug.Print("App {0}", Hud1.Entry.Millis());
+        Debug.Print("App {0} {1} {2}", Hud1.Entry.Millis(), ShutdownMode, MainWindow);
         InitializeComponent();
     }
 

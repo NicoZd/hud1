@@ -14,11 +14,17 @@ public partial class MainWindow : Window
 {
     nint hwnd;
 
-    public MainWindow()
+    internal static void Create()
+    {
+        var mainWindow = new MainWindow();
+        mainWindow.Show();
+        Application.Current.MainWindow = mainWindow;
+    }
+
+    private MainWindow()
     {
         Opacity = 0;
         MoreViewModel.Instance.PropertyChanged += OnPropertyChanged;
-
         InitializeComponent();
     }
 
@@ -72,13 +78,14 @@ public partial class MainWindow : Window
 
     private void OnWindowLoaded(object sender, RoutedEventArgs e)
     {
+        Debug.WriteLine("MainWindow OnWindowLoaded");
+
         hwnd = new WindowInteropHelper(this).Handle;
         HwndSource source = HwndSource.FromHwnd(hwnd);
         source.AddHook(WndProc);
 
         MainWindowViewModel.Instance.InitWindow(hwnd);
 
-        Debug.WriteLine("OnWindowLoaded {0}", hwnd);
 
         System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
         dispatcherTimer.Tick += new EventHandler((_, _) =>

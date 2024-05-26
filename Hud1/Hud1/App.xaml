@@ -4,7 +4,9 @@
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              StartupUri="SplashWindow.xaml"
              Startup="OnStartup"
-             Exit="OnExit">
+             Exit="OnExit"
+             ShutdownMode="OnMainWindowClose"
+             >
 
     <Application.Resources>
         <ResourceDictionary>

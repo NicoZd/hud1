@@ -1,6 +1,6 @@
-MainPackage=C:\Workspaces\nico_2024\hud1\Hud1\Wap\bin\x86\Debug\Wap_1.2.93.0_x86_Debug.msix
-SymbolPackage=C:\Workspaces\nico_2024\hud1\Hud1\Wap\obj\x86\Debug\Symbols\Wap_1.2.93.0_x86_Debug.appxsym
-ResourcePack=C:\Workspaces\nico_2024\hud1\Hud1\Wap\bin\x86\Debug\Wap_1.2.93.0_scale-100.msix
-ResourcePack=C:\Workspaces\nico_2024\hud1\Hud1\Wap\bin\x86\Debug\Wap_1.2.93.0_scale-125.msix
-ResourcePack=C:\Workspaces\nico_2024\hud1\Hud1\Wap\bin\x86\Debug\Wap_1.2.93.0_scale-150.msix
-ResourcePack=C:\Workspaces\nico_2024\hud1\Hud1\Wap\bin\x86\Debug\Wap_1.2.93.0_scale-400.msix
+MainPackage=C:\Workspaces\nico_2024\hud1\Hud1\Wap\bin\x86\Debug\Wap_1.2.94.0_x86_Debug.msix
+SymbolPackage=C:\Workspaces\nico_2024\hud1\Hud1\Wap\obj\x86\Debug\Symbols\Wap_1.2.94.0_x86_Debug.appxsym
+ResourcePack=C:\Workspaces\nico_2024\hud1\Hud1\Wap\bin\x86\Debug\Wap_1.2.94.0_scale-100.msix
+ResourcePack=C:\Workspaces\nico_2024\hud1\Hud1\Wap\bin\x86\Debug\Wap_1.2.94.0_scale-125.msix
+ResourcePack=C:\Workspaces\nico_2024\hud1\Hud1\Wap\bin\x86\Debug\Wap_1.2.94.0_scale-150.msix
+ResourcePack=C:\Workspaces\nico_2024\hud1\Hud1\Wap\bin\x86\Debug\Wap_1.2.94.0_scale-400.msix

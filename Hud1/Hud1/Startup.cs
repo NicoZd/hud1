@@ -53,8 +53,8 @@ public class Startup
 
     public static void Shutdown()
     {
-        Console.WriteLine("ReleaseMutex");
-        mutex.ReleaseMutex();
+        Console.WriteLine("Wont ReleaseMutex");
+        //mutex.ReleaseMutex();
     }
 
     private static async Task ApplyConfig()

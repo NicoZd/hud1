@@ -19,6 +19,7 @@ public partial class SplashWindow : Window
     public SplashWindow()
     {
         Debug.Print("SplashWindow {0}", Hud1.Entry.Millis());
+        Application.Current.MainWindow = this;
 
         Instance = this;
         Opacity = 0;
@@ -54,18 +55,39 @@ public partial class SplashWindow : Window
             try
             {
                 await Startup.Run();
-                var mainWindow = new MainWindow();
-                mainWindow.Show();
+                //throw new Exception("ds");
+                MainWindow.Create();
+                this.Close();
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
-                this.Close();
+                this.Opacity = 0;
                 MessageBox.Show("Wooo - there was a fatal startup error:\n\n" + ex.ToString(), "Game Direct", MessageBoxButton.OK, MessageBoxImage.Error);
+                this.Close();
             }
+
+            //await Task.Delay(500);
+            //CloseWithAnimation();
         };
         this.BeginAnimation(UIElement.OpacityProperty, animation);
     }
 
-
+    private void CloseWithAnimation()
+    {
+        var animation = new DoubleAnimation
+        {
+            To = 0,
+            BeginTime = TimeSpan.FromSeconds(0),
+            Duration = TimeSpan.FromSeconds(0.15),
+            FillBehavior = FillBehavior.Stop
+        };
+        animation.Completed += async (s, a) =>
+        {
+            Debug.Print("SplashWindow Animation Out Complete {0}", Hud1.Entry.Millis());
+            this.Opacity = 0;
+            this.Close();
+        };
+        this.BeginAnimation(UIElement.OpacityProperty, animation);
+    }
 }
