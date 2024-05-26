@@ -73,7 +73,6 @@ public partial class MainWindow : Window
         Console.WriteLine("OnWindowActivated");
         MainWindowViewModel.Instance.Active = true;
         MainWindowViewModel.Instance.HudVisibility = Visibility.Visible;
-
     }
 
     private void OnWindowLoaded(object sender, RoutedEventArgs e)
@@ -95,18 +94,6 @@ public partial class MainWindow : Window
         dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
         dispatcherTimer.Start();
 
-        //var extendedStyle = WindowsAPI.GetWindowLong(hwnd, WindowsAPI.GWL_EXSTYLE);
-        //WindowsAPI.SetWindowLong(hwnd, WindowsAPI.GWL_EXSTYLE,
-        //    extendedStyle
-        //    | WindowsAPI.WS_EX_NOACTIVATE
-        //    );
-
-        //var extendedStyle = WindowsAPI.GetWindowLong(hwnd, WindowsAPI.GWL_EXSTYLE);
-        //WindowsAPI.SetWindowLong(hwnd, WindowsAPI.GWL_EXSTYLE,
-        //    extendedStyle
-        //    | WindowsAPI.WS_EX_TOOLWINDOW
-        //    );
-
         _ = ApplyHudPosition(false);
 
         NavigationStates.TOUCH_MODE.PropertyChanged += (_, e) =>
@@ -115,10 +102,10 @@ public partial class MainWindow : Window
             {
                 Debug.Print("TOUCH_MODE {0}", NavigationStates.TOUCH_MODE.SelectionBoolean);
 
-                ConfigureTouchMode();
+                UpdateTouchMode();
             }
         };
-        ConfigureTouchMode();
+        UpdateTouchMode();
 
         GlobalMouseHook.SystemHook();
 
@@ -128,7 +115,7 @@ public partial class MainWindow : Window
         FadeIn();
     }
 
-    private void ConfigureTouchMode()
+    private void UpdateTouchMode()
     {
         var extendedStyle = WindowsAPI.GetWindowLong(hwnd, WindowsAPI.GWL_EXSTYLE);
 
@@ -136,7 +123,7 @@ public partial class MainWindow : Window
             extendedStyle | WindowsAPI.WS_EX_NOACTIVATE :
             extendedStyle & ~WindowsAPI.WS_EX_NOACTIVATE;
 
-        Debug.Print("Touch ? {0} {1} {2}", NavigationStates.TOUCH_MODE.SelectionBoolean, extendedStyle, newStyle);
+        Debug.Print("UpdateTouchMode {0} {1} {2}", NavigationStates.TOUCH_MODE.SelectionBoolean, extendedStyle, newStyle);
 
         WindowsAPI.SetWindowLong(hwnd, WindowsAPI.GWL_EXSTYLE, newStyle);
 
@@ -144,7 +131,6 @@ public partial class MainWindow : Window
         {
             MainWindowViewModel.Instance.Activate();
         }
-        //MainWindowViewModel.Instance.IsForeground = !NavigationStates.TOUCH_MODE.SelectionBoolean;
     }
 
     private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)

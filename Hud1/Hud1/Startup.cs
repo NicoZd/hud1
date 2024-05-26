@@ -51,12 +51,6 @@ public class Startup
         await ShowSplash("Complete");
     }
 
-    public static void Shutdown()
-    {
-        Console.WriteLine("Wont ReleaseMutex");
-        //mutex.ReleaseMutex();
-    }
-
     private static async Task ApplyConfig()
     {
         await Task.Delay(0);
