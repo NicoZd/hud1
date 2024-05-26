@@ -1,4 +1,5 @@
 ﻿using Hud1.Helpers;
+using Hud1.Models;
 using Hud1.ViewModels;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -38,7 +39,8 @@ public partial class MainWindow : Window
 
         await Task.Delay(30);
 
-        this.SetWindowPosition(WpfScreenHelper.Enum.WindowPositions.Maximize, Screen.AllScreens.ElementAt(screenIndex));
+        var aligmnent = MoreViewModel.Instance.HudAlignment == "Left" ? WpfScreenHelper.Enum.WindowPositions.Left2 : WpfScreenHelper.Enum.WindowPositions.Right2;
+        this.SetWindowPosition(aligmnent, Screen.AllScreens.ElementAt(screenIndex));
 
         await Task.Delay(30);
 
@@ -64,6 +66,8 @@ public partial class MainWindow : Window
     {
         Console.WriteLine("OnWindowActivated");
         MainWindowViewModel.Instance.Active = true;
+        MainWindowViewModel.Instance.HudVisibility = Visibility.Visible;
+
     }
 
     private void OnWindowLoaded(object sender, RoutedEventArgs e)
@@ -72,7 +76,7 @@ public partial class MainWindow : Window
         HwndSource source = HwndSource.FromHwnd(hwnd);
         source.AddHook(WndProc);
 
-        MainWindowViewModel.Instance.Hwnd = hwnd;
+        MainWindowViewModel.Instance.InitWindow(hwnd);
 
         Debug.WriteLine("OnWindowLoaded {0}", hwnd);
 
@@ -84,13 +88,30 @@ public partial class MainWindow : Window
         dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
         dispatcherTimer.Start();
 
-        var extendedStyle = WindowsAPI.GetWindowLong(hwnd, WindowsAPI.GWL_EXSTYLE);
-        WindowsAPI.SetWindowLong(hwnd, WindowsAPI.GWL_EXSTYLE,
-            extendedStyle
-            | WindowsAPI.WS_EX_NOACTIVATE
-            );
+        //var extendedStyle = WindowsAPI.GetWindowLong(hwnd, WindowsAPI.GWL_EXSTYLE);
+        //WindowsAPI.SetWindowLong(hwnd, WindowsAPI.GWL_EXSTYLE,
+        //    extendedStyle
+        //    | WindowsAPI.WS_EX_NOACTIVATE
+        //    );
+
+        //var extendedStyle = WindowsAPI.GetWindowLong(hwnd, WindowsAPI.GWL_EXSTYLE);
+        //WindowsAPI.SetWindowLong(hwnd, WindowsAPI.GWL_EXSTYLE,
+        //    extendedStyle
+        //    | WindowsAPI.WS_EX_TOOLWINDOW
+        //    );
 
         _ = ApplyHudPosition(false);
+
+        NavigationStates.KEYBOARD_CONTROL.PropertyChanged += (_, e) =>
+        {
+            if (e.PropertyName == nameof(NavigationStates.KEYBOARD_CONTROL.SelectionBoolean))
+            {
+                Debug.Print("KEYBOARD_CONTROL {0}", NavigationStates.KEYBOARD_CONTROL.SelectionBoolean);
+
+                ConfigureTouchMode();
+            }
+        };
+        ConfigureTouchMode();
 
         GlobalMouseHook.SystemHook();
 
@@ -99,13 +120,47 @@ public partial class MainWindow : Window
 
         FadeIn();
     }
+
+    private void ConfigureTouchMode()
+    {
+        var extendedStyle = WindowsAPI.GetWindowLong(hwnd, WindowsAPI.GWL_EXSTYLE);
+
+        var newStyle = NavigationStates.KEYBOARD_CONTROL.SelectionBoolean ?
+            extendedStyle | WindowsAPI.WS_EX_NOACTIVATE :
+            extendedStyle & ~WindowsAPI.WS_EX_NOACTIVATE;
+
+        Debug.Print("Touch ? {0} {1} {2}", NavigationStates.KEYBOARD_CONTROL.SelectionBoolean, extendedStyle, newStyle);
+
+        WindowsAPI.SetWindowLong(hwnd, WindowsAPI.GWL_EXSTYLE, newStyle);
+
+        if (!NavigationStates.KEYBOARD_CONTROL.SelectionBoolean)
+        {
+            MainWindowViewModel.Instance.Activate();
+        }
+        //MainWindowViewModel.Instance.IsForeground = !NavigationStates.KEYBOARD_CONTROL.SelectionBoolean;
+    }
+
     private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
     {
         if (msg == Startup.WM_GAME_DIRECT_SHOWME)
         {
             Console.WriteLine("WndProc {0} {1}", msg, Startup.WM_GAME_DIRECT_SHOWME);
             Application.Current.Shutdown();
+            return IntPtr.Zero;
         }
+
+        if (msg == 126)
+        {
+            Debug.Print("Resolution or DPI Change {0}", msg);
+            _ = ApplyHudPosition(true);
+            return IntPtr.Zero;
+        }
+
+        //int[] ignore = [13, 70, 71];
+        //if (ignore.Contains(msg))
+        //    return IntPtr.Zero;
+
+        //Debug.Print("" + msg);
 
         return IntPtr.Zero;
     }
