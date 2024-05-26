@@ -29,7 +29,6 @@
 		<None Remove="Abstract-colorful-fluid-background-on-transparent-PNG.png" />
 		<None Remove="Assets\blue-noise.png" />
 		<None Remove="Assets\splash.png" />
-		<None Remove="Assets\splash2.png" />
 		<None Remove="Fonts\FiraCode-R.ttf" />
 		<None Remove="Fonts\HitmarkerNormal-Regular.ttf" />
 		<None Remove="Fonts\HitmarkerText-Regular.ttf" />
@@ -52,8 +51,7 @@
 		<Resource Include="Assets\blue-noise.png">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Resource>
-		<Resource Include="Assets\splash.png" />
-		<Resource Include="Assets\splash2.png">
+		<Resource Include="Assets\splash.png">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Resource>
 		<Content Include="Fonts\FiraCode-R.ttf">

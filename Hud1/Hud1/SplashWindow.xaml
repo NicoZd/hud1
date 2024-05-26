@@ -28,7 +28,7 @@
     </Window.Background>
 
     <Grid >
-        <Image Source="Assets/splash2.png" />
+        <Image Source="Assets/splash.png" />
 
         <Grid Margin="0,5,0,0">
             <TextBlock
