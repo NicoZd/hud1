@@ -91,7 +91,7 @@ public class Startup
         }
 
         // apply config
-        NavigationStates.KEYBOARD_CONTROL.SelectionBoolean = UserConfig.Current.KeyboardNavigationEnabled;
+        NavigationStates.TOUCH_MODE.SelectionBoolean = UserConfig.Current.TouchModeEnabled;
 
         NavigationStates.STYLE.SelectionLabel = UserConfig.Current.Style;
 #if !HOT
@@ -124,9 +124,9 @@ public class Startup
 
         // add change listeners
 
-        NavigationStates.KEYBOARD_CONTROL.PropertyChanged += OnConfigChanged(
-                nameof(NavigationStates.KEYBOARD_CONTROL.SelectionBoolean),
-                nameof(UserConfig.Current.KeyboardNavigationEnabled));
+        NavigationStates.TOUCH_MODE.PropertyChanged += OnConfigChanged(
+                nameof(NavigationStates.TOUCH_MODE.SelectionBoolean),
+                nameof(UserConfig.Current.TouchModeEnabled));
 
         NightvisionViewModel.Instance.PropertyChanged += OnConfigChanged(
                 nameof(NightvisionViewModel.Instance.GammaIndex),

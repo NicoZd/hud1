@@ -8,7 +8,7 @@ public class UserConfig
     {
         HudPosition = "0:Right";
         GammaIndex = 4;
-        KeyboardNavigationEnabled = false;
+        TouchModeEnabled = false;
 
         Style = "Green";
         Font = "Source Code Pro";
@@ -18,7 +18,7 @@ public class UserConfig
 
     public string HudPosition { get; set; }
 
-    public bool KeyboardNavigationEnabled { get; set; }
+    public bool TouchModeEnabled { get; set; }
 
     public string Style { get; set; }
 

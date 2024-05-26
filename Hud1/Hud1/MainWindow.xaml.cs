@@ -102,11 +102,11 @@ public partial class MainWindow : Window
 
         _ = ApplyHudPosition(false);
 
-        NavigationStates.KEYBOARD_CONTROL.PropertyChanged += (_, e) =>
+        NavigationStates.TOUCH_MODE.PropertyChanged += (_, e) =>
         {
-            if (e.PropertyName == nameof(NavigationStates.KEYBOARD_CONTROL.SelectionBoolean))
+            if (e.PropertyName == nameof(NavigationStates.TOUCH_MODE.SelectionBoolean))
             {
-                Debug.Print("KEYBOARD_CONTROL {0}", NavigationStates.KEYBOARD_CONTROL.SelectionBoolean);
+                Debug.Print("TOUCH_MODE {0}", NavigationStates.TOUCH_MODE.SelectionBoolean);
 
                 ConfigureTouchMode();
             }
@@ -125,19 +125,19 @@ public partial class MainWindow : Window
     {
         var extendedStyle = WindowsAPI.GetWindowLong(hwnd, WindowsAPI.GWL_EXSTYLE);
 
-        var newStyle = NavigationStates.KEYBOARD_CONTROL.SelectionBoolean ?
+        var newStyle = NavigationStates.TOUCH_MODE.SelectionBoolean ?
             extendedStyle | WindowsAPI.WS_EX_NOACTIVATE :
             extendedStyle & ~WindowsAPI.WS_EX_NOACTIVATE;
 
-        Debug.Print("Touch ? {0} {1} {2}", NavigationStates.KEYBOARD_CONTROL.SelectionBoolean, extendedStyle, newStyle);
+        Debug.Print("Touch ? {0} {1} {2}", NavigationStates.TOUCH_MODE.SelectionBoolean, extendedStyle, newStyle);
 
         WindowsAPI.SetWindowLong(hwnd, WindowsAPI.GWL_EXSTYLE, newStyle);
 
-        if (!NavigationStates.KEYBOARD_CONTROL.SelectionBoolean)
+        if (!NavigationStates.TOUCH_MODE.SelectionBoolean)
         {
             MainWindowViewModel.Instance.Activate();
         }
-        //MainWindowViewModel.Instance.IsForeground = !NavigationStates.KEYBOARD_CONTROL.SelectionBoolean;
+        //MainWindowViewModel.Instance.IsForeground = !NavigationStates.TOUCH_MODE.SelectionBoolean;
     }
 
     private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)

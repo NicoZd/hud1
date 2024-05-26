@@ -44,11 +44,11 @@ public partial class MoreViewModel : ObservableObject
            .InternalTransition(NavigationTriggers.LEFT, NavigationStates.HUD_POSITION.ExecuteLeft)
            .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.HUD_POSITION.ExecuteRight);
 
-        NavigationStates.KEYBOARD_CONTROL.LeftAction = EnableCursorNav(false);
-        NavigationStates.KEYBOARD_CONTROL.RightAction = EnableCursorNav(true);
-        Navigation.Configure(NavigationStates.KEYBOARD_CONTROL)
-            .InternalTransition(NavigationTriggers.LEFT, NavigationStates.KEYBOARD_CONTROL.ExecuteLeft)
-            .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.KEYBOARD_CONTROL.ExecuteRight);
+        NavigationStates.TOUCH_MODE.LeftAction = EnableCursorNav(false);
+        NavigationStates.TOUCH_MODE.RightAction = EnableCursorNav(true);
+        Navigation.Configure(NavigationStates.TOUCH_MODE)
+            .InternalTransition(NavigationTriggers.LEFT, NavigationStates.TOUCH_MODE.ExecuteLeft)
+            .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.TOUCH_MODE.ExecuteRight);
 
         NavigationStates.STYLE.LeftAction = PrevStyle;
         NavigationStates.STYLE.RightAction = NextStyle;
@@ -64,14 +64,14 @@ public partial class MoreViewModel : ObservableObject
 
         NavigationViewModel.MakeNav(NavigationStates.MENU_MORE, NavigationStates.MORE_VISIBLE,
             [NavigationStates.EXIT, NavigationStates.HUD_POSITION,
-            NavigationStates.KEYBOARD_CONTROL, NavigationStates.STYLE, NavigationStates.FONT]);
+            NavigationStates.TOUCH_MODE, NavigationStates.STYLE, NavigationStates.FONT]);
     }
 
     private static Action? EnableCursorNav(bool v)
     {
         return () =>
         {
-            NavigationStates.KEYBOARD_CONTROL.SelectionBoolean = v;
+            NavigationStates.TOUCH_MODE.SelectionBoolean = v;
         };
     }
 

@@ -159,7 +159,7 @@
 
                             <Label Content="Settings" Style="{DynamicResource TitleContent}"/>
                             <views:SelectionControl NavigationState="{Binding Path=States[HUD_POSITION]}" />
-                            <views:BooleanPanel NavigationState="{Binding Path=States[KEYBOARD_CONTROL]}" />
+                            <views:BooleanPanel NavigationState="{Binding Path=States[TOUCH_MODE]}" />
 
                             <Label Content="Style" Style="{DynamicResource TitleContent}"/>
                             <views:SelectionControl NavigationState="{Binding Path=States[STYLE]}" />
