@@ -57,7 +57,7 @@
                         <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                             <GradientStop Color="{DynamicResource ColorInfoSecondary}" Offset="0.0"/>
                             <GradientStop Color="{DynamicResource ColorBackgroundDarkTrans}" Offset="0.1"/>
-                            <GradientStop Color="{DynamicResource ColorBackgroundDarkTrans}" Offset="0.8"/>
+                            <GradientStop Color="{DynamicResource ColorBackgroundDarkTrans}" Offset="0.6"/>
                             <GradientStop Color="{DynamicResource ColorMedLow}" Offset="1"/>
                         </LinearGradientBrush>
                     </Grid.Background>
@@ -74,16 +74,34 @@
                     </Grid.Style>
                 </Grid>
 
-                <!-- Background texture -->
+                <!-- Background frost -->
                 <Grid>
                     <Grid.Background>
-                        <ImageBrush                            
-                            Opacity="0.05"
+                        <ImageBrush  
+                            AlignmentX="Center"
+                            AlignmentY="Center"
+                            Opacity="0.005"
+                            ImageSource="../Assets/frosted-texture-tile.jpg"
+                            ViewportUnits="Absolute"
+                            Viewport="0,0,350,350"
+                            TileMode="Tile"
+                            Stretch="Fill"
+                            />
+                    </Grid.Background>
+                </Grid>
+                
+                <!-- Background noise -->
+                <Grid>
+                    <Grid.Background>
+                        <ImageBrush  
+                            AlignmentX="Center"
+                            AlignmentY="Center"
+                            Opacity="0.01"
                             ImageSource="../Assets/blue-noise.png"
                             ViewportUnits="Absolute"
-                            Viewport="0,0,200,200"
+                            Viewport="0,0,500,500"
                             TileMode="Tile"
-                            Stretch="None"
+                            Stretch="Fill"
                             />
                     </Grid.Background>
                 </Grid>

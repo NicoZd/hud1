@@ -30,6 +30,7 @@
 	<ItemGroup>
 		<None Remove="Abstract-colorful-fluid-background-on-transparent-PNG.png" />
 		<None Remove="Assets\blue-noise.png" />
+		<None Remove="Assets\frosted-texture-tile.jpg" />
 		<None Remove="Assets\logo.png" />
 		<None Remove="Assets\splash.png" />
 		<None Remove="Fonts\FiraCode-R.ttf" />
@@ -54,6 +55,7 @@
 		<Resource Include="Assets\blue-noise.png">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Resource>
+		<Resource Include="Assets\frosted-texture-tile.jpg" />
 		<Resource Include="Assets\logo.png">
 		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Resource>
