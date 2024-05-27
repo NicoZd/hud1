@@ -1,4 +1,4 @@
-﻿namespace WpfScreenHelper;
+﻿namespace Hud1.Helpers.ScreenHelper;
 
 internal class ExternDll
 {

@@ -5,7 +5,6 @@ using Stateless.Graph;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
-using System.Reflection;
 using System.Text.Json;
 using System.Windows;
 using Windows.ApplicationModel;
@@ -17,8 +16,7 @@ namespace Hud1;
 public class Startup
 {
     public static readonly uint WM_GAME_DIRECT_SHOWME = WindowsAPI.RegisterWindowMessage("WM_GAME_DIRECT_SHOWME");
-
-    static Mutex mutex = new Mutex(true, "GAME_DIRECT");
+    private static readonly Mutex mutex = new(true, "GAME_DIRECT");
 
     public static string RootPath = "";
     public static string VersionPath = "";
@@ -58,11 +56,11 @@ public class Startup
         {
             if (File.Exists(UserConfigFile))
             {
-                string userConfigString = File.ReadAllText(UserConfigFile);
+                var userConfigString = File.ReadAllText(UserConfigFile);
                 var loaded = JsonSerializer.Deserialize<UserConfig>(userConfigString);
 
                 var config = UserConfig.Current;
-                foreach (PropertyInfo prop in config.GetType().GetProperties())
+                foreach (var prop in config.GetType().GetProperties())
                 {
                     var value = prop.GetValue(loaded, null);
                     if (value != null)
@@ -112,7 +110,7 @@ public class Startup
         var showGraph = false;
         if (showGraph)
         {
-            string graph = UmlDotGraph.Format(NavigationViewModel.Instance.Navigation.GetInfo());
+            var graph = UmlDotGraph.Format(NavigationViewModel.Instance.Navigation.GetInfo());
             Console.WriteLine(graph);
         }
 
@@ -159,7 +157,7 @@ public class Startup
                         dest.GetType().GetProperty(userConfigPropertyName)!.SetValue(dest, value);
 
                         var options = new JsonSerializerOptions { WriteIndented = true };
-                        string jsonString = JsonSerializer.Serialize(UserConfig.Current, options);
+                        var jsonString = JsonSerializer.Serialize(UserConfig.Current, options);
 
                         Debug.Print(jsonString);
                         File.WriteAllText(UserConfigFile, jsonString);
@@ -186,7 +184,7 @@ public class Startup
     {
         try
         {
-            int startRount = 0;
+            var startRount = 0;
             while (!mutex.WaitOne(TimeSpan.Zero, true) && startRount <= 10)
             {
                 Console.WriteLine("Startup Shutdown existing window (attempt: " + startRount + "/10)");
@@ -260,13 +258,13 @@ public class Startup
     {
         Console.WriteLine("Copy {0}, {1}", sourcePath, targetPath);
         //Now Create all of the directories
-        foreach (string dirPath in Directory.GetDirectories(sourcePath, "*", SearchOption.AllDirectories))
+        foreach (var dirPath in Directory.GetDirectories(sourcePath, "*", SearchOption.AllDirectories))
         {
             Directory.CreateDirectory(dirPath.Replace(sourcePath, targetPath));
         }
 
         //Copy all the files & Replaces any files with the same name
-        foreach (string newPath in Directory.GetFiles(sourcePath, "*.*", SearchOption.AllDirectories))
+        foreach (var newPath in Directory.GetFiles(sourcePath, "*.*", SearchOption.AllDirectories))
         {
             File.Copy(newPath, newPath.Replace(sourcePath, targetPath), true);
         }
@@ -276,12 +274,12 @@ public class Startup
     {
         try
         {
-            StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
+            var storageFolder = ApplicationData.Current.LocalFolder;
             RootPath = Path.Combine(storageFolder.Path, "Game Direct");
 
-            Package package = Package.Current;
-            PackageId packageId = package.Id;
-            PackageVersion version = packageId.Version;
+            var package = Package.Current;
+            var packageId = package.Id;
+            var version = packageId.Version;
             var Version = string.Format("{0}.{1}.{2}.{3}", version.Major, version.Minor, version.Build, version.Revision);
             VersionPath = Path.Combine(RootPath, Version);
             UserConfigFile = Path.Combine(VersionPath, "UserConfig.json");

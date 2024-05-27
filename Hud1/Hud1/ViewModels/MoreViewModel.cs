@@ -1,10 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Hud1.Helpers.ScreenHelper;
 using Hud1.Models;
-using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Media;
-using WpfScreenHelper;
 
 namespace Hud1.ViewModels;
 
@@ -30,7 +29,7 @@ public partial class MoreViewModel : ObservableObject
     {
         var Navigation = NavigationViewModel.Instance.Navigation;
 
-        NavigationStates.EXIT.RightAction = () => { Application.Current.Shutdown(); };
+        NavigationStates.EXIT.RightAction = Shutdown;
         Navigation.Configure(NavigationStates.EXIT)
             .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.EXIT.ExecuteRight);
 
@@ -67,6 +66,11 @@ public partial class MoreViewModel : ObservableObject
             NavigationStates.TOUCH_MODE, NavigationStates.STYLE, NavigationStates.FONT]);
     }
 
+    private void Shutdown()
+    {
+        Application.Current.Shutdown();
+    }
+
     private static Action? EnableCursorNav(bool v)
     {
         return () =>
@@ -90,9 +94,9 @@ public partial class MoreViewModel : ObservableObject
         string[] positions = ["Left", "Right"];
 
         List<string> options = [];
-        for (int screenIndex = 0; screenIndex < screenCount; screenIndex++)
+        for (var screenIndex = 0; screenIndex < screenCount; screenIndex++)
         {
-            for (int positionIndex = 0; positionIndex < positions.Length; positionIndex++)
+            for (var positionIndex = 0; positionIndex < positions.Length; positionIndex++)
             {
                 var name = screenIndex + ":" + positions[positionIndex];
                 options.Add(name);
@@ -123,12 +127,13 @@ public partial class MoreViewModel : ObservableObject
         MainWindowViewModel.Instance?.Activate();
     }
 
-    void NextStyle()
+    private void NextStyle()
     {
         SelectStyle(1);
 
     }
-    void PrevStyle()
+
+    private void PrevStyle()
     {
         SelectStyle(-1);
     }
@@ -146,21 +151,21 @@ public partial class MoreViewModel : ObservableObject
         App.SelectStyle(NavigationStates.STYLE.SelectionLabel, NavigationStates.FONT.SelectionLabel);
     }
 
-    string[] FontList()
+    private string[] FontList()
     {
         var fontsFolder = Path.Combine(Startup.VersionPath, "Fonts");
         if (!Directory.Exists(fontsFolder))
             return [];
-        string[] fileEntries = Directory.GetFiles(fontsFolder, "*.*").Where(s => s.ToLower().EndsWith(".ttf") || s.ToLower().EndsWith(".otf")).ToArray();
+        var fileEntries = Directory.GetFiles(fontsFolder, "*.*").Where(s => s.ToLower().EndsWith(".ttf") || s.ToLower().EndsWith(".otf")).ToArray();
         List<string> fonts = [];
-        for (int i = 0; i < fileEntries.Length; i++)
+        for (var i = 0; i < fileEntries.Length; i++)
         {
             var ff = Fonts.GetFontFamilies(fileEntries[i]);
             if (ff.Count > 0)
             {
                 var y = ff.First();
                 var k = y.Source.Split("#");
-                var v = k[k.Length - 1];
+                var v = k[^1];
                 Console.WriteLine("fontCol.Families[0].Name {0}", v);
                 fonts.Add(v);
             }
@@ -168,12 +173,12 @@ public partial class MoreViewModel : ObservableObject
         return [.. fonts];
     }
 
-    void NextFont()
+    private void NextFont()
     {
         SelectFont(1);
     }
 
-    void PrevFont()
+    private void PrevFont()
     {
         SelectFont(-1);
     }

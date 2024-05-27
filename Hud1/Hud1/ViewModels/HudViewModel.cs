@@ -2,22 +2,20 @@
 using CommunityToolkit.Mvvm.Input;
 using Hud1.Helpers;
 using Hud1.Models;
-using Stateless.Reflection;
 using System.Diagnostics;
-using System.IO;
 using System.Windows;
 
 namespace Hud1.ViewModels;
 
 public partial class HudViewModel : ObservableObject
 {
-    public readonly static HudViewModel Instance = new();
+    public static readonly HudViewModel Instance = new();
 
     [ObservableProperty]
     public NavigationState? state;
 
     [ObservableProperty]
-    public Dictionary<string, NavigationState> states = new Dictionary<string, NavigationState> { };
+    public Dictionary<string, NavigationState> states = [];
 
     private HudViewModel()
     {
@@ -51,7 +49,7 @@ public partial class HudViewModel : ObservableObject
         var key = keyEvent.key;
 
         NavigationState.Repeat = keyEvent.repeated;
-        var isVerticalNavigation = key == GlobalKey.VK_UP || key == GlobalKey.VK_DOWN;
+        var isVerticalNavigation = key is GlobalKey.VK_UP or GlobalKey.VK_DOWN;
 
         if (NavigationState.Repeat && (!State!.AllowRepeat || isVerticalNavigation))
         {
@@ -82,7 +80,7 @@ public partial class HudViewModel : ObservableObject
         }
     }
 
-    void UpdateModelFromMavigation()
+    private void UpdateModelFromMavigation()
     {
         // Console.WriteLine("UpdateModelFromStateless {0} ", nav.State);
 
@@ -93,7 +91,7 @@ public partial class HudViewModel : ObservableObject
         var newStates = new Dictionary<string, NavigationState> { };
 
         var info = Navigation.GetInfo();
-        foreach (StateInfo stateInfo in info.States)
+        foreach (var stateInfo in info.States)
         {
             var navigationState = (NavigationState)stateInfo.UnderlyingState;
             var isInState = Navigation.IsInState(navigationState);

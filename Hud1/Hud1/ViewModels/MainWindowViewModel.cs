@@ -1,10 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Hud1.Helpers;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Windows;
-using System.Windows.Interop;
 
 namespace Hud1.ViewModels;
 
@@ -13,10 +10,10 @@ public partial class MainWindowViewModel : ObservableObject
     public static readonly MainWindowViewModel Instance = new();
 
     [ObservableProperty]
-    public Boolean _active = true;
+    public bool _active = true;
 
     [ObservableProperty]
-    public Boolean _isForeground = false;
+    public bool _isForeground = false;
 
     [ObservableProperty]
     public Visibility _hudVisibility = Visibility.Visible;
@@ -24,10 +21,10 @@ public partial class MainWindowViewModel : ObservableObject
     internal nint Hwnd;
     private WinEventDelegate winEventDelegate;
 
-    delegate void WinEventDelegate(IntPtr hWinEventHook, uint eventType, IntPtr hwnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime);
+    private delegate void WinEventDelegate(IntPtr hWinEventHook, uint eventType, IntPtr hwnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime);
 
     [DllImport("user32.dll")]
-    static extern IntPtr SetWinEventHook(uint eventMin, uint eventMax, IntPtr hmodWinEventProc, WinEventDelegate lpfnWinEventProc, uint idProcess, uint idThread, uint dwFlags);
+    private static extern IntPtr SetWinEventHook(uint eventMin, uint eventMax, IntPtr hmodWinEventProc, WinEventDelegate lpfnWinEventProc, uint idProcess, uint idThread, uint dwFlags);
 
 
     private const uint EVENT_SYSTEM_FOREGROUND = 3;
@@ -39,12 +36,12 @@ public partial class MainWindowViewModel : ObservableObject
 
     internal void InitWindow(nint hwnd)
     {
-        this.Hwnd = hwnd;
+        Hwnd = hwnd;
         winEventDelegate = new WinEventDelegate(WinEventProc);
         SetWinEventHook(EVENT_SYSTEM_FOREGROUND, EVENT_SYSTEM_FOREGROUND, IntPtr.Zero, winEventDelegate, 0, 0, WINEVENT_OUTOFCONTEXT);
         ComputeIsForeground();
 
-        System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+        var dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
         dispatcherTimer.Tick += new EventHandler((_, _) =>
         {
             ComputeIsForeground();
@@ -61,7 +58,7 @@ public partial class MainWindowViewModel : ObservableObject
     private void ComputeIsForeground()
     {
         var foreground = WindowsAPI.GetForegroundWindow();
-        IsForeground = (foreground == this.Hwnd) || WindowsAPI.IsMouseHidden();
+        IsForeground = (foreground == Hwnd) || WindowsAPI.IsMouseHidden();
     }
 
     public void ActivateWindow()

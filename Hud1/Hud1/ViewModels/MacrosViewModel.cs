@@ -20,13 +20,13 @@ public partial class MacrosViewModel : ObservableObject
     [ObservableProperty]
     private bool _selected = false;
 
-    private FileSystemWatcher _watcher;
+    private readonly FileSystemWatcher _watcher;
 
-    public String _path = "";
+    public string _path = "";
 
     private MacrosViewModel()
     {
-        Macros = new ObservableCollection<Macro>();
+        Macros = [];
 
         _path = Path.Combine(Startup.VersionPath, "Macros");
 
@@ -36,8 +36,10 @@ public partial class MacrosViewModel : ObservableObject
             _path = ".";
         }
 
-        _watcher = new FileSystemWatcher(_path);
-        _watcher.NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.CreationTime | NotifyFilters.FileName;
+        _watcher = new FileSystemWatcher(_path)
+        {
+            NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.CreationTime | NotifyFilters.FileName
+        };
         _watcher.Changed += OnDirectoryChanged;
         _watcher.Created += OnDirectoryChanged;
         _watcher.Deleted += OnDirectoryChanged;
@@ -78,27 +80,24 @@ public partial class MacrosViewModel : ObservableObject
 
     private void OnDirectoryChanged(object sender, FileSystemEventArgs e)
     {
-        Application.Current.Dispatcher.Invoke(new Action(() =>
-        {
-            UpdateFiles();
-        }));
+        Application.Current.Dispatcher.Invoke(new Action(UpdateFiles));
     }
 
     private void UpdateFiles()
     {
         Console.WriteLine("UpdateFiles");
-        foreach (Macro macro in Macros)
+        foreach (var macro in Macros)
             macro.Running = false;
 
-        string[] fileEntries = Directory.GetFiles(_path, "*.lua");
+        var fileEntries = Directory.GetFiles(_path, "*.lua");
         var temp = new ObservableCollection<Macro>();
-        foreach (string fileEntry in fileEntries)
+        foreach (var fileEntry in fileEntries)
         {
             temp.Add(new Macro(fileEntry, this));
         }
 
         Macros.Clear();
-        foreach (Macro m in temp.OrderBy(m => m.Label))
+        foreach (var m in temp.OrderBy(m => m.Label))
         {
             Macros.Add(m);
         }

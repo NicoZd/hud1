@@ -15,14 +15,14 @@ public partial class Option : ObservableObject
     private string _value = "";
 
     [ObservableProperty]
-    private Image _image = null;
+    private Image? _image = null;
 
     [ObservableProperty]
     public bool _selected = false;
 
     public Option(string value)
     {
-        this.Value = value;
+        Value = value;
     }
 }
 

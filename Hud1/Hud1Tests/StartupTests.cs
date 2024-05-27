@@ -1,6 +1,7 @@
-﻿using System.Diagnostics;
+﻿using Hud1;
+using System.Diagnostics;
 
-namespace Hud1.Tests;
+namespace Hud1Tests;
 
 [TestClass()]
 public class StartupTests

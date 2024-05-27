@@ -24,18 +24,14 @@ public static class GlobalKeyboardHook
 
     private static IntPtr HookID = IntPtr.Zero;
 
-    private static Dictionary<GlobalKey, bool> IsDown = new Dictionary<GlobalKey, bool>();
+    private static readonly Dictionary<GlobalKey, bool> IsDown = [];
     private static GlobalKey? _lastPressedKey;
 
     public static void SystemHook()
     {
-        using (Process curProcess = Process.GetCurrentProcess())
-        {
-            using (ProcessModule curModule = curProcess.MainModule!)
-            {
-                HookID = WindowsAPI.SetWindowsHookEx(WindowsAPI.WH_KEYBOARD_LL, HookCallback, WindowsAPI.GetModuleHandle(curModule.ModuleName), 0);
-            }
-        }
+        using var curProcess = Process.GetCurrentProcess();
+        using var curModule = curProcess.MainModule!;
+        HookID = WindowsAPI.SetWindowsHookEx(WindowsAPI.WH_KEYBOARD_LL, HookCallback, WindowsAPI.GetModuleHandle(curModule.ModuleName), 0);
     }
 
     public static void SystemUnhook()
@@ -55,7 +51,7 @@ public static class GlobalKeyboardHook
             {
                 case WindowsAPI.WM_KEYDOWN:
                     {
-                        int vkCode = Marshal.ReadInt32(lParam);
+                        var vkCode = Marshal.ReadInt32(lParam);
                         var keyEvent = new KeyEvent((GlobalKey)vkCode);
                         keyEvent.repeated = keyEvent.key.Equals(_lastPressedKey);
                         _lastPressedKey = keyEvent.key;
@@ -69,21 +65,23 @@ public static class GlobalKeyboardHook
                     }
                 case WindowsAPI.WM_KEYUP:
                     {
-                        int vkCode = Marshal.ReadInt32(lParam);
+                        var vkCode = Marshal.ReadInt32(lParam);
                         // Console.WriteLine("WM_KEYUP vkCode:{0}", vkCode);
                         _lastPressedKey = null;
                         break;
                     }
                 case WindowsAPI.WM_SYSKEYDOWN:
                     {
-                        int vkCode = Marshal.ReadInt32(lParam);
+                        var vkCode = Marshal.ReadInt32(lParam);
                         // Console.WriteLine("WM_SYSKEYDOWN vkCode:{0}", vkCode);
                         if (vkCode == (int)GlobalKey.VK_LMENU)
                         {
                             IsDown[GlobalKey.VK_LMENU] = true;
                         }
-                        var keyEvent = new KeyEvent((GlobalKey)vkCode);
-                        keyEvent.alt = IsDown.ContainsKey(GlobalKey.VK_LMENU) && IsDown[GlobalKey.VK_LMENU];
+                        var keyEvent = new KeyEvent((GlobalKey)vkCode)
+                        {
+                            alt = IsDown.ContainsKey(GlobalKey.VK_LMENU) && IsDown[GlobalKey.VK_LMENU]
+                        };
                         KeyDown?.Invoke(keyEvent);
                         // Console.WriteLine("WM_KEYDOWN vkCode:{0} blocked:{1}", vkCode, blocked);
                         if (keyEvent.block)
@@ -94,7 +92,7 @@ public static class GlobalKeyboardHook
                     }
                 case WindowsAPI.WM_SYSKEYUP:
                     {
-                        int vkCode = Marshal.ReadInt32(lParam);
+                        var vkCode = Marshal.ReadInt32(lParam);
                         // Console.WriteLine("WM_SYSKEYUP vkCode:{0}", vkCode);
                         if (vkCode == (int)GlobalKey.VK_LMENU)
                         {

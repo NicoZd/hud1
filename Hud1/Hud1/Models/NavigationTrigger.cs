@@ -8,7 +8,7 @@ public class NavigationTrigger
 
     public NavigationTrigger([CallerMemberName] string label = "")
     {
-        this.Label = label;
+        Label = label;
     }
 
     public override string? ToString()

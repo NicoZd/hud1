@@ -1,13 +1,12 @@
-﻿using System;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using System.Runtime.Versioning;
 using System.Windows;
 
-namespace WpfScreenHelper;
+namespace Hud1.Helpers.ScreenHelper;
 
 internal static class NativeMethods
 {
-    public delegate bool MonitorEnumProc(IntPtr monitor, IntPtr hdc, IntPtr lprcMonitor, IntPtr lParam);
+    public delegate bool MonitorEnumProc(nint monitor, nint hdc, nint lprcMonitor, nint lParam);
 
     public enum DpiType
     {
@@ -71,11 +70,11 @@ internal static class NativeMethods
         D2D1_FACTORY_TYPE_MULTI_THREADED = 1,
     }
 
-    public static readonly HandleRef NullHandleRef = new HandleRef(null, IntPtr.Zero);
+    public static readonly HandleRef NullHandleRef = new(null, nint.Zero);
 
     [DllImport(ExternDll.Shcore, CharSet = CharSet.Auto)]
     [ResourceExposure(ResourceScope.None)]
-    public static extern IntPtr GetDpiForMonitor([In] IntPtr hmonitor, [In] DpiType dpiType, [Out] out uint dpiX, [Out] out uint dpiY);
+    public static extern nint GetDpiForMonitor([In] nint hmonitor, [In] DpiType dpiType, [Out] out uint dpiX, [Out] out uint dpiY);
 
     [DllImport(ExternDll.User32, CharSet = CharSet.Auto)]
     [ResourceExposure(ResourceScope.None)]
@@ -83,11 +82,11 @@ internal static class NativeMethods
 
     [DllImport(ExternDll.User32, ExactSpelling = true)]
     [ResourceExposure(ResourceScope.None)]
-    public static extern bool EnumDisplayMonitors(HandleRef hdc, COMRECT? rcClip, MonitorEnumProc lpfnEnum, IntPtr dwData);
+    public static extern bool EnumDisplayMonitors(HandleRef hdc, COMRECT? rcClip, MonitorEnumProc lpfnEnum, nint dwData);
 
     [DllImport(ExternDll.User32, ExactSpelling = true)]
     [ResourceExposure(ResourceScope.None)]
-    public static extern IntPtr MonitorFromWindow(HandleRef handle, int flags);
+    public static extern nint MonitorFromWindow(HandleRef handle, int flags);
 
     [DllImport(ExternDll.User32, ExactSpelling = true, CharSet = CharSet.Auto)]
     [ResourceExposure(ResourceScope.None)]
@@ -99,7 +98,7 @@ internal static class NativeMethods
 
     [DllImport(ExternDll.User32, ExactSpelling = true)]
     [ResourceExposure(ResourceScope.None)]
-    public static extern IntPtr MonitorFromPoint(POINTSTRUCT pt, MonitorDefault flags);
+    public static extern nint MonitorFromPoint(POINTSTRUCT pt, MonitorDefault flags);
 
     [DllImport(ExternDll.User32, ExactSpelling = true, CharSet = CharSet.Auto)]
     [ResourceExposure(ResourceScope.None)]
@@ -109,10 +108,10 @@ internal static class NativeMethods
     public static extern bool IsProcessDPIAware();
 
     [DllImport(ExternDll.User32, SetLastError = true)]
-    public static extern bool MoveWindow(IntPtr hWnd, int X, int Y, int nWidth, int nHeight, bool bRepaint);
+    public static extern bool MoveWindow(nint hWnd, int X, int Y, int nWidth, int nHeight, bool bRepaint);
 
     [DllImport(ExternDll.D2D1)]
-    public static extern int D2D1CreateFactory(D2D1_FACTORY_TYPE factoryType, [MarshalAs(UnmanagedType.LPStruct)] Guid riid, IntPtr pFactoryOptions, out ID2D1Factory ppIFactory);
+    public static extern int D2D1CreateFactory(D2D1_FACTORY_TYPE factoryType, [MarshalAs(UnmanagedType.LPStruct)] Guid riid, nint pFactoryOptions, out ID2D1Factory ppIFactory);
 
     [StructLayout(LayoutKind.Sequential)]
     public struct RECT
@@ -143,7 +142,7 @@ internal static class NativeMethods
             return new RECT(x, y, x + width, y + height);
         }
 
-        public Size Size => new Size(right - left, bottom - top);
+        public Size Size => new(right - left, bottom - top);
     }
 
     // use this in cases where the Native API takes a POINT not a POINT*
@@ -192,8 +191,8 @@ internal static class NativeMethods
     {
         internal int cbSize = Marshal.SizeOf(typeof(MONITORINFOEX));
 
-        internal RECT rcMonitor = new RECT();
-        internal RECT rcWork = new RECT();
+        internal RECT rcMonitor = new();
+        internal RECT rcWork = new();
         internal int dwFlags = 0;
 
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 32)]

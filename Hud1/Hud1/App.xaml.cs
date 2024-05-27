@@ -23,7 +23,7 @@ public partial class App : Application
         EventManager.RegisterClassHandler(typeof(Window), Window.PreviewMouseUpEvent, new MouseButtonEventHandler(OnPreviewMouseDown));
     }
 
-    static void OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
+    private static void OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
     {
         if (MouseService.IgnoreNextEvent)
         {
@@ -37,7 +37,7 @@ public partial class App : Application
         Application.Current.Resources.MergedDictionaries.RemoveAt(index + 1);
     }
 
-    public static void SelectStyle(String style, String font)
+    public static void SelectStyle(string style, string font)
     {
         //return;
 
@@ -51,15 +51,15 @@ public partial class App : Application
         var fontsFolder = Path.Combine(Hud1.Startup.VersionPath, "Fonts");
         if (Directory.Exists(fontsFolder))
         {
-            string[] fileEntries = Directory.GetFiles(fontsFolder, "*.*").Where(s => s.ToLower().EndsWith(".ttf") || s.ToLower().EndsWith(".otf")).ToArray();
-            for (int i = 0; i < fileEntries.Length; i++)
+            var fileEntries = Directory.GetFiles(fontsFolder, "*.*").Where(s => s.ToLower().EndsWith(".ttf") || s.ToLower().EndsWith(".otf")).ToArray();
+            for (var i = 0; i < fileEntries.Length; i++)
             {
                 var ff = Fonts.GetFontFamilies(fileEntries[i]);
                 if (ff.Count > 0)
                 {
                     var y = ff.First();
                     var k = y.Source.Split("#");
-                    var v = k[k.Length - 1];
+                    var v = k[^1];
                     Console.WriteLine("fontCol.Families[0].Name {0}", v);
                     if (v.Equals(font))
                     {
@@ -71,7 +71,7 @@ public partial class App : Application
         }
 
 
-        foreach (ScrollPanel sp in ScrollPanel.Instances)
+        foreach (var sp in ScrollPanel.Instances)
             sp.SaveScrollPosition();
 
         if (fontFile != "")
@@ -103,7 +103,7 @@ public partial class App : Application
             Source = new Uri("Themes/ScrollViewer.xaml", UriKind.RelativeOrAbsolute)
         });
 
-        foreach (ScrollPanel sp in ScrollPanel.Instances)
+        foreach (var sp in ScrollPanel.Instances)
             sp.RestoreScrollPosition();
 
     }

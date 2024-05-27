@@ -21,7 +21,7 @@ public enum GlobalKey : int
 
 public static class WindowsAPI
 {
-    public static readonly nint HWND_TOP = new nint(0);
+    public static readonly nint HWND_TOP = new(0);
 
     public const int WH_KEYBOARD_LL = 13;
     public const int WH_MOUSE_LL = 14;
@@ -48,7 +48,7 @@ public static class WindowsAPI
     public const int WS_EX_TRANSPARENT = 0x00000020;
     public const int WS_EX_TOOLWINDOW = 0x00000080;
     public const int WS_EX_NOACTIVATE = 0x08000000;
-    public const int GWL_EXSTYLE = (-20);
+    public const int GWL_EXSTYLE = -20;
 
     // Hooks
 
@@ -119,8 +119,8 @@ public static class WindowsAPI
     [StructLayout(LayoutKind.Sequential)]
     public struct CURSORINFO
     {
-        public Int32 cbSize;
-        public Int32 flags;
+        public int cbSize;
+        public int flags;
         public IntPtr hCursor;
         public POINTAPI ptScreenPos;
     }
@@ -132,7 +132,7 @@ public static class WindowsAPI
         public int y;
     }
 
-    public const Int32 CURSOR_SHOWING = 0x00000001;
+    public const int CURSOR_SHOWING = 0x00000001;
     [DllImport("user32.dll")]
     public static extern bool GetCursorInfo(out CURSORINFO pci);
 

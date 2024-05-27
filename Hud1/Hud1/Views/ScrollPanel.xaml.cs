@@ -4,7 +4,7 @@ namespace Hud1.Views;
 
 public partial class ScrollPanel : UserControl
 {
-    public static List<ScrollPanel> Instances = new();
+    public static List<ScrollPanel> Instances = [];
 
     private double _storedPosition;
     public ScrollPanel()

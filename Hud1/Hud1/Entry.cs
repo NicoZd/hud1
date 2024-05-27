@@ -2,7 +2,7 @@
 
 namespace Hud1;
 
-class Entry
+internal class Entry
 {
     private static readonly long _startMS = DateTimeOffset.Now.ToUnixTimeMilliseconds();
 

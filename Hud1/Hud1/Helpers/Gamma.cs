@@ -1,14 +1,12 @@
-﻿using System.Diagnostics;
-using System.Drawing;
+﻿using Hud1.Helpers.ScreenHelper;
 using System.Runtime.InteropServices;
-using WpfScreenHelper;
 
 namespace Hud1.Helpers;
 
 public static class Gamma
 {
     [DllImport("gdi32.dll")]
-    private unsafe static extern bool SetDeviceGammaRamp(Int32 hdc, void* ramp);
+    private static extern unsafe bool SetDeviceGammaRamp(int hdc, void* ramp);
 
     [DllImport("gdi32.dll")]
     public static extern IntPtr CreateDC(string lpszDriver, string? lpszDevice, string? lpszOutput, IntPtr lpInitData);
@@ -19,7 +17,7 @@ public static class Gamma
 
 
     [DllImport("user32.dll")]
-    static extern bool EnumDisplayDevices(string lpDevice, uint iDevNum, ref DISPLAY_DEVICE lpDisplayDevice, uint dwFlags);
+    private static extern bool EnumDisplayDevices(string lpDevice, uint iDevNum, ref DISPLAY_DEVICE lpDisplayDevice, uint dwFlags);
 
     [Flags()]
     public enum DisplayDeviceStateFlags : int
@@ -61,31 +59,31 @@ public static class Gamma
 
     public static unsafe bool SetGamma(double gamma)
     {
-        short* gArray = stackalloc short[3 * 256];
+        var gArray = stackalloc short[3 * 256];
 
         // just all 
         foreach (var screen in Screen.AllScreens)
         {
             Console.WriteLine("Set Gamma for DeviceName {0}", screen.DeviceName);
 
-            Int32 hdc = CreateDC(screen.DeviceName, null, null, IntPtr.Zero).ToInt32();
+            var hdc = CreateDC(screen.DeviceName, null, null, IntPtr.Zero).ToInt32();
 
-            short* idx = gArray;
+            var idx = gArray;
             double offset = 0;
             double range2 = 255;
 
-            double[] gammas = new double[3];
-            gammas[0] = 1 + (gamma - 1) * 1;
-            gammas[1] = 1 + (gamma - 1) * 1;
-            gammas[2] = 1 + (gamma - 1) * 1;
+            var gammas = new double[3];
+            gammas[0] = 1 + ((gamma - 1) * 1);
+            gammas[1] = 1 + ((gamma - 1) * 1);
+            gammas[2] = 1 + ((gamma - 1) * 1);
 
-            for (int j = 0; j < 3; j++)
+            for (var j = 0; j < 3; j++)
             {
                 for (var i = 0; i < 256; i++)
                 {
                     var factor = (i + offset) / range2;
-                    factor = Math.Pow(factor, 1 / (gammas[j]));
-                    int arrayVal = (int)(factor * 0xffff);
+                    factor = Math.Pow(factor, 1 / gammas[j]);
+                    var arrayVal = (int)(factor * 0xffff);
                     if (arrayVal > 65535)
                         arrayVal = 65535;
                     *idx = (short)arrayVal;
@@ -93,7 +91,7 @@ public static class Gamma
                 }
             }
 
-            bool retVal = SetDeviceGammaRamp(hdc, gArray);
+            var retVal = SetDeviceGammaRamp(hdc, gArray);
             DeleteDC(hdc);
         }
 

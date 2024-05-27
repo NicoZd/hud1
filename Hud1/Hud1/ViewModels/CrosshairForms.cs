@@ -3,7 +3,7 @@ using System.Windows.Media;
 
 namespace Hud1.ViewModels;
 
-class CrosshairForms
+internal class CrosshairForms
 {
     public static Drawing RenderDot(int size, Brush brush, bool outline)
     {
@@ -96,11 +96,11 @@ class CrosshairForms
             {5, new() { offs = 0.0, length = 6, thickness = 2, centerSpace = 5, extraOffset = 0 } },
         };
 
-        double offs = crosses[size].offs;
-        double length = crosses[size].length;
-        double thickness = crosses[size].thickness;
-        double centerSpace = crosses[size].centerSpace;
-        double extraOffset = crosses[size].extraOffset;
+        var offs = crosses[size].offs;
+        var length = crosses[size].length;
+        var thickness = crosses[size].thickness;
+        var centerSpace = crosses[size].centerSpace;
+        var extraOffset = crosses[size].extraOffset;
 
         GeometryGroup geometryGroup = new();
 
@@ -108,11 +108,11 @@ class CrosshairForms
         //geometryGroup.Children.Add(new RectangleGeometry(new Rect(-1, -1, 2, 2)));
         //geometryGroup.Children.Add(new RectangleGeometry(new Rect(0, 0, 1, 1)));
 
-        geometryGroup.Children.Add(new RectangleGeometry(new Rect(-thickness / 2 + offs, -(length + centerSpace) + extraOffset, thickness, length)));
-        geometryGroup.Children.Add(new RectangleGeometry(new Rect(-thickness / 2 + offs, centerSpace, thickness, length)));
+        geometryGroup.Children.Add(new RectangleGeometry(new Rect((-thickness / 2) + offs, -(length + centerSpace) + extraOffset, thickness, length)));
+        geometryGroup.Children.Add(new RectangleGeometry(new Rect((-thickness / 2) + offs, centerSpace, thickness, length)));
 
-        geometryGroup.Children.Add(new RectangleGeometry(new Rect(centerSpace, -thickness / 2 + offs, length, thickness)));
-        geometryGroup.Children.Add(new RectangleGeometry(new Rect(-(length + centerSpace) + extraOffset, -thickness / 2 + offs, length, thickness)));
+        geometryGroup.Children.Add(new RectangleGeometry(new Rect(centerSpace, (-thickness / 2) + offs, length, thickness)));
+        geometryGroup.Children.Add(new RectangleGeometry(new Rect(-(length + centerSpace) + extraOffset, (-thickness / 2) + offs, length, thickness)));
 
         GeometryDrawing outlineDrawing = new()
         {

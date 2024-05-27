@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Hud1.Helpers;
 
-class DebugWriter : TextWriter
+internal class DebugWriter : TextWriter
 {
     private readonly string Path;
 
@@ -31,8 +31,5 @@ class DebugWriter : TextWriter
         streamWriter.Write(value);
     }
 
-    public override Encoding Encoding
-    {
-        get { return Encoding.Unicode; }
-    }
+    public override Encoding Encoding => Encoding.Unicode;
 }

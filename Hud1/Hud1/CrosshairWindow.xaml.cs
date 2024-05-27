@@ -1,18 +1,17 @@
 ﻿using Hud1.Helpers;
+using Hud1.Helpers.ScreenHelper;
+using Hud1.Helpers.ScreenHelper.Enum;
 using Hud1.Models;
 using Hud1.ViewModels;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Interop;
-using Windows.Gaming.Input.ForceFeedback;
-using WpfScreenHelper;
 
 namespace Hud1;
 
 public partial class CrosshairWindow : Window
 {
-    string lastRedrawScreenConfig = "";
+    private string lastRedrawScreenConfig = "";
 
     public CrosshairWindow()
     {
@@ -23,7 +22,7 @@ public partial class CrosshairWindow : Window
     {
         var hwnd = new WindowInteropHelper(this).Handle;
 
-        System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+        var dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
         dispatcherTimer.Tick += new EventHandler((_, _) =>
         {
             WindowsAPI.SetWindowPos(hwnd, WindowsAPI.HWND_TOP, 0, 0, 0, 0, WindowsAPI.SetWindowPosFlags.SWP_NOMOVE | WindowsAPI.SetWindowPosFlags.SWP_NOSIZE | WindowsAPI.SetWindowPosFlags.SWP_NOACTIVATE);
@@ -43,7 +42,7 @@ public partial class CrosshairWindow : Window
             | WindowsAPI.WS_EX_TRANSPARENT
             );
 
-        this.SetWindowPosition(WpfScreenHelper.Enum.WindowPositions.Maximize, Screen.AllScreens.ElementAt(0));
+        this.SetWindowPosition(WindowPositions.Maximize, Screen.AllScreens.ElementAt(0));
 
         Redraw(force: true);
 

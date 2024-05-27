@@ -35,7 +35,7 @@ public partial class Macro : ObservableObject
     private MacroScript? _macroScript;
     private readonly MacrosViewModel _macros;
 
-    public Macro(String path, MacrosViewModel macros)
+    public Macro(string path, MacrosViewModel macros)
     {
         Path = path;
         Label = System.IO.Path.GetFileName(Path);
@@ -103,19 +103,14 @@ public partial class Macro : ObservableObject
             try
             {
                 _macroScript = new MacroScript(this);
-                using (var hooks = new ScriptHooks(_macroScript))
-                {
-                    _macroScript.Run();
-                }
+                using var hooks = new ScriptHooks(_macroScript);
+                _macroScript.Run();
             }
             catch (InterpreterException ex)
             {
                 Console.WriteLine("ERROR {0}", ex.DecoratedMessage);
 
-                if (ex.DecoratedMessage != null)
-                    Error = ex.DecoratedMessage;
-                else
-                    Error = "ERROR: " + ex.Message;
+                Error = ex.DecoratedMessage ?? "ERROR: " + ex.Message;
             }
             catch (Exception ex)
             {
@@ -128,7 +123,7 @@ public partial class Macro : ObservableObject
 
     public class ScriptHooks : IDisposable
     {
-        private MacroScript _macroScript;
+        private readonly MacroScript _macroScript;
 
         public ScriptHooks(MacroScript macroScript)
         {

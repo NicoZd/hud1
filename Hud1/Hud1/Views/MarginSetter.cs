@@ -18,8 +18,7 @@ public class MarginSetter
     private static void MarginChangedCallback(object sender, DependencyPropertyChangedEventArgs e)
     {
         // Make sure this is put on a panel
-        var panel = sender as Panel;
-        if (panel == null) return;
+        if (sender is not Panel panel) return;
 
         // Avoid duplicate registrations
         panel.Loaded -= OnPanelLoaded;
@@ -38,11 +37,10 @@ public class MarginSetter
         // Go over the children and set margin for them:
         for (var i = 0; i < panel.Children.Count; i++)
         {
-            UIElement child = panel.Children[i];
-            var fe = child as FrameworkElement;
-            if (fe == null) continue;
+            var child = panel.Children[i];
+            if (child is not FrameworkElement fe) continue;
 
-            bool isLastItem = i == panel.Children.Count - 1;
+            var isLastItem = i == panel.Children.Count - 1;
             fe.Margin = isLastItem ? GetLastItemMargin(panel) : GetMargin(panel);
         }
     }

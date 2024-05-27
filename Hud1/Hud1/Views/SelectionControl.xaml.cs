@@ -12,8 +12,8 @@ public partial class SelectionControl : UserControl
 
     public NavigationState NavigationState
     {
-        get { return (NavigationState)GetValue(NavigationStateProperty); }
-        set { SetValue(NavigationStateProperty, value); }
+        get => (NavigationState)GetValue(NavigationStateProperty);
+        set => SetValue(NavigationStateProperty, value);
     }
 
     public SelectionControl()

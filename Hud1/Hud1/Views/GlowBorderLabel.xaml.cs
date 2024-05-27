@@ -31,31 +31,31 @@ public partial class GlowBorderLabel : UserControl
     private static readonly DependencyProperty ClickProperty =
         BindingHelper.CreateProperty<GlowBorderLabel, ICommand>("Click", null);
 
-    public String Label
+    public string Label
     {
         set => SetValue(LabelProperty, value);
-        get => (String)GetValue(LabelProperty);
+        get => (string)GetValue(LabelProperty);
     }
 
     public bool Highlighted
     {
         set => SetValue(HighlightedProperty, value);
-        get => (Boolean)GetValue(HighlightedProperty);
+        get => (bool)GetValue(HighlightedProperty);
     }
     public bool Selected
     {
         set => SetValue(SelectedProperty, value);
-        get => (Boolean)GetValue(SelectedProperty);
+        get => (bool)GetValue(SelectedProperty);
     }
     public bool Pressed
     {
         set => SetValue(PressedProperty, value);
-        get => (Boolean)GetValue(PressedProperty);
+        get => (bool)GetValue(PressedProperty);
     }
     public bool Enabled
     {
         set => SetValue(EnabledProperty, value);
-        get => (Boolean)GetValue(EnabledProperty);
+        get => (bool)GetValue(EnabledProperty);
     }
     public ICommand Click
     {

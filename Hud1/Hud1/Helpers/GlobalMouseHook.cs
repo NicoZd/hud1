@@ -11,13 +11,9 @@ public static class GlobalMouseHook
 
     public static void SystemHook()
     {
-        using (Process curProcess = Process.GetCurrentProcess())
-        {
-            using (ProcessModule curModule = curProcess.MainModule!)
-            {
-                HookID = WindowsAPI.SetWindowsHookEx(WindowsAPI.WH_MOUSE_LL, HookCallback, WindowsAPI.GetModuleHandle(curModule.ModuleName), 0);
-            }
-        }
+        using var curProcess = Process.GetCurrentProcess();
+        using var curModule = curProcess.MainModule!;
+        HookID = WindowsAPI.SetWindowsHookEx(WindowsAPI.WH_MOUSE_LL, HookCallback, WindowsAPI.GetModuleHandle(curModule.ModuleName), 0);
     }
 
     public static void SystemUnhook()

@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using System.Windows;
 
 namespace Hud1.Helpers;
@@ -16,13 +15,13 @@ public class MouseService
     }
 
     [DllImport("user32.dll")]
-    static extern void mouse_event(int flags, int dX, int dY, int buttons, int extraInfo);
+    private static extern void mouse_event(int flags, int dX, int dY, int buttons, int extraInfo);
 
     public static void MouseDown(MouseButton button)
     {
         Console.WriteLine("MouseDown1");
         IgnoreNextEvent = true;
-        mouse_event(((int)button), 0, 0, 0, 0);
+        mouse_event((int)button, 0, 0, 0, 0);
 
         ThreadPool.QueueUserWorkItem((_) =>
         {

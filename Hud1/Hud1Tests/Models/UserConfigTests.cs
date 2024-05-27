@@ -1,8 +1,9 @@
-﻿using System.Diagnostics;
+﻿using Hud1.Models;
+using System.Diagnostics;
 using System.Reflection;
 using System.Text.Json;
 
-namespace Hud1.Models.Tests;
+namespace Hud1Tests.Models;
 
 [TestClass()]
 public class UserConfigTests
@@ -10,7 +11,7 @@ public class UserConfigTests
     [TestMethod()]
     public void LogTest()
     {
-        var config = new UserConfig();
+        _ = new UserConfig();
         Debug.WriteLine("hello6");
     }
 
@@ -21,13 +22,13 @@ public class UserConfigTests
         string jsonString = JsonSerializer.Serialize(file);
         Debug.Print("File {0}", jsonString);
 
-        var config = new UserConfig();
+        UserConfig config = new();
 
-        var loaded = JsonSerializer.Deserialize<UserConfig>(jsonString);
+        UserConfig? loaded = JsonSerializer.Deserialize<UserConfig>(jsonString);
 
         foreach (PropertyInfo prop in config.GetType().GetProperties())
         {
-            var value = prop.GetValue(loaded, null);
+            object? value = prop.GetValue(loaded, null);
             if (value != null)
             {
                 Debug.Print("Set {0} to {1}", prop.Name, value);

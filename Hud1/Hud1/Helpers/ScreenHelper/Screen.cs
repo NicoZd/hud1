@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.Collections;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
 
-namespace WpfScreenHelper;
+namespace Hud1.Helpers.ScreenHelper;
 
 /// <summary>
 /// Represents a display device or multiple display devices on a single system.
@@ -34,7 +30,7 @@ public class Screen
     /// <summary>
     /// The monitor handle.
     /// </summary>
-    private readonly IntPtr monitorHandle;
+    private readonly nint monitorHandle;
 
     /// <summary>
     /// Initializes static members of the <see cref="Screen"/> class.
@@ -48,8 +44,8 @@ public class Screen
     /// Initializes a new instance of the <see cref="Screen"/> class.
     /// </summary>
     /// <param name="monitor">The monitor.</param>
-    private Screen(IntPtr monitor)
-        : this(monitor, IntPtr.Zero)
+    private Screen(nint monitor)
+        : this(monitor, nint.Zero)
     {
     }
 
@@ -58,7 +54,7 @@ public class Screen
     /// </summary>
     /// <param name="monitor">The monitor.</param>
     /// <param name="hdc">The hdc.</param>
-    private Screen(IntPtr monitor, IntPtr hdc)
+    private Screen(nint monitor, nint hdc)
     {
         if (NativeMethods.IsProcessDPIAware())
         {
@@ -66,24 +62,20 @@ public class Screen
 
             try
             {
-                if (monitor == (IntPtr)PRIMARY_MONITOR)
+                if (monitor == PRIMARY_MONITOR)
                 {
                     var ptr = NativeMethods.MonitorFromPoint(new NativeMethods.POINTSTRUCT(0, 0), NativeMethods.MonitorDefault.MONITOR_DEFAULTTOPRIMARY);
                     NativeMethods.GetDpiForMonitor(ptr, NativeMethods.DpiType.EFFECTIVE, out dpiX, out _);
                 }
                 else
-                {
                     NativeMethods.GetDpiForMonitor(monitor, NativeMethods.DpiType.EFFECTIVE, out dpiX, out _);
-                }
             }
             catch
             {
                 // Windows 7 fallback
-                var hr = NativeMethods.D2D1CreateFactory(NativeMethods.D2D1_FACTORY_TYPE.D2D1_FACTORY_TYPE_SINGLE_THREADED, typeof(NativeMethods.ID2D1Factory).GUID, IntPtr.Zero, out var factory);
+                var hr = NativeMethods.D2D1CreateFactory(NativeMethods.D2D1_FACTORY_TYPE.D2D1_FACTORY_TYPE_SINGLE_THREADED, typeof(NativeMethods.ID2D1Factory).GUID, nint.Zero, out var factory);
                 if (hr < 0)
-                {
                     dpiX = 96;
-                }
                 else
                 {
                     factory.GetDesktopDpi(out var x, out _);
@@ -92,18 +84,18 @@ public class Screen
                 }
             }
 
-            this.ScaleFactor = dpiX / 96.0;
+            ScaleFactor = dpiX / 96.0;
         }
 
-        if (!MultiMonitorSupport || monitor == (IntPtr)PRIMARY_MONITOR)
+        if (!MultiMonitorSupport || monitor == PRIMARY_MONITOR)
         {
             var size = new Size(
                 NativeMethods.GetSystemMetrics(NativeMethods.SystemMetric.SM_CXSCREEN),
                 NativeMethods.GetSystemMetrics(NativeMethods.SystemMetric.SM_CYSCREEN));
 
-            this.Bounds = new Rect(0, 0, size.Width, size.Height);
-            this.Primary = true;
-            this.DeviceName = "DISPLAY";
+            Bounds = new Rect(0, 0, size.Width, size.Height);
+            Primary = true;
+            DeviceName = "DISPLAY";
         }
         else
         {
@@ -111,16 +103,16 @@ public class Screen
 
             NativeMethods.GetMonitorInfo(new HandleRef(null, monitor), info);
 
-            this.Bounds = new Rect(
+            Bounds = new Rect(
                 info.rcMonitor.left,
                 info.rcMonitor.top,
                 info.rcMonitor.right - info.rcMonitor.left,
                 info.rcMonitor.bottom - info.rcMonitor.top);
-            this.Primary = (info.dwFlags & MONITORINFOF_PRIMARY) != 0;
-            this.DeviceName = new string(info.szDevice).TrimEnd((char)0);
+            Primary = (info.dwFlags & MONITORINFOF_PRIMARY) != 0;
+            DeviceName = new string(info.szDevice).TrimEnd((char)0);
         }
 
-        this.monitorHandle = monitor;
+        monitorHandle = monitor;
     }
 
     /// <summary>
@@ -136,15 +128,13 @@ public class Screen
                 var closure = new MonitorEnumCallback();
                 var proc = new NativeMethods.MonitorEnumProc(closure.Callback);
 
-                NativeMethods.EnumDisplayMonitors(NativeMethods.NullHandleRef, null, proc, IntPtr.Zero);
+                NativeMethods.EnumDisplayMonitors(NativeMethods.NullHandleRef, null, proc, nint.Zero);
                 if (closure.Screens.Count > 0)
-                {
                     return closure.Screens.Cast<Screen>();
-                }
 
             }
 
-            return new[] { new Screen((IntPtr)PRIMARY_MONITOR) };
+            return new[] { new Screen(PRIMARY_MONITOR) };
         }
     }
 
@@ -152,26 +142,20 @@ public class Screen
     /// Gets the primary display.
     /// </summary>
     /// <returns>The primary display.</returns>
-    public static Screen PrimaryScreen
-    {
-        get
-        {
-            return MultiMonitorSupport ? AllScreens.FirstOrDefault(t => t.Primary)! : new Screen((IntPtr)PRIMARY_MONITOR);
-        }
-    }
+    public static Screen PrimaryScreen => MultiMonitorSupport ? AllScreens.FirstOrDefault(t => t.Primary)! : new Screen(PRIMARY_MONITOR);
 
     /// <summary>
     /// Gets the bounds of the display in units.
     /// </summary>
     /// <returns>A <see cref="T:System.Windows.Rect" />, representing the bounds of the display in units.</returns>
     public Rect WpfBounds =>
-        this.ScaleFactor.Equals(1.0)
-            ? this.Bounds
+        ScaleFactor.Equals(1.0)
+            ? Bounds
             : new Rect(
-                this.Bounds.X / this.ScaleFactor,
-                this.Bounds.Y / this.ScaleFactor,
-                this.Bounds.Width / this.ScaleFactor,
-                this.Bounds.Height / this.ScaleFactor);
+                Bounds.X / ScaleFactor,
+                Bounds.Y / ScaleFactor,
+                Bounds.Width / ScaleFactor,
+                Bounds.Height / ScaleFactor);
 
     /// <summary>
     /// Gets the device name associated with a display.
@@ -208,7 +192,7 @@ public class Screen
         {
             Rect workingArea;
 
-            if (!MultiMonitorSupport || this.monitorHandle == (IntPtr)PRIMARY_MONITOR)
+            if (!MultiMonitorSupport || monitorHandle == PRIMARY_MONITOR)
             {
                 var rc = new NativeMethods.RECT();
 
@@ -219,7 +203,7 @@ public class Screen
             else
             {
                 var info = new NativeMethods.MONITORINFOEX();
-                NativeMethods.GetMonitorInfo(new HandleRef(null, this.monitorHandle), info);
+                NativeMethods.GetMonitorInfo(new HandleRef(null, monitorHandle), info);
 
                 workingArea = new Rect(info.rcWork.left, info.rcWork.top, info.rcWork.right - info.rcWork.left, info.rcWork.bottom - info.rcWork.top);
             }
@@ -234,13 +218,13 @@ public class Screen
     /// </summary>
     /// <returns>A <see cref="T:System.Windows.Rect" />, representing the working area of the display in units.</returns>
     public Rect WpfWorkingArea =>
-        this.ScaleFactor.Equals(1.0)
-            ? this.WorkingArea
+        ScaleFactor.Equals(1.0)
+            ? WorkingArea
             : new Rect(
-                this.WorkingArea.X / this.ScaleFactor,
-                this.WorkingArea.Y / this.ScaleFactor,
-                this.WorkingArea.Width / this.ScaleFactor,
-                this.WorkingArea.Height / this.ScaleFactor);
+                WorkingArea.X / ScaleFactor,
+                WorkingArea.Y / ScaleFactor,
+                WorkingArea.Width / ScaleFactor,
+                WorkingArea.Height / ScaleFactor);
 
     /// <summary>
     /// Retrieves a Screen for the display that contains the largest portion of the specified control.
@@ -250,11 +234,11 @@ public class Screen
     /// A Screen for the display that contains the largest region of the object. In multiple display environments
     /// where no display contains any portion of the specified window, the display closest to the object is returned.
     /// </returns>
-    public static Screen FromHandle(IntPtr hwnd)
+    public static Screen FromHandle(nint hwnd)
     {
         return MultiMonitorSupport
                    ? new Screen(NativeMethods.MonitorFromWindow(new HandleRef(null, hwnd), 2))
-                   : new Screen((IntPtr)PRIMARY_MONITOR);
+                   : new Screen(PRIMARY_MONITOR);
     }
 
     /// <summary>
@@ -273,7 +257,7 @@ public class Screen
             return new Screen(NativeMethods.MonitorFromPoint(pt, NativeMethods.MonitorDefault.MONITOR_DEFAULTTONEAREST));
         }
 
-        return new Screen((IntPtr)PRIMARY_MONITOR);
+        return new Screen(PRIMARY_MONITOR);
     }
 
     /// <summary>
@@ -297,33 +281,29 @@ public class Screen
     public override bool Equals(object? obj)
     {
         if (obj is Screen monitor)
-        {
-            if (this.monitorHandle == monitor.monitorHandle)
-            {
+            if (monitorHandle == monitor.monitorHandle)
                 return true;
-            }
-        }
 
         return false;
     }
 
     public override int GetHashCode()
     {
-        return this.monitorHandle.GetHashCode();
+        return monitorHandle.GetHashCode();
     }
 
     private class MonitorEnumCallback
     {
         public MonitorEnumCallback()
         {
-            this.Screens = new ArrayList();
+            Screens = [];
         }
 
         public ArrayList Screens { get; }
 
-        public bool Callback(IntPtr monitor, IntPtr hdc, IntPtr lprcMonitor, IntPtr lparam)
+        public bool Callback(nint monitor, nint hdc, nint lprcMonitor, nint lparam)
         {
-            this.Screens.Add(new Screen(monitor, hdc));
+            Screens.Add(new Screen(monitor, hdc));
             return true;
         }
     }

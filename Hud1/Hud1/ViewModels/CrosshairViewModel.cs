@@ -1,11 +1,9 @@
-﻿using Hud1.Models;
+﻿using Hud1.Helpers.ScreenHelper;
+using Hud1.Models;
 using System.Diagnostics;
-using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using WpfScreenHelper;
 
 namespace Hud1.ViewModels;
 
@@ -13,7 +11,7 @@ public class CrosshairViewModel
 {
     public static readonly CrosshairViewModel Instance = new();
     private Dictionary<string, Func<int, Brush, bool, Drawing>> FormRenderFunctions = [];
-    private Dictionary<string, Brush> ColorOptions = [];
+    private readonly Dictionary<string, Brush> ColorOptions = [];
 
     private CrosshairViewModel() { }
 
@@ -110,7 +108,7 @@ public class CrosshairViewModel
         Debug.Print("Color {0}", NavigationStates.CROSSHAIR_COLOR.SelectionLabel);
         Debug.Print("Outline {0}", NavigationStates.CROSSHAIR_OUTLINE.SelectionBoolean);
 
-        var scale = Int32.Parse(NavigationStates.CROSSHAIR_SIZE.SelectionLabel);
+        var scale = int.Parse(NavigationStates.CROSSHAIR_SIZE.SelectionLabel);
         var color = ColorOptions[NavigationStates.CROSSHAIR_COLOR.SelectionLabel];
 
         if (!FormRenderFunctions.ContainsKey(NavigationStates.CROSSHAIR_FORM.SelectionLabel))
@@ -157,8 +155,8 @@ public class CrosshairViewModel
                 Source = drawingImage,
                 Stretch = Stretch.None,
                 RenderTransform = new ScaleTransform(dpiScale, dpiScale, drawingImage.Width / 2, drawingImage.Height / 2),
+                Margin = new Thickness(4, 0, 4, 0)
             };
-            image.Margin = new Thickness(4, 0, 4, 0);
 
             option.Image = image;
         }
@@ -181,9 +179,8 @@ public class CrosshairViewModel
             {
                 Source = drawingImage,
                 Stretch = Stretch.None,
-                //RenderTransform = new ScaleTransform(dpiScale, dpiScale, drawingImage.Width / 2, drawingImage.Height / 2),
+                Margin = new Thickness(0, 2, 0, 0)
             };
-            image.Margin = new Thickness(0, 2, 0, 0);
 
 
             option.Image = image;
@@ -191,7 +188,7 @@ public class CrosshairViewModel
 
         foreach (var option in NavigationStates.CROSSHAIR_SIZE.Options)
         {
-            var sizeOption = Int32.Parse(option.Value);
+            var sizeOption = int.Parse(option.Value);
             var geometryDrawing = GetGeometryDrawing(sizeOption, color, formFunction);
 
             DrawingImage drawingImage = new(geometryDrawing);
@@ -202,8 +199,8 @@ public class CrosshairViewModel
                 Source = drawingImage,
                 Stretch = Stretch.None,
                 RenderTransform = new ScaleTransform(dpiScale, dpiScale, drawingImage.Width / 2, drawingImage.Height / 2),
+                Margin = new Thickness(4, 0, 4, 0)
             };
-            image.Margin = new Thickness(4, 0, 4, 0);
 
 
             option.Image = image;

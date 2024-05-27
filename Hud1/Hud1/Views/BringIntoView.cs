@@ -23,9 +23,13 @@ public class BringIntoView : UIElement
         }
     }
 
-    public static bool GetBringIntoView(UIElement target) =>
-        (bool)target.GetValue(BringIntoViewProperty);
+    public static bool GetBringIntoView(UIElement target)
+    {
+        return (bool)target.GetValue(BringIntoViewProperty);
+    }
 
-    public static void SetBringIntoView(UIElement target, bool value) =>
+    public static void SetBringIntoView(UIElement target, bool value)
+    {
         target.SetValue(BringIntoViewProperty, value);
+    }
 }

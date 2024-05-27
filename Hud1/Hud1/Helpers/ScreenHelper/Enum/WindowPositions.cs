@@ -1,4 +1,4 @@
-﻿namespace WpfScreenHelper.Enum;
+﻿namespace Hud1.Helpers.ScreenHelper.Enum;
 
 public enum WindowPositions
 {

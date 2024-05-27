@@ -1,20 +1,19 @@
 ﻿using Hud1.Helpers;
+using Hud1.Helpers.ScreenHelper;
+using Hud1.Helpers.ScreenHelper.Enum;
 using Hud1.Models;
 using Hud1.ViewModels;
-using Hud1.Views;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Interop;
-using System.Windows.Media;
 using System.Windows.Media.Animation;
-using WpfScreenHelper;
 
 namespace Hud1;
 
 public partial class MainWindow : Window
 {
-    nint hwnd;
+    private nint hwnd;
 
     internal static void Create()
     {
@@ -40,14 +39,14 @@ public partial class MainWindow : Window
 
     private async Task ApplyHudPosition(bool animate)
     {
-        var screenIndex = Int32.Parse(MoreViewModel.Instance.HudPosition.Split(":")[0]);
+        var screenIndex = int.Parse(MoreViewModel.Instance.HudPosition.Split(":")[0]);
 
         if (animate)
             Opacity = 0;
 
         await Task.Delay(30);
 
-        var aligmnent = MoreViewModel.Instance.HudAlignment == "Left" ? WpfScreenHelper.Enum.WindowPositions.Left2 : WpfScreenHelper.Enum.WindowPositions.Right2;
+        var aligmnent = MoreViewModel.Instance.HudAlignment == "Left" ? WindowPositions.Left2 : WindowPositions.Right2;
 
         var screen = Screen.AllScreens.ElementAt(screenIndex);
         this.SetWindowPosition(aligmnent, screen);
@@ -66,9 +65,9 @@ public partial class MainWindow : Window
 
             animation.Completed += (s, a) =>
             {
-                this.Opacity = 1;
+                Opacity = 1;
             };
-            this.BeginAnimation(UIElement.OpacityProperty, animation);
+            BeginAnimation(UIElement.OpacityProperty, animation);
         }
     }
 
@@ -84,12 +83,12 @@ public partial class MainWindow : Window
         Debug.WriteLine("MainWindow OnWindowLoaded");
 
         hwnd = new WindowInteropHelper(this).Handle;
-        HwndSource source = HwndSource.FromHwnd(hwnd);
+        var source = HwndSource.FromHwnd(hwnd);
         source.AddHook(WndProc);
 
         MainWindowViewModel.Instance.InitWindow(hwnd);
 
-        System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+        var dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
         dispatcherTimer.Tick += new EventHandler((_, _) =>
         {
             WindowsAPI.SetWindowPos(hwnd, WindowsAPI.HWND_TOP, 0, 0, 0, 0, WindowsAPI.SetWindowPosFlags.SWP_NOMOVE | WindowsAPI.SetWindowPosFlags.SWP_NOSIZE | WindowsAPI.SetWindowPosFlags.SWP_NOACTIVATE);
@@ -174,7 +173,7 @@ public partial class MainWindow : Window
         {
             if (keyEvent.alt)
             {
-                if (keyEvent.key == GlobalKey.VK_S || keyEvent.key == GlobalKey.VK_F || keyEvent.key == GlobalKey.VK_L)
+                if (keyEvent.key is GlobalKey.VK_S or GlobalKey.VK_F or GlobalKey.VK_L)
                 {
                     MainWindowViewModel.Instance.HandleKeyActivator();
                     keyEvent.block = true;
@@ -194,10 +193,12 @@ public partial class MainWindow : Window
 
     private void FadeIn()
     {
-        this.Opacity = 0;
+        Opacity = 0;
 
-        var crosshairWindow = new CrosshairWindow();
-        crosshairWindow.Opacity = 0;
+        var crosshairWindow = new CrosshairWindow
+        {
+            Opacity = 0
+        };
         crosshairWindow.Show();
 
         var animation = new DoubleAnimation
@@ -211,11 +212,11 @@ public partial class MainWindow : Window
         animation.Completed += (s, a) =>
         {
             crosshairWindow.Opacity = 1;
-            this.Opacity = 1;
+            Opacity = 1;
         };
 
         Console.WriteLine("MainWindow FadeIn {0}", Entry.Millis());
-        this.BeginAnimation(UIElement.OpacityProperty, animation);
+        BeginAnimation(UIElement.OpacityProperty, animation);
         crosshairWindow.BeginAnimation(UIElement.OpacityProperty, animation);
     }
 }

@@ -1,11 +1,10 @@
-﻿using CommunityToolkit.Mvvm.DependencyInjection;
-using Hud1.Models;
+﻿using Hud1.Models;
 
 namespace Hud1.ViewModels;
 
 public class NavigationViewModel
 {
-    public static readonly NavigationViewModel Instance = new NavigationViewModel();
+    public static readonly NavigationViewModel Instance = new();
 
     public readonly Stateless.StateMachine<NavigationState, NavigationTrigger> Navigation;
 
@@ -61,7 +60,7 @@ public class NavigationViewModel
             throw new Exception("List Length mist be at least 2.");
 
         var first = list[0];
-        var last = list[list.Length - 1];
+        var last = list[^1];
 
         Navigation.Configure(menu)
             .SubstateOf(visible)

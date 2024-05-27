@@ -52,7 +52,7 @@ public class MacroScript
         var debouncedLog = "";
         var lastUpdateTimeMs = (long)0;
 
-        var update = () =>
+        void update()
         {
             Application.Current.Dispatcher.Invoke(new Action(() =>
             {
@@ -63,7 +63,7 @@ public class MacroScript
                 }
             }));
             lastUpdateTimeMs = DateTimeOffset.Now.ToUnixTimeMilliseconds();
-        };
+        }
 
         var delay = 50;
         System.Timers.Timer timer = new(TimeSpan.FromMilliseconds(delay));
@@ -96,7 +96,7 @@ public class MacroScript
             MouseService.MouseUp(MouseService.MouseButton.Left);
         };
 
-        string scriptCode = File.ReadAllText(_macro.Path);
+        var scriptCode = File.ReadAllText(_macro.Path);
         _script.DoString(scriptCode);
     }
 
@@ -116,7 +116,7 @@ public class MacroScript
         _systemEvents.Enqueue(new SystemEvent());
     }
 
-    class SystemEvent { }
+    private class SystemEvent { }
 
     internal void DequeueEvents()
     {

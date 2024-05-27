@@ -10,7 +10,7 @@ public static class DependencyObjectExtensions
         var count = VisualTreeHelper.GetChildrenCount(parent);
         if (count == 0) return null;
 
-        for (int i = 0; i < count; i++)
+        for (var i = 0; i < count; i++)
         {
             var el = VisualTreeHelper.GetChild(parent, i) as UIElement;
             if (el == null) continue;

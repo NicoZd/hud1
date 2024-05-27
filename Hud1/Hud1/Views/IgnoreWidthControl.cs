@@ -15,8 +15,8 @@ public class IgnoreWidthControl : ContentControl
     protected override Size MeasureOverride(Size constraint)
     {
         constraint.Width = ActualWidth;
-        Size size = new Size();
-        UIElement? child = GetFirstVisualChild();
+        var size = new Size();
+        var child = GetFirstVisualChild();
         if (child != null)
         {
             child.Measure(constraint);
@@ -28,8 +28,6 @@ public class IgnoreWidthControl : ContentControl
 
     private UIElement? GetFirstVisualChild()
     {
-        if (this.VisualChildrenCount <= 0)
-            return null;
-        return this.GetVisualChild(0) as UIElement;
+        return VisualChildrenCount <= 0 ? null : GetVisualChild(0) as UIElement;
     }
 }

@@ -1,12 +1,12 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Hud1.Helpers;
+using Hud1.Helpers.ScreenHelper;
+using Hud1.Helpers.ScreenHelper.Enum;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Interop;
-using System.Windows.Media;
 using System.Windows.Media.Animation;
-using WpfScreenHelper;
 
 namespace Hud1;
 
@@ -41,7 +41,7 @@ public partial class SplashWindow : Window
             | WindowsAPI.WS_EX_TRANSPARENT
             );
 
-        this.SetWindowPosition(WpfScreenHelper.Enum.WindowPositions.Center, Screen.PrimaryScreen);
+        this.SetWindowPosition(WindowPositions.Center, Screen.PrimaryScreen);
 
         FadeIn();
     }
@@ -58,11 +58,11 @@ public partial class SplashWindow : Window
         animation.Completed += async (s, a) =>
         {
             Debug.Print("SplashWindow Animation In Complete {0}", Hud1.Entry.Millis());
-            this.Opacity = 1;
+            Opacity = 1;
             await StartupAndShowMainWindow();
 
         };
-        this.BeginAnimation(UIElement.OpacityProperty, animation);
+        BeginAnimation(UIElement.OpacityProperty, animation);
     }
 
     private async Task StartupAndShowMainWindow()
@@ -76,9 +76,9 @@ public partial class SplashWindow : Window
         catch (Exception ex)
         {
             Console.WriteLine(ex.ToString());
-            this.Opacity = 0;
+            Opacity = 0;
             MessageBox.Show("Wooo - there was a fatal startup error:\n\n" + ex.ToString(), "Game Direct", MessageBoxButton.OK, MessageBoxImage.Error);
-            this.Close();
+            Close();
         }
     }
 
@@ -91,12 +91,12 @@ public partial class SplashWindow : Window
             Duration = TimeSpan.FromSeconds(0.15),
             FillBehavior = FillBehavior.Stop
         };
-        animation.Completed += async (s, a) =>
+        animation.Completed += (s, a) =>
         {
             Debug.Print("SplashWindow Animation Out Complete {0}", Hud1.Entry.Millis());
-            this.Opacity = 0;
-            this.Close();
+            Opacity = 0;
+            Close();
         };
-        this.BeginAnimation(UIElement.OpacityProperty, animation);
+        BeginAnimation(UIElement.OpacityProperty, animation);
     }
 }
