@@ -2,7 +2,7 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
-             StartupUri="SplashWindow.xaml"
+             StartupUri="Windows/SplashWindow.xaml"
              Startup="OnStartup"
              ShutdownMode="OnMainWindowClose"
              >
@@ -10,11 +10,11 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Themes/Font.xaml"/>
-                <ResourceDictionary Source="Themes/Green.xaml"/>
-                <ResourceDictionary Source="Themes/Standard.xaml"/>
-                <ResourceDictionary Source="Themes/Buttons.xaml"/>
-                <ResourceDictionary Source="Themes/ScrollViewer.xaml"/>
+                <ResourceDictionary Source="Styles/Font.xaml"/>
+                <ResourceDictionary Source="Styles/Green.xaml"/>
+                <ResourceDictionary Source="Styles/Standard.xaml"/>
+                <ResourceDictionary Source="Styles/Buttons.xaml"/>
+                <ResourceDictionary Source="Styles/ScrollViewer.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

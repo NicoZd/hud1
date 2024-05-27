@@ -11,9 +11,9 @@ using Windows.ApplicationModel;
 using Windows.Services.Store;
 using Windows.Storage;
 
-namespace Hud1;
+namespace Hud1.Start;
 
-public class Startup
+public class Setup
 {
     public static readonly uint WM_GAME_DIRECT_SHOWME = WindowsAPI.RegisterWindowMessage("WM_GAME_DIRECT_SHOWME");
     private static readonly Mutex mutex = new(true, "GAME_DIRECT");
@@ -72,9 +72,7 @@ public class Startup
                 Console.WriteLine("UserConfigString {0}", userConfigString);
             }
             else
-            {
                 Console.WriteLine("No UserConfig File {0}", UserConfigFile);
-            }
         }
         catch (Exception ex)
         {
@@ -139,10 +137,9 @@ public class Startup
 
     private static PropertyChangedEventHandler OnConfigChanged(string propertyName, string userConfigPropertyName)
     {
-        return (object? sender, PropertyChangedEventArgs e) =>
+        return (sender, e) =>
         {
             if (propertyName == e.PropertyName)
-            {
                 ThreadPool.QueueUserWorkItem((_) =>
                 {
                     try
@@ -168,7 +165,6 @@ public class Startup
                         Console.WriteLine(ex.ToString());
                     }
                 });
-            }
         };
     }
 
@@ -217,9 +213,7 @@ public class Startup
     private static void CreateRootPath()
     {
         if (!Directory.Exists(RootPath))
-        {
             Directory.CreateDirectory(RootPath);
-        }
     }
 
     private static void LazyCreateVersion()
@@ -259,15 +253,11 @@ public class Startup
         Console.WriteLine("Copy {0}, {1}", sourcePath, targetPath);
         //Now Create all of the directories
         foreach (var dirPath in Directory.GetDirectories(sourcePath, "*", SearchOption.AllDirectories))
-        {
             Directory.CreateDirectory(dirPath.Replace(sourcePath, targetPath));
-        }
 
         //Copy all the files & Replaces any files with the same name
         foreach (var newPath in Directory.GetFiles(sourcePath, "*.*", SearchOption.AllDirectories))
-        {
             File.Copy(newPath, newPath.Replace(sourcePath, targetPath), true);
-        }
     }
 
     private static void ComputePaths()
@@ -306,13 +296,11 @@ public class Startup
         {
             SplashWindow.Instance?.Close();
             if (MessageBox.Show("App License is inactive. Unfortunately the application must shutdown. Do you want to open the App in the Microsoft Store?", "Game Direct", MessageBoxButton.YesNo, MessageBoxImage.Asterisk) == MessageBoxResult.Yes)
-            {
                 Process.Start(new ProcessStartInfo
                 {
                     FileName = "ms-windows-store://pdp/?productid=9NCQ2311M9XV",
                     UseShellExecute = true
                 });
-            }
         }
     }
 }

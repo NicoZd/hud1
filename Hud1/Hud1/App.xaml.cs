@@ -1,5 +1,6 @@
 ﻿using Hud1.Helpers;
 using Hud1.Models;
+using Hud1.Start;
 using Hud1.Views;
 using System.Diagnostics;
 using System.IO;
@@ -13,7 +14,7 @@ public partial class App : Application
 {
     public App()
     {
-        Debug.Print("App {0} {1} {2}", Hud1.Entry.Millis(), ShutdownMode, MainWindow);
+        Debug.Print("App {0} {1} {2}", Entry.Millis(), ShutdownMode, MainWindow);
         InitializeComponent();
     }
 
@@ -48,7 +49,7 @@ public partial class App : Application
 
         var fontFile = "";
 
-        var fontsFolder = Path.Combine(Hud1.Startup.VersionPath, "Fonts");
+        var fontsFolder = Path.Combine(Setup.VersionPath, "Fonts");
         if (Directory.Exists(fontsFolder))
         {
             var fileEntries = Directory.GetFiles(fontsFolder, "*.*").Where(s => s.ToLower().EndsWith(".ttf") || s.ToLower().EndsWith(".otf")).ToArray();
@@ -85,22 +86,22 @@ public partial class App : Application
 
         ReplaceResource(1, new ResourceDictionary
         {
-            Source = new Uri("Themes/" + style + ".xaml", UriKind.RelativeOrAbsolute)
+            Source = new Uri("Styles/" + style + ".xaml", UriKind.RelativeOrAbsolute)
         });
 
         ReplaceResource(2, new ResourceDictionary
         {
-            Source = new Uri("Themes/Standard.xaml", UriKind.RelativeOrAbsolute)
+            Source = new Uri("Styles/Standard.xaml", UriKind.RelativeOrAbsolute)
         });
 
         ReplaceResource(3, new ResourceDictionary
         {
-            Source = new Uri("Themes/Buttons.xaml", UriKind.RelativeOrAbsolute)
+            Source = new Uri("Styles/Buttons.xaml", UriKind.RelativeOrAbsolute)
         });
 
         ReplaceResource(4, new ResourceDictionary
         {
-            Source = new Uri("Themes/ScrollViewer.xaml", UriKind.RelativeOrAbsolute)
+            Source = new Uri("Styles/ScrollViewer.xaml", UriKind.RelativeOrAbsolute)
         });
 
         foreach (var sp in ScrollPanel.Instances)

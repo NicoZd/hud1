@@ -3,13 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:controls="clr-namespace:Hud1.Controls"
              xmlns:views="clr-namespace:Hud1.Views"
              xmlns:viewModels="clr-namespace:Hud1.ViewModels"
              xmlns:local="clr-namespace:Hud1.Views"
              mc:Ignorable="d"
              >
     <Grid DataContext="{Binding Source={x:Static viewModels:MacrosViewModel.Instance}}" >
-        <StackPanel views:Spacing.Vertical="8">
+        <StackPanel controls:Spacing.Vertical="8">
             <Label Content="Macros" Style="{DynamicResource TitleContent}"/>
             <ItemsControl ItemsSource="{Binding Macros}"
                 Margin="0,0,0,0"
@@ -38,7 +39,7 @@
                                         HorizontalAlignment="Left" 
                                         Content="{Binding Path=Label}" />
                                 </DockPanel>
-                                <views:IgnoreWidthControl>
+                                <controls:IgnoreWidthControl>
                                     <Grid Background="{DynamicResource BrushColorMedLow}"
                                         Margin="4,0,4,4" >
                                         <Grid.Style>
@@ -59,8 +60,8 @@
                                             Margin="4">
                                         </TextBlock>
                                     </Grid>
-                                </views:IgnoreWidthControl>
-                                <views:IgnoreWidthControl>
+                                </controls:IgnoreWidthControl>
+                                <controls:IgnoreWidthControl>
                                     <Grid
                                         Background="{DynamicResource BrushColorMedLow}"
                                         Margin="4,0,4,4">
@@ -82,7 +83,7 @@
                                             Margin="4">
                                         </TextBlock>
                                     </Grid>
-                                </views:IgnoreWidthControl>
+                                </controls:IgnoreWidthControl>
                             </StackPanel>
                         </Button>
                     </DataTemplate>

@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:controls="clr-namespace:Hud1.Controls"
              xmlns:views="clr-namespace:Hud1.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
@@ -10,9 +11,9 @@
              >
     <UserControl.Template>
         <ControlTemplate>
-            <views:DraggableScrollViewer Focusable="False" Style="{StaticResource PanelScrollViewer}" Margin="-10">
+            <controls:DraggableScrollViewer Focusable="False" Style="{StaticResource PanelScrollViewer}" Margin="-10">
                 <ContentPresenter Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content}" Margin="10"/>
-            </views:DraggableScrollViewer>
+            </controls:DraggableScrollViewer>
         </ControlTemplate>
     </UserControl.Template>
 </UserControl>

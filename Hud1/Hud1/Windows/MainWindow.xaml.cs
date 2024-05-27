@@ -2,6 +2,7 @@
 using Hud1.Helpers.ScreenHelper;
 using Hud1.Helpers.ScreenHelper.Enum;
 using Hud1.Models;
+using Hud1.Start;
 using Hud1.ViewModels;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -137,9 +138,9 @@ public partial class MainWindow : Window
 
     private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
     {
-        if (msg == Startup.WM_GAME_DIRECT_SHOWME)
+        if (msg == Setup.WM_GAME_DIRECT_SHOWME)
         {
-            Console.WriteLine("WndProc {0} {1}", msg, Startup.WM_GAME_DIRECT_SHOWME);
+            Console.WriteLine("WndProc {0} {1}", msg, Setup.WM_GAME_DIRECT_SHOWME);
             Application.Current.Shutdown();
             return IntPtr.Zero;
         }

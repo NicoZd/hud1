@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Hud1.Helpers.ScreenHelper;
 using Hud1.Models;
+using Hud1.Start;
 using System.IO;
 using System.Windows;
 using System.Windows.Media;
@@ -153,7 +154,7 @@ public partial class MoreViewModel : ObservableObject
 
     private string[] FontList()
     {
-        var fontsFolder = Path.Combine(Startup.VersionPath, "Fonts");
+        var fontsFolder = Path.Combine(Start.Setup.VersionPath, "Fonts");
         if (!Directory.Exists(fontsFolder))
             return [];
         var fileEntries = Directory.GetFiles(fontsFolder, "*.*").Where(s => s.ToLower().EndsWith(".ttf") || s.ToLower().EndsWith(".otf")).ToArray();

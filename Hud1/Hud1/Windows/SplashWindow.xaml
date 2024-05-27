@@ -24,7 +24,7 @@
     >
 
     <Grid >
-        <Image Source="Assets/splash.png" />
+        <Image Source="../Assets/splash.png" />
 
         <Grid Margin="0,5,0,0">
             <TextBlock

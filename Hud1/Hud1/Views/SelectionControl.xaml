@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:controls="clr-namespace:Hud1.Controls"
              xmlns:views="clr-namespace:Hud1.Views"
              xmlns:local="clr-namespace:Hud1.Views"
              mc:Ignorable="d"
@@ -16,7 +17,7 @@
         <StackPanel>
             <views:PanelLabel />
 
-            <DockPanel Margin="0,0,0,4" views:MarginSetter.Margin="4,0,4,0">
+            <DockPanel Margin="0,0,0,4" controls:MarginSetter.Margin="4,0,4,0">
                 <views:GlowBorderLabel 
                     DockPanel.Dock="Left"
                     Click="{Binding Path=LeftCommand}"
@@ -101,7 +102,7 @@
                                 <ItemsPanelTemplate>
                                     <StackPanel 
                                         Orientation="Horizontal" 
-                                        views:Spacing.Horizontal="{Binding Spacing}"                                        />
+                                        controls:Spacing.Horizontal="{Binding Spacing}"                                        />
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>

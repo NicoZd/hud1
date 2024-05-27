@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace Hud1.Views;
+namespace Hud1.Controls;
 
 public class Spacing
 {

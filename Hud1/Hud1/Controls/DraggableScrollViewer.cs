@@ -3,7 +3,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 
-namespace Hud1.Views;
+namespace Hud1.Controls;
 
 internal class DraggableScrollViewer : ScrollViewer
 {
@@ -62,7 +62,7 @@ internal class DraggableScrollViewer : ScrollViewer
 
     private void UpdatePosition(object? sender, EventArgs e)
     {
-        var target = VerticalOffset + ((virtualVerticalOffset - VerticalOffset) * 0.3);
+        var target = VerticalOffset + (virtualVerticalOffset - VerticalOffset) * 0.3;
         ScrollToVerticalOffset(target);
     }
 

@@ -32,12 +32,12 @@ public partial class MainWindowViewModel : ObservableObject
 
     private MainWindowViewModel()
     {
+        winEventDelegate = new WinEventDelegate(WinEventProc);
     }
 
     internal void InitWindow(nint hwnd)
     {
         Hwnd = hwnd;
-        winEventDelegate = new WinEventDelegate(WinEventProc);
         SetWinEventHook(EVENT_SYSTEM_FOREGROUND, EVENT_SYSTEM_FOREGROUND, IntPtr.Zero, winEventDelegate, 0, 0, WINEVENT_OUTOFCONTEXT);
         ComputeIsForeground();
 

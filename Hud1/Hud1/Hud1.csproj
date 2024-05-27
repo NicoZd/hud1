@@ -5,7 +5,7 @@
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<UseWPF>true</UseWPF>
-		<StartupObject>Hud1.Entry</StartupObject>
+		<StartupObject>Hud1.Start.Entry</StartupObject>
 		<ApplicationManifest>app.manifest</ApplicationManifest>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<Title>Draco HUD</Title>
@@ -86,7 +86,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Compile Update="SplashWindow.xaml.cs">
+	  <Page Include="App.xaml" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Update="Windows\SplashWindow.xaml.cs">
 			<SubType>Code</SubType>
 		</Compile>
 	</ItemGroup>

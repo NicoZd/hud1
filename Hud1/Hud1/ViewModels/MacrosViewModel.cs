@@ -28,7 +28,7 @@ public partial class MacrosViewModel : ObservableObject
     {
         Macros = [];
 
-        _path = Path.Combine(Startup.VersionPath, "Macros");
+        _path = Path.Combine(Start.Setup.VersionPath, "Macros");
 
         // fallback for vs studio xaml viewer;
         if (!Directory.Exists(_path))

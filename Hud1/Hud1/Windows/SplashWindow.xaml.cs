@@ -2,6 +2,7 @@
 using Hud1.Helpers;
 using Hud1.Helpers.ScreenHelper;
 using Hud1.Helpers.ScreenHelper.Enum;
+using Hud1.Start;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows;
@@ -20,7 +21,7 @@ public partial class SplashWindow : Window
 
     public SplashWindow()
     {
-        Debug.Print("SplashWindow {0}", Hud1.Entry.Millis());
+        Debug.Print("SplashWindow {0}", Entry.Millis());
         Application.Current.MainWindow = this;
 
         Instance = this;
@@ -32,7 +33,7 @@ public partial class SplashWindow : Window
 
     private void OnWindowLoaded(object sender, RoutedEventArgs e)
     {
-        Debug.Print("SplashWindow OnWindowLoaded {0}", Hud1.Entry.Millis());
+        Debug.Print("SplashWindow OnWindowLoaded {0}", Entry.Millis());
         var hwnd = new WindowInteropHelper(this).Handle;
         var extendedStyle = WindowsAPI.GetWindowLong(hwnd, WindowsAPI.GWL_EXSTYLE);
         WindowsAPI.SetWindowLong(hwnd, WindowsAPI.GWL_EXSTYLE,
@@ -57,7 +58,7 @@ public partial class SplashWindow : Window
         };
         animation.Completed += async (s, a) =>
         {
-            Debug.Print("SplashWindow Animation In Complete {0}", Hud1.Entry.Millis());
+            Debug.Print("SplashWindow Animation In Complete {0}", Entry.Millis());
             Opacity = 1;
             await StartupAndShowMainWindow();
 
@@ -69,7 +70,7 @@ public partial class SplashWindow : Window
     {
         try
         {
-            await Startup.Run();
+            await Setup.Run();
             MainWindow.Create();
             CloseWithAnimation();
         }
@@ -93,7 +94,7 @@ public partial class SplashWindow : Window
         };
         animation.Completed += (s, a) =>
         {
-            Debug.Print("SplashWindow Animation Out Complete {0}", Hud1.Entry.Millis());
+            Debug.Print("SplashWindow Animation Out Complete {0}", Entry.Millis());
             Opacity = 0;
             Close();
         };

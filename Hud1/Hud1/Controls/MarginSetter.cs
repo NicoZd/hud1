@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace Hud1.Views;
+namespace Hud1.Controls;
 
 public class MarginSetter
 {
@@ -25,9 +25,7 @@ public class MarginSetter
         panel.Loaded += OnPanelLoaded;
 
         if (panel.IsLoaded)
-        {
             OnPanelLoaded(panel, null);
-        }
     }
 
     private static void OnPanelLoaded(object sender, RoutedEventArgs? e)

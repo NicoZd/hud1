@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace Hud1;
+namespace Hud1.Start;
 
 internal class Entry
 {
@@ -14,7 +14,7 @@ internal class Entry
 
     private static void RunApp()
     {
-        Debug.Print("Entry RunApp {0}", Hud1.Entry.Millis());
+        Debug.Print("Entry RunApp {0}", Entry.Millis());
         App app = new();
         app.Run();
     }

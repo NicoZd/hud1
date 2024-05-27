@@ -3,13 +3,9 @@
   <PropertyGroup>
     <_LastSelectedProfileId>C:\Workspaces\nico_2024\hud1\Hud1\Hud1\Properties\PublishProfiles\FastProfile.pubxml</_LastSelectedProfileId>
   </PropertyGroup>
+  <ItemGroup />
   <ItemGroup>
-    <ApplicationDefinition Update="App.xaml">
-      <SubType>Designer</SubType>
-    </ApplicationDefinition>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Update="CrosshairWindow.xaml.cs">
+    <Compile Update="Windows\CrosshairWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\BooleanPanel.xaml.cs">
@@ -41,28 +37,28 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="SplashWindow.xaml">
+    <Page Update="Windows\SplashWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="CrosshairWindow.xaml">
+    <Page Update="Windows\CrosshairWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Themes\ScrollViewer.xaml">
+    <Page Update="Styles\ScrollViewer.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Themes\Font.xaml">
+    <Page Update="Styles\Font.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Themes\Red.xaml">
+    <Page Update="Styles\Red.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Themes\Buttons.xaml">
+    <Page Update="Styles\Buttons.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Themes\Standard.xaml">
+    <Page Update="Styles\Standard.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Themes\Green.xaml">
+    <Page Update="Styles\Green.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\BooleanPanel.xaml">
@@ -86,7 +82,7 @@
     <Page Update="Views\PanelTopBar.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="MainWindow.xaml">
+    <Page Update="Windows\MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\ScrollPanel.xaml">
