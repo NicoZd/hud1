@@ -10,14 +10,71 @@
     <UserControl.Template>
         <ControlTemplate>
             <Grid>
-                <Grid.Background>
-                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                        <GradientStop Color="{DynamicResource ColorBackgroundDark}" Offset="0.0"/>
-                        <GradientStop Color="{DynamicResource ColorBackgroundDarkMed}" Offset="0.25"/>
-                        <GradientStop Color="{DynamicResource ColorBackgroundDarkTrans}" Offset="0.7"/>
-                    </LinearGradientBrush>
-                </Grid.Background>
 
+                <!-- Background gradient with shadow -->
+                <Grid Opacity="1">
+                    <Grid.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                            <GradientStop Color="{DynamicResource ColorBackgroundDark}" Offset="0.0"/>
+                            <GradientStop Color="{DynamicResource ColorBackgroundDarkMed}" Offset="0.25"/>
+                            <GradientStop Color="{DynamicResource ColorBackgroundDarkTrans}" Offset="0.7"/>
+                        </LinearGradientBrush>
+                    </Grid.Background>
+
+                    <Grid.Style>
+                        <Style TargetType="Grid">
+                            <Setter Property="Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect
+                                          Color="{DynamicResource ColorBackgroundDark}"                              
+                                          ShadowDepth="0"
+                                          Opacity="0.7"
+                                          BlurRadius="8"
+                                          />
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Source={x:Static viewModels:MainWindowViewModel.Instance}, Path=IsForeground}" Value="False">
+                                    <Setter Property="Effect">
+                                        <Setter.Value>
+                                            <DropShadowEffect
+                                                 Color="{DynamicResource ColorBackgroundDark}"                              
+                                                 ShadowDepth="0"
+                                                 Opacity="0.7"
+                                                 BlurRadius="4"
+                                                 />
+                                        </Setter.Value>
+                                    </Setter>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Grid.Style>
+                </Grid>
+
+                <!-- Background light gradient with shadow -->
+                <Grid>
+                    <Grid.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                            <GradientStop Color="{DynamicResource ColorInfoSecondary}" Offset="0.0"/>
+                            <GradientStop Color="{DynamicResource ColorBackgroundDarkTrans}" Offset="0.1"/>
+                            <GradientStop Color="{DynamicResource ColorBackgroundDarkTrans}" Offset="0.8"/>
+                            <GradientStop Color="{DynamicResource ColorMedLow}" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Grid.Background>
+
+                    <Grid.Style>
+                        <Style TargetType="Grid">
+                            <Setter Property="Opacity" Value="0.0"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Source={x:Static viewModels:MainWindowViewModel.Instance}, Path=IsForeground}" Value="True">
+                                    <Setter Property="Opacity" Value="0.1"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Grid.Style>
+                </Grid>
+
+                <!-- Background texture -->
                 <Grid>
                     <Grid.Background>
                         <ImageBrush                            
@@ -31,6 +88,7 @@
                     </Grid.Background>
                 </Grid>
 
+                <!-- outline pixels -->
                 <Border Padding="0" BorderThickness="1,1,1,1">
                     <Border.BorderBrush>
                         <DrawingBrush Viewport="0,0,5,5" ViewportUnits="Absolute" TileMode="Tile">
