@@ -33,10 +33,8 @@
 		<None Remove="Assets\frosted-texture-tile.jpg" />
 		<None Remove="Assets\logo.png" />
 		<None Remove="Assets\splash.png" />
-		<None Remove="Fonts\FiraCode-R.ttf" />
-		<None Remove="Fonts\HitmarkerNormal-Regular.ttf" />
+		<None Remove="Fonts\ARIAL.TTF" />
 		<None Remove="Fonts\HitmarkerText-Regular.ttf" />
-		<None Remove="Fonts\JetBrainsMono-Regular.ttf" />
 		<None Remove="Fonts\neuropolitical rg.otf" />
 		<None Remove="Fonts\SourceCodePro-Regular.ttf" />
 		<None Remove="Macros\press-left-mouse.lua" />
@@ -63,17 +61,11 @@
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Resource>
 		<Resource Include="Assets\icon.ico" />
+		<Content Include="Fonts\Arial.ttf">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
 		<Content Include="Assets\icon.ico" />
-		<Content Include="Fonts\FiraCode-R.ttf">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</Content>
-		<Content Include="Fonts\HitmarkerNormal-Regular.ttf">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</Content>
 		<Content Include="Fonts\HitmarkerText-Regular.ttf">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</Content>
-		<Content Include="Fonts\JetBrainsMono-Regular.ttf">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Fonts\neuropolitical rg.otf">

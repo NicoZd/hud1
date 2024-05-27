@@ -28,7 +28,7 @@
                                     <DropShadowEffect
                                           Color="{DynamicResource ColorBackgroundDark}"                              
                                           ShadowDepth="0"
-                                          Opacity="0.7"
+                                          Opacity="0.8"
                                           BlurRadius="8"
                                           />
                                 </Setter.Value>
@@ -40,7 +40,7 @@
                                             <DropShadowEffect
                                                  Color="{DynamicResource ColorBackgroundDark}"                              
                                                  ShadowDepth="0"
-                                                 Opacity="0.7"
+                                                 Opacity="0.8"
                                                  BlurRadius="4"
                                                  />
                                         </Setter.Value>
@@ -67,7 +67,7 @@
                             <Setter Property="Opacity" Value="0.0"/>
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding Source={x:Static viewModels:MainWindowViewModel.Instance}, Path=IsForeground}" Value="True">
-                                    <Setter Property="Opacity" Value="0.1"/>
+                                    <Setter Property="Opacity" Value="0.05"/>
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>

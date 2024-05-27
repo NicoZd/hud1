@@ -51,7 +51,7 @@ public partial class App : Application
         var fontsFolder = Path.Combine(Hud1.Startup.VersionPath, "Fonts");
         if (Directory.Exists(fontsFolder))
         {
-            string[] fileEntries = Directory.GetFiles(fontsFolder, "*.*").Where(s => s.EndsWith(".ttf") || s.EndsWith(".otf")).ToArray();
+            string[] fileEntries = Directory.GetFiles(fontsFolder, "*.*").Where(s => s.ToLower().EndsWith(".ttf") || s.ToLower().EndsWith(".otf")).ToArray();
             for (int i = 0; i < fileEntries.Length; i++)
             {
                 var ff = Fonts.GetFontFamilies(fileEntries[i]);

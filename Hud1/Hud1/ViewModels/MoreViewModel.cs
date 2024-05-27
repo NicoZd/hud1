@@ -151,7 +151,7 @@ public partial class MoreViewModel : ObservableObject
         var fontsFolder = Path.Combine(Startup.VersionPath, "Fonts");
         if (!Directory.Exists(fontsFolder))
             return [];
-        string[] fileEntries = Directory.GetFiles(fontsFolder, "*.*").Where(s => s.EndsWith(".ttf") || s.EndsWith(".otf")).ToArray();
+        string[] fileEntries = Directory.GetFiles(fontsFolder, "*.*").Where(s => s.ToLower().EndsWith(".ttf") || s.ToLower().EndsWith(".otf")).ToArray();
         List<string> fonts = [];
         for (int i = 0; i < fileEntries.Length; i++)
         {
