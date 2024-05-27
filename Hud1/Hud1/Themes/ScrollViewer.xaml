@@ -126,7 +126,7 @@
                         <ScrollContentPresenter Grid.Column="0" />
                         <ScrollBar
                             x:Name="PART_VerticalScrollBar"
-                            Margin="0,12,0,28"
+                            Margin="-20,25,0,37"
                             Grid.Row="0"
                             Grid.Column="1"
                             Value="{TemplateBinding VerticalOffset}"

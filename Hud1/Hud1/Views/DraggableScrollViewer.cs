@@ -50,7 +50,7 @@ namespace Hud1.Views
         {
             base.OnPreviewMouseLeftButtonDown(e);
             var point = e.GetPosition(this);
-            if (point.X > this.ActualWidth - 12)
+            if (point.X > this.ActualWidth - 25)
                 return;
 
             startPoint = point;

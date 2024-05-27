@@ -10,8 +10,8 @@
              >
     <UserControl.Template>
         <ControlTemplate>
-            <views:DraggableScrollViewer Focusable="False" Style="{StaticResource PanelScrollViewer}">
-                <ContentPresenter Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content}" />
+            <views:DraggableScrollViewer Focusable="False" Style="{StaticResource PanelScrollViewer}" Margin="-10">
+                <ContentPresenter Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content}" Margin="10"/>
             </views:DraggableScrollViewer>
         </ControlTemplate>
     </UserControl.Template>

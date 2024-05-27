@@ -111,7 +111,7 @@
                                             </Setter>
                                             <Setter Property="BorderBrush" Value="{DynamicResource BrushInfo}" />
                                         </DataTrigger>
-                                                                                           
+
                                         <DataTrigger Binding="{Binding Path=Enabled}" Value="False">
                                             <Setter Property="Background" >
                                                 <Setter.Value>
@@ -193,13 +193,42 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Border 
-                        Background="{TemplateBinding Background}"
-                        BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="1"
-                        >
+                    <Grid>
+                        <Border 
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="1"
+                            >
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="Effect">
+                                        <Setter.Value>
+                                            <DropShadowEffect Opacity="0"/>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Style.Triggers>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Source={x:Static viewModels:MainWindowViewModel.Instance}, Path=IsForeground}" Value="True"/>
+                                                <Condition Binding="{Binding Path=Selected}" Value="True"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Effect">
+                                                <Setter.Value>
+                                                    <DropShadowEffect
+                                                        BlurRadius="15"
+                                                        ShadowDepth="0"
+                                                        Opacity="0.5"
+                                                        Color="{DynamicResource ColorSuperBright}"
+                                                        />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                        </Border>
                         <ContentPresenter HorizontalAlignment="Stretch"/>
-                    </Border>
+                    </Grid>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
