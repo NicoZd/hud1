@@ -29,7 +29,7 @@
 
         <views:GlassPanel>
 
-            <DockPanel Margin="15,5,15,15" Height="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Border}},Path=ActualHeight}">
+            <DockPanel Margin="15,5,15,15" Height="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Grid}},Path=ActualHeight}">
 
                 <StackPanel DockPanel.Dock="Top">
                     <Label Content="Game Direct" Style="{DynamicResource TitleLabel}" />
