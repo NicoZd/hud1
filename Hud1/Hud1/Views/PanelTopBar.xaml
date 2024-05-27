@@ -16,11 +16,26 @@
                         <SolidColorBrush Color="{DynamicResource ColorInfo}"/>
                     </Setter.Value>
                 </Setter>
+                <Setter Property="Effect">
+                    <Setter.Value>
+                        <DropShadowEffect 
+                             ShadowDepth="0"
+                             BlurRadius="20" 
+                             Color="{DynamicResource ColorInfo}"
+                             Opacity="0.5"
+                             />
+                    </Setter.Value>
+                </Setter>
                 <Style.Triggers>
                     <DataTrigger Binding="{Binding Source={x:Static viewModels:MainWindowViewModel.Instance}, Path=IsForeground}" Value="False">
                         <Setter Property="Background">
                             <Setter.Value>
                                 <SolidColorBrush Color="{DynamicResource ColorBright}"/>
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="Effect">
+                            <Setter.Value>
+                                <DropShadowEffect Opacity="0.0"/>
                             </Setter.Value>
                         </Setter>
                     </DataTrigger>

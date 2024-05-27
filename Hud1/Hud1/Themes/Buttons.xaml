@@ -1,5 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                      xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                    xmlns:viewModels="clr-namespace:Hud1.ViewModels"
                     xmlns:views="clr-namespace:Hud1.Views"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
@@ -10,135 +11,142 @@
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Grid>
                         <Border 
-                            Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="1"
-                            />
+                            >
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="BorderBrush">
+                                        <Setter.Value>
+                                            <LinearGradientBrush  StartPoint="0,0" EndPoint="0,0">
+                                                <GradientStop Color="{DynamicResource ColorMed}" Offset="0.0"/>
+                                            </LinearGradientBrush>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Setter Property="Background">
+                                        <Setter.Value>
+                                            <LinearGradientBrush  StartPoint="0,0" EndPoint="0,0">
+                                                <GradientStop Color="{DynamicResource ColorBackgroundDarkMed}" Offset="0"/>
+                                            </LinearGradientBrush>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Setter Property="Effect">
+                                        <Setter.Value>
+                                            <DropShadowEffect
+                                                BlurRadius="10"
+                                                ShadowDepth="0"
+                                                Opacity="0"
+                                                Color="Red"
+                                                />
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource FindAncestor, AncestorType=Grid}}" Value="True">
+                                            <Setter Property="Background" Value="{DynamicResource BrushColorMedLow}"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Path=Selected}" Value="True">
+                                            <Setter Property="Effect">
+                                                <Setter.Value>
+                                                    <DropShadowEffect
+                                                        BlurRadius="15"
+                                                        ShadowDepth="0"
+                                                        Opacity="0.5"
+                                                        Color="{DynamicResource ColorInfo}"
+                                                        />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Source={x:Static viewModels:MainWindowViewModel.Instance}, Path=IsForeground}" Value="False">
+                                            <Setter Property="Effect">
+                                                <Setter.Value>
+                                                    <DropShadowEffect Opacity="0.0"/>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Path=Highlighted}" Value="True">
+                                            <Setter Property="Background" >
+                                                <Setter.Value>
+                                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,0">
+                                                        <GradientStop Color="{DynamicResource ColorMed}" Offset="0.0"/>
+                                                    </LinearGradientBrush>
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Setter Property="BorderBrush" Value="{DynamicResource BrushSolidSuperBright}" />
+                                        </DataTrigger>
+
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Source={x:Static viewModels:MainWindowViewModel.Instance}, Path=IsForeground}" Value="True"/>
+                                                <Condition Binding="{Binding Path=Highlighted}" Value="True"/>
+                                                <Condition Binding="{Binding Path=Selected}" Value="False"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Effect">
+                                                <Setter.Value>
+                                                    <DropShadowEffect
+                                                         BlurRadius="15"
+                                                         ShadowDepth="0"
+                                                         Opacity="0.5"
+                                                         Color="{DynamicResource ColorSuperBright}"
+                                                         />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </MultiDataTrigger>
+
+                                        <DataTrigger Binding="{Binding Path=Enabled}" Value="False">
+                                            <Setter Property="Background" >
+                                                <Setter.Value>
+                                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,0">
+                                                        <GradientStop Color="{DynamicResource ColorBackgroundDark}" Offset="0.0"/>
+                                                    </LinearGradientBrush>
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Setter Property="BorderBrush" Value="{DynamicResource BrushColorMedLow}" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Path=Selected}" Value="True">
+                                            <Setter Property="Background" >
+                                                <Setter.Value>
+                                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,0">
+                                                        <GradientStop Color="{DynamicResource ColorMed}" Offset="0.0"/>
+                                                    </LinearGradientBrush>
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Setter Property="BorderBrush" Value="{DynamicResource BrushInfo}" />
+                                        </DataTrigger>
+                                                                                           
+                                        <DataTrigger Binding="{Binding Path=Enabled}" Value="False">
+                                            <Setter Property="Background" >
+                                                <Setter.Value>
+                                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,0">
+                                                        <GradientStop Color="{DynamicResource ColorBackgroundDarkMedUp}" Offset="0.0"/>
+                                                    </LinearGradientBrush>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Path=Pressed}" Value="True">
+                                            <Setter Property="Background" >
+                                                <Setter.Value>
+                                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,0">
+                                                        <GradientStop Color="{DynamicResource ColorBright}" Offset="0.0"/>
+                                                    </LinearGradientBrush>
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Setter Property="BorderBrush" Value="{DynamicResource BrushInfo}" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Path=Enabled}" Value="False">
+                                            <Setter Property="Effect">
+                                                <Setter.Value>
+                                                    <DropShadowEffect Opacity="0.0"/>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                        </Border>
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Setter Property="BorderBrush">
-            <Setter.Value>
-                <LinearGradientBrush  StartPoint="0,0" EndPoint="0,0">
-                    <GradientStop Color="{DynamicResource ColorMed}" Offset="0.0"/>
-                </LinearGradientBrush>
-            </Setter.Value>
-        </Setter>
-        <Setter Property="Background" >
-            <Setter.Value>
-                <LinearGradientBrush  StartPoint="0,0" EndPoint="0,0">
-                    <GradientStop Color="{DynamicResource ColorBackgroundDarkMed}" Offset="0"/>
-                </LinearGradientBrush>
-            </Setter.Value>
-        </Setter>
-        <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{DynamicResource BrushColorMedLow}"/>
-            </Trigger>
-            <DataTrigger Binding="{Binding Path=Highlighted}" Value="True">
-                <Setter Property="Background" >
-                    <Setter.Value>
-                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,0">
-                            <GradientStop Color="{DynamicResource ColorMed}" Offset="0.0"/>
-                        </LinearGradientBrush>
-                    </Setter.Value>
-                </Setter>
-                <Setter Property="BorderBrush" Value="{DynamicResource BrushSolidSuperBright}" />
-            </DataTrigger>
-            <DataTrigger Binding="{Binding Path=Enabled}" Value="False">
-                <Setter Property="Background" >
-                    <Setter.Value>
-                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,0">
-                            <GradientStop Color="{DynamicResource ColorBackgroundDark}" Offset="0.0"/>
-                        </LinearGradientBrush>
-                    </Setter.Value>
-                </Setter>
-                <Setter Property="BorderBrush" Value="{DynamicResource BrushColorMedLow}" />
-                <Setter Property="Effect">
-                    <Setter.Value>
-                        <DropShadowEffect 
-                            ShadowDepth="0"
-                            BlurRadius="10" 
-                            Color="{DynamicResource ColorInfo}"
-                            Opacity="0.5"
-                            />
-                    </Setter.Value>
-                </Setter>
-            </DataTrigger>
-            <DataTrigger Binding="{Binding Path=Selected}" Value="False">
-                <Setter Property="Effect">
-                    <Setter.Value>
-                        <DropShadowEffect 
-                        ShadowDepth="0"
-                        BlurRadius="10" 
-                        Color="{DynamicResource ColorInfo}"
-                        Opacity="0.0"
-                        />
-                    </Setter.Value>
-                </Setter>
-            </DataTrigger>
-            <DataTrigger Binding="{Binding Path=Selected}" Value="True">
-                <Setter Property="Background" >
-                    <Setter.Value>
-                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,0">
-                            <GradientStop Color="{DynamicResource ColorMed}" Offset="0.0"/>
-                        </LinearGradientBrush>
-                    </Setter.Value>
-                </Setter>
-                <Setter Property="BorderBrush" Value="{DynamicResource BrushInfo}" />
-                <Setter Property="Effect">
-                    <Setter.Value>
-                        <DropShadowEffect 
-                            ShadowDepth="0"
-                            BlurRadius="10" 
-                            Color="{DynamicResource ColorInfo}"
-                            Opacity="0.5"/>
-                    </Setter.Value>
-                </Setter>
-            </DataTrigger>
-            <DataTrigger Binding="{Binding Path=Enabled}" Value="False">
-                <Setter Property="Background" >
-                    <Setter.Value>
-                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,0">
-                            <GradientStop Color="{DynamicResource ColorBackgroundDarkMedUp}" Offset="0.0"/>
-                        </LinearGradientBrush>
-                    </Setter.Value>
-                </Setter>
-            </DataTrigger>
-            <DataTrigger Binding="{Binding Path=Pressed}" Value="True">
-                <Setter Property="Background" >
-                    <Setter.Value>
-                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,0">
-                            <GradientStop Color="{DynamicResource ColorBright}" Offset="0.0"/>
-                        </LinearGradientBrush>
-                    </Setter.Value>
-                </Setter>
-                <Setter Property="BorderBrush" Value="{DynamicResource BrushInfo}" />
-                <Setter Property="Effect">
-                    <Setter.Value>
-                        <DropShadowEffect 
-                            ShadowDepth="0"
-                            BlurRadius="10" 
-                            Color="{DynamicResource ColorInfo}"
-                            Opacity="0.5"/>
-                    </Setter.Value>
-                </Setter>
-            </DataTrigger>
-            <DataTrigger Binding="{Binding Path=Enabled}" Value="False">
-                <Setter Property="BorderBrush" Value="{DynamicResource BrushColorMedLow}" />
-                <Setter Property="Effect">
-                    <Setter.Value>
-                        <DropShadowEffect 
-                            ShadowDepth="0"
-                            BlurRadius="10" 
-                            Color="{DynamicResource ColorMedLow}"
-                            Opacity="0.0"/>
-                    </Setter.Value>
-                </Setter>
-            </DataTrigger>
-        </Style.Triggers>
     </Style>
 
     <Style TargetType="{x:Type Button}" x:Key="OptionButton">

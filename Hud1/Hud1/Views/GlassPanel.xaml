@@ -30,7 +30,7 @@
                             />
                     </Grid.Background>
                 </Grid>
-                
+
                 <Border Padding="0" BorderThickness="1,1,1,1">
                     <Border.BorderBrush>
                         <DrawingBrush Viewport="0,0,5,5" ViewportUnits="Absolute" TileMode="Tile">
@@ -52,7 +52,7 @@
                         </DrawingBrush>
                     </Border.BorderBrush>
                 </Border>
-                
+
                 <StackPanel>
                     <local:PanelTopBar />
                     <ContentPresenter Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content}" />

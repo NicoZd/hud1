@@ -39,6 +39,8 @@ public partial class App : Application
 
     public static void SelectStyle(String style, String font)
     {
+        //return;
+
         // for testing
         if (Application.Current == null) return;
 

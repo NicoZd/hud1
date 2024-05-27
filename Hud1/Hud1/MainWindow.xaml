@@ -24,18 +24,7 @@
     Width="450"
     Background="Transparent"
     >
-    
-    <views:Hud Visibility="{Binding Path=HudVisibility}">
-        <views:Hud.Style>
-            <Style TargetType="views:Hud">
-                <Setter Property="Opacity" Value="1"/>
-                <Style.Triggers>
-                    <DataTrigger Binding="{Binding Source={x:Static viewModels:MainWindowViewModel.Instance}, Path=IsForeground}" Value="False">
-                        <Setter Property="Opacity" Value="0.9"/>
-                    </DataTrigger>
-                </Style.Triggers>
-            </Style>
-        </views:Hud.Style>
-    </views:Hud>
+
+    <views:Hud Visibility="{Binding Path=HudVisibility}"/>
 
 </Window>
