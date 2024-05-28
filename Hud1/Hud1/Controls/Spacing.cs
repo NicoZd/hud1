@@ -23,7 +23,6 @@ public class Spacing
         MarginSetter.SetLastItemMargin(obj, new Thickness(0));
     }
 
-
     public static void SetHorizontal(DependencyObject obj, double space)
     {
         obj.SetValue(HorizontalProperty, space);

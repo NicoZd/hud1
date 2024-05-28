@@ -84,14 +84,10 @@ public class Setup
         NavigationStates.TOUCH_MODE.SelectionBoolean = UserConfig.Current.TouchModeEnabled;
 
         NavigationStates.STYLE.SelectionLabel = UserConfig.Current.Style;
-#if !HOT
         MoreViewModel.Instance.SelectStyle(0);
-#endif
 
         NavigationStates.FONT.SelectionLabel = UserConfig.Current.Font;
-#if !HOT
         MoreViewModel.Instance.SelectFont(0);
-#endif
 
         // create navgation
         NavigationViewModel.Instance.BuildNavigation();

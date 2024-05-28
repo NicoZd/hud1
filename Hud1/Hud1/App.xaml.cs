@@ -39,7 +39,11 @@ public partial class App : Application
 
     public static void SelectStyle(string style, string font)
     {
-        //return;
+
+#if HOT
+        // dont touch Application.Current.Resources.MergedDictionaries otherwise Hot Reload wount work 
+        return;
+#endif
 
         // for testing
         if (Application.Current == null) return;
