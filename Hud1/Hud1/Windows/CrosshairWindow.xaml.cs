@@ -56,7 +56,6 @@ public partial class CrosshairWindow : Window
         NavigationStates.CROSSHAIR_OUTLINE.PropertyChanged += UpdateCrosshair;
     }
 
-
     private void Redraw(bool force)
     {
         // current screen
@@ -83,7 +82,6 @@ public partial class CrosshairWindow : Window
         }
     }
 
-
     private void UpdateCrosshair(object? sender, PropertyChangedEventArgs e)
     {
         string[] validProperties = [nameof(NavigationState.SelectionLabel), nameof(NavigationState.SelectionBoolean)];
@@ -94,4 +92,5 @@ public partial class CrosshairWindow : Window
         }
 
     }
+
 }

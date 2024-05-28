@@ -1,4 +1,5 @@
 ﻿using Hud1.Helpers.ScreenHelper.Enum;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Interop;
 
@@ -17,12 +18,31 @@ public static class WindowHelper
     /// <param name="y">Y coordinate for moving.</param>
     /// <param name="width">New width of the window.</param>
     /// <param name="height">New height of the window.</param>
+    /// 
+
     public static void SetWindowPosition(this Window window, int x, int y, int width, int height)
     {
-        // The first move puts it on the correct monitor, which triggers WM_DPICHANGED
-        // The +1/-1 coerces WPF to update Window.Top/Left/Width/Height in the second move
-        NativeMethods.MoveWindow(new WindowInteropHelper(window).Handle, x - 1, y, width + 1, height, false);
-        NativeMethods.MoveWindow(new WindowInteropHelper(window).Handle, x, y, width, height, true);
+        var rect = new NativeMethods.RECT();
+
+        // lazy
+        NativeMethods.GetWindowRect(new WindowInteropHelper(window).Handle, ref rect);
+
+        Debug.Print($"Maybe SetWindowPosition {rect.left} {rect.top} {rect.Size.Width} {rect.Size.Height} ////// {x}, {y}, {width}, {height}");
+
+        var changed = rect.left != x || rect.top != y || rect.Size.Width != width || rect.Size.Height != height;
+
+        if (changed)
+        {
+            Debug.Print($"Apply SetWindowPosition");
+            // The first move puts it on the correct monitor, which triggers WM_DPICHANGED
+            // The +1/-1 coerces WPF to update Window.Top/Left/Width/Height in the second move
+            NativeMethods.MoveWindow(new WindowInteropHelper(window).Handle, x - 1, y, width + 1, height, false);
+            NativeMethods.MoveWindow(new WindowInteropHelper(window).Handle, x, y, width, height, true);
+        }
+        else
+        {
+            Debug.Print($"Skip SetWindowPosition");
+        }
     }
 
     /// <summary>
@@ -33,6 +53,7 @@ public static class WindowHelper
     /// <param name="screen">The screen to which we move.</param>
     public static void SetWindowPosition(this Window window, WindowPositions pos, Screen screen)
     {
+        Debug.Print("!!!!!!!!!!!!!!!! ======== SettingWindowPosition");
         var coordinates = CalculateWindowCoordinates(window, pos, screen);
 
         window.SetWindowPosition((int)coordinates.X, (int)coordinates.Y, (int)coordinates.Width, (int)coordinates.Height);

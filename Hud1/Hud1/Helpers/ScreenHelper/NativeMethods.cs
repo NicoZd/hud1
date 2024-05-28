@@ -110,6 +110,9 @@ internal static class NativeMethods
     [DllImport(ExternDll.User32, SetLastError = true)]
     public static extern bool MoveWindow(nint hWnd, int X, int Y, int nWidth, int nHeight, bool bRepaint);
 
+    [DllImport("user32.dll")]
+    public static extern bool GetWindowRect(nint hwnd, ref RECT rectangle);
+
     [DllImport(ExternDll.D2D1)]
     public static extern int D2D1CreateFactory(D2D1_FACTORY_TYPE factoryType, [MarshalAs(UnmanagedType.LPStruct)] Guid riid, nint pFactoryOptions, out ID2D1Factory ppIFactory);
 
