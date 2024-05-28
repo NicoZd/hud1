@@ -224,17 +224,9 @@ public class Setup
             {
                 Console.WriteLine("=== Creating New Version");
                 Directory.CreateDirectory(VersionPath);
-
-                Directory.CreateDirectory(Path.Combine(VersionPath, "Macros"));
-                Directory.CreateDirectory(Path.Combine(VersionPath, "Fonts"));
-
                 CopyFilesRecursively(
-                    Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Macros"),
-                    Path.Combine(VersionPath, "Macros")
-                    );
-                CopyFilesRecursively(
-                    Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Fonts"),
-                    Path.Combine(VersionPath, "Fonts")
+                    Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Version"),
+                    Path.Combine(VersionPath)
                     );
             }
         }
@@ -278,7 +270,11 @@ public class Setup
         catch (Exception)
         {
             RootPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Game Direct");
-            VersionPath = Path.Combine(RootPath, "0.0.0.9");
+#if HOT
+            VersionPath = Path.Combine(RootPath, "0.0.0." + (new Random().NextInt64() >> 48));
+#else
+            VersionPath = Path.Combine(RootPath, "0.0.0.0");
+#endif
             UserConfigFile = Path.Combine(VersionPath, "UserConfig.json");
         }
     }

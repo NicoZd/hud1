@@ -8,7 +8,7 @@
 		<StartupObject>Hud1.Entry</StartupObject>
 		<ApplicationManifest>app.manifest</ApplicationManifest>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-		<Title>Draco HUD</Title>
+		<Title>Game Direct</Title>
 		<PackageIcon></PackageIcon>
 		<SatelliteResourceLanguages>en</SatelliteResourceLanguages>
 		<Configurations>Debug;Release;Hot</Configurations>
@@ -16,8 +16,11 @@
 		<AssemblyName>Game Direct</AssemblyName>
 		<ApplicationIcon>Assets\icon.ico</ApplicationIcon>
 	</PropertyGroup>
+
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Hot|x86'">
-	  <DefineConstants>$(DefineConstants);DEBUG</DefineConstants>
+		<DefineConstants>$(DefineConstants);DEBUG</DefineConstants>
+		<DebugSymbols>true</DebugSymbols>
+		<XamlDebuggingInformation>True</XamlDebuggingInformation>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -33,14 +36,14 @@
 		<None Remove="Assets\frosted-texture-tile.jpg" />
 		<None Remove="Assets\logo.png" />
 		<None Remove="Assets\splash.png" />
-		<None Remove="Fonts\ARIAL.TTF" />
-		<None Remove="Fonts\CALIBRI.TTF" />
-		<None Remove="Fonts\FiraCode.ttf" />
-		<None Remove="Fonts\HitmarkerText.ttf" />
-		<None Remove="Fonts\Neuropolitical.otf" />
-		<None Remove="Macros\press-left-mouse.lua" />
-		<None Remove="Macros\repeat-left-mouse-click.lua" />
-		<None Remove="Macros\test.lua" />
+		<None Remove="Version\Fonts\ARIAL.TTF" />
+		<None Remove="Version\Fonts\CALIBRI.TTF" />
+		<None Remove="Version\Fonts\FiraCode.ttf" />
+		<None Remove="Version\Fonts\HitmarkerText.ttf" />
+		<None Remove="Version\Fonts\Neuropolitical.otf" />
+		<None Remove="Version\Macros\press-left-mouse.lua" />
+		<None Remove="Version\Macros\repeat-left-mouse-click.lua" />
+		<None Remove="Version\Macros\test.lua" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -56,41 +59,41 @@
 		</Resource>
 		<Resource Include="Assets\frosted-texture-tile.jpg" />
 		<Resource Include="Assets\logo.png">
-		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Resource>
 		<Resource Include="Assets\splash.png">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Resource>
 		<Resource Include="Assets\icon.ico" />
-		<Content Include="Fonts\Calibri.ttf">
-		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Content Include="Version\Fonts\Calibri.ttf">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
-		<Content Include="Fonts\FiraCode.ttf">
-		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Content Include="Version\Fonts\FiraCode.ttf">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
-		<Content Include="Fonts\Arial.ttf">
-		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Content Include="Version\Fonts\Arial.ttf">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Assets\icon.ico" />
-		<Content Include="Fonts\HitmarkerText.ttf">
+		<Content Include="Version\Fonts\HitmarkerText.ttf">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
-		<Content Include="Fonts\Neuropolitical.otf">
+		<Content Include="Version\Fonts\Neuropolitical.otf">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
-		<Content Include="Macros\test.lua">
+		<Content Include="Version\Macros\test.lua">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
-		<Content Include="Macros\press-left-mouse.lua">
+		<Content Include="Version\Macros\press-left-mouse.lua">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
-		<Content Include="Macros\repeat-left-mouse-click.lua">
+		<Content Include="Version\Macros\repeat-left-mouse-click.lua">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Page Include="App.xaml" />
+		<Page Include="App.xaml" />
 	</ItemGroup>
 
 	<ItemGroup>
