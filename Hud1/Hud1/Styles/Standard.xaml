@@ -33,6 +33,16 @@
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
     </Style>
 
+    <Style TargetType="{x:Type Label}" x:Key="PanelTitleContent">
+        <Setter Property="Foreground" Value="{DynamicResource BrushTitle}"/>
+        <Setter Property="FontFamily" Value="{DynamicResource FontFamily}"/>
+        <Setter Property="Height" Value="28"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Padding" Value="0,0,0,0"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+    </Style>
+
     <!-- Button -->
     <Style TargetType="{x:Type Label}" x:Key="ButtonLabel">
         <Setter Property="Foreground" Value="{DynamicResource BrushLabel}"/>

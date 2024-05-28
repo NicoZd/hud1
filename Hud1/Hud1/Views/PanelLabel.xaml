@@ -5,9 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Hud1.Views"
              mc:Ignorable="d">
-    <Label Content="{Binding Path=Label}" Padding="5,5,0,5" FontSize="12" >
+    <Label Content="{Binding Path=Label}" Padding="5,5,0,5">
         <Label.Style>
-            <Style TargetType="Label" BasedOn="{StaticResource TitleContent}">
+            <Style TargetType="Label" BasedOn="{StaticResource PanelTitleContent}">
                 <Style.Triggers>
                     <DataTrigger Binding="{Binding Path=Selected}" Value="False">
                         <Setter Property="Foreground">
