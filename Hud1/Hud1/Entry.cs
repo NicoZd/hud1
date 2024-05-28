@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace Hud1.Start;
+namespace Hud1;
 
 internal class Entry
 {

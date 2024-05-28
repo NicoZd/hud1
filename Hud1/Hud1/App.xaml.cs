@@ -1,6 +1,5 @@
 ﻿using Hud1.Helpers;
 using Hud1.Models;
-using Hud1.Start;
 using Hud1.Views;
 using System.Diagnostics;
 using System.IO;

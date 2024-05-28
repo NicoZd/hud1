@@ -11,7 +11,7 @@ using Windows.ApplicationModel;
 using Windows.Services.Store;
 using Windows.Storage;
 
-namespace Hud1.Start;
+namespace Hud1;
 
 public class Setup
 {

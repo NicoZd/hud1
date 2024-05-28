@@ -2,7 +2,6 @@
 using Hud1.Helpers;
 using Hud1.Helpers.ScreenHelper;
 using Hud1.Helpers.ScreenHelper.Enum;
-using Hud1.Start;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows;

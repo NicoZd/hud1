@@ -1,6 +1,5 @@
 ﻿using Hud1.Helpers.ScreenHelper;
 using Hud1.Models;
-using Hud1.Start;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
