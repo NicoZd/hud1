@@ -21,6 +21,7 @@
     Loaded="OnWindowLoaded"    
     DataContext="{Binding RelativeSource={RelativeSource Self}}"
     Background="Transparent"
+    UseLayoutRounding="True"
     >
 
     <Grid >

@@ -34,9 +34,10 @@
 		<None Remove="Assets\logo.png" />
 		<None Remove="Assets\splash.png" />
 		<None Remove="Fonts\ARIAL.TTF" />
-		<None Remove="Fonts\HitmarkerText-Regular.ttf" />
-		<None Remove="Fonts\neuropolitical rg.otf" />
-		<None Remove="Fonts\SourceCodePro-Regular.ttf" />
+		<None Remove="Fonts\CALIBRI.TTF" />
+		<None Remove="Fonts\FiraCode.ttf" />
+		<None Remove="Fonts\HitmarkerText.ttf" />
+		<None Remove="Fonts\Neuropolitical.otf" />
 		<None Remove="Macros\press-left-mouse.lua" />
 		<None Remove="Macros\repeat-left-mouse-click.lua" />
 		<None Remove="Macros\test.lua" />
@@ -61,17 +62,20 @@
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Resource>
 		<Resource Include="Assets\icon.ico" />
+		<Content Include="Fonts\Calibri.ttf">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Fonts\FiraCode.ttf">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
 		<Content Include="Fonts\Arial.ttf">
 		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Assets\icon.ico" />
-		<Content Include="Fonts\HitmarkerText-Regular.ttf">
+		<Content Include="Fonts\HitmarkerText.ttf">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
-		<Content Include="Fonts\neuropolitical rg.otf">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</Content>
-		<Content Include="Fonts\SourceCodePro-Regular.ttf">
+		<Content Include="Fonts\Neuropolitical.otf">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Macros\test.lua">

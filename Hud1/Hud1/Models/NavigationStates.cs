@@ -40,5 +40,5 @@ public class NavigationStates
     public static readonly NavigationState TOUCH_MODE = new() { Label = "Touch Mode", Hint = "Don't activate this window on mouse or touch interaction.", SelectionLeftLabel = "< Off", SelectionRightLabel = "On >" };
 
     public static readonly NavigationState STYLE = new() { SelectionLabel = "Green", Label = "Colors", Hint = "Adjust colors of this window." };
-    public static readonly NavigationState FONT = new() { SelectionLabel = "Source Code Pro", Label = "Font", Hint = "Select Font" };
+    public static readonly NavigationState FONT = new() { SelectionLabel = "Fira Code", Label = "Font", Hint = "Select Font" };
 }

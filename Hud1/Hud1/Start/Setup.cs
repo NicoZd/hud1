@@ -278,7 +278,7 @@ public class Setup
         catch (Exception)
         {
             RootPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Game Direct");
-            VersionPath = Path.Combine(RootPath, "0.0.0.0");
+            VersionPath = Path.Combine(RootPath, "0.0.0.9");
             UserConfigFile = Path.Combine(VersionPath, "UserConfig.json");
         }
     }

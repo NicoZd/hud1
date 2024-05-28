@@ -15,6 +15,7 @@
     Loaded="OnWindowLoaded"
     SnapsToDevicePixels="True"
     Focusable="False"        
+    UseLayoutRounding="True"
     >
 
     <Window.Background>

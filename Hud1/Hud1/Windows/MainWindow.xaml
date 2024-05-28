@@ -23,6 +23,7 @@
     d:DesignHeight="800"
     Width="450"
     Background="Transparent"
+    UseLayoutRounding="True"
     >
 
     <views:Hud Visibility="{Binding Path=HudVisibility}"/>

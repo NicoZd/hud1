@@ -11,7 +11,7 @@ public class UserConfig
         TouchModeEnabled = false;
 
         Style = "Green";
-        Font = "Source Code Pro";
+        Font = "Fira Code";
     }
 
     public int GammaIndex { get; set; }

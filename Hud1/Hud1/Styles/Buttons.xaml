@@ -32,12 +32,7 @@
                                     </Setter>
                                     <Setter Property="Effect">
                                         <Setter.Value>
-                                            <DropShadowEffect
-                                                BlurRadius="10"
-                                                ShadowDepth="0"
-                                                Opacity="0"
-                                                Color="Red"
-                                                />
+                                            <DropShadowEffect Opacity="0"/>
                                         </Setter.Value>
                                     </Setter>
                                     <Style.Triggers>
