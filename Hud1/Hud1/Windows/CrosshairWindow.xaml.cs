@@ -47,8 +47,10 @@ public partial class CrosshairWindow : Window
         Redraw(force: true);
 
         NavigationStates.CROSSHAIR_ENABLED.PropertyChanged += UpdateCrosshair;
+        NavigationStates.CROSSHAIR_DISPLAY.PropertyChanged += UpdateCrosshair;
         NavigationStates.CROSSHAIR_FORM.PropertyChanged += UpdateCrosshair;
         NavigationStates.CROSSHAIR_COLOR.PropertyChanged += UpdateCrosshair;
+        NavigationStates.CROSSHAIR_OPACITY.PropertyChanged += UpdateCrosshair;
         NavigationStates.CROSSHAIR_SIZE.PropertyChanged += UpdateCrosshair;
         NavigationStates.CROSSHAIR_OUTLINE.PropertyChanged += UpdateCrosshair;
     }
@@ -57,14 +59,16 @@ public partial class CrosshairWindow : Window
     private void Redraw(bool force)
     {
         // current screen
-        var screen = Screen.AllScreens.ElementAt(0);
+        var display = Int32.Parse(NavigationStates.CROSSHAIR_DISPLAY.SelectionLabel);
+        var screen = Screen.AllScreens.ElementAt(display);
+        this.SetWindowPosition(WindowPositions.Maximize, screen);
 
         var currentRedrawConfig = screen.ScaleFactor + " " + screen.Bounds.Width + " " + screen.Bounds.Height;
 
         if (currentRedrawConfig != lastRedrawScreenConfig || force)
         {
             lastRedrawScreenConfig = currentRedrawConfig;
-            CrosshairViewModel.Instance.Redraw(Container);
+            CrosshairViewModel.Instance.Redraw(PART_Container);
         }
     }
 

@@ -17,10 +17,9 @@
         <StackPanel>
             <views:PanelLabel />
 
-            <DockPanel Margin="4,0,0,4" controls:Spacing.Horizontal="4">
+            <DockPanel Margin="0,0,0,4" controls:MarginSetter.Margin="4,0,4,0">
                 <views:GlowBorderLabel 
                     MinWidth="40"
-                    Margin="0,0,4,0"
                     DockPanel.Dock="Left"
                     Click="{Binding Path=LeftCommand}"
                     Label="{Binding Path=SelectionLeftLabel}"
@@ -28,7 +27,6 @@
                     Pressed="{Binding Path=SelectLeft}"/>
                 <views:GlowBorderLabel
                     MinWidth="40"
-                    Margin="4,0,4,0"
                     DockPanel.Dock="Right"
                     Click="{Binding Path=RightCommand}"                    
                     Label="{Binding Path=SelectionRightLabel}"

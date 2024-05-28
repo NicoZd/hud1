@@ -133,22 +133,24 @@
                         </StackPanel>
                     </views:ScrollPanel>
 
+                    <views:ScrollPanel Visibility="{Binding Path=States[CROSSHAIR_VISIBLE].Visibility}">
+                        <StackPanel Margin="0,0,0,28" controls:Spacing.Vertical="8">
+                            <Label Content="Crosshair" Style="{DynamicResource TitleContent}"/>
+                            <views:BooleanPanel NavigationState="{Binding Path=States[CROSSHAIR_ENABLED]}" />
+                            <views:SelectionControl NavigationState="{Binding Path=States[CROSSHAIR_DISPLAY]}" />
+                            <views:SelectionControl NavigationState="{Binding Path=States[CROSSHAIR_FORM]}" />
+                            <views:SelectionControl NavigationState="{Binding Path=States[CROSSHAIR_COLOR]}" />
+                            <views:SelectionControl NavigationState="{Binding Path=States[CROSSHAIR_OPACITY]}" />
+                            <views:SelectionControl NavigationState="{Binding Path=States[CROSSHAIR_SIZE]}" />
+                            <views:BooleanPanel NavigationState="{Binding Path=States[CROSSHAIR_OUTLINE]}" />
+                        </StackPanel>
+                    </views:ScrollPanel>
+
                     <views:ScrollPanel Visibility="{Binding Path=States[MACRO_VISIBLE].Visibility}">
                         <StackPanel Margin="0,0,0,28" controls:Spacing.Vertical="8">
                             <views:MacrosView />
                             <Label Content="Functions" Style="{DynamicResource TitleContent}"/>
                             <views:ButtonPanel NavigationState="{Binding Path=States[MACROS_FOLDER]}"/>
-                        </StackPanel>
-                    </views:ScrollPanel>
-
-                    <views:ScrollPanel Visibility="{Binding Path=States[CROSSHAIR_VISIBLE].Visibility}">
-                        <StackPanel Margin="0,0,0,28" controls:Spacing.Vertical="8">
-                            <Label Content="Crosshair" Style="{DynamicResource TitleContent}"/>
-                            <views:BooleanPanel NavigationState="{Binding Path=States[CROSSHAIR_ENABLED]}" />
-                            <views:SelectionControl NavigationState="{Binding Path=States[CROSSHAIR_FORM]}" />
-                            <views:SelectionControl NavigationState="{Binding Path=States[CROSSHAIR_COLOR]}" />
-                            <views:SelectionControl NavigationState="{Binding Path=States[CROSSHAIR_SIZE]}" />
-                            <views:BooleanPanel NavigationState="{Binding Path=States[CROSSHAIR_OUTLINE]}" />
                         </StackPanel>
                     </views:ScrollPanel>
 

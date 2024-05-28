@@ -43,18 +43,23 @@ public partial class MoreViewModel : ObservableObject
            .InternalTransition(NavigationTriggers.LEFT, NavigationStates.HUD_POSITION.ExecuteLeft)
            .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.HUD_POSITION.ExecuteRight);
 
-        NavigationStates.TOUCH_MODE.LeftAction = EnableCursorNav(false);
-        NavigationStates.TOUCH_MODE.RightAction = EnableCursorNav(true);
+        NavigationStates.TOUCH_MODE.SelectionBoolean = UserConfig.Current.TouchModeEnabled;
+        NavigationStates.TOUCH_MODE.LeftAction = EnableTouchMode(false);
+        NavigationStates.TOUCH_MODE.RightAction = EnableTouchMode(true);
         Navigation.Configure(NavigationStates.TOUCH_MODE)
             .InternalTransition(NavigationTriggers.LEFT, NavigationStates.TOUCH_MODE.ExecuteLeft)
             .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.TOUCH_MODE.ExecuteRight);
 
+        NavigationStates.STYLE.SelectionLabel = UserConfig.Current.Style;
+        SelectStyle(0);
         NavigationStates.STYLE.LeftAction = PrevStyle;
         NavigationStates.STYLE.RightAction = NextStyle;
         Navigation.Configure(NavigationStates.STYLE)
            .InternalTransition(NavigationTriggers.LEFT, NavigationStates.STYLE.ExecuteLeft)
            .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.STYLE.ExecuteRight);
 
+        NavigationStates.FONT.SelectionLabel = UserConfig.Current.Font;
+        SelectFont(0);
         NavigationStates.FONT.LeftAction = PrevFont;
         NavigationStates.FONT.RightAction = NextFont;
         Navigation.Configure(NavigationStates.FONT)
@@ -71,7 +76,7 @@ public partial class MoreViewModel : ObservableObject
         Application.Current.Shutdown();
     }
 
-    private static Action? EnableCursorNav(bool v)
+    private static Action? EnableTouchMode(bool v)
     {
         return () =>
         {

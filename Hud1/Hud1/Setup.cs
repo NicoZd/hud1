@@ -80,15 +80,6 @@ public class Setup
             Console.WriteLine(ex.ToString());
         }
 
-        // apply config
-        NavigationStates.TOUCH_MODE.SelectionBoolean = UserConfig.Current.TouchModeEnabled;
-
-        NavigationStates.STYLE.SelectionLabel = UserConfig.Current.Style;
-        MoreViewModel.Instance.SelectStyle(0);
-
-        NavigationStates.FONT.SelectionLabel = UserConfig.Current.Font;
-        MoreViewModel.Instance.SelectFont(0);
-
         // create navgation
         NavigationViewModel.Instance.BuildNavigation();
 
@@ -110,17 +101,24 @@ public class Setup
 
         // add change listeners
 
-        NavigationStates.TOUCH_MODE.PropertyChanged += OnConfigChanged(
-                nameof(NavigationStates.TOUCH_MODE.SelectionBoolean),
-                nameof(UserConfig.Current.TouchModeEnabled));
-
+        // Nightvision
         NightvisionViewModel.Instance.PropertyChanged += OnConfigChanged(
-                nameof(NightvisionViewModel.Instance.GammaIndex),
-                nameof(UserConfig.Current.GammaIndex));
+            nameof(NightvisionViewModel.Instance.GammaIndex),
+            nameof(UserConfig.Current.GammaIndex));
+
+        // Chrosshair
+        NavigationStates.CROSSHAIR_DISPLAY.PropertyChanged += OnConfigChanged(
+            nameof(NavigationStates.CROSSHAIR_DISPLAY.SelectionLabel),
+            nameof(UserConfig.Current.CrosshairDisplay));
+
+        // More
+        NavigationStates.TOUCH_MODE.PropertyChanged += OnConfigChanged(
+            nameof(NavigationStates.TOUCH_MODE.SelectionBoolean),
+            nameof(UserConfig.Current.TouchModeEnabled));
 
         MoreViewModel.Instance.PropertyChanged += OnConfigChanged(
-                nameof(MoreViewModel.Instance.HudPosition),
-                nameof(UserConfig.Current.HudPosition));
+            nameof(MoreViewModel.Instance.HudPosition),
+            nameof(UserConfig.Current.HudPosition));
 
         NavigationStates.STYLE.PropertyChanged += OnConfigChanged(
             nameof(NavigationStates.STYLE.SelectionLabel),

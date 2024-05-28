@@ -22,6 +22,6 @@
         <SolidColorBrush Color="Transparent"/>
     </Window.Background>
 
-    <Grid x:Name="Container" VerticalAlignment="Center"/>
+    <Grid x:Name="PART_Container" VerticalAlignment="Center"/>
 
 </Window>

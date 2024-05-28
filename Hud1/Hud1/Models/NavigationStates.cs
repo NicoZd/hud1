@@ -25,8 +25,10 @@ public class NavigationStates
     public static readonly NavigationState CROSSHAIR_ENABLED = new() { Label = "Toggle", SelectionLeftLabel = "< Off", SelectionRightLabel = "On >" };
     public static readonly NavigationState CROSSHAIR_FORM = new() { Label = "Form" };
     public static readonly NavigationState CROSSHAIR_COLOR = new() { Label = "Color" };
+    public static readonly NavigationState CROSSHAIR_OPACITY = new() { Label = "Opacity" };
     public static readonly NavigationState CROSSHAIR_SIZE = new() { Label = "Size" };
     public static readonly NavigationState CROSSHAIR_OUTLINE = new() { Label = "Outline", SelectionLeftLabel = "< Off", SelectionRightLabel = "On >" };
+    public static readonly NavigationState CROSSHAIR_DISPLAY = new() { Label = "Display" };
 
     // MACRO
     public static readonly NavigationState MACROS = new() { };

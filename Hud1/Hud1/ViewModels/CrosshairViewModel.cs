@@ -25,6 +25,14 @@ public class CrosshairViewModel
            .InternalTransition(NavigationTriggers.LEFT, NavigationStates.CROSSHAIR_ENABLED.ExecuteLeft)
            .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.CROSSHAIR_ENABLED.ExecuteRight);
 
+        NavigationStates.CROSSHAIR_DISPLAY.SelectionLabel = UserConfig.Current.CrosshairDisplay;
+        ChangeDisplay(0)();
+        NavigationStates.CROSSHAIR_DISPLAY.LeftAction = ChangeDisplay(-1);
+        NavigationStates.CROSSHAIR_DISPLAY.RightAction = ChangeDisplay(1);
+        Navigation.Configure(NavigationStates.CROSSHAIR_DISPLAY)
+           .InternalTransition(NavigationTriggers.LEFT, NavigationStates.CROSSHAIR_DISPLAY.ExecuteLeft)
+           .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.CROSSHAIR_DISPLAY.ExecuteRight);
+
         NavigationStates.CROSSHAIR_FORM.SelectionLabel = "Cross";
         NavigationStates.CROSSHAIR_FORM.Options = [new Option("Dot"), new Option("Ring"), new Option("Cross"), new Option("Diagonal"), new Option("3 Dots")];
         NavigationStates.CROSSHAIR_FORM.SelectOption();
@@ -74,6 +82,13 @@ public class CrosshairViewModel
             ColorOptions.Add(option.Value, (SolidColorBrush)new BrushConverter().ConvertFromString(option.Value)!);
         }
 
+        NavigationStates.CROSSHAIR_OPACITY.SelectionLabel = "1";
+        NavigationStates.CROSSHAIR_OPACITY.LeftAction = ChangeOpacity(-0.1);
+        NavigationStates.CROSSHAIR_OPACITY.RightAction = ChangeOpacity(0.1);
+        Navigation.Configure(NavigationStates.CROSSHAIR_OPACITY)
+           .InternalTransition(NavigationTriggers.LEFT, NavigationStates.CROSSHAIR_OPACITY.ExecuteLeft)
+           .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.CROSSHAIR_OPACITY.ExecuteRight);
+
         NavigationStates.CROSSHAIR_SIZE.SelectionLabel = "3";
         NavigationStates.CROSSHAIR_SIZE.Options = [new Option("1"), new Option("2"), new Option("3"), new Option("4"), new Option("5")];
         NavigationStates.CROSSHAIR_SIZE.SelectOption();
@@ -93,11 +108,33 @@ public class CrosshairViewModel
         NavigationViewModel.MakeNav(NavigationStates.MENU_CROSSHAIR, NavigationStates.CROSSHAIR_VISIBLE,
             [
             NavigationStates.CROSSHAIR_ENABLED,
+            NavigationStates.CROSSHAIR_DISPLAY,
             NavigationStates.CROSSHAIR_FORM,
             NavigationStates.CROSSHAIR_COLOR,
+            NavigationStates.CROSSHAIR_OPACITY,
             NavigationStates.CROSSHAIR_SIZE,
             NavigationStates.CROSSHAIR_OUTLINE,
             ]);
+    }
+
+    private Action ChangeDisplay(int dir)
+    {
+        return () =>
+        {
+            var current = Int32.Parse(NavigationStates.CROSSHAIR_DISPLAY.SelectionLabel);
+            var next = Math.Min(Math.Max(current + dir, 0), Screen.AllScreens.Count() - 1);
+            NavigationStates.CROSSHAIR_DISPLAY.SelectionLabel = "" + next;
+        };
+    }
+
+    private Action ChangeOpacity(double dir)
+    {
+        return () =>
+        {
+            var current = Double.Parse(NavigationStates.CROSSHAIR_OPACITY.SelectionLabel);
+            var next = Math.Min(Math.Max(current + dir, 0.1), 1);
+            NavigationStates.CROSSHAIR_OPACITY.SelectionLabel = "" + Math.Round(next * 10) / 10;
+        };
     }
 
     public void Redraw(Grid grid)
@@ -218,7 +255,8 @@ public class CrosshairViewModel
         drawingWithFixedSize.Children.Insert(0, new GeometryDrawing() { Geometry = areaGroup, Brush = Brushes.Transparent });
         //        drawingWithFixedSize.Children.Insert(0, new GeometryDrawing() { Geometry = areaGroup, Brush = Brushes.Red });
 
-        drawingWithFixedSize.Opacity = 0.8;
+
+        drawingWithFixedSize.Opacity = Double.Parse(NavigationStates.CROSSHAIR_OPACITY.SelectionLabel);
 
         return drawingWithFixedSize;
     }
