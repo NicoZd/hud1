@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media.Animation;
+using Windows.Graphics;
 
 namespace Hud1;
 
@@ -39,7 +40,14 @@ public partial class MainWindow : Window
 
     private async Task ApplyHudPosition(bool animate)
     {
+        var screens = Screen.AllScreens;
         var screenIndex = int.Parse(MoreViewModel.Instance.HudPosition.Split(":")[0]);
+
+        if (screens.Count() - 1 < screenIndex)
+        {
+            MoreViewModel.Instance.ComputeNextHudPosition(0);
+            return;
+        }
 
         if (animate)
             Opacity = 0;
@@ -48,7 +56,7 @@ public partial class MainWindow : Window
 
         var aligmnent = MoreViewModel.Instance.HudAlignment == "Left" ? WindowPositions.Left2 : WindowPositions.Right2;
 
-        var screen = Screen.AllScreens.ElementAt(screenIndex);
+        var screen = screens.ElementAt(screenIndex);
         this.SetWindowPosition(aligmnent, screen);
 
         await Task.Delay(30);

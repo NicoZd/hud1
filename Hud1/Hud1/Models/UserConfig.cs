@@ -4,18 +4,13 @@ public class UserConfig
 {
     public static readonly UserConfig Current = new();
 
-    public UserConfig()
-    {
-        HudPosition = "0:Right";
-        GammaIndex = 4;
-        TouchModeEnabled = false;
-
-        Style = "Green";
-        Font = "Fira Code";
-    }
-
+    // Nightvision
     public int GammaIndex { get; set; }
 
+    // Crosshair
+    public string CrosshairDisplay { get; set; }
+
+    // More
     public string HudPosition { get; set; }
 
     public bool TouchModeEnabled { get; set; }
@@ -23,4 +18,20 @@ public class UserConfig
     public string Style { get; set; }
 
     public string Font { get; set; }
+
+    public UserConfig()
+    {
+        // Nightvision
+        GammaIndex = 4;
+
+        // Crosshair
+        CrosshairDisplay = "1";
+
+        // More
+        Style = "Green";
+        Font = "Fira Code";
+        HudPosition = "1:Left";
+        TouchModeEnabled = false;
+    }
+
 }

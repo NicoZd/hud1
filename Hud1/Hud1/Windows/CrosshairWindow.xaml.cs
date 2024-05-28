@@ -4,6 +4,7 @@ using Hud1.Helpers.ScreenHelper.Enum;
 using Hud1.Models;
 using Hud1.ViewModels;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Interop;
 
@@ -59,15 +60,25 @@ public partial class CrosshairWindow : Window
     private void Redraw(bool force)
     {
         // current screen
+        var screens = Screen.AllScreens;
         var display = Int32.Parse(NavigationStates.CROSSHAIR_DISPLAY.SelectionLabel);
-        var screen = Screen.AllScreens.ElementAt(display);
-        this.SetWindowPosition(WindowPositions.Maximize, screen);
 
-        var currentRedrawConfig = screen.ScaleFactor + " " + screen.Bounds.Width + " " + screen.Bounds.Height;
+        if (screens.Count() - 1 < display)
+        {
+            NavigationStates.CROSSHAIR_DISPLAY.SelectionLabel = "0";
+            display = 0;
+            Debug.Print("RESET to display 0");
+        }
+        var screen = screens.ElementAt(display);
+
+        var currentRedrawConfig = screen.ScaleFactor + " " + screen.Bounds.Width + " " + screen.Bounds.Height + " " + display;
 
         if (currentRedrawConfig != lastRedrawScreenConfig || force)
         {
+            Debug.Print("Apply");
+
             lastRedrawScreenConfig = currentRedrawConfig;
+            this.SetWindowPosition(WindowPositions.Maximize, screen);
             CrosshairViewModel.Instance.Redraw(PART_Container);
         }
     }
@@ -75,6 +86,12 @@ public partial class CrosshairWindow : Window
 
     private void UpdateCrosshair(object? sender, PropertyChangedEventArgs e)
     {
-        Redraw(force: true);
+        string[] validProperties = [nameof(NavigationState.SelectionLabel), nameof(NavigationState.SelectionBoolean)];
+        if (validProperties.Contains(e.PropertyName))
+        {
+            Debug.Print($"UpdateCrosshair based on Prop: {e.PropertyName}");
+            Redraw(force: true);
+        }
+
     }
 }

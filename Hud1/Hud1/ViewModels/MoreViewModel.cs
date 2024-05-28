@@ -92,7 +92,7 @@ public partial class MoreViewModel : ObservableObject
         };
     }
 
-    private void ComputeNextHudPosition(int dir)
+    public void ComputeNextHudPosition(int dir)
     {
         Console.WriteLine("Compute Hud Pos {0}", dir);
         var screenCount = Screen.AllScreens.Count();
