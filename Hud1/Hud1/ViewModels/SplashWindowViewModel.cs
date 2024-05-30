@@ -28,14 +28,14 @@ internal partial class SplashWindowViewModel : ObservableObject
         Debug.Print($"Load");
 
         FadeIn = true;
-        await Task.Delay(200);
+        await Task.Delay(150);
 
         try
         {
             await Setup.Run();
             MainWindow.Create();
             FadeIn = false;
-            await Task.Delay(200);
+            await Task.Delay(150);
             IsCloseActivated = true;
         }
         catch (Exception ex)
