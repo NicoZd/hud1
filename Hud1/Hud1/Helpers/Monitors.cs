@@ -14,22 +14,17 @@ namespace Hud1.Helpers
 {
     class MonitorEnumCallback
     {
-        public MonitorEnumCallback()
-        {
-            Screens = [];
-        }
-
-        public ArrayList Screens { get; }
+        public readonly List<Monitor> Monitors = [];
 
         public bool Callback(nint monitor, nint hdc, nint lprcMonitor, nint lparam)
         {
             Debug.Print("CallBACK", nameof(Screen));
-            Screens.Add(new Screen2(monitor, hdc));
+            Monitors.Add(new Monitor(monitor, hdc));
             return true;
         }
     }
 
-    class Screen2
+    class Monitor
     {
         private const int MONITORINFOF_PRIMARY = 0x00000001;
 
@@ -37,7 +32,7 @@ namespace Hud1.Helpers
         public readonly Rect Bounds;
         public readonly bool IsPrimary;
 
-        public Screen2()
+        public Monitor()
         {
             Debug.Print("DEFAULT MONITOR");
             ScaleFactor = 1.0;
@@ -45,7 +40,7 @@ namespace Hud1.Helpers
             IsPrimary = true;
         }
 
-        public Screen2(nint monitor, nint hdc)
+        public Monitor(nint monitor, nint hdc)
         {
             NativeMethods.GetDpiForMonitor(monitor, NativeMethods.DpiType.EFFECTIVE, out var dpiX, out _);
             ScaleFactor = dpiX / 96.0;
@@ -62,31 +57,30 @@ namespace Hud1.Helpers
         }
     }
 
-    class Displays
+    class Monitors
     {
 
-        public static IEnumerable<Screen2> All
+        public static List<Monitor> All
         {
             get
             {
                 var closure = new MonitorEnumCallback();
                 var proc = new NativeMethods.MonitorEnumProc(closure.Callback);
-
                 NativeMethods.EnumDisplayMonitors(NativeMethods.NullHandleRef, null, proc, nint.Zero);
-                return closure.Screens.Cast<Screen2>();
+                return closure.Monitors;
             }
         }
 
-        public static Screen2 PrimaryScreen
+        public static Monitor Primary
         {
             get
             {
-                return All.FirstOrDefault(t => t.IsPrimary) ?? new Screen2();
+                return All.FirstOrDefault(t => t.IsPrimary) ?? new Monitor();
             }
         }
 
 
-        public static void RegisterDisplaysChange(Window window, Action OnDisplayChange)
+        public static void RegisterMonitorsChange(Window window, Action OnMonitorsChange)
         {
             var hwnd = new WindowInteropHelper(window).Handle;
             var source = HwndSource.FromHwnd(hwnd);
@@ -95,8 +89,8 @@ namespace Hud1.Helpers
             {
                 if (msg == 126)
                 {
-                    Debug.Print("DisplaysChange...");
-                    OnDisplayChange();
+                    Debug.Print("OnMonitorsChange...");
+                    OnMonitorsChange();
                     return IntPtr.Zero;
                 }
                 return IntPtr.Zero;

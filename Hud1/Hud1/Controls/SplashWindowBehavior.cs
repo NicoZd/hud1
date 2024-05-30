@@ -45,21 +45,15 @@ namespace Hud1.Controls
                 | WindowsAPI.WS_EX_TRANSPARENT
                 );
 
-            Displays.RegisterDisplaysChange(window, OnDisplayChange);
+            Monitors.RegisterMonitorsChange(window, OnDisplayChange);
             OnDisplayChange();
         }
 
         private void OnDisplayChange()
         {
-            var PrimaryScreen = Displays.PrimaryScreen;
-
-            //Debug.Print($"SplashWindowBehavior OnDisplayChange {Screen.PrimaryScreen.ScaleFactor} {Screen.PrimaryScreen.WpfBounds} {Screen.PrimaryScreen.Bounds.Width} {window.Width}");
-            //var coords = WindowHelper.CalculateWindowCoordinates(window, Helpers.ScreenHelper.Enum.WindowPositions.Center, Screen.PrimaryScreen);
-
-            //Debug.Print($"What {coords.Left} {window.Left}");
-
-            window.Left = PrimaryScreen.Bounds.X + PrimaryScreen.Bounds.Width / 2 - window.Width / 2;
-            window.Top = PrimaryScreen.Bounds.Y + PrimaryScreen.Bounds.Height / 2 - window.Height / 2;
+            var PrimaryMonitor = Monitors.Primary;
+            window.Left = PrimaryMonitor.Bounds.X + PrimaryMonitor.Bounds.Width / 2 - window.Width / 2;
+            window.Top = PrimaryMonitor.Bounds.Y + PrimaryMonitor.Bounds.Height / 2 - window.Height / 2;
         }
     }
 }
