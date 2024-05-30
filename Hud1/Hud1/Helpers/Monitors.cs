@@ -18,7 +18,6 @@ namespace Hud1.Helpers
 
         public bool Callback(nint monitor, nint hdc, nint lprcMonitor, nint lparam)
         {
-            Debug.Print("CallBACK", nameof(Screen));
             Monitors.Add(new Monitor(monitor, hdc));
             return true;
         }
