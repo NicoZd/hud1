@@ -1,5 +1,4 @@
-﻿using Hud1.Startup;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 
 namespace Hud1Tests;
 

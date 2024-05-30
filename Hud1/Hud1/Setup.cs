@@ -1,7 +1,6 @@
 ﻿using Hud1.Helpers;
 using Hud1.Models;
 using Hud1.ViewModels;
-using Hud1.Windows;
 using Stateless.Graph;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -11,7 +10,6 @@ using System.Windows;
 using Windows.ApplicationModel;
 using Windows.Services.Store;
 using Windows.Storage;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Hud1;
 

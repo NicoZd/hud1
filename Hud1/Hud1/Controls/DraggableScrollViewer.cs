@@ -62,7 +62,7 @@ internal class DraggableScrollViewer : ScrollViewer
 
     private void UpdatePosition(object? sender, EventArgs e)
     {
-        var target = VerticalOffset + (virtualVerticalOffset - VerticalOffset) * 0.3;
+        var target = VerticalOffset + ((virtualVerticalOffset - VerticalOffset) * 0.3);
         ScrollToVerticalOffset(target);
     }
 

@@ -19,7 +19,7 @@ public partial class MainWindowViewModel : ObservableObject
     public Visibility _hudVisibility = Visibility.Visible;
 
     internal nint Hwnd;
-    private WinEventDelegate winEventDelegate;
+    private readonly WinEventDelegate winEventDelegate;
 
     private delegate void WinEventDelegate(IntPtr hWinEventHook, uint eventType, IntPtr hwnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime);
 

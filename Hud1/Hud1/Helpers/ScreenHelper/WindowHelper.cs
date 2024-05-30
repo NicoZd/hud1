@@ -1,5 +1,4 @@
-﻿using Hud1.Helpers.ScreenHelper.Enum;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Windows;
 using System.Windows.Interop;
 

@@ -1,6 +1,5 @@
 ﻿using Hud1.Helpers;
 using Hud1.Helpers.ScreenHelper;
-using Hud1.Helpers.ScreenHelper.Enum;
 using Hud1.Models;
 using Hud1.ViewModels;
 using System.ComponentModel;
@@ -60,7 +59,7 @@ public partial class CrosshairWindow : Window
     {
         // current screen
         var screens = Screen.AllScreens;
-        var display = Int32.Parse(NavigationStates.CROSSHAIR_DISPLAY.SelectionLabel);
+        var display = int.Parse(NavigationStates.CROSSHAIR_DISPLAY.SelectionLabel);
 
         if (screens.Count() - 1 < display)
         {

@@ -121,7 +121,7 @@ public class CrosshairViewModel
     {
         return () =>
         {
-            var current = Int32.Parse(NavigationStates.CROSSHAIR_DISPLAY.SelectionLabel);
+            var current = int.Parse(NavigationStates.CROSSHAIR_DISPLAY.SelectionLabel);
             var next = Math.Min(Math.Max(current + dir, 0), Screen.AllScreens.Count() - 1);
             NavigationStates.CROSSHAIR_DISPLAY.SelectionLabel = "" + next;
         };
@@ -131,9 +131,9 @@ public class CrosshairViewModel
     {
         return () =>
         {
-            var current = Double.Parse(NavigationStates.CROSSHAIR_OPACITY.SelectionLabel);
+            var current = double.Parse(NavigationStates.CROSSHAIR_OPACITY.SelectionLabel);
             var next = Math.Min(Math.Max(current + dir, 0.1), 1);
-            NavigationStates.CROSSHAIR_OPACITY.SelectionLabel = "" + Math.Round(next * 10) / 10;
+            NavigationStates.CROSSHAIR_OPACITY.SelectionLabel = "" + (Math.Round(next * 10) / 10);
         };
     }
 
@@ -256,7 +256,7 @@ public class CrosshairViewModel
         //        drawingWithFixedSize.Children.Insert(0, new GeometryDrawing() { Geometry = areaGroup, Brush = Brushes.Red });
 
 
-        drawingWithFixedSize.Opacity = Double.Parse(NavigationStates.CROSSHAIR_OPACITY.SelectionLabel);
+        drawingWithFixedSize.Opacity = double.Parse(NavigationStates.CROSSHAIR_OPACITY.SelectionLabel);
 
         return drawingWithFixedSize;
     }
