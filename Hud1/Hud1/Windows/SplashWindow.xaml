@@ -1,16 +1,17 @@
 ﻿<Window    
-    x:Class="Hud1.Windows.SplashWindow"
-    x:Name="Self"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:local="clr-namespace:Hud1.Windows"    
-    xmlns:controls="clr-namespace:Hud1.Controls"    
+    xmlns:behaviors="clr-namespace:Hud1.Behaviors"
+    xmlns:controls="clr-namespace:Hud1.Controls"
     xmlns:viewModels="clr-namespace:Hud1.ViewModels"
     mc:Ignorable="d"
-    
+
+    x:Class="Hud1.Windows.SplashWindow"
+    x:Name="Self"
+
     WindowStyle="None"
     ShowActivated="False"
     AllowsTransparency="True"
@@ -19,9 +20,9 @@
     ResizeMode="NoResize"
     Focusable="False"
     
-    Background="Transparent"    
+    Background="Transparent"
     SnapsToDevicePixels="True"
-    UseLayoutRounding="True"    
+    UseLayoutRounding="True"
     
     d:DataContext="{d:DesignInstance Type=viewModels:SplashWindowViewModel}"
     DataContext="{Binding Source={x:Static viewModels:SplashWindowViewModel.Instance}}"
@@ -66,13 +67,12 @@
     </b:Interaction.Triggers>
 
     <b:Interaction.Behaviors>
-        <local:SplashWindowBehavior />
-        <controls:CloseWindowBehavior IsCloseActivated="{Binding IsCloseActivated}" />
+        <behaviors:SplashWindowLayoutBehavior />
+        <behaviors:CloseWindowBehavior IsCloseActivated="{Binding IsCloseActivated}" />
     </b:Interaction.Behaviors>
 
     <Grid >
         <Image Source="../Assets/splash.png"/>
-
         <Grid Margin="0,5,0,0">
             <TextBlock
                 Foreground="#9900ff00"
@@ -87,6 +87,5 @@
                 HorizontalAlignment="Center"
                 Text="{Binding SplashText, FallbackValue=...}"/>
         </Grid>
-
     </Grid>
 </Window>

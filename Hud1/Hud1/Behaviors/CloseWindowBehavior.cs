@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Windows;
 
-namespace Hud1.Controls;
+namespace Hud1.Behaviors;
 
 internal class CloseWindowBehavior : Behavior<Window>
 {

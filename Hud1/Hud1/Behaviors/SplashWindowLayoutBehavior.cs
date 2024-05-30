@@ -4,15 +4,11 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Interop;
 
-namespace Hud1.Windows;
+namespace Hud1.Behaviors;
 
 
-public class SplashWindowBehavior : Behavior<Window>
+public class SplashWindowLayoutBehavior : Behavior<Window>
 {
-#pragma warning disable CS8618
-    private Window window;
-#pragma warning restore CS8618
-
     protected override void OnAttached()
     {
         base.OnAttached();
@@ -27,7 +23,7 @@ public class SplashWindowBehavior : Behavior<Window>
 
     private void OnLoaded(object sender, RoutedEventArgs e)
     {
-        window = (Window)sender;
+        var window = (Window)AssociatedObject;
 
         var hwnd = new WindowInteropHelper(window).Handle;
         var extendedStyle = WindowsAPI.GetWindowLong(hwnd, WindowsAPI.GWL_EXSTYLE);
@@ -43,12 +39,12 @@ public class SplashWindowBehavior : Behavior<Window>
 
     private void OnDisplayChange()
     {
+        var window = (Window)AssociatedObject;
+
         var hwnd = new WindowInteropHelper(window).Handle;
         var monitor = Monitors.Primary;
         var x = monitor.Bounds.X + (monitor.Bounds.Width - window.Width * monitor.ScaleFactor) / 2;
         var y = monitor.Bounds.Y + (monitor.Bounds.Height - window.Height * monitor.ScaleFactor) / 2;
         WindowsAPI.SetWindowPosition(hwnd, x, y);
-
-
     }
 }

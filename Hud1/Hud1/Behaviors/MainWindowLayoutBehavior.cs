@@ -8,15 +8,11 @@ using System.Windows.Interop;
 using System.Windows.Media.Animation;
 using Windows.UI;
 
-namespace Hud1.Windows;
+namespace Hud1.Behaviors;
 
 
-public class MainWindowBehavior : Behavior<Window>
+public class MainWindowLayoutBehavior : Behavior<Window>
 {
-#pragma warning disable CS8618
-    private MainWindow _mainWindow;
-#pragma warning restore CS8618
-
     protected override void OnAttached()
     {
         base.OnAttached();
@@ -31,9 +27,9 @@ public class MainWindowBehavior : Behavior<Window>
 
     private void OnLoaded(object sender, RoutedEventArgs e)
     {
-        _mainWindow = (MainWindow)sender;
+        var mainWindow = (MainWindow)AssociatedObject;
 
-        Monitors.RegisterMonitorsChange(_mainWindow, () =>
+        Monitors.RegisterMonitorsChange(mainWindow, () =>
         {
             _ = OnDisplayChangeAsync();
         });
@@ -44,61 +40,56 @@ public class MainWindowBehavior : Behavior<Window>
                 _ = OnDisplayChangeAsync();
             }
         };
-
-        _mainWindow.Opacity = 0;
         _ = OnDisplayChangeAsync();
     }
 
 
     private async Task OnDisplayChangeAsync()
     {
-        var AllMonitors = Monitors.All;
+        var mainWindow = (MainWindow)AssociatedObject;
+        var hudPosition = MoreViewModel.Instance.HudPosition;
 
-        var monitorIndex = int.Parse(MoreViewModel.Instance.HudPosition.Split(":")[0]);
-        Debug.Print($"===============AllMonitors {AllMonitors.Count} {monitorIndex} {MoreViewModel.Instance.HudPosition}");
-        if (AllMonitors.Count - 1 < monitorIndex)
+        var monitors = Monitors.All;
+        var monitorIndex = int.Parse(hudPosition.Split(":")[0]);
+        var hudAlignment = hudPosition.Split(":")[1];
+
+        if (monitors.Count - 1 < monitorIndex)
         {
             MoreViewModel.Instance.ComputeNextHudPosition(0);
             return;
         }
 
-        var monitor = AllMonitors.ElementAt(monitorIndex);
-
-        var hwnd = new WindowInteropHelper(_mainWindow).Handle;
-
-        Storyboard fadeOut = (Storyboard)_mainWindow.FindResource("FadeOut");
-        await fadeOut.BeginAsync();
-
-        var hudAlignment = MoreViewModel.Instance.HudPosition.Split(":")[1];
-
+        var monitor = monitors.ElementAt(monitorIndex);
         var foreground = WindowsAPI.GetForegroundWindow();
+        var hwnd = new WindowInteropHelper(mainWindow).Handle;
         var wasForeground = foreground == hwnd;
 
         Debug.Print($"OnDisplayChangeAsync {monitorIndex} {monitor.Bounds} wasForeground: {wasForeground}");
 
+        await ((Storyboard)mainWindow.FindResource("FadeOut")).BeginAsync();
+
+        // apply layout
         if (hudAlignment == "Left")
         {
             WindowsAPI.SetWindowPosition(hwnd, monitor.Bounds.X, (int)monitor.Bounds.Y);
-            _mainWindow.GlassContainer.Margin = new Thickness(0, 0, 5, 0);
+            mainWindow.GlassContainer.Margin = new Thickness(0, 0, 5, 0);
 
         }
         else if (hudAlignment == "Right")
         {
-            WindowsAPI.SetWindowPosition(hwnd, monitor.Bounds.X + (monitor.Bounds.Width - _mainWindow.Width * monitor.ScaleFactor), monitor.Bounds.Y);
-            _mainWindow.GlassContainer.Margin = new Thickness(5, 0, 0, 0);
+            WindowsAPI.SetWindowPosition(hwnd, monitor.Bounds.X + (monitor.Bounds.Width - mainWindow.Width * monitor.ScaleFactor), monitor.Bounds.Y);
+            mainWindow.GlassContainer.Margin = new Thickness(5, 0, 0, 0);
         }
-        _mainWindow.Height = monitor.Bounds.Height / monitor.ScaleFactor;
+        mainWindow.Height = monitor.Bounds.Height / monitor.ScaleFactor;
 
+        // post operations
         if (wasForeground)
         {
-            _ = Application.Current.Dispatcher.InvokeAsync(() =>
-            {
-                MainWindowViewModel.Instance.ActivateWindow();
-            });
+            // For some unknown reason ActivateWindow must be called later when SetWindowPosition was called before
+            _ = Application.Current.Dispatcher.InvokeAsync(MainWindowViewModel.Instance.ActivateWindow);
         }
 
-        Storyboard fadeIn = (Storyboard)_mainWindow.FindResource("FadeIn");
-        fadeIn.Begin();
+        ((Storyboard)mainWindow.FindResource("FadeIn")).Begin();
     }
 
 }
