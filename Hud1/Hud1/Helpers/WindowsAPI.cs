@@ -77,7 +77,8 @@ public static class WindowsAPI
     {
         SWP_NOACTIVATE = 0x0010,
         SWP_NOMOVE = 0x0002,
-        SWP_NOSIZE = 0x0001
+        SWP_NOSIZE = 0x0001,
+        SWP_NOZORDER = 0x0004
     }
     [DllImport("user32.dll", ExactSpelling = true, SetLastError = true)]
     [return: MarshalAs(UnmanagedType.Bool)]
@@ -148,5 +149,10 @@ public static class WindowsAPI
             }
         }
         return false;
+    }
+
+    internal static void SetWindowPosition(nint hwnd, double x, double y)
+    {
+        WindowsAPI.SetWindowPos(hwnd, 0, (int)x, (int)y, 0, 0, WindowsAPI.SetWindowPosFlags.SWP_NOSIZE | WindowsAPI.SetWindowPosFlags.SWP_NOACTIVATE | WindowsAPI.SetWindowPosFlags.SWP_NOZORDER);
     }
 }

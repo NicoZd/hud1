@@ -6,9 +6,9 @@
     xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:Hud1.Windows"    
     xmlns:controls="clr-namespace:Hud1.Controls"    
     xmlns:viewModels="clr-namespace:Hud1.ViewModels"
-    xmlns:local="clr-namespace:Hud1.Windows"
     mc:Ignorable="d"
     
     WindowStyle="None"
@@ -66,7 +66,7 @@
     </b:Interaction.Triggers>
 
     <b:Interaction.Behaviors>
-        <controls:SplashWindowBehavior />
+        <local:SplashWindowBehavior />
         <controls:CloseWindowBehavior IsCloseActivated="{Binding IsCloseActivated}" />
     </b:Interaction.Behaviors>
 

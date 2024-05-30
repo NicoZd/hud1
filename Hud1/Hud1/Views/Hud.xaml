@@ -12,40 +12,25 @@
     d:DesignHeight="800"
     >
 
-    <Grid
-        HorizontalAlignment="Stretch"
+    <DockPanel 
         DataContext="{Binding Source={x:Static viewModels:HudViewModel.Instance}}"
+        Margin="15,5,15,15" 
+        Height="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Grid}},Path=ActualHeight}"
         >
-        <Grid.Style>
-            <Style TargetType="Grid">
-                <Style.Triggers>
-                    <DataTrigger Binding="{Binding Source={x:Static viewModels:MoreViewModel.Instance}, Path=HudAlignment}" Value="Right">
-                        <Setter Property="Margin" Value="5,0,0,0"/>
-                    </DataTrigger>
-                    <DataTrigger Binding="{Binding Source={x:Static viewModels:MoreViewModel.Instance}, Path=HudAlignment}" Value="Left">
-                        <Setter Property="Margin" Value="0,0,5,0"/>
-                    </DataTrigger>
-                </Style.Triggers>
-            </Style>
-        </Grid.Style>
 
-        <views:GlassPanel>
+        <StackPanel DockPanel.Dock="Top">
+            <Label Content="Game Direct" Style="{DynamicResource TitleLabel}" />
 
-            <DockPanel Margin="15,5,15,15" Height="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Grid}},Path=ActualHeight}">
+            <StackPanel Orientation="Vertical" Margin="0,0,0,0">
+                <Label Content="Press F2 to open and close this window." Style="{DynamicResource InfoLabelSecondary}" />
+                <Label Content="Use cursor keys to navigate and select." Style="{DynamicResource InfoLabelSecondary}" />
+            </StackPanel>
 
-                <StackPanel DockPanel.Dock="Top">
-                    <Label Content="Game Direct" Style="{DynamicResource TitleLabel}" />
-
-                    <StackPanel Orientation="Vertical" Margin="0,0,0,0">
-                        <Label Content="Press F2 to open and close this window." Style="{DynamicResource InfoLabelSecondary}" />
-                        <Label Content="Use cursor keys to navigate and select." Style="{DynamicResource InfoLabelSecondary}" />
-                    </StackPanel>
-
-                    <DockPanel 
+            <DockPanel 
                         Margin="0,15,0,0"                       
                         >
 
-                        <views:GlowBorderLabel    
+                <views:GlowBorderLabel    
                             DockPanel.Dock="Right"
                             Label="⚙" 
                             Selected="{Binding Path=States[MENU_MORE].Selected}"
@@ -54,11 +39,11 @@
                             NavigationState="{Binding Path=States[MENU_MORE]}"
                             />
 
-                        <StackPanel 
+                <StackPanel 
                             Orientation="Horizontal"
                             controls:Spacing.Horizontal="4">
 
-                            <views:GlowBorderLabel 
+                    <views:GlowBorderLabel 
                                 Label="Nightvision" 
                                 Selected="{Binding Path=States[MENU_NIGHTVISION].Selected}"
                                 Highlighted="{Binding Path=States[NIGHTVISION_VISIBLE].Selected}"
@@ -66,7 +51,7 @@
                                 NavigationState="{Binding Path=States[MENU_NIGHTVISION]}"
                                 />
 
-                            <views:GlowBorderLabel 
+                    <views:GlowBorderLabel 
                                 Label="Crosshair" 
                                 Selected="{Binding Path=States[MENU_CROSSHAIR].Selected}"
                                 Highlighted="{Binding Path=States[CROSSHAIR_VISIBLE].Selected}"
@@ -74,7 +59,7 @@
                                 NavigationState="{Binding Path=States[MENU_CROSSHAIR]}"
                                 />
 
-                            <views:GlowBorderLabel 
+                    <views:GlowBorderLabel 
                                 Label="Macros" 
                                 Selected="{Binding Path=States[MENU_MACRO].Selected}"
                                 Highlighted="{Binding Path=States[MACRO_VISIBLE].Selected}"
@@ -82,20 +67,20 @@
                                 NavigationState="{Binding Path=States[MENU_MACRO]}"
                                 />
 
-                            <Canvas Width="50"/>
-                        </StackPanel>
+                    <Canvas Width="50"/>
+                </StackPanel>
 
-                    </DockPanel>
+            </DockPanel>
 
-                    <Separator Margin="0,10,0,10" Background="{DynamicResource BrushSeparator}"/>
+            <Separator Margin="0,10,0,10" Background="{DynamicResource BrushSeparator}"/>
 
-                    <Grid
+            <Grid
                         VerticalAlignment="Center"
                         Background="{DynamicResource BrushColorMedLow}"
                         Focusable="False"
                         >
-                        <controls:IgnoreWidthControl Margin="0" Focusable="False">
-                            <TextBlock   
+                <controls:IgnoreWidthControl Margin="0" Focusable="False">
+                    <TextBlock   
                                 Focusable="false"
                                 Margin="5,3,5,2"
                                 Padding="0"
@@ -107,71 +92,71 @@
                                 FontSize="12"
                                 Text="{Binding State.Hint}"
                                 />
-                        </controls:IgnoreWidthControl>
-                    </Grid>
+                </controls:IgnoreWidthControl>
+            </Grid>
 
+        </StackPanel>
+
+        <Grid Margin="0,10,-15,0">
+
+            <Grid.OpacityMask>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <LinearGradientBrush.GradientStops>
+                        <GradientStop Offset="0.0" Color="Transparent"/>
+                        <GradientStop Offset="0.011" Color="#66000000"/>
+                        <GradientStop Offset="0.02" Color="Black"/>
+                        <GradientStop Offset="1" Color="Black"/>
+                    </LinearGradientBrush.GradientStops>
+                </LinearGradientBrush>
+            </Grid.OpacityMask>
+
+            <views:ScrollPanel Visibility="{Binding Path=States[NIGHTVISION_VISIBLE].Visibility}">
+                <StackPanel Margin="0,0,0,28" controls:Spacing.Vertical="8">
+                    <Label Content="Nightvision" Style="{DynamicResource TitleContent}"/>
+                    <views:BooleanPanel NavigationState="{Binding Path=States[NIGHTVISION_ENABLED]}" />
+                    <views:SelectionControl NavigationState="{Binding Path=States[GAMMA]}" />
                 </StackPanel>
+            </views:ScrollPanel>
 
-                <Grid Margin="0,10,-15,0">
+            <views:ScrollPanel Visibility="{Binding Path=States[CROSSHAIR_VISIBLE].Visibility}">
+                <StackPanel Margin="0,0,0,28" controls:Spacing.Vertical="8">
+                    <Label Content="Crosshair" Style="{DynamicResource TitleContent}"/>
+                    <views:BooleanPanel NavigationState="{Binding Path=States[CROSSHAIR_ENABLED]}" />
+                    <views:SelectionControl NavigationState="{Binding Path=States[CROSSHAIR_DISPLAY]}" />
+                    <views:SelectionControl NavigationState="{Binding Path=States[CROSSHAIR_FORM]}" />
+                    <views:SelectionControl NavigationState="{Binding Path=States[CROSSHAIR_COLOR]}" />
+                    <views:SelectionControl NavigationState="{Binding Path=States[CROSSHAIR_OPACITY]}" />
+                    <views:SelectionControl NavigationState="{Binding Path=States[CROSSHAIR_SIZE]}" />
+                    <views:BooleanPanel NavigationState="{Binding Path=States[CROSSHAIR_OUTLINE]}" />
+                </StackPanel>
+            </views:ScrollPanel>
 
-                    <Grid.OpacityMask>
-                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                            <LinearGradientBrush.GradientStops>
-                                <GradientStop Offset="0.0" Color="Transparent"/>
-                                <GradientStop Offset="0.011" Color="#66000000"/>
-                                <GradientStop Offset="0.02" Color="Black"/>
-                                <GradientStop Offset="1" Color="Black"/>
-                            </LinearGradientBrush.GradientStops>
-                        </LinearGradientBrush>
-                    </Grid.OpacityMask>
+            <views:ScrollPanel Visibility="{Binding Path=States[MACRO_VISIBLE].Visibility}">
+                <StackPanel Margin="0,0,0,28" controls:Spacing.Vertical="8">
+                    <views:MacrosView />
+                    <Label Content="Functions" Style="{DynamicResource TitleContent}"/>
+                    <views:ButtonPanel NavigationState="{Binding Path=States[MACROS_FOLDER]}"/>
+                </StackPanel>
+            </views:ScrollPanel>
 
-                    <views:ScrollPanel Visibility="{Binding Path=States[NIGHTVISION_VISIBLE].Visibility}">
-                        <StackPanel Margin="0,0,0,28" controls:Spacing.Vertical="8">
-                            <Label Content="Nightvision" Style="{DynamicResource TitleContent}"/>
-                            <views:BooleanPanel NavigationState="{Binding Path=States[NIGHTVISION_ENABLED]}" />
-                            <views:SelectionControl NavigationState="{Binding Path=States[GAMMA]}" />
-                        </StackPanel>
-                    </views:ScrollPanel>
+            <views:ScrollPanel Visibility="{Binding Path=States[MORE_VISIBLE].Visibility}">
+                <StackPanel Margin="0,0,0,28" controls:Spacing.Vertical="8">
 
-                    <views:ScrollPanel Visibility="{Binding Path=States[CROSSHAIR_VISIBLE].Visibility}">
-                        <StackPanel Margin="0,0,0,28" controls:Spacing.Vertical="8">
-                            <Label Content="Crosshair" Style="{DynamicResource TitleContent}"/>
-                            <views:BooleanPanel NavigationState="{Binding Path=States[CROSSHAIR_ENABLED]}" />
-                            <views:SelectionControl NavigationState="{Binding Path=States[CROSSHAIR_DISPLAY]}" />
-                            <views:SelectionControl NavigationState="{Binding Path=States[CROSSHAIR_FORM]}" />
-                            <views:SelectionControl NavigationState="{Binding Path=States[CROSSHAIR_COLOR]}" />
-                            <views:SelectionControl NavigationState="{Binding Path=States[CROSSHAIR_OPACITY]}" />
-                            <views:SelectionControl NavigationState="{Binding Path=States[CROSSHAIR_SIZE]}" />
-                            <views:BooleanPanel NavigationState="{Binding Path=States[CROSSHAIR_OUTLINE]}" />
-                        </StackPanel>
-                    </views:ScrollPanel>
+                    <Label Content="Functions" Style="{DynamicResource TitleContent}"/>
+                    <views:ButtonPanel NavigationState="{Binding Path=States[EXIT]}"/>
+                    <!--<views:ButtonPanel NavigationState="{Binding Path=States[ACTIVATE]}"/>-->
 
-                    <views:ScrollPanel Visibility="{Binding Path=States[MACRO_VISIBLE].Visibility}">
-                        <StackPanel Margin="0,0,0,28" controls:Spacing.Vertical="8">
-                            <views:MacrosView />
-                            <Label Content="Functions" Style="{DynamicResource TitleContent}"/>
-                            <views:ButtonPanel NavigationState="{Binding Path=States[MACROS_FOLDER]}"/>
-                        </StackPanel>
-                    </views:ScrollPanel>
+                    <Label Content="Settings" Style="{DynamicResource TitleContent}"/>
+                    <views:SelectionControl NavigationState="{Binding Path=States[HUD_POSITION]}" />
+                    <views:BooleanPanel NavigationState="{Binding Path=States[TOUCH_MODE]}" />
 
-                    <views:ScrollPanel Visibility="{Binding Path=States[MORE_VISIBLE].Visibility}">
-                        <StackPanel Margin="0,0,0,28" controls:Spacing.Vertical="8">
+                    <Label Content="Style" Style="{DynamicResource TitleContent}"/>
+                    <views:SelectionControl NavigationState="{Binding Path=States[STYLE]}" />
+                    <views:SelectionControl NavigationState="{Binding Path=States[FONT]}" />
 
-                            <Label Content="Functions" Style="{DynamicResource TitleContent}"/>
-                            <views:ButtonPanel NavigationState="{Binding Path=States[EXIT]}"/>
-                            <!--<views:ButtonPanel NavigationState="{Binding Path=States[ACTIVATE]}"/>-->
-
-                            <Label Content="Settings" Style="{DynamicResource TitleContent}"/>
-                            <views:SelectionControl NavigationState="{Binding Path=States[HUD_POSITION]}" />
-                            <views:BooleanPanel NavigationState="{Binding Path=States[TOUCH_MODE]}" />
-
-                            <Label Content="Style" Style="{DynamicResource TitleContent}"/>
-                            <views:SelectionControl NavigationState="{Binding Path=States[STYLE]}" />
-                            <views:SelectionControl NavigationState="{Binding Path=States[FONT]}" />
-
-                            <Label Content="Quickhelp" Style="{DynamicResource TitleContent}"/>
-                            <controls:IgnoreWidthControl Margin="0"  Focusable="False">
-                                <TextBlock   
+                    <Label Content="Quickhelp" Style="{DynamicResource TitleContent}"/>
+                    <controls:IgnoreWidthControl Margin="0"  Focusable="False">
+                        <TextBlock   
                                     Focusable="false"
                                     Margin="5,4,5,0"
                                     Padding="0"
@@ -185,15 +170,13 @@
                                     • Keys to open and close this window:<LineBreak/>
                                     &#160;&#160;&#160;• F2, ALT-S, ALT-F or ALT-L<LineBreak/>
                                     • Use cursor keys, mouse or touch to navigate and select.
-                                </TextBlock>
-                            </controls:IgnoreWidthControl>
+                        </TextBlock>
+                    </controls:IgnoreWidthControl>
 
-                        </StackPanel>
-                    </views:ScrollPanel>
+                </StackPanel>
+            </views:ScrollPanel>
 
-                </Grid>
+        </Grid>
 
-            </DockPanel>
-        </views:GlassPanel>
-    </Grid>
+    </DockPanel>
 </UserControl>

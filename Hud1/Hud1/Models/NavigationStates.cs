@@ -36,7 +36,6 @@ public class NavigationStates
 
     // MORE
     public static readonly NavigationState EXIT = new() { Label = "Exit", Hint = "Exit HUD and terminate process." };
-    public static readonly NavigationState ACTIVATE = new() { Label = "Capture Mouse", Hint = "Activate this Window to capture mouse once." };
 
     public static readonly NavigationState HUD_POSITION = new() { Label = "HUD Position", Hint = "Select Position of the HUD" };
     public static readonly NavigationState TOUCH_MODE = new() { Label = "Touch Mode", Hint = "Don't activate this window on mouse or touch interaction.", SelectionLeftLabel = "< Off", SelectionRightLabel = "On >" };

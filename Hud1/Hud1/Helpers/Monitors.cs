@@ -45,7 +45,6 @@ internal class Monitor
             info.rcMonitor.top,
             info.rcMonitor.right - info.rcMonitor.left,
             info.rcMonitor.bottom - info.rcMonitor.top);
-        Bounds.Scale(1 / ScaleFactor, 1 / ScaleFactor);
         IsPrimary = (info.dwFlags & MONITORINFOF_PRIMARY) != 0;
     }
 }

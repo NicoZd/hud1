@@ -24,58 +24,58 @@ public partial class MainWindow : Window
     private MainWindow()
     {
         Opacity = 0;
-        MoreViewModel.Instance.PropertyChanged += OnPropertyChanged;
+        //MoreViewModel.Instance.PropertyChanged += OnPropertyChanged;
         InitializeComponent();
     }
 
-    private void OnPropertyChanged(object? sender, PropertyChangedEventArgs e)
-    {
-        if (e.PropertyName == nameof(MoreViewModel.Instance.HudPosition))
-        {
-            _ = ApplyHudPosition(true);
-        }
-    }
+    //private void OnPropertyChanged(object? sender, PropertyChangedEventArgs e)
+    //{
+    //    if (e.PropertyName == nameof(MoreViewModel.Instance.HudPosition))
+    //    {
+    //        _ = ApplyHudPosition(true);
+    //    }
+    //}
 
-    private async Task ApplyHudPosition(bool animate)
-    {
-        var screens = Screen.AllScreens;
-        var screenIndex = int.Parse(MoreViewModel.Instance.HudPosition.Split(":")[0]);
+    //private async Task ApplyHudPosition(bool animate)
+    //{
+    //    var screens = Screen.AllScreens;
+    //    var screenIndex = int.Parse(MoreViewModel.Instance.HudPosition.Split(":")[0]);
 
-        if (screens.Count() - 1 < screenIndex)
-        {
-            MoreViewModel.Instance.ComputeNextHudPosition(0);
-            return;
-        }
+    //    if (screens.Count() - 1 < screenIndex)
+    //    {
+    //        MoreViewModel.Instance.ComputeNextHudPosition(0);
+    //        return;
+    //    }
 
-        if (animate)
-            Opacity = 0;
+    //    if (animate)
+    //        Opacity = 0;
 
-        await Task.Delay(30);
+    //    await Task.Delay(30);
 
-        var aligmnent = MoreViewModel.Instance.HudAlignment == "Left" ? WindowPositions.Left2 : WindowPositions.Right2;
+    //    var aligmnent = MoreViewModel.Instance.HudAlignment == "Left" ? WindowPositions.Left2 : WindowPositions.Right2;
 
-        var screen = screens.ElementAt(screenIndex);
-        this.SetWindowPosition(aligmnent, screen);
+    //    var screen = screens.ElementAt(screenIndex);
+    //    this.SetWindowPosition(aligmnent, screen);
 
-        await Task.Delay(30);
+    //    await Task.Delay(30);
 
-        if (animate)
-        {
-            var animation = new DoubleAnimation
-            {
-                To = 1,
-                BeginTime = TimeSpan.FromSeconds(0.0),
-                Duration = TimeSpan.FromSeconds(0.15),
-                FillBehavior = FillBehavior.Stop
-            };
+    //    if (animate)
+    //    {
+    //        var animation = new DoubleAnimation
+    //        {
+    //            To = 1,
+    //            BeginTime = TimeSpan.FromSeconds(0.0),
+    //            Duration = TimeSpan.FromSeconds(0.15),
+    //            FillBehavior = FillBehavior.Stop
+    //        };
 
-            animation.Completed += (s, a) =>
-            {
-                Opacity = 1;
-            };
-            BeginAnimation(UIElement.OpacityProperty, animation);
-        }
-    }
+    //        animation.Completed += (s, a) =>
+    //        {
+    //            Opacity = 1;
+    //        };
+    //        BeginAnimation(UIElement.OpacityProperty, animation);
+    //    }
+    //}
 
     private void OnWindowActivated(object sender, EventArgs e)
     {
@@ -102,7 +102,7 @@ public partial class MainWindow : Window
         dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
         dispatcherTimer.Start();
 
-        _ = ApplyHudPosition(false);
+        //_ = ApplyHudPosition(false);
 
         NavigationStates.TOUCH_MODE.PropertyChanged += (_, e) =>
         {
@@ -120,7 +120,7 @@ public partial class MainWindow : Window
         GlobalKeyboardHook.KeyDown += HandleKeyDown;
         GlobalKeyboardHook.SystemHook();
 
-        FadeIn();
+        //FadeIn();
     }
 
     private void UpdateTouchMode()
@@ -137,7 +137,7 @@ public partial class MainWindow : Window
 
         if (!NavigationStates.TOUCH_MODE.SelectionBoolean)
         {
-            MainWindowViewModel.Instance.Activate();
+            MainWindowViewModel.Instance.ActivateWindow();
         }
     }
 
@@ -153,7 +153,7 @@ public partial class MainWindow : Window
         if (msg == 126)
         {
             Debug.Print("Resolution or DPI Change {0}", msg);
-            _ = ApplyHudPosition(true);
+            //_ = ApplyHudPosition(true);
             return IntPtr.Zero;
         }
 
@@ -197,32 +197,32 @@ public partial class MainWindow : Window
 
     }
 
-    private void FadeIn()
-    {
-        Opacity = 0;
+    //private void FadeIn()
+    //{
+    //    Opacity = 0;
 
-        var crosshairWindow = new CrosshairWindow
-        {
-            Opacity = 0
-        };
-        crosshairWindow.Show();
+    //    //var crosshairWindow = new CrosshairWindow
+    //    //{
+    //    //    Opacity = 0
+    //    //};
+    //    //crosshairWindow.Show();
 
-        var animation = new DoubleAnimation
-        {
-            To = 1,
-            BeginTime = TimeSpan.FromSeconds(0.15),
-            Duration = TimeSpan.FromSeconds(0.15),
-            FillBehavior = FillBehavior.Stop
-        };
+    //    var animation = new DoubleAnimation
+    //    {
+    //        To = 1,
+    //        BeginTime = TimeSpan.FromSeconds(0.15),
+    //        Duration = TimeSpan.FromSeconds(0.15),
+    //        FillBehavior = FillBehavior.Stop
+    //    };
 
-        animation.Completed += (s, a) =>
-        {
-            crosshairWindow.Opacity = 1;
-            Opacity = 1;
-        };
+    //    animation.Completed += (s, a) =>
+    //    {
+    //        //crosshairWindow.Opacity = 1;
+    //        Opacity = 1;
+    //    };
 
-        Console.WriteLine("MainWindow FadeIn {0}", Entry.Millis());
-        BeginAnimation(UIElement.OpacityProperty, animation);
-        crosshairWindow.BeginAnimation(UIElement.OpacityProperty, animation);
-    }
+    //    Console.WriteLine("MainWindow FadeIn {0}", Entry.Millis());
+    //    BeginAnimation(UIElement.OpacityProperty, animation);
+    //    //crosshairWindow.BeginAnimation(UIElement.OpacityProperty, animation);
+    //}
 }

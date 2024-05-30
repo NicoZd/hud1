@@ -1,9 +1,10 @@
 ﻿using Hud1.Helpers;
 using Microsoft.Xaml.Behaviors;
+using System.Threading;
 using System.Windows;
 using System.Windows.Interop;
 
-namespace Hud1.Controls;
+namespace Hud1.Windows;
 
 
 public class SplashWindowBehavior : Behavior<Window>
@@ -42,8 +43,12 @@ public class SplashWindowBehavior : Behavior<Window>
 
     private void OnDisplayChange()
     {
-        var PrimaryMonitor = Monitors.Primary;
-        window.Left = PrimaryMonitor.Bounds.X + (PrimaryMonitor.Bounds.Width / 2) - (window.Width / 2);
-        window.Top = PrimaryMonitor.Bounds.Y + (PrimaryMonitor.Bounds.Height / 2) - (window.Height / 2);
+        var hwnd = new WindowInteropHelper(window).Handle;
+        var monitor = Monitors.Primary;
+        var x = monitor.Bounds.X + (monitor.Bounds.Width - window.Width * monitor.ScaleFactor) / 2;
+        var y = monitor.Bounds.Y + (monitor.Bounds.Height - window.Height * monitor.ScaleFactor) / 2;
+        WindowsAPI.SetWindowPosition(hwnd, x, y);
+
+
     }
 }

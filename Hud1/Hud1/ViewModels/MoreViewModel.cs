@@ -1,9 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Hud1.Helpers;
 using Hud1.Helpers.ScreenHelper;
 using Hud1.Models;
 using System.IO;
 using System.Windows;
 using System.Windows.Media;
+using System.Xml.Linq;
 
 namespace Hud1.ViewModels;
 
@@ -15,9 +17,6 @@ public partial class MoreViewModel : ObservableObject
 
     [ObservableProperty]
     private string _hudPosition = "0:Right";
-
-    [ObservableProperty]
-    private string _hudAlignment = "Right";
 
     private MoreViewModel()
     {
@@ -32,10 +31,6 @@ public partial class MoreViewModel : ObservableObject
         NavigationStates.EXIT.RightAction = Shutdown;
         Navigation.Configure(NavigationStates.EXIT)
             .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.EXIT.ExecuteRight);
-
-        NavigationStates.ACTIVATE.RightAction = Activate;
-        Navigation.Configure(NavigationStates.ACTIVATE)
-            .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.ACTIVATE.ExecuteRight);
 
         NavigationStates.HUD_POSITION.LeftAction = SelectHudPos(-1);
         NavigationStates.HUD_POSITION.RightAction = SelectHudPos(1);
@@ -95,11 +90,12 @@ public partial class MoreViewModel : ObservableObject
     public void ComputeNextHudPosition(int dir)
     {
         Console.WriteLine("Compute Hud Pos {0}", dir);
-        var screenCount = Screen.AllScreens.Count();
+        var monitors = Monitors.All;
+        var monitorCount = monitors.Count;
         string[] positions = ["Left", "Right"];
 
         List<string> options = [];
-        for (var screenIndex = 0; screenIndex < screenCount; screenIndex++)
+        for (var screenIndex = 0; screenIndex < monitorCount; screenIndex++)
         {
             for (var positionIndex = 0; positionIndex < positions.Length; positionIndex++)
             {
@@ -110,6 +106,7 @@ public partial class MoreViewModel : ObservableObject
         }
 
         var currentOptionIndex = options.IndexOf(HudPosition);
+        Console.WriteLine($"current {HudPosition} {currentOptionIndex}");
         if (currentOptionIndex == -1)
         {
             currentOptionIndex = 0;
@@ -119,23 +116,15 @@ public partial class MoreViewModel : ObservableObject
             currentOptionIndex += dir;
         }
         var newIndex = Math.Min(Math.Max(currentOptionIndex, 0), options.Count - 1);
-
+        var newHudPosition = options[newIndex];
         HudPosition = options[newIndex];
-        HudAlignment = HudPosition.Split(":")[1];
 
-        NavigationStates.HUD_POSITION.SelectionLabel = "Display " + HudPosition.Split(":")[0] + ", " + HudAlignment;
-    }
-
-    private void Activate()
-    {
-        Console.WriteLine("Activate");
-        MainWindowViewModel.Instance?.Activate();
+        NavigationStates.HUD_POSITION.SelectionLabel = "Display " + HudPosition.Split(":")[0] + ", " + HudPosition.Split(":")[1];
     }
 
     private void NextStyle()
     {
         SelectStyle(1);
-
     }
 
     private void PrevStyle()

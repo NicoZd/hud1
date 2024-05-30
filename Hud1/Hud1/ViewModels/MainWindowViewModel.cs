@@ -78,12 +78,6 @@ public partial class MainWindowViewModel : ObservableObject
         }
     }
 
-
-    internal void Activate()
-    {
-        ActivateWindow();
-    }
-
     internal void HandleKeyActivator()
     {
         Console.WriteLine("HandleKeyActivator");
