@@ -1,31 +1,48 @@
-﻿<Window 
-    x:Class="Hud1.SplashWindow"
+﻿<Window    
+    x:Class="Hud1.Windows.SplashWindow"
+    x:Name="Self"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="clr-namespace:Hud1.Controls"    
+    xmlns:viewModels="clr-namespace:Hud1.ViewModels"
+    xmlns:local="clr-namespace:Hud1.Windows"
     mc:Ignorable="d"
-    Title="SplashWindow"
     
-    AllowsTransparency="True"
     WindowStyle="None"
+    ShowActivated="False"
+    AllowsTransparency="True"
     Topmost="True"
     ShowInTaskbar="False"
-    ResizeMode="NoResize"       
-    ShowActivated="False"
+    ResizeMode="NoResize"
+    Focusable="False"
     
+    Background="Transparent"    
     SnapsToDevicePixels="True"
-    Focusable="False"        
+    UseLayoutRounding="True"    
+    
+    d:DataContext="{d:DesignInstance Type=viewModels:SplashWindowViewModel}"
+    DataContext="{Binding Source={x:Static viewModels:SplashWindowViewModel.Instance}}"
+    
     Width="676"
     Height="396"
-    Loaded="OnWindowLoaded"    
-    DataContext="{Binding RelativeSource={RelativeSource Self}}"
-    Background="Transparent"
-    UseLayoutRounding="True"
     >
 
+    <b:Interaction.Triggers>
+        <b:EventTrigger EventName="Loaded">
+            <b:InvokeCommandAction Command="{Binding LoadCommand}" CommandParameter="{Binding ElementName=Self}"/>
+        </b:EventTrigger>
+    </b:Interaction.Triggers>
+
+    <b:Interaction.Behaviors>
+        <controls:SplashWindowBehavior />
+        <controls:CloseWindowBehavior IsCloseActivated="{Binding IsCloseActivated}" />
+    </b:Interaction.Behaviors>
+
     <Grid >
-        <Image Source="../Assets/splash.png" />
+        <Image Source="../Assets/splash.png"/>
 
         <Grid Margin="0,5,0,0">
             <TextBlock
@@ -34,7 +51,6 @@
                 VerticalAlignment="Top"
                 HorizontalAlignment="Center"
                 Text="Game Direct"/>
-
             <TextBlock
                 Foreground="#99008800"
                 Margin="0,246,0,0"
@@ -42,5 +58,6 @@
                 HorizontalAlignment="Center"
                 Text="{Binding SplashText, FallbackValue=...}"/>
         </Grid>
+
     </Grid>
 </Window>

@@ -1,6 +1,7 @@
 ﻿using Hud1.Helpers;
 using Hud1.Models;
 using Hud1.ViewModels;
+using Hud1.Windows;
 using Stateless.Graph;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -10,6 +11,7 @@ using System.Windows;
 using Windows.ApplicationModel;
 using Windows.Services.Store;
 using Windows.Storage;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Hud1;
 
@@ -165,8 +167,7 @@ public class Setup
     private static async Task ShowSplash(string text)
     {
         Console.WriteLine($"Startup ShowSplash: {text} {Entry.Millis()}");
-        if (SplashWindow.Instance != null)
-            SplashWindow.Instance.SplashText = text;
+        SplashWindowViewModel.Instance.SplashText = text;
         await Task.Delay(TimeSpan.FromMilliseconds(20));
     }
 
@@ -192,7 +193,7 @@ public class Setup
         {
             await ShowSplash("Could not stop existing window - shutting down.. :(");
             await Task.Delay(1000);
-            SplashWindow.Instance?.Close();
+            SplashWindowViewModel.Instance.IsCloseActivated = true;
         }
     }
 
@@ -284,13 +285,15 @@ public class Setup
 
         if (!appLicense.IsActive)
         {
-            SplashWindow.Instance?.Close();
+            SplashWindowViewModel.Instance.IsCloseActivated = true;
             if (MessageBox.Show("App License is inactive. Unfortunately the application must shutdown. Do you want to open the App in the Microsoft Store?", "Game Direct", MessageBoxButton.YesNo, MessageBoxImage.Asterisk) == MessageBoxResult.Yes)
+            {
                 Process.Start(new ProcessStartInfo
                 {
                     FileName = "ms-windows-store://pdp/?productid=9NCQ2311M9XV",
                     UseShellExecute = true
                 });
+            }
         }
     }
 }

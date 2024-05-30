@@ -14,6 +14,7 @@ public partial class App : Application
     public App()
     {
         Debug.Print("App {0} {1} {2}", Entry.Millis(), ShutdownMode, MainWindow);
+        // PresentationTraceSources.DataBindingSource.Switch.Level = SourceLevels.All;
         InitializeComponent();
     }
 

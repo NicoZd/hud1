@@ -88,7 +88,7 @@ public static class WindowHelper
     /// <summary>
     /// Calculates window end position.
     /// </summary>
-    private static Rect CalculateWindowCoordinates(FrameworkElement window, WindowPositions pos, Screen screen)
+    public static Rect CalculateWindowCoordinates(FrameworkElement window, WindowPositions pos, Screen screen)
     {
         switch (pos)
         {

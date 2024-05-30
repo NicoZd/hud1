@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
@@ -54,7 +55,7 @@ public class Screen
     /// </summary>
     /// <param name="monitor">The monitor.</param>
     /// <param name="hdc">The hdc.</param>
-    private Screen(nint monitor, nint hdc)
+    public Screen(nint monitor, nint hdc)
     {
         if (NativeMethods.IsProcessDPIAware())
         {
@@ -303,6 +304,7 @@ public class Screen
 
         public bool Callback(nint monitor, nint hdc, nint lprcMonitor, nint lparam)
         {
+            Debug.Print("CallBACK");
             Screens.Add(new Screen(monitor, hdc));
             return true;
         }

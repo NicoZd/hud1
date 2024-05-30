@@ -2,48 +2,42 @@
 using Hud1.Helpers;
 using Hud1.Helpers.ScreenHelper;
 using Hud1.Helpers.ScreenHelper.Enum;
+using Hud1.ViewModels;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media.Animation;
 
-namespace Hud1;
+namespace Hud1.Windows;
 
-[INotifyPropertyChanged]
 public partial class SplashWindow : Window
 {
-    public static SplashWindow? Instance;
-
-    [ObservableProperty]
-    private string _splashText;
-
     public SplashWindow()
     {
         Debug.Print("SplashWindow {0}", Entry.Millis());
         Application.Current.MainWindow = this;
 
-        Instance = this;
-        Opacity = 0;
+        //DataContext = mew SplashWindowViewModel.Instance;
 
-        SplashText = "Start";
+        //Opacity = 0;
+
+
+        //((SplashWindowViewModel)DataContext).OnWindowLoaded(this);
+        //SplashWindowViewModel.Instance.OnWindowLoaded(this);
         InitializeComponent();
+
     }
 
     private void OnWindowLoaded(object sender, RoutedEventArgs e)
     {
-        Debug.Print("SplashWindow OnWindowLoaded {0}", Entry.Millis());
-        var hwnd = new WindowInteropHelper(this).Handle;
-        var extendedStyle = WindowsAPI.GetWindowLong(hwnd, WindowsAPI.GWL_EXSTYLE);
-        WindowsAPI.SetWindowLong(hwnd, WindowsAPI.GWL_EXSTYLE,
-            extendedStyle
-            | WindowsAPI.WS_EX_NOACTIVATE
-            | WindowsAPI.WS_EX_TRANSPARENT
-            );
 
-        this.SetWindowPosition(WindowPositions.Center, Screen.PrimaryScreen);
 
-        FadeIn();
+        //this.SetWindowPosition(WindowPositions.Center, Screen.PrimaryScreen);
+
+
+
+        //FadeIn();
     }
 
     private void FadeIn()
