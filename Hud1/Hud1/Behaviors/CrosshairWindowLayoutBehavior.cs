@@ -95,7 +95,7 @@ public class CrosshairWindowLayoutBehavior : Behavior<CrosshairWindow>
         var hwnd = new WindowInteropHelper(window).Handle;
         var foregroundRestorer = new MainWindowForegroundRestorer();
 
-        Debug.Print($"CrosshairWindowLayoutBehavior OnMonitorsChangeAsync {monitorIndex} {monitor.Bounds}  selectionLabel: {selectionLabel}");
+        Debug.Print($"CrosshairWindowLayoutBehavior OnMonitorsChangeAsync {monitorIndex} {monitor.DeviceName} {monitor.Bounds}  selectionLabel: {selectionLabel}");
 
         await ((Storyboard)window.FindResource("FadeOut")).BeginAsync();
 
