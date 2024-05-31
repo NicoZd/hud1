@@ -51,40 +51,4 @@ public partial class MainWindow : Window
         MainWindowViewModel.Instance.Active = true;
         MainWindowViewModel.Instance.HudVisibility = Visibility.Visible;
     }
-
-    private void OnWindowLoaded(object sender, RoutedEventArgs e)
-    {
-        Debug.WriteLine("MainWindow OnWindowLoaded");
-
-        NavigationStates.TOUCH_MODE.PropertyChanged += (_, e) =>
-        {
-            if (e.PropertyName == nameof(NavigationStates.TOUCH_MODE.SelectionBoolean))
-            {
-                Debug.Print("TOUCH_MODE {0}", NavigationStates.TOUCH_MODE.SelectionBoolean);
-
-                UpdateTouchMode();
-            }
-        };
-        UpdateTouchMode();
-    }
-
-    private void UpdateTouchMode()
-    {
-        var hwnd = new WindowInteropHelper(this).Handle;
-
-        var extendedStyle = WindowsAPI.GetWindowLong(hwnd, WindowsAPI.GWL_EXSTYLE);
-
-        var newStyle = NavigationStates.TOUCH_MODE.SelectionBoolean ?
-            extendedStyle | WindowsAPI.WS_EX_NOACTIVATE :
-            extendedStyle & ~WindowsAPI.WS_EX_NOACTIVATE;
-
-        Debug.Print("UpdateTouchMode {0} {1} {2}", NavigationStates.TOUCH_MODE.SelectionBoolean, extendedStyle, newStyle);
-
-        WindowsAPI.SetWindowLong(hwnd, WindowsAPI.GWL_EXSTYLE, newStyle);
-
-        if (!NavigationStates.TOUCH_MODE.SelectionBoolean)
-        {
-            MainWindow.Instance!.ActivateWindow();
-        }
-    }
 }

@@ -29,7 +29,6 @@
     Width="450"
 
     Activated="OnWindowActivated"
-    Loaded="OnWindowLoaded"
 
     d:DesignHeight="800"    
     >
@@ -62,6 +61,7 @@
         <behaviors:SystemHooksBehavior/>
         <behaviors:ComputeIsForegroundBehavior/>
         <behaviors:MainWindowKeyActivationBehavior/>
+        <behaviors:MainWindowTouchModeBehavior/>
     </b:Interaction.Behaviors>
 
     <Grid x:Name="GlassContainer" Visibility="{Binding Path=HudVisibility}">
