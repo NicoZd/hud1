@@ -1,4 +1,5 @@
-﻿using Hud1.Helpers.ScreenHelper;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Hud1.Helpers.ScreenHelper;
 using Hud1.Models;
 using System.Diagnostics;
 using System.Windows;
@@ -7,9 +8,17 @@ using System.Windows.Media;
 
 namespace Hud1.ViewModels;
 
-public class CrosshairViewModel
+public partial class CrosshairViewModel : ObservableObject
 {
     public static readonly CrosshairViewModel Instance = new();
+
+    [ObservableProperty]
+    private Image _crosshairImage = new Image();
+
+    // dpi scales for main and crosshair Window Monitors
+    public double dpiScaleMain = 1.0;
+    public double dpiScaleCrosshair = 1.0;
+
     private Dictionary<string, Func<int, Brush, bool, Drawing>> FormRenderFunctions = [];
     private readonly Dictionary<string, Brush> ColorOptions = [];
 
@@ -117,7 +126,7 @@ public class CrosshairViewModel
             ]);
     }
 
-    private Action ChangeDisplay(int dir)
+    public Action ChangeDisplay(int dir)
     {
         return () =>
         {
@@ -137,7 +146,7 @@ public class CrosshairViewModel
         };
     }
 
-    public void Redraw(Grid grid)
+    public void Redraw()
     {
         Debug.Print("Enabled {0}", NavigationStates.CROSSHAIR_ENABLED.SelectionBoolean);
         Debug.Print("Form {0}", NavigationStates.CROSSHAIR_FORM.SelectionLabel);
@@ -157,9 +166,6 @@ public class CrosshairViewModel
         var formFunction = FormRenderFunctions[NavigationStates.CROSSHAIR_FORM.SelectionLabel];
         var geometryDrawing = GetGeometryDrawing(scale, color, formFunction);
 
-        var screen = Screen.AllScreens.ElementAt(0);
-        var dpiScale = 1 / screen.ScaleFactor;
-
         DrawingImage drawingImage = new(geometryDrawing);
         drawingImage.Freeze();
 
@@ -167,16 +173,15 @@ public class CrosshairViewModel
         {
             Source = drawingImage,
             Stretch = Stretch.None,
-            RenderTransform = new ScaleTransform(dpiScale, dpiScale, drawingImage.Width / 2, drawingImage.Height / 2),
+            RenderTransform = new ScaleTransform(dpiScaleCrosshair, dpiScaleCrosshair, drawingImage.Width / 2, drawingImage.Height / 2),
         };
 
-        grid.Children.Clear();
-        grid.Children.Add(image);
+        CrosshairImage = image;
 
-        UpdateAllOptions(scale, color, formFunction, dpiScale);
+        UpdateAllOptions(scale, color, formFunction);
     }
 
-    private void UpdateAllOptions(int scale, Brush color, Func<int, Brush, bool, Drawing> formFunction, double dpiScale)
+    private void UpdateAllOptions(int scale, Brush color, Func<int, Brush, bool, Drawing> formFunction)
     {
         foreach (var option in NavigationStates.CROSSHAIR_FORM.Options)
         {
@@ -191,7 +196,7 @@ public class CrosshairViewModel
             {
                 Source = drawingImage,
                 Stretch = Stretch.None,
-                RenderTransform = new ScaleTransform(dpiScale, dpiScale, drawingImage.Width / 2, drawingImage.Height / 2),
+                RenderTransform = new ScaleTransform(dpiScaleMain, dpiScaleMain, drawingImage.Width / 2, drawingImage.Height / 2),
                 Margin = new Thickness(4, 0, 4, 0)
             };
 
@@ -235,7 +240,7 @@ public class CrosshairViewModel
             {
                 Source = drawingImage,
                 Stretch = Stretch.None,
-                RenderTransform = new ScaleTransform(dpiScale, dpiScale, drawingImage.Width / 2, drawingImage.Height / 2),
+                RenderTransform = new ScaleTransform(dpiScaleMain, dpiScaleMain, drawingImage.Width / 2, drawingImage.Height / 2),
                 Margin = new Thickness(4, 0, 4, 0)
             };
 

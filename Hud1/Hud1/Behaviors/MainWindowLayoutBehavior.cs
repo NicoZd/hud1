@@ -10,11 +10,10 @@ using System.Windows.Media.Animation;
 namespace Hud1.Behaviors;
 
 
-public class MainWindowLayoutBehavior : Behavior<Window>
+public class MainWindowLayoutBehavior : Behavior<MainWindow>
 {
     private bool _running = false;
     private readonly Queue<string> _runningUpdates = [];
-
 
     protected override void OnAttached()
     {
@@ -30,10 +29,10 @@ public class MainWindowLayoutBehavior : Behavior<Window>
 
     private void OnLoaded(object sender, RoutedEventArgs e)
     {
-        var mainWindow = (MainWindow)AssociatedObject;
-        mainWindow.Opacity = 0;
+        var window = AssociatedObject;
+        window.Opacity = 0;
 
-        Monitors.RegisterMonitorsChange(mainWindow, () =>
+        Monitors.RegisterMonitorsChange(window, () =>
         {
             _ = OnMonitorsChangeAsync(MoreViewModel.Instance.HudPosition);
         });
@@ -78,7 +77,7 @@ public class MainWindowLayoutBehavior : Behavior<Window>
 
     private async Task UpdateWindowPosition(string hudPosition)
     {
-        var mainWindow = (MainWindow)AssociatedObject;
+        var mainWindow = AssociatedObject;
 
         var monitors = Monitors.All;
         var monitorIndex = int.Parse(hudPosition.Split(":")[0]);
@@ -86,16 +85,16 @@ public class MainWindowLayoutBehavior : Behavior<Window>
 
         if (monitors.Count - 1 < monitorIndex)
         {
+            await Task.Delay(100);
             MoreViewModel.Instance.ComputeNextHudPosition(0);
             return;
         }
 
         var monitor = monitors.ElementAt(monitorIndex);
-        var foreground = WindowsAPI.GetForegroundWindow();
         var hwnd = new WindowInteropHelper(mainWindow).Handle;
-        var wasForeground = foreground == hwnd;
+        var foregroundRestorer = new MainWindowForegroundRestorer();
 
-        Debug.Print($"OnMonitorsChangeAsync {monitorIndex} {monitor.Bounds} wasForeground: {wasForeground} {hudPosition}");
+        Debug.Print($"OnMonitorsChangeAsync {monitorIndex} {monitor.Bounds} {hudPosition}");
 
         await ((Storyboard)mainWindow.FindResource("FadeOut")).BeginAsync();
 
@@ -118,11 +117,10 @@ public class MainWindowLayoutBehavior : Behavior<Window>
             mainWindow.GlassContainer.Margin = new Thickness(5, 0, 0, 0);
         }
 
-        if (wasForeground)
-        {
-            // For some unknown reason ActivateWindow must be called later when SetWindowPosition was called before
-            _ = Application.Current.Dispatcher.InvokeAsync(MainWindow.Instance!.ActivateWindow);
-        }
+        CrosshairViewModel.Instance.dpiScaleMain = 1 / monitor.ScaleFactor;
+        CrosshairViewModel.Instance.Redraw();
+
+        foregroundRestorer.Restore();
 
         await ((Storyboard)mainWindow.FindResource("FadeIn")).BeginAsync();
     }
