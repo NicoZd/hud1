@@ -85,4 +85,11 @@ internal class Monitors
 
         source.AddHook(WndProc);
     }
+
+    internal static void MoveWindow(nint hwnd, double x, double y, double width, double height)
+    {
+        Debug.Print($"MoveWindow {x}, {y}, {width}, {height}");
+        NativeMethods.MoveWindow(hwnd, (int)(x + 1), (int)(y + 1), (int)(width - 2), (int)(height - 2), false);
+        NativeMethods.MoveWindow(hwnd, (int)(x), (int)(y), (int)(width), (int)(height), true);
+    }
 }

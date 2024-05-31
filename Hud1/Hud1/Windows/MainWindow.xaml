@@ -38,7 +38,7 @@
     <Window.Resources>
         <Storyboard x:Key="FadeIn">
             <DoubleAnimation 
-             Duration="0:0:0.150"
+             Duration="0:0:0.050"
              To="1" 
              Storyboard.TargetProperty="(FrameworkElement.Opacity)"
              Storyboard.TargetName="Self"
@@ -58,6 +58,7 @@
 
     <b:Interaction.Behaviors>
         <behaviors:MainWindowLayoutBehavior />
+        <behaviors:TopMostBehavior/>
     </b:Interaction.Behaviors>
 
     <Grid x:Name="GlassContainer" Visibility="{Binding Path=HudVisibility}">

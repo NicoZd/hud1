@@ -57,7 +57,7 @@ public partial class HudViewModel : ObservableObject
             return;
         }
 
-        //Console.WriteLine("Execute {0} {1} {2}", State.Name, State.AllowRepeat, keyEvent.key);
+        Console.WriteLine("Execute {0} {1} {2}", State.Name, State.AllowRepeat, keyEvent.key);
 
         if (key == GlobalKey.VK_LEFT)
         {

@@ -1,4 +1,5 @@
 ﻿using System.Runtime.InteropServices;
+using System.Text;
 
 namespace Hud1.Helpers;
 
@@ -22,6 +23,7 @@ public enum GlobalKey : int
 public static class WindowsAPI
 {
     public static readonly nint HWND_TOP = new(0);
+    public static uint GW_HWNDNEXT = 2;
 
     public const int WH_KEYBOARD_LL = 13;
     public const int WH_MOUSE_LL = 14;
@@ -96,6 +98,32 @@ public static class WindowsAPI
     [DllImport("user32.dll")]
     public static extern bool AttachThreadInput(uint idAttach, uint idAttachTo, bool fAttach);
 
+    [DllImport("user32.dll")]
+    public static extern nint GetDesktopWindow();
+
+    [DllImport("user32.dll")]
+    public static extern nint GetTopWindow(nint hwnd);
+
+    [DllImport("user32.dll")]
+    public static extern nint GetWindow(nint hwnd, uint uCmd);
+
+    [DllImport("user32.dll")]
+    public static extern bool IsWindowVisible(nint hwnd);
+
+    [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+    static extern int GetWindowText(IntPtr hWnd, StringBuilder lpString, int nMaxCount);
+
+    [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+    static extern int GetWindowTextLength(IntPtr hWnd);
+
+    public static string GetWindowTitle(IntPtr hWnd)
+    {
+        var length = GetWindowTextLength(hWnd) + 1;
+        var title = new StringBuilder(length);
+        GetWindowText(hWnd, title, length);
+        return title.ToString();
+    }
+
 
     // Window Style
 
@@ -149,10 +177,5 @@ public static class WindowsAPI
             }
         }
         return false;
-    }
-
-    internal static void SetWindowPosition(nint hwnd, double x, double y)
-    {
-        WindowsAPI.SetWindowPos(hwnd, 0, (int)x, (int)y, 0, 0, WindowsAPI.SetWindowPosFlags.SWP_NOSIZE | WindowsAPI.SetWindowPosFlags.SWP_NOACTIVATE | WindowsAPI.SetWindowPosFlags.SWP_NOZORDER);
     }
 }

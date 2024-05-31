@@ -3,6 +3,7 @@ using Microsoft.Xaml.Behaviors;
 using System.Threading;
 using System.Windows;
 using System.Windows.Interop;
+using System.Windows.Media.Media3D;
 
 namespace Hud1.Behaviors;
 
@@ -43,8 +44,12 @@ public class SplashWindowLayoutBehavior : Behavior<Window>
 
         var hwnd = new WindowInteropHelper(window).Handle;
         var monitor = Monitors.Primary;
-        var x = monitor.Bounds.X + (monitor.Bounds.Width - window.Width * monitor.ScaleFactor) / 2;
-        var y = monitor.Bounds.Y + (monitor.Bounds.Height - window.Height * monitor.ScaleFactor) / 2;
-        WindowsAPI.SetWindowPosition(hwnd, x, y);
+
+        var width = window.Width * monitor.ScaleFactor;
+        var height = window.Height * monitor.ScaleFactor;
+        var x = monitor.Bounds.X + (monitor.Bounds.Width - width) / 2;
+        var y = monitor.Bounds.Y + (monitor.Bounds.Height - height) / 2;
+
+        Monitors.MoveWindow(hwnd, x, y, width, height);
     }
 }

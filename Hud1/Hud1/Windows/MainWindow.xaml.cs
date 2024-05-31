@@ -150,13 +150,6 @@ public partial class MainWindow : Window
             return IntPtr.Zero;
         }
 
-        if (msg == 126)
-        {
-            Debug.Print("Resolution or DPI Change {0}", msg);
-            //_ = ApplyHudPosition(true);
-            return IntPtr.Zero;
-        }
-
         //int[] ignore = [13, 70, 71];
         //if (ignore.Contains(msg))
         //    return IntPtr.Zero;

@@ -138,7 +138,7 @@ public class Setup
                 {
                     try
                     {
-                        Debug.Print("Save OnConfigChanged {0} {1}", e.PropertyName, sender);
+                        //Debug.Print("Save OnConfigChanged {0} {1}", e.PropertyName, sender);
 
                         Thread.Sleep(100);
                         var src = sender!;
@@ -150,7 +150,7 @@ public class Setup
                         var options = new JsonSerializerOptions { WriteIndented = true };
                         var jsonString = JsonSerializer.Serialize(UserConfig.Current, options);
 
-                        Debug.Print(jsonString);
+                        //Debug.Print(jsonString);
                         File.WriteAllText(UserConfigFile, jsonString);
                     }
                     catch (Exception ex)

@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using Hud1.ViewModels;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
@@ -100,6 +101,7 @@ public partial class NavigationState : ObservableObject
 
     public async void ExecuteLeft()
     {
+        Debug.Print("ExecuteLeft");
         SelectLeft = true;
         _selectLeftCounter++;
         await Task.Delay(10);
@@ -113,6 +115,7 @@ public partial class NavigationState : ObservableObject
 
     public async void ExecuteRight()
     {
+        Debug.Print("ExecuteRight");
         SelectRight = true;
         _selectRightCounter++;
         await Task.Delay(10);
