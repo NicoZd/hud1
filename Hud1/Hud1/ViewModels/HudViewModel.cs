@@ -79,46 +79,9 @@ public partial class HudViewModel : ObservableObject
         }
     }
 
-    public void MakeNav(NavigationState menu, NavigationState visible, NavigationState[] list)
+    public void Fire(NavigationTrigger trigger)
     {
-        if (list.Length < 2)
-            throw new Exception("List Length mist be at least 2.");
-
-        var first = list[0];
-        var last = list[^1];
-
-        Navigation.Configure(menu)
-            .SubstateOf(visible)
-            .Permit(NavigationTriggers.UP, last)
-            .Permit(NavigationTriggers.DOWN, first);
-
-        for (var i = 0; i < list.Length; i++)
-        {
-            var item = list[i];
-            Navigation.Configure(item).SubstateOf(visible);
-
-            if (item == NavigationStates.MACROS)
-                continue;
-
-            if (item == first)
-            {
-                Navigation.Configure(item)
-                    .Permit(NavigationTriggers.UP, menu)
-                    .Permit(NavigationTriggers.DOWN, list[i + 1]);
-            }
-            else if (item == last)
-            {
-                Navigation.Configure(item)
-                    .Permit(NavigationTriggers.UP, list[i - 1])
-                    .Permit(NavigationTriggers.DOWN, menu);
-            }
-            else
-            {
-                Navigation.Configure(item)
-                    .Permit(NavigationTriggers.UP, list[i - 1])
-                    .Permit(NavigationTriggers.DOWN, list[i + 1]);
-            }
-        }
+        Navigation.Fire(trigger);
     }
 
     [RelayCommand]
@@ -164,15 +127,52 @@ public partial class HudViewModel : ObservableObject
         }
     }
 
-    public void ShowGraph()
+    public void MakeNav(NavigationState menu, NavigationState visible, NavigationState[] list)
     {
-        var graph = UmlDotGraph.Format(HudViewModel.Instance.Navigation.GetInfo());
-        Console.WriteLine(graph);
+        if (list.Length < 2)
+            throw new Exception("List Length mist be at least 2.");
+
+        var first = list[0];
+        var last = list[^1];
+
+        Navigation.Configure(menu)
+            .SubstateOf(visible)
+            .Permit(NavigationTriggers.UP, last)
+            .Permit(NavigationTriggers.DOWN, first);
+
+        for (var i = 0; i < list.Length; i++)
+        {
+            var item = list[i];
+            Navigation.Configure(item).SubstateOf(visible);
+
+            if (item == NavigationStates.MACROS)
+                continue;
+
+            if (item == first)
+            {
+                Navigation.Configure(item)
+                    .Permit(NavigationTriggers.UP, menu)
+                    .Permit(NavigationTriggers.DOWN, list[i + 1]);
+            }
+            else if (item == last)
+            {
+                Navigation.Configure(item)
+                    .Permit(NavigationTriggers.UP, list[i - 1])
+                    .Permit(NavigationTriggers.DOWN, menu);
+            }
+            else
+            {
+                Navigation.Configure(item)
+                    .Permit(NavigationTriggers.UP, list[i - 1])
+                    .Permit(NavigationTriggers.DOWN, list[i + 1]);
+            }
+        }
     }
 
-    public void Fire(NavigationTrigger trigger)
+    public void ShowGraph()
     {
-        Navigation.Fire(trigger);
+        var graph = UmlDotGraph.Format(Navigation.GetInfo());
+        Console.WriteLine(graph);
     }
 
     private void UpdateModelFromMavigation()

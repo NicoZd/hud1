@@ -162,6 +162,7 @@ public partial class MacrosViewModel : ObservableObject
         }
         SelectedIndex--;
     }
+
     public void OnDown()
     {
         Console.WriteLine("OnDown {0}", SelectedIndex);
