@@ -91,41 +91,41 @@ public partial class HudViewModel : ObservableObject
         SelectNavigationState(navigationState);
     }
 
-    public void OnKeyPressed(KeyEvent keyEvent)
-    {
-        var key = keyEvent.key;
+    //public void OnKeyPressed(KeyEvent keyEvent)
+    //{
+    //    var key = keyEvent.key;
 
-        NavigationState.Repeat = keyEvent.repeated;
-        var isVerticalNavigation = key is GlobalKey.VK_UP or GlobalKey.VK_DOWN;
+    //    NavigationState.Repeat = keyEvent.repeated;
+    //    var isVerticalNavigation = key is GlobalKey.VK_UP or GlobalKey.VK_DOWN;
 
-        if (NavigationState.Repeat && (!State!.AllowRepeat || isVerticalNavigation))
-        {
-            //Console.WriteLine("Skip {0}", keyEvent.key);
-            return;
-        }
+    //    if (NavigationState.Repeat && (!State!.AllowRepeat || isVerticalNavigation))
+    //    {
+    //        //Console.WriteLine("Skip {0}", keyEvent.key);
+    //        return;
+    //    }
 
-        Console.WriteLine("Execute {0} {1} {2}", State!.Name, State.AllowRepeat, keyEvent.key);
+    //    Console.WriteLine("Execute {0} {1} {2}", State!.Name, State.AllowRepeat, keyEvent.key);
 
-        if (key == GlobalKey.VK_LEFT)
-        {
-            Navigation.Fire(NavigationTriggers.LEFT);
-        }
+    //    if (key == GlobalKey.VK_LEFT)
+    //    {
+    //        Navigation.Fire(NavigationTriggers.LEFT);
+    //    }
 
-        if (key == GlobalKey.VK_RIGHT)
-        {
-            Navigation.Fire(NavigationTriggers.RIGHT);
-        }
+    //    if (key == GlobalKey.VK_RIGHT)
+    //    {
+    //        Navigation.Fire(NavigationTriggers.RIGHT);
+    //    }
 
-        if (key == GlobalKey.VK_UP)
-        {
-            Navigation.Fire(NavigationTriggers.UP);
-        }
+    //    if (key == GlobalKey.VK_UP)
+    //    {
+    //        Navigation.Fire(NavigationTriggers.UP);
+    //    }
 
-        if (key == GlobalKey.VK_DOWN)
-        {
-            Navigation.Fire(NavigationTriggers.DOWN);
-        }
-    }
+    //    if (key == GlobalKey.VK_DOWN)
+    //    {
+    //        Navigation.Fire(NavigationTriggers.DOWN);
+    //    }
+    //}
 
     public void MakeNav(NavigationState menu, NavigationState visible, NavigationState[] list)
     {

@@ -3,13 +3,19 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:b="http://schemas.microsoft.com/xaml/behaviors"    
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:behaviors="clr-namespace:Hud1.Behaviors"
     xmlns:controls="clr-namespace:Hud1.Controls"
     xmlns:views="clr-namespace:Hud1.Views"
     xmlns:viewModels="clr-namespace:Hud1.ViewModels"
     mc:Ignorable="d"
     d:DesignHeight="800"
     >
+
+    <b:Interaction.Behaviors>
+        <behaviors:HudKeyBehavior />
+    </b:Interaction.Behaviors>
 
     <DockPanel 
         DataContext="{Binding Source={x:Static viewModels:HudViewModel.Instance}}"
@@ -26,45 +32,45 @@
             </StackPanel>
 
             <DockPanel 
-                        Margin="0,15,0,0"                       
-                        >
+                Margin="0,15,0,0"                       
+                >
 
                 <views:GlowBorderLabel    
-                            DockPanel.Dock="Right"
-                            Label="⚙" 
-                            Selected="{Binding Path=States[MENU_MORE].Selected}"
-                            Highlighted="{Binding Path=States[MORE_VISIBLE].Selected}"
-                            Click="{Binding SelectCommand}"
-                            NavigationState="{Binding Path=States[MENU_MORE]}"
-                            />
+                    DockPanel.Dock="Right"
+                    Label="⚙" 
+                    Selected="{Binding Path=States[MENU_MORE].Selected}"
+                    Highlighted="{Binding Path=States[MORE_VISIBLE].Selected}"
+                    Click="{Binding SelectCommand}"
+                    NavigationState="{Binding Path=States[MENU_MORE]}"
+                    />
 
                 <StackPanel 
-                            Orientation="Horizontal"
-                            controls:Spacing.Horizontal="4">
+                    Orientation="Horizontal"
+                    controls:Spacing.Horizontal="4">
 
                     <views:GlowBorderLabel 
-                                Label="Nightvision" 
-                                Selected="{Binding Path=States[MENU_NIGHTVISION].Selected}"
-                                Highlighted="{Binding Path=States[NIGHTVISION_VISIBLE].Selected}"
-                                Click="{Binding SelectCommand}"
-                                NavigationState="{Binding Path=States[MENU_NIGHTVISION]}"
-                                />
+                        Label="Nightvision" 
+                        Selected="{Binding Path=States[MENU_NIGHTVISION].Selected}"
+                        Highlighted="{Binding Path=States[NIGHTVISION_VISIBLE].Selected}"
+                        Click="{Binding SelectCommand}"
+                        NavigationState="{Binding Path=States[MENU_NIGHTVISION]}"
+                        />
 
                     <views:GlowBorderLabel 
-                                Label="Crosshair" 
-                                Selected="{Binding Path=States[MENU_CROSSHAIR].Selected}"
-                                Highlighted="{Binding Path=States[CROSSHAIR_VISIBLE].Selected}"
-                                Click="{Binding SelectCommand}"
-                                NavigationState="{Binding Path=States[MENU_CROSSHAIR]}"
-                                />
+                        Label="Crosshair" 
+                        Selected="{Binding Path=States[MENU_CROSSHAIR].Selected}"
+                        Highlighted="{Binding Path=States[CROSSHAIR_VISIBLE].Selected}"
+                        Click="{Binding SelectCommand}"
+                        NavigationState="{Binding Path=States[MENU_CROSSHAIR]}"
+                        />
 
                     <views:GlowBorderLabel 
-                                Label="Macros" 
-                                Selected="{Binding Path=States[MENU_MACRO].Selected}"
-                                Highlighted="{Binding Path=States[MACRO_VISIBLE].Selected}"
-                                Click="{Binding SelectCommand}"
-                                NavigationState="{Binding Path=States[MENU_MACRO]}"
-                                />
+                        Label="Macros" 
+                        Selected="{Binding Path=States[MENU_MACRO].Selected}"
+                        Highlighted="{Binding Path=States[MACRO_VISIBLE].Selected}"
+                        Click="{Binding SelectCommand}"
+                        NavigationState="{Binding Path=States[MENU_MACRO]}"
+                        />
 
                     <Canvas Width="50"/>
                 </StackPanel>
@@ -74,23 +80,23 @@
             <Separator Margin="0,10,0,10" Background="{DynamicResource BrushSeparator}"/>
 
             <Grid
-                        VerticalAlignment="Center"
-                        Background="{DynamicResource BrushColorMedLow}"
-                        Focusable="False"
-                        >
+                VerticalAlignment="Center"
+                Background="{DynamicResource BrushColorMedLow}"
+                Focusable="False"
+                >
                 <controls:IgnoreWidthControl Margin="0" Focusable="False">
                     <TextBlock   
-                                Focusable="false"
-                                Margin="5,3,5,2"
-                                Padding="0"
-                                VerticalAlignment="Top"
-                                Height="33"
-                                TextWrapping="Wrap"
-                                FontFamily="{DynamicResource FontFamily}"
-                                Foreground="{DynamicResource BrushInfoSecondary}" 
-                                FontSize="12"
-                                Text="{Binding State.Hint}"
-                                />
+                        Focusable="false"
+                        Margin="5,3,5,2"
+                        Padding="0"
+                        VerticalAlignment="Top"
+                        Height="33"
+                        TextWrapping="Wrap"
+                        FontFamily="{DynamicResource FontFamily}"
+                        Foreground="{DynamicResource BrushInfoSecondary}" 
+                        FontSize="12"
+                        Text="{Binding State.Hint}"
+                        />
                 </controls:IgnoreWidthControl>
             </Grid>
 
@@ -156,19 +162,19 @@
                     <Label Content="Quickhelp" Style="{DynamicResource TitleContent}"/>
                     <controls:IgnoreWidthControl Margin="0"  Focusable="False">
                         <TextBlock   
-                                    Focusable="false"
-                                    Margin="5,4,5,0"
-                                    Padding="0"
-                                    VerticalAlignment="Top"
-                                    HorizontalAlignment="Left"
-                                    TextWrapping="Wrap"
-                                    FontFamily="{DynamicResource FontFamily}"
-                                    Foreground="{DynamicResource BrushInfoSecondary}" 
-                                    FontSize="12"
-                                    >
-                                    • Keys to open and close this window:<LineBreak/>
-                                    &#160;&#160;&#160;• F2, ALT-S, ALT-F or ALT-L<LineBreak/>
-                                    • Use cursor keys, mouse or touch to navigate and select.
+                            Focusable="false"
+                            Margin="5,4,5,0"
+                            Padding="0"
+                            VerticalAlignment="Top"
+                            HorizontalAlignment="Left"
+                            TextWrapping="Wrap"
+                            FontFamily="{DynamicResource FontFamily}"
+                            Foreground="{DynamicResource BrushInfoSecondary}" 
+                            FontSize="12"
+                            >
+                            • Keys to open and close this window:<LineBreak/>
+                            &#160;&#160;&#160;• F2, ALT-S, ALT-F or ALT-L<LineBreak/>
+                            • Use cursor keys, mouse or touch to navigate and select.
                         </TextBlock>
                     </controls:IgnoreWidthControl>
 

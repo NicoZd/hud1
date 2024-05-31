@@ -54,7 +54,7 @@ public class MacroScript
 
         void update()
         {
-            Application.Current.Dispatcher.Invoke(new Action(() =>
+            Application.Current?.Dispatcher.Invoke(new Action(() =>
             {
                 if (debouncedLog != null)
                 {
