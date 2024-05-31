@@ -39,11 +39,4 @@ public partial class MainWindow : Window
             WindowsAPI.SetForegroundWindow(hwnd);
         }
     }
-
-    private void OnWindowActivated(object sender, EventArgs e)
-    {
-        Console.WriteLine("OnWindowActivated");
-        MainWindowViewModel.Instance.Active = true;
-        MainWindowViewModel.Instance.HudVisibility = Visibility.Visible;
-    }
 }

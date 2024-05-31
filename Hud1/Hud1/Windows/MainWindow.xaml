@@ -28,8 +28,6 @@
     DataContext="{Binding Source={x:Static viewModels:MainWindowViewModel.Instance}}"    
     Width="450"
 
-    Activated="OnWindowActivated"
-
     d:DesignHeight="800"    
     >
 
@@ -60,7 +58,7 @@
         <behaviors:ReceiveShutdownBehavior/>
         <behaviors:SystemHooksBehavior/>
         <behaviors:ComputeIsForegroundBehavior/>
-        <behaviors:MainWindowKeyActivationBehavior/>
+        <behaviors:MainWindowActivationBehavior/>
         <behaviors:MainWindowTouchModeBehavior/>
     </b:Interaction.Behaviors>
 

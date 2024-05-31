@@ -20,10 +20,14 @@ public partial class MainWindowViewModel : ObservableObject
     {
     }
 
-    internal void HandleKeyActivator()
+    internal void Activate()
     {
-        Console.WriteLine("HandleKeyActivator");
+        Active = true;
+        HudVisibility = Visibility.Visible;
+    }
 
+    internal void ToggleActive()
+    {
         if (Active)
         {
             HudVisibility = Visibility.Collapsed;
@@ -33,7 +37,6 @@ public partial class MainWindowViewModel : ObservableObject
         {
             HudVisibility = Visibility.Visible;
             Active = true;
-
         }
     }
 
