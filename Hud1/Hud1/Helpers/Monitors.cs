@@ -73,7 +73,7 @@ internal class Monitors
 
         IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
-            int WM_DISPLAYCHANGE = 126;
+            var WM_DISPLAYCHANGE = 126;
             if (msg == WM_DISPLAYCHANGE)
             {
                 Debug.Print("OnMonitorsChange...");
@@ -90,6 +90,6 @@ internal class Monitors
     {
         Debug.Print($"MoveWindow {x}, {y}, {width}, {height}");
         NativeMethods.MoveWindow(hwnd, (int)(x + 1), (int)(y + 1), (int)(width - 2), (int)(height - 2), false);
-        NativeMethods.MoveWindow(hwnd, (int)(x), (int)(y), (int)(width), (int)(height), true);
+        NativeMethods.MoveWindow(hwnd, (int)x, (int)y, (int)width, (int)height, true);
     }
 }

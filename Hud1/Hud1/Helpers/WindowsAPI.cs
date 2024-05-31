@@ -118,10 +118,10 @@ public static class WindowsAPI
     public static extern bool IsWindowVisible(nint hwnd);
 
     [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-    static extern int GetWindowText(IntPtr hWnd, StringBuilder lpString, int nMaxCount);
+    private static extern int GetWindowText(IntPtr hWnd, StringBuilder lpString, int nMaxCount);
 
     [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
-    static extern int GetWindowTextLength(IntPtr hWnd);
+    private static extern int GetWindowTextLength(IntPtr hWnd);
 
     public static string GetWindowTitle(IntPtr hWnd)
     {

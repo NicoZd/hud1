@@ -1,9 +1,7 @@
 ﻿using Hud1.Helpers;
 using Microsoft.Xaml.Behaviors;
-using System.Threading;
 using System.Windows;
 using System.Windows.Interop;
-using System.Windows.Media.Media3D;
 
 namespace Hud1.Behaviors;
 
@@ -24,7 +22,7 @@ public class SplashWindowLayoutBehavior : Behavior<Window>
 
     private void OnLoaded(object sender, RoutedEventArgs e)
     {
-        var window = (Window)AssociatedObject;
+        var window = AssociatedObject;
 
         var hwnd = new WindowInteropHelper(window).Handle;
         var extendedStyle = WindowsAPI.GetWindowLong(hwnd, WindowsAPI.GWL_EXSTYLE);
@@ -40,15 +38,15 @@ public class SplashWindowLayoutBehavior : Behavior<Window>
 
     private void OnMonitorsChange()
     {
-        var window = (Window)AssociatedObject;
+        var window = AssociatedObject;
 
         var hwnd = new WindowInteropHelper(window).Handle;
         var monitor = Monitors.Primary;
 
         var width = window.Width * monitor.ScaleFactor;
         var height = window.Height * monitor.ScaleFactor;
-        var x = monitor.Bounds.X + (monitor.Bounds.Width - width) / 2;
-        var y = monitor.Bounds.Y + (monitor.Bounds.Height - height) / 2;
+        var x = monitor.Bounds.X + ((monitor.Bounds.Width - width) / 2);
+        var y = monitor.Bounds.Y + ((monitor.Bounds.Height - height) / 2);
 
         Monitors.MoveWindow(hwnd, x, y, width, height);
     }

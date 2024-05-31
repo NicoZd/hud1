@@ -1,47 +1,39 @@
-﻿using Hud1.Helpers;
-using Microsoft.Xaml.Behaviors;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Xaml.Behaviors;
 using System.Windows;
 using System.Windows.Interop;
 
-namespace Hud1.Behaviors
+namespace Hud1.Behaviors;
+
+internal class ReceiveShutdownBehavior : Behavior<Window>
 {
-    class ReceiveShutdownBehavior : Behavior<Window>
+    protected override void OnAttached()
     {
-        protected override void OnAttached()
-        {
-            base.OnAttached();
-            AssociatedObject.Loaded += OnLoaded;
-        }
+        base.OnAttached();
+        AssociatedObject.Loaded += OnLoaded;
+    }
 
-        protected override void OnDetaching()
-        {
-            base.OnDetaching();
-            AssociatedObject.Loaded -= OnLoaded;
-        }
+    protected override void OnDetaching()
+    {
+        base.OnDetaching();
+        AssociatedObject.Loaded -= OnLoaded;
+    }
 
-        private void OnLoaded(object sender, RoutedEventArgs e)
-        {
-            var window = (Window)AssociatedObject;
-            var hwnd = new WindowInteropHelper(window).Handle;
-            var source = HwndSource.FromHwnd(hwnd);
-            source.AddHook(WndProc);
-        }
+    private void OnLoaded(object sender, RoutedEventArgs e)
+    {
+        var window = AssociatedObject;
+        var hwnd = new WindowInteropHelper(window).Handle;
+        var source = HwndSource.FromHwnd(hwnd);
+        source.AddHook(WndProc);
+    }
 
-        private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+    private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+    {
+        if (msg == Setup.WM_GAME_DIRECT_SHOWME)
         {
-            if (msg == Setup.WM_GAME_DIRECT_SHOWME)
-            {
-                Console.WriteLine("ReceiveShutdownBehavior WndProc {0} {1}", msg, Setup.WM_GAME_DIRECT_SHOWME);
-                Application.Current.Shutdown();
-                return IntPtr.Zero;
-            }
+            Console.WriteLine("ReceiveShutdownBehavior WndProc {0} {1}", msg, Setup.WM_GAME_DIRECT_SHOWME);
+            Application.Current.Shutdown();
             return IntPtr.Zero;
         }
+        return IntPtr.Zero;
     }
 }

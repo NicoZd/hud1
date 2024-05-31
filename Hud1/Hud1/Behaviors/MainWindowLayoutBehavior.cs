@@ -1,5 +1,4 @@
 ﻿using Hud1.Helpers;
-using Hud1.Helpers.ScreenHelper;
 using Hud1.ViewModels;
 using Microsoft.Xaml.Behaviors;
 using System.ComponentModel;
@@ -7,8 +6,6 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Media3D;
-using Windows.UI;
 
 namespace Hud1.Behaviors;
 
@@ -16,7 +13,7 @@ namespace Hud1.Behaviors;
 public class MainWindowLayoutBehavior : Behavior<Window>
 {
     private bool _running = false;
-    private Queue<string> _runningUpdates = [];
+    private readonly Queue<string> _runningUpdates = [];
 
 
     protected override void OnAttached()

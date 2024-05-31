@@ -1,11 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Hud1.Helpers;
-using Hud1.Helpers.ScreenHelper;
 using Hud1.Models;
 using System.IO;
 using System.Windows;
 using System.Windows.Media;
-using System.Xml.Linq;
 
 namespace Hud1.ViewModels;
 
