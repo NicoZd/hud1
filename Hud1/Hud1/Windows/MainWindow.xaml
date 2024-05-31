@@ -60,6 +60,7 @@
         <behaviors:TopMostBehavior/>
         <behaviors:ReceiveShutdownBehavior/>
         <behaviors:SystemHooksBehavior/>
+        <behaviors:ComputeIsForegroundBehavior/>
     </b:Interaction.Behaviors>
 
     <Grid x:Name="GlassContainer" Visibility="{Binding Path=HudVisibility}">
