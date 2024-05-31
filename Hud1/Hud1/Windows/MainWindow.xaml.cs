@@ -19,6 +19,7 @@ public partial class MainWindow : Window
     private MainWindow()
     {
         InitializeComponent();
+        CrosshairWindow.Create();
     }
 
     public void ActivateWindow()

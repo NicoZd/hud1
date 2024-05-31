@@ -11,9 +11,17 @@ namespace Hud1;
 
 public partial class CrosshairWindow : Window
 {
+    public static CrosshairWindow? Instance;
+
     private string lastRedrawScreenConfig = "";
 
-    public CrosshairWindow()
+    internal static void Create()
+    {
+        Instance = new CrosshairWindow();
+        Instance.Show();
+    }
+
+    private CrosshairWindow()
     {
         InitializeComponent();
     }
