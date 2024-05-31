@@ -35,8 +35,6 @@ public class MainWindowTouchModeBehavior : Behavior<Window>
         {
             if (e.PropertyName == nameof(NavigationStates.TOUCH_MODE.SelectionBoolean))
             {
-                Debug.Print("TOUCH_MODE {0}", NavigationStates.TOUCH_MODE.SelectionBoolean);
-
                 UpdateTouchMode();
             }
         };

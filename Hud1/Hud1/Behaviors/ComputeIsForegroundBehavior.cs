@@ -1,4 +1,5 @@
 ﻿using Hud1.Helpers;
+using Hud1.Models;
 using Hud1.ViewModels;
 using Microsoft.Xaml.Behaviors;
 using System;
@@ -45,7 +46,7 @@ namespace Hud1.Behaviors
             {
                 ComputeIsForeground();
             });
-            dispatcherTimer.Interval = TimeSpan.FromSeconds(1);
+            dispatcherTimer.Interval = TimeSpan.FromMilliseconds(250);
             dispatcherTimer.Start();
 
             ComputeIsForeground();
@@ -59,7 +60,7 @@ namespace Hud1.Behaviors
         private void ComputeIsForeground()
         {
             var foreground = WindowsAPI.GetForegroundWindow();
-            var isForeground = (foreground == hwnd);
+            var isForeground = (foreground == hwnd) && !NavigationStates.TOUCH_MODE.SelectionBoolean;
             var isMouseHidden = WindowsAPI.IsMouseHidden();
             var newIsForeground = isForeground || isMouseHidden;
             if (newIsForeground != MainWindowViewModel.Instance.IsForeground)
