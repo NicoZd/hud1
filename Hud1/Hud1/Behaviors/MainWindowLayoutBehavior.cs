@@ -124,7 +124,7 @@ public class MainWindowLayoutBehavior : Behavior<Window>
         if (wasForeground)
         {
             // For some unknown reason ActivateWindow must be called later when SetWindowPosition was called before
-            _ = Application.Current.Dispatcher.InvokeAsync(MainWindowViewModel.Instance.ActivateWindow);
+            _ = Application.Current.Dispatcher.InvokeAsync(MainWindow.Instance!.ActivateWindow);
         }
 
         await ((Storyboard)mainWindow.FindResource("FadeIn")).BeginAsync();

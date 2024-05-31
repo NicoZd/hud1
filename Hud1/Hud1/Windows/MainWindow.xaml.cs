@@ -12,19 +12,41 @@ namespace Hud1;
 
 public partial class MainWindow : Window
 {
+    public static MainWindow? Instance;
+
     private nint hwnd;
 
     internal static void Create()
     {
-        var mainWindow = new MainWindow();
-        mainWindow.Show();
-        Application.Current.MainWindow = mainWindow;
+        Instance = new MainWindow();
+        Instance.Show();
+        Application.Current.MainWindow = Instance;
     }
 
     private MainWindow()
     {
         InitializeComponent();
     }
+
+    public void ActivateWindow()
+    {
+        var hwnd = new WindowInteropHelper(this).Handle;
+
+        var threadId1 = WindowsAPI.GetWindowThreadProcessId(WindowsAPI.GetForegroundWindow(), IntPtr.Zero);
+        var threadId2 = WindowsAPI.GetWindowThreadProcessId(hwnd, IntPtr.Zero);
+
+        if (threadId1 != threadId2)
+        {
+            WindowsAPI.AttachThreadInput(threadId1, threadId2, true);
+            WindowsAPI.SetForegroundWindow(hwnd);
+            WindowsAPI.AttachThreadInput(threadId1, threadId2, false);
+        }
+        else
+        {
+            WindowsAPI.SetForegroundWindow(hwnd);
+        }
+    }
+
 
     private void OnWindowActivated(object sender, EventArgs e)
     {
@@ -38,7 +60,6 @@ public partial class MainWindow : Window
         Debug.WriteLine("MainWindow OnWindowLoaded");
 
         hwnd = new WindowInteropHelper(this).Handle;
-        MainWindowViewModel.Instance.InitWindow(hwnd);
 
         NavigationStates.TOUCH_MODE.PropertyChanged += (_, e) =>
         {
@@ -68,7 +89,7 @@ public partial class MainWindow : Window
 
         if (!NavigationStates.TOUCH_MODE.SelectionBoolean)
         {
-            MainWindowViewModel.Instance.ActivateWindow();
+            MainWindow.Instance!.ActivateWindow();
         }
     }
 

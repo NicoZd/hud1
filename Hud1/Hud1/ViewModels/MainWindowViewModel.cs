@@ -20,32 +20,8 @@ public partial class MainWindowViewModel : ObservableObject
     [ObservableProperty]
     public Visibility _hudVisibility = Visibility.Visible;
 
-    internal nint Hwnd;
-
     private MainWindowViewModel()
     {
-    }
-
-    internal void InitWindow(nint hwnd)
-    {
-        Hwnd = hwnd;
-    }
-
-    public void ActivateWindow()
-    {
-        var threadId1 = WindowsAPI.GetWindowThreadProcessId(WindowsAPI.GetForegroundWindow(), IntPtr.Zero);
-        var threadId2 = WindowsAPI.GetWindowThreadProcessId(Hwnd, IntPtr.Zero);
-
-        if (threadId1 != threadId2)
-        {
-            WindowsAPI.AttachThreadInput(threadId1, threadId2, true);
-            WindowsAPI.SetForegroundWindow(Hwnd);
-            WindowsAPI.AttachThreadInput(threadId1, threadId2, false);
-        }
-        else
-        {
-            WindowsAPI.SetForegroundWindow(Hwnd);
-        }
     }
 
     internal void HandleKeyActivator()
