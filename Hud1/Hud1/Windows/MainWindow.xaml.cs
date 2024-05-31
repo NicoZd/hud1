@@ -23,59 +23,8 @@ public partial class MainWindow : Window
 
     private MainWindow()
     {
-        Opacity = 0;
-        //MoreViewModel.Instance.PropertyChanged += OnPropertyChanged;
         InitializeComponent();
     }
-
-    //private void OnPropertyChanged(object? sender, PropertyChangedEventArgs e)
-    //{
-    //    if (e.PropertyName == nameof(MoreViewModel.Instance.HudPosition))
-    //    {
-    //        _ = ApplyHudPosition(true);
-    //    }
-    //}
-
-    //private async Task ApplyHudPosition(bool animate)
-    //{
-    //    var screens = Screen.AllScreens;
-    //    var screenIndex = int.Parse(MoreViewModel.Instance.HudPosition.Split(":")[0]);
-
-    //    if (screens.Count() - 1 < screenIndex)
-    //    {
-    //        MoreViewModel.Instance.ComputeNextHudPosition(0);
-    //        return;
-    //    }
-
-    //    if (animate)
-    //        Opacity = 0;
-
-    //    await Task.Delay(30);
-
-    //    var aligmnent = MoreViewModel.Instance.HudAlignment == "Left" ? WindowPositions.Left2 : WindowPositions.Right2;
-
-    //    var screen = screens.ElementAt(screenIndex);
-    //    this.SetWindowPosition(aligmnent, screen);
-
-    //    await Task.Delay(30);
-
-    //    if (animate)
-    //    {
-    //        var animation = new DoubleAnimation
-    //        {
-    //            To = 1,
-    //            BeginTime = TimeSpan.FromSeconds(0.0),
-    //            Duration = TimeSpan.FromSeconds(0.15),
-    //            FillBehavior = FillBehavior.Stop
-    //        };
-
-    //        animation.Completed += (s, a) =>
-    //        {
-    //            Opacity = 1;
-    //        };
-    //        BeginAnimation(UIElement.OpacityProperty, animation);
-    //    }
-    //}
 
     private void OnWindowActivated(object sender, EventArgs e)
     {
@@ -89,20 +38,7 @@ public partial class MainWindow : Window
         Debug.WriteLine("MainWindow OnWindowLoaded");
 
         hwnd = new WindowInteropHelper(this).Handle;
-        var source = HwndSource.FromHwnd(hwnd);
-        source.AddHook(WndProc);
-
         MainWindowViewModel.Instance.InitWindow(hwnd);
-
-        var dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
-        dispatcherTimer.Tick += new EventHandler((_, _) =>
-        {
-            WindowsAPI.SetWindowPos(hwnd, WindowsAPI.HWND_TOP, 0, 0, 0, 0, WindowsAPI.SetWindowPosFlags.SWP_NOMOVE | WindowsAPI.SetWindowPosFlags.SWP_NOSIZE | WindowsAPI.SetWindowPosFlags.SWP_NOACTIVATE);
-        });
-        dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
-        dispatcherTimer.Start();
-
-        //_ = ApplyHudPosition(false);
 
         NavigationStates.TOUCH_MODE.PropertyChanged += (_, e) =>
         {
@@ -115,12 +51,7 @@ public partial class MainWindow : Window
         };
         UpdateTouchMode();
 
-        GlobalMouseHook.SystemHook();
-
         GlobalKeyboardHook.KeyDown += HandleKeyDown;
-        GlobalKeyboardHook.SystemHook();
-
-        //FadeIn();
     }
 
     private void UpdateTouchMode()
@@ -139,29 +70,6 @@ public partial class MainWindow : Window
         {
             MainWindowViewModel.Instance.ActivateWindow();
         }
-    }
-
-    private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
-    {
-        if (msg == Setup.WM_GAME_DIRECT_SHOWME)
-        {
-            Console.WriteLine("WndProc {0} {1}", msg, Setup.WM_GAME_DIRECT_SHOWME);
-            Application.Current.Shutdown();
-            return IntPtr.Zero;
-        }
-
-        //int[] ignore = [13, 70, 71];
-        //if (ignore.Contains(msg))
-        //    return IntPtr.Zero;
-
-        //Debug.Print("" + msg);
-
-        return IntPtr.Zero;
-    }
-
-    private void OnWindowUnloaded(object sender, RoutedEventArgs e)
-    {
-        GlobalKeyboardHook.SystemUnhook();
     }
 
     private void HandleKeyDown(KeyEvent keyEvent)
@@ -189,33 +97,4 @@ public partial class MainWindow : Window
         }
 
     }
-
-    //private void FadeIn()
-    //{
-    //    Opacity = 0;
-
-    //    //var crosshairWindow = new CrosshairWindow
-    //    //{
-    //    //    Opacity = 0
-    //    //};
-    //    //crosshairWindow.Show();
-
-    //    var animation = new DoubleAnimation
-    //    {
-    //        To = 1,
-    //        BeginTime = TimeSpan.FromSeconds(0.15),
-    //        Duration = TimeSpan.FromSeconds(0.15),
-    //        FillBehavior = FillBehavior.Stop
-    //    };
-
-    //    animation.Completed += (s, a) =>
-    //    {
-    //        //crosshairWindow.Opacity = 1;
-    //        Opacity = 1;
-    //    };
-
-    //    Console.WriteLine("MainWindow FadeIn {0}", Entry.Millis());
-    //    BeginAnimation(UIElement.OpacityProperty, animation);
-    //    //crosshairWindow.BeginAnimation(UIElement.OpacityProperty, animation);
-    //}
 }

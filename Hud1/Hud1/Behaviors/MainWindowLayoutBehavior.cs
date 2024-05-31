@@ -34,6 +34,7 @@ public class MainWindowLayoutBehavior : Behavior<Window>
     private void OnLoaded(object sender, RoutedEventArgs e)
     {
         var mainWindow = (MainWindow)AssociatedObject;
+        mainWindow.Opacity = 0;
 
         Monitors.RegisterMonitorsChange(mainWindow, () =>
         {

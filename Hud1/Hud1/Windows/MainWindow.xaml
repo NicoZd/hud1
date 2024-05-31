@@ -30,7 +30,6 @@
 
     Activated="OnWindowActivated"
     Loaded="OnWindowLoaded"
-    Unloaded="OnWindowUnloaded"
 
     d:DesignHeight="800"    
     >
@@ -59,6 +58,8 @@
     <b:Interaction.Behaviors>
         <behaviors:MainWindowLayoutBehavior />
         <behaviors:TopMostBehavior/>
+        <behaviors:ReceiveShutdownBehavior/>
+        <behaviors:SystemHooksBehavior/>
     </b:Interaction.Behaviors>
 
     <Grid x:Name="GlassContainer" Visibility="{Binding Path=HudVisibility}">
