@@ -7,7 +7,7 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Interop;
 
-namespace Hud1;
+namespace Hud1.Windows;
 
 public partial class CrosshairWindow : Window
 {

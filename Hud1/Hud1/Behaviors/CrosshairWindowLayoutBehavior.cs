@@ -1,6 +1,7 @@
 ﻿using Hud1.Helpers;
 using Hud1.Models;
 using Hud1.ViewModels;
+using Hud1.Windows;
 using Microsoft.Xaml.Behaviors;
 using System.ComponentModel;
 using System.Diagnostics;

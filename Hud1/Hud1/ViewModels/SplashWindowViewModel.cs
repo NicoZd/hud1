@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Hud1.Windows;
 using System.Diagnostics;
 using System.Windows;
 

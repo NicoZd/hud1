@@ -3,7 +3,7 @@ using Hud1.ViewModels;
 using System.Windows;
 using System.Windows.Interop;
 
-namespace Hud1;
+namespace Hud1.Windows;
 
 public partial class MainWindow : Window
 {
