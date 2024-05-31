@@ -17,11 +17,11 @@ public class CrosshairViewModel
 
     public void BuildNavigation()
     {
-        var Navigation = NavigationViewModel.Instance.Navigation;
+        var Configure = HudViewModel.Instance.Configure;
 
         NavigationStates.CROSSHAIR_ENABLED.LeftAction = NavigationStates.CROSSHAIR_ENABLED.BooleanLeft;
         NavigationStates.CROSSHAIR_ENABLED.RightAction = NavigationStates.CROSSHAIR_ENABLED.BooleanRight;
-        Navigation.Configure(NavigationStates.CROSSHAIR_ENABLED)
+        Configure(NavigationStates.CROSSHAIR_ENABLED)
            .InternalTransition(NavigationTriggers.LEFT, NavigationStates.CROSSHAIR_ENABLED.ExecuteLeft)
            .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.CROSSHAIR_ENABLED.ExecuteRight);
 
@@ -29,7 +29,7 @@ public class CrosshairViewModel
         ChangeDisplay(0)();
         NavigationStates.CROSSHAIR_DISPLAY.LeftAction = ChangeDisplay(-1);
         NavigationStates.CROSSHAIR_DISPLAY.RightAction = ChangeDisplay(1);
-        Navigation.Configure(NavigationStates.CROSSHAIR_DISPLAY)
+        Configure(NavigationStates.CROSSHAIR_DISPLAY)
            .InternalTransition(NavigationTriggers.LEFT, NavigationStates.CROSSHAIR_DISPLAY.ExecuteLeft)
            .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.CROSSHAIR_DISPLAY.ExecuteRight);
 
@@ -38,7 +38,7 @@ public class CrosshairViewModel
         NavigationStates.CROSSHAIR_FORM.SelectOption();
         NavigationStates.CROSSHAIR_FORM.LeftAction = NavigationStates.CROSSHAIR_FORM.OptionLeft;
         NavigationStates.CROSSHAIR_FORM.RightAction = NavigationStates.CROSSHAIR_FORM.OptionRight;
-        Navigation.Configure(NavigationStates.CROSSHAIR_FORM)
+        Configure(NavigationStates.CROSSHAIR_FORM)
           .InternalTransition(NavigationTriggers.LEFT, NavigationStates.CROSSHAIR_FORM.ExecuteLeft)
           .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.CROSSHAIR_FORM.ExecuteRight);
         FormRenderFunctions = new Dictionary<string, Func<int, Brush, bool, Drawing>>
@@ -73,7 +73,7 @@ public class CrosshairViewModel
         NavigationStates.CROSSHAIR_COLOR.SelectOption();
         NavigationStates.CROSSHAIR_COLOR.LeftAction = NavigationStates.CROSSHAIR_COLOR.OptionLeft;
         NavigationStates.CROSSHAIR_COLOR.RightAction = NavigationStates.CROSSHAIR_COLOR.OptionRight;
-        Navigation.Configure(NavigationStates.CROSSHAIR_COLOR)
+        Configure(NavigationStates.CROSSHAIR_COLOR)
            .InternalTransition(NavigationTriggers.LEFT, NavigationStates.CROSSHAIR_COLOR.ExecuteLeft)
            .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.CROSSHAIR_COLOR.ExecuteRight);
 
@@ -85,7 +85,7 @@ public class CrosshairViewModel
         NavigationStates.CROSSHAIR_OPACITY.SelectionLabel = "1";
         NavigationStates.CROSSHAIR_OPACITY.LeftAction = ChangeOpacity(-0.1);
         NavigationStates.CROSSHAIR_OPACITY.RightAction = ChangeOpacity(0.1);
-        Navigation.Configure(NavigationStates.CROSSHAIR_OPACITY)
+        Configure(NavigationStates.CROSSHAIR_OPACITY)
            .InternalTransition(NavigationTriggers.LEFT, NavigationStates.CROSSHAIR_OPACITY.ExecuteLeft)
            .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.CROSSHAIR_OPACITY.ExecuteRight);
 
@@ -94,18 +94,18 @@ public class CrosshairViewModel
         NavigationStates.CROSSHAIR_SIZE.SelectOption();
         NavigationStates.CROSSHAIR_SIZE.LeftAction = NavigationStates.CROSSHAIR_SIZE.OptionLeft;
         NavigationStates.CROSSHAIR_SIZE.RightAction = NavigationStates.CROSSHAIR_SIZE.OptionRight;
-        Navigation.Configure(NavigationStates.CROSSHAIR_SIZE)
+        Configure(NavigationStates.CROSSHAIR_SIZE)
            .InternalTransition(NavigationTriggers.LEFT, NavigationStates.CROSSHAIR_SIZE.ExecuteLeft)
            .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.CROSSHAIR_SIZE.ExecuteRight);
 
         NavigationStates.CROSSHAIR_OUTLINE.SelectionBoolean = true;
         NavigationStates.CROSSHAIR_OUTLINE.LeftAction = NavigationStates.CROSSHAIR_OUTLINE.BooleanLeft;
         NavigationStates.CROSSHAIR_OUTLINE.RightAction = NavigationStates.CROSSHAIR_OUTLINE.BooleanRight;
-        Navigation.Configure(NavigationStates.CROSSHAIR_OUTLINE)
+        Configure(NavigationStates.CROSSHAIR_OUTLINE)
            .InternalTransition(NavigationTriggers.LEFT, NavigationStates.CROSSHAIR_OUTLINE.ExecuteLeft)
            .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.CROSSHAIR_OUTLINE.ExecuteRight);
 
-        NavigationViewModel.MakeNav(NavigationStates.MENU_CROSSHAIR, NavigationStates.CROSSHAIR_VISIBLE,
+        HudViewModel.Instance.MakeNav(NavigationStates.MENU_CROSSHAIR, NavigationStates.CROSSHAIR_VISIBLE,
             [
             NavigationStates.CROSSHAIR_ENABLED,
             NavigationStates.CROSSHAIR_DISPLAY,

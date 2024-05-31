@@ -24,22 +24,22 @@ public partial class MoreViewModel : ObservableObject
 
     public void BuildNavigation()
     {
-        var Navigation = NavigationViewModel.Instance.Navigation;
+        var Configure = HudViewModel.Instance.Configure;
 
         NavigationStates.EXIT.RightAction = Shutdown;
-        Navigation.Configure(NavigationStates.EXIT)
+        Configure(NavigationStates.EXIT)
             .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.EXIT.ExecuteRight);
 
         NavigationStates.HUD_POSITION.LeftAction = SelectHudPos(-1);
         NavigationStates.HUD_POSITION.RightAction = SelectHudPos(1);
-        Navigation.Configure(NavigationStates.HUD_POSITION)
+        Configure(NavigationStates.HUD_POSITION)
            .InternalTransition(NavigationTriggers.LEFT, NavigationStates.HUD_POSITION.ExecuteLeft)
            .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.HUD_POSITION.ExecuteRight);
 
         NavigationStates.TOUCH_MODE.SelectionBoolean = UserConfig.Current.TouchModeEnabled;
         NavigationStates.TOUCH_MODE.LeftAction = EnableTouchMode(false);
         NavigationStates.TOUCH_MODE.RightAction = EnableTouchMode(true);
-        Navigation.Configure(NavigationStates.TOUCH_MODE)
+        Configure(NavigationStates.TOUCH_MODE)
             .InternalTransition(NavigationTriggers.LEFT, NavigationStates.TOUCH_MODE.ExecuteLeft)
             .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.TOUCH_MODE.ExecuteRight);
 
@@ -47,7 +47,7 @@ public partial class MoreViewModel : ObservableObject
         SelectStyle(0);
         NavigationStates.STYLE.LeftAction = PrevStyle;
         NavigationStates.STYLE.RightAction = NextStyle;
-        Navigation.Configure(NavigationStates.STYLE)
+        Configure(NavigationStates.STYLE)
            .InternalTransition(NavigationTriggers.LEFT, NavigationStates.STYLE.ExecuteLeft)
            .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.STYLE.ExecuteRight);
 
@@ -55,11 +55,11 @@ public partial class MoreViewModel : ObservableObject
         SelectFont(0);
         NavigationStates.FONT.LeftAction = PrevFont;
         NavigationStates.FONT.RightAction = NextFont;
-        Navigation.Configure(NavigationStates.FONT)
+        Configure(NavigationStates.FONT)
            .InternalTransition(NavigationTriggers.LEFT, NavigationStates.FONT.ExecuteLeft)
            .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.FONT.ExecuteRight);
 
-        NavigationViewModel.MakeNav(NavigationStates.MENU_MORE, NavigationStates.MORE_VISIBLE,
+        HudViewModel.Instance.MakeNav(NavigationStates.MENU_MORE, NavigationStates.MORE_VISIBLE,
             [NavigationStates.EXIT, NavigationStates.HUD_POSITION,
             NavigationStates.TOUCH_MODE, NavigationStates.STYLE, NavigationStates.FONT]);
     }

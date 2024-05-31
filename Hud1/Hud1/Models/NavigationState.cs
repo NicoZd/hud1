@@ -82,21 +82,21 @@ public partial class NavigationState : ObservableObject
     [RelayCommand]
     private void Left()
     {
-        NavigationViewModel.SelectNavigationState(this);
+        HudViewModel.Instance.SelectNavigationState(this);
         ExecuteLeft();
     }
 
     [RelayCommand]
     private void Right()
     {
-        NavigationViewModel.SelectNavigationState(this);
+        HudViewModel.Instance.SelectNavigationState(this);
         ExecuteRight();
     }
 
     [RelayCommand]
     private void Click()
     {
-        NavigationViewModel.SelectNavigationState(this);
+        HudViewModel.Instance.SelectNavigationState(this);
     }
 
     public async void ExecuteLeft()

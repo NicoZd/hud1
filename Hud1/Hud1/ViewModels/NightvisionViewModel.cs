@@ -35,21 +35,21 @@ public partial class NightvisionViewModel : ObservableObject
 
     public void BuildNavigation()
     {
-        var Navigation = NavigationViewModel.Instance.Navigation;
+        var Configure = HudViewModel.Instance.Configure;
 
         NavigationStates.NIGHTVISION_ENABLED.LeftAction = EnableNightVision(false);
         NavigationStates.NIGHTVISION_ENABLED.RightAction = EnableNightVision(true);
-        Navigation.Configure(NavigationStates.NIGHTVISION_ENABLED)
+        Configure(NavigationStates.NIGHTVISION_ENABLED)
         .InternalTransition(NavigationTriggers.LEFT, NavigationStates.NIGHTVISION_ENABLED.ExecuteLeft)
         .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.NIGHTVISION_ENABLED.ExecuteRight);
 
         NavigationStates.GAMMA.LeftAction = SelectPrevGama;
         NavigationStates.GAMMA.RightAction = SelectNextGama;
-        Navigation.Configure(NavigationStates.GAMMA)
+        Configure(NavigationStates.GAMMA)
            .InternalTransition(NavigationTriggers.LEFT, NavigationStates.GAMMA.ExecuteLeft)
            .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.GAMMA.ExecuteRight);
 
-        NavigationViewModel.MakeNav(NavigationStates.MENU_NIGHTVISION, NavigationStates.NIGHTVISION_VISIBLE,
+        HudViewModel.Instance.MakeNav(NavigationStates.MENU_NIGHTVISION, NavigationStates.NIGHTVISION_VISIBLE,
             [NavigationStates.NIGHTVISION_ENABLED, NavigationStates.GAMMA]);
     }
 

@@ -51,9 +51,9 @@ public partial class MacrosViewModel : ObservableObject
 
     public void BuildNavigation()
     {
-        var Navigation = NavigationViewModel.Instance.Navigation;
+        var Configure = HudViewModel.Instance.Configure;
 
-        Navigation.Configure(NavigationStates.MACROS)
+        Configure(NavigationStates.MACROS)
             .OnEntryFrom(NavigationTriggers.UP, OnEntryFromBottom)
             .OnEntryFrom(NavigationTriggers.DOWN, OnEntryFromTop)
             .OnEntry(OnEntry)
@@ -71,10 +71,10 @@ public partial class MacrosViewModel : ObservableObject
             Process.Start("explorer.exe", _path);
         };
 
-        Navigation.Configure(NavigationStates.MACROS_FOLDER)
+        Configure(NavigationStates.MACROS_FOLDER)
             .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.MACROS_FOLDER.ExecuteRight);
 
-        NavigationViewModel.MakeNav(NavigationStates.MENU_MACRO, NavigationStates.MACRO_VISIBLE,
+        HudViewModel.Instance.MakeNav(NavigationStates.MENU_MACRO, NavigationStates.MACRO_VISIBLE,
             [NavigationStates.MACROS, NavigationStates.MACROS_FOLDER]);
     }
 
@@ -129,7 +129,7 @@ public partial class MacrosViewModel : ObservableObject
 
         if (Macros.Count == 0)
         {
-            NavigationViewModel.Instance.Navigation.Fire(NavigationTriggers.RETURN_UP);
+            HudViewModel.Instance.Fire(NavigationTriggers.RETURN_UP);
         }
     }
 
@@ -157,7 +157,7 @@ public partial class MacrosViewModel : ObservableObject
         Console.WriteLine("OnUp {0}", SelectedIndex);
         if (SelectedIndex <= 0)
         {
-            NavigationViewModel.Instance.Navigation.Fire(NavigationTriggers.RETURN_UP);
+            HudViewModel.Instance.Fire(NavigationTriggers.RETURN_UP);
             return;
         }
         SelectedIndex--;
@@ -167,7 +167,7 @@ public partial class MacrosViewModel : ObservableObject
         Console.WriteLine("OnDown {0}", SelectedIndex);
         if (SelectedIndex >= Macros.Count - 1)
         {
-            NavigationViewModel.Instance.Navigation.Fire(NavigationTriggers.RETURN_DOWN);
+            HudViewModel.Instance.Fire(NavigationTriggers.RETURN_DOWN);
             return;
         }
         SelectedIndex++;
@@ -186,7 +186,7 @@ public partial class MacrosViewModel : ObservableObject
 
     internal void SelectMacro(Macro macro)
     {
-        NavigationViewModel.SelectNavigationState(NavigationStates.MACROS);
+        HudViewModel.Instance.SelectNavigationState(NavigationStates.MACROS);
         var index = Macros.IndexOf(macro);
         if (index >= 0)
         {

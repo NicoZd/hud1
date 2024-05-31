@@ -80,23 +80,19 @@ public class Setup
             Console.WriteLine(ex.ToString());
         }
 
-        // create navgation
-        NavigationViewModel.Instance.BuildNavigation();
-
         // add to navgation
         NightvisionViewModel.Instance.BuildNavigation();
         CrosshairViewModel.Instance.BuildNavigation();
         MacrosViewModel.Instance.BuildNavigation();
         MoreViewModel.Instance.BuildNavigation();
 
-        // finish navidation
+        // update
         HudViewModel.Instance.BuildNavigation();
 
         var showGraph = false;
         if (showGraph)
         {
-            var graph = UmlDotGraph.Format(NavigationViewModel.Instance.Navigation.GetInfo());
-            Console.WriteLine(graph);
+            HudViewModel.Instance.ShowGraph();
         }
 
         // add change listeners
