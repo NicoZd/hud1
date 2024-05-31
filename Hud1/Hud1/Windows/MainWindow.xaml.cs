@@ -14,8 +14,6 @@ public partial class MainWindow : Window
 {
     public static MainWindow? Instance;
 
-    private nint hwnd;
-
     internal static void Create()
     {
         Instance = new MainWindow();
@@ -47,7 +45,6 @@ public partial class MainWindow : Window
         }
     }
 
-
     private void OnWindowActivated(object sender, EventArgs e)
     {
         Console.WriteLine("OnWindowActivated");
@@ -59,8 +56,6 @@ public partial class MainWindow : Window
     {
         Debug.WriteLine("MainWindow OnWindowLoaded");
 
-        hwnd = new WindowInteropHelper(this).Handle;
-
         NavigationStates.TOUCH_MODE.PropertyChanged += (_, e) =>
         {
             if (e.PropertyName == nameof(NavigationStates.TOUCH_MODE.SelectionBoolean))
@@ -71,12 +66,12 @@ public partial class MainWindow : Window
             }
         };
         UpdateTouchMode();
-
-        GlobalKeyboardHook.KeyDown += HandleKeyDown;
     }
 
     private void UpdateTouchMode()
     {
+        var hwnd = new WindowInteropHelper(this).Handle;
+
         var extendedStyle = WindowsAPI.GetWindowLong(hwnd, WindowsAPI.GWL_EXSTYLE);
 
         var newStyle = NavigationStates.TOUCH_MODE.SelectionBoolean ?
@@ -91,31 +86,5 @@ public partial class MainWindow : Window
         {
             MainWindow.Instance!.ActivateWindow();
         }
-    }
-
-    private void HandleKeyDown(KeyEvent keyEvent)
-    {
-        //Console.WriteLine("HandleKeyDown2 {0} {1}", keyEvent.key, keyEvent.alt);           
-
-        if (!keyEvent.repeated)
-        {
-            if (keyEvent.alt)
-            {
-                if (keyEvent.key is GlobalKey.VK_S or GlobalKey.VK_F or GlobalKey.VK_L)
-                {
-                    MainWindowViewModel.Instance.HandleKeyActivator();
-                    keyEvent.block = true;
-                }
-            }
-            else
-            {
-                if (keyEvent.key == GlobalKey.VK_F2)
-                {
-                    MainWindowViewModel.Instance.HandleKeyActivator();
-                    keyEvent.block = true;
-                }
-            }
-        }
-
     }
 }
