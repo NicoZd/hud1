@@ -12,12 +12,16 @@ public partial class Hud : UserControl
     public Hud()
     {
         InitializeComponent();
-    }
-
-    private void OnWindowLoaded(object sender, RoutedEventArgs e)
-    {
-        Debug.Print("Hud OnWindowLoaded");
-        GlobalKeyboardHook.KeyDown += HandleKeyDown;
+        Loaded += (_, _) =>
+        {
+            Debug.Print("!!!!Hud Loaded");
+            GlobalKeyboardHook.KeyDown += HandleKeyDown;
+        };
+        Unloaded += (_, _) =>
+        {
+            Debug.Print("!!!!Hud Unloaded");
+            GlobalKeyboardHook.KeyDown -= HandleKeyDown;
+        };
     }
 
     private void HandleKeyDown(KeyEvent keyEvent)
