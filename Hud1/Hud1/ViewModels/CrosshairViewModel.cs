@@ -1,5 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Hud1.Helpers.ScreenHelper;
+using Hud1.Helpers;
 using Hud1.Models;
 using System.Diagnostics;
 using System.Windows;
@@ -131,7 +131,7 @@ public partial class CrosshairViewModel : ObservableObject
         return () =>
         {
             var current = int.Parse(NavigationStates.CROSSHAIR_DISPLAY.SelectionLabel);
-            var next = Math.Min(Math.Max(current + dir, 0), Screen.AllScreens.Count() - 1);
+            var next = Math.Min(Math.Max(current + dir, 0), Monitors.All.Count - 1);
             NavigationStates.CROSSHAIR_DISPLAY.SelectionLabel = "" + next;
         };
     }

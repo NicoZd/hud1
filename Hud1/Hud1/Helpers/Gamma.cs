@@ -1,5 +1,4 @@
-﻿using Hud1.Helpers.ScreenHelper;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 
 namespace Hud1.Helpers;
 
@@ -62,11 +61,11 @@ public static class Gamma
         var gArray = stackalloc short[3 * 256];
 
         // just all 
-        foreach (var screen in Screen.AllScreens)
+        foreach (var monitor in Monitors.All)
         {
-            Console.WriteLine("Set Gamma for DeviceName {0}", screen.DeviceName);
+            Console.WriteLine("Set Gamma for DeviceName {0}", monitor.DeviceName);
 
-            var hdc = CreateDC(screen.DeviceName, null, null, IntPtr.Zero).ToInt32();
+            var hdc = CreateDC(monitor.DeviceName, null, null, IntPtr.Zero).ToInt32();
 
             var idx = gArray;
             double offset = 0;

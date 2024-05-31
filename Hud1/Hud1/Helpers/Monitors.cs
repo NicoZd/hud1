@@ -1,5 +1,4 @@
-﻿using Hud1.Helpers.ScreenHelper;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
@@ -24,6 +23,7 @@ internal class Monitor
     public readonly double ScaleFactor;
     public readonly Rect Bounds;
     public readonly bool IsPrimary;
+    public readonly string DeviceName;
 
     public Monitor()
     {
@@ -31,40 +31,40 @@ internal class Monitor
         ScaleFactor = 1.0;
         Bounds = new Rect(0, 0, 1920, 1080);
         IsPrimary = true;
+        DeviceName = "DISPLAY";
     }
 
     public Monitor(nint monitor, nint hdc)
     {
-        NativeMethods.GetDpiForMonitor(monitor, NativeMethods.DpiType.EFFECTIVE, out var dpiX, out _);
+        WindowsAPI.GetDpiForMonitor(monitor, WindowsAPI.DpiType.EFFECTIVE, out var dpiX, out _);
         ScaleFactor = dpiX / 96.0;
 
-        var info = new NativeMethods.MONITORINFOEX();
-        NativeMethods.GetMonitorInfo(new HandleRef(null, monitor), info);
+        var info = new WindowsAPI.MONITORINFOEX();
+        WindowsAPI.GetMonitorInfo(new HandleRef(null, monitor), info);
         Bounds = new Rect(
             info.rcMonitor.left,
             info.rcMonitor.top,
             info.rcMonitor.right - info.rcMonitor.left,
             info.rcMonitor.bottom - info.rcMonitor.top);
         IsPrimary = (info.dwFlags & MONITORINFOF_PRIMARY) != 0;
+        DeviceName = new string(info.szDevice).TrimEnd((char)0);
     }
 }
 
 internal class Monitors
 {
-
     public static List<Monitor> All
     {
         get
         {
             var closure = new MonitorEnumCallback();
-            var proc = new NativeMethods.MonitorEnumProc(closure.Callback);
-            NativeMethods.EnumDisplayMonitors(NativeMethods.NullHandleRef, null, proc, nint.Zero);
+            var proc = new WindowsAPI.MonitorEnumProc(closure.Callback);
+            WindowsAPI.EnumDisplayMonitors(WindowsAPI.NullHandleRef, null, proc, nint.Zero);
             return closure.Monitors;
         }
     }
 
     public static Monitor Primary => All.FirstOrDefault(t => t.IsPrimary) ?? new Monitor();
-
 
     public static void RegisterMonitorsChange(Window window, Action OnMonitorsChange)
     {
@@ -89,7 +89,7 @@ internal class Monitors
     internal static void MoveWindow(nint hwnd, double x, double y, double width, double height)
     {
         Debug.Print($"MoveWindow {x}, {y}, {width}, {height}");
-        NativeMethods.MoveWindow(hwnd, (int)(x + 1), (int)(y + 1), (int)(width - 2), (int)(height - 2), false);
-        NativeMethods.MoveWindow(hwnd, (int)x, (int)y, (int)width, (int)height, true);
+        WindowsAPI.MoveWindow(hwnd, (int)(x + 1), (int)(y + 1), (int)(width - 2), (int)(height - 2), false);
+        WindowsAPI.MoveWindow(hwnd, (int)x, (int)y, (int)width, (int)height, true);
     }
 }

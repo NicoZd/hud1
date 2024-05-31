@@ -1,5 +1,7 @@
 ﻿using System.Runtime.InteropServices;
+using System.Runtime.Versioning;
 using System.Text;
+using System.Windows;
 
 namespace Hud1.Helpers;
 
@@ -185,4 +187,118 @@ public static class WindowsAPI
         }
         return false;
     }
+
+    // Monitors
+
+    [DllImport("user32.dll", SetLastError = true)]
+    public static extern bool MoveWindow(nint hWnd, int X, int Y, int nWidth, int nHeight, bool bRepaint);
+
+    public enum DpiType
+    {
+        EFFECTIVE = 0,
+        ANGULAR = 1,
+        RAW = 2
+    }
+
+    [DllImport("shcore.dll", CharSet = CharSet.Auto)]
+    [ResourceExposure(ResourceScope.None)]
+    public static extern nint GetDpiForMonitor([In] nint hmonitor, [In] DpiType dpiType, [Out] out uint dpiX, [Out] out uint dpiY);
+
+    [DllImport("user32.dll", CharSet = CharSet.Auto)]
+    [ResourceExposure(ResourceScope.None)]
+    public static extern bool GetMonitorInfo(HandleRef hmonitor, [In][Out] MONITORINFOEX info);
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct RECT
+    {
+        public int left;
+        public int top;
+        public int right;
+        public int bottom;
+
+        public RECT(int left, int top, int right, int bottom)
+        {
+            this.left = left;
+            this.top = top;
+            this.right = right;
+            this.bottom = bottom;
+        }
+
+        public RECT(Rect r)
+        {
+            left = (int)r.Left;
+            top = (int)r.Top;
+            right = (int)r.Right;
+            bottom = (int)r.Bottom;
+        }
+
+        public static RECT FromXYWH(int x, int y, int width, int height)
+        {
+            return new RECT(x, y, x + width, y + height);
+        }
+
+        public Size Size => new(right - left, bottom - top);
+    }
+
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto, Pack = 4)]
+    public class MONITORINFOEX
+    {
+        internal int cbSize = Marshal.SizeOf(typeof(MONITORINFOEX));
+
+        internal RECT rcMonitor = new();
+        internal RECT rcWork = new();
+        internal int dwFlags = 0;
+
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 32)]
+        internal char[] szDevice = new char[32];
+    }
+
+    public delegate bool MonitorEnumProc(nint monitor, nint hdc, nint lprcMonitor, nint lParam);
+
+    [DllImport("user32.dll", ExactSpelling = true)]
+    [ResourceExposure(ResourceScope.None)]
+    public static extern bool EnumDisplayMonitors(HandleRef hdc, COMRECT? rcClip, MonitorEnumProc lpfnEnum, nint dwData);
+
+    public static readonly HandleRef NullHandleRef = new(null, nint.Zero);
+
+    [StructLayout(LayoutKind.Sequential)]
+    public class COMRECT
+    {
+        public int bottom;
+        public int left;
+        public int right;
+        public int top;
+
+        public COMRECT()
+        {
+        }
+
+        public COMRECT(Rect r)
+        {
+            left = (int)r.X;
+            top = (int)r.Y;
+            right = (int)r.Right;
+            bottom = (int)r.Bottom;
+        }
+
+        public COMRECT(int left, int top, int right, int bottom)
+        {
+            this.left = left;
+            this.top = top;
+            this.right = right;
+            this.bottom = bottom;
+        }
+
+        public static COMRECT FromXYWH(int x, int y, int width, int height)
+        {
+            return new COMRECT(x, y, x + width, y + height);
+        }
+
+        public override string ToString()
+        {
+            return "Left = " + left + " Top " + top + " Right = " + right + " Bottom = " + bottom;
+        }
+    }
+
+
 }
