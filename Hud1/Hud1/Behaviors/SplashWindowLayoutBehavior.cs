@@ -33,11 +33,11 @@ public class SplashWindowLayoutBehavior : Behavior<Window>
             | WindowsAPI.WS_EX_TRANSPARENT
             );
 
-        Monitors.RegisterMonitorsChange(window, OnDisplayChange);
-        OnDisplayChange();
+        Monitors.RegisterMonitorsChange(window, OnMonitorsChange);
+        OnMonitorsChange();
     }
 
-    private void OnDisplayChange()
+    private void OnMonitorsChange()
     {
         var window = (Window)AssociatedObject;
 

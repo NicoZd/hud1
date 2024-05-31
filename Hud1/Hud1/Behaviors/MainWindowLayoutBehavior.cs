@@ -31,20 +31,20 @@ public class MainWindowLayoutBehavior : Behavior<Window>
 
         Monitors.RegisterMonitorsChange(mainWindow, () =>
         {
-            _ = OnDisplayChangeAsync();
+            _ = OnMonitorsChangeAsync();
         });
         MoreViewModel.Instance.PropertyChanged += (object? sender, PropertyChangedEventArgs e) =>
         {
             if (e.PropertyName == nameof(MoreViewModel.Instance.HudPosition))
             {
-                _ = OnDisplayChangeAsync();
+                _ = OnMonitorsChangeAsync();
             }
         };
-        _ = OnDisplayChangeAsync();
+        _ = OnMonitorsChangeAsync();
     }
 
 
-    private async Task OnDisplayChangeAsync()
+    private async Task OnMonitorsChangeAsync()
     {
         var mainWindow = (MainWindow)AssociatedObject;
         var hudPosition = MoreViewModel.Instance.HudPosition;

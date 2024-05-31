@@ -73,7 +73,8 @@ internal class Monitors
 
         IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
-            if (msg == 126)
+            int WM_DISPLAYCHANGE = 126;
+            if (msg == WM_DISPLAYCHANGE)
             {
                 Debug.Print("OnMonitorsChange...");
                 OnMonitorsChange();
