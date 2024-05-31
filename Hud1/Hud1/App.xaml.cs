@@ -18,20 +18,6 @@ public partial class App : Application
         InitializeComponent();
     }
 
-    private void OnStartup(object sender, StartupEventArgs e)
-    {
-        EventManager.RegisterClassHandler(typeof(Window), Window.PreviewMouseDownEvent, new MouseButtonEventHandler(OnPreviewMouseDown));
-        EventManager.RegisterClassHandler(typeof(Window), Window.PreviewMouseUpEvent, new MouseButtonEventHandler(OnPreviewMouseDown));
-    }
-
-    private static void OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
-    {
-        if (MouseService.IgnoreNextEvent)
-        {
-            e.Handled = true;
-        }
-    }
-
     public static void ReplaceResource(int index, ResourceDictionary dictionary)
     {
         Application.Current.Resources.MergedDictionaries.Insert(index, dictionary);
@@ -40,7 +26,6 @@ public partial class App : Application
 
     public static void SelectStyle(string style, string font)
     {
-
 #if HOT
         // dont touch Application.Current.Resources.MergedDictionaries otherwise Hot Reload wount work 
         return;
@@ -48,8 +33,6 @@ public partial class App : Application
 
         // for testing
         if (Application.Current == null) return;
-
-        NavigationStates.FONT.SelectionLabel = font;
 
         var fontFile = "";
 
@@ -75,17 +58,15 @@ public partial class App : Application
             }
         }
 
-
         foreach (var sp in ScrollPanel.Instances)
             sp.SaveScrollPosition();
 
         if (fontFile != "")
         {
-
             ReplaceResource(0, new ResourceDictionary
-        {
-            { "FontFamily", new FontFamily(new Uri(fontFile, UriKind.Absolute), "./#" + font) }
-        });
+            {
+                { "FontFamily", new FontFamily(new Uri(fontFile, UriKind.Absolute), "./#" + font) }
+            });
         }
 
         ReplaceResource(1, new ResourceDictionary

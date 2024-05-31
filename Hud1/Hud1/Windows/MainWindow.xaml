@@ -53,6 +53,7 @@
     </Window.Resources>
 
     <b:Interaction.Behaviors>
+        <behaviors:IgnoreMacroMouseEventsBehavior />
         <behaviors:MainWindowLayoutBehavior />
         <behaviors:TopMostBehavior/>
         <behaviors:ReceiveShutdownBehavior/>
