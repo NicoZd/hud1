@@ -4,7 +4,7 @@ namespace Hud1;
 
 internal class Entry
 {
-    private static readonly long _startMS = DateTimeOffset.Now.ToUnixTimeMilliseconds();
+    private static readonly long startMs = DateTimeOffset.Now.ToUnixTimeMilliseconds();
 
     [STAThread]
     public static void Main(string[] args)
@@ -21,6 +21,6 @@ internal class Entry
 
     public static long Millis()
     {
-        return DateTimeOffset.Now.ToUnixTimeMilliseconds() - _startMS;
+        return DateTimeOffset.Now.ToUnixTimeMilliseconds() - startMs;
     }
 }
