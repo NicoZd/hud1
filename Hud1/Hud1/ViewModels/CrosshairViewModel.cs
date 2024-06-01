@@ -14,7 +14,7 @@ public partial class CrosshairViewModel : ObservableObject
     public static readonly CrosshairViewModel Instance = new();
 
     [ObservableProperty]
-    private Image _crosshairImage = new Image();
+    private Image _crosshairImage = new();
 
     private Dictionary<string, Func<int, Brush, bool, Drawing>> FormRenderFunctions = [];
     private readonly Dictionary<string, Brush> ColorOptions = [];

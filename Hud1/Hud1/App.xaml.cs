@@ -1,10 +1,7 @@
-﻿using Hud1.Helpers;
-using Hud1.Models;
-using Hud1.Views;
+﻿using Hud1.Views;
 using System.Diagnostics;
 using System.IO;
 using System.Windows;
-using System.Windows.Input;
 using System.Windows.Media;
 
 namespace Hud1;

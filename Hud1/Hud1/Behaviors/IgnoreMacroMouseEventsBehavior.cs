@@ -1,9 +1,7 @@
 ﻿using Hud1.Helpers;
 using Microsoft.Xaml.Behaviors;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Interop;
 
 namespace Hud1.Behaviors;
 

@@ -1,7 +1,6 @@
 ﻿using Hud1.Helpers;
 using Hud1.ViewModels;
 using Microsoft.Xaml.Behaviors;
-using System;
 using System.Windows;
 
 namespace Hud1.Behaviors;

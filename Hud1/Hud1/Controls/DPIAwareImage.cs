@@ -1,14 +1,7 @@
 ﻿using Hud1.Helpers;
-using System;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Interop;
 using System.Windows.Media;
 
 namespace Hud1.Controls;
@@ -63,7 +56,7 @@ public class DPIAwareImage : Image
 
     private void UpdateDpiScale()
     {
-        PresentationSource source = PresentationSource.FromVisual(this);
+        var source = PresentationSource.FromVisual(this);
 
         double dpiX = 1;
         if (source != null)
@@ -71,7 +64,7 @@ public class DPIAwareImage : Image
             dpiX = source.CompositionTarget.TransformToDevice.M11;
         }
 
-        double dpiScale = 1.0 / dpiX;
+        var dpiScale = 1.0 / dpiX;
 
         RenderTransform = new ScaleTransform(dpiScale, dpiScale, Source.Width / 2, Source.Height / 2);
 

@@ -4,7 +4,7 @@ namespace Hud1.Helpers;
 internal class FunctionDebounce
 {
     private readonly Func<string, Task> function;
-    private string next = String.Empty;
+    private string next = string.Empty;
     private bool running = false;
 
     public FunctionDebounce(Func<string, Task> function)
@@ -35,7 +35,7 @@ internal class FunctionDebounce
 
         running = false;
 
-        if (!String.Empty.Equals(next))
+        if (!string.Empty.Equals(next))
         {
             var next = this.next;
             this.next = string.Empty;
