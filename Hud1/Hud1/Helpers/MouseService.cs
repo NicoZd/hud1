@@ -3,11 +3,11 @@ using System.Windows;
 
 namespace Hud1.Helpers;
 
-public class MouseService
+internal class MouseService
 {
-    public static bool IgnoreNextEvent { get; set; }
+    internal static bool IgnoreNextEvent { get; set; }
 
-    public enum MouseButton
+    internal enum MouseButton
     {
         Left = 0x2,
         Right = 0x8,
@@ -17,7 +17,7 @@ public class MouseService
     [DllImport("user32.dll")]
     private static extern void mouse_event(int flags, int dX, int dY, int buttons, int extraInfo);
 
-    public static void MouseDown(MouseButton button)
+    internal static void MouseDown(MouseButton button)
     {
         Console.WriteLine("MouseDown1");
         IgnoreNextEvent = true;
@@ -34,7 +34,7 @@ public class MouseService
         });
     }
 
-    public static void MouseUp(MouseButton button)
+    internal static void MouseUp(MouseButton button)
     {
         Console.WriteLine("MouseUp1");
         IgnoreNextEvent = true;

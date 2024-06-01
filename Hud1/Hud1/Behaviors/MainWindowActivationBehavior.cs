@@ -6,9 +6,8 @@ using System.Windows;
 namespace Hud1.Behaviors;
 
 
-public class MainWindowActivationBehavior : Behavior<Window>
+internal class MainWindowActivationBehavior : Behavior<Window>
 {
-
     protected override void OnAttached()
     {
         base.OnAttached();
@@ -68,6 +67,5 @@ public class MainWindowActivationBehavior : Behavior<Window>
     private void OnActivated(object? sender, EventArgs e)
     {
         MainWindowViewModel.Instance.Activate();
-
     }
 }

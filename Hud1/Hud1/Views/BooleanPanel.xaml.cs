@@ -10,7 +10,7 @@ public partial class BooleanPanel : UserControl
     private static readonly DependencyProperty NavigationStateProperty =
          BindingHelper.CreateProperty<BooleanPanel, NavigationState>("NavigationState", null);
 
-    public NavigationState NavigationState
+    internal NavigationState NavigationState
     {
         get => (NavigationState)GetValue(NavigationStateProperty);
         set => SetValue(NavigationStateProperty, value);

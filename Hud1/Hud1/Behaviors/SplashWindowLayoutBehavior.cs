@@ -6,7 +6,7 @@ using System.Windows.Interop;
 namespace Hud1.Behaviors;
 
 
-public class SplashWindowLayoutBehavior : Behavior<Window>
+internal class SplashWindowLayoutBehavior : Behavior<Window>
 {
     protected override void OnAttached()
     {

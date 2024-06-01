@@ -4,9 +4,9 @@ using Hud1.Models;
 
 namespace Hud1.ViewModels;
 
-public partial class NightvisionViewModel : ObservableObject
+internal partial class NightvisionViewModel : ObservableObject
 {
-    public static readonly double[] Gammas = [1.25, 1.5, 2, 2.5, 3, 3.5, 4.2];
+    internal static readonly double[] Gammas = [1.25, 1.5, 2, 2.5, 3, 3.5, 4.2];
 
     public static readonly NightvisionViewModel Instance = new();
 
@@ -33,7 +33,7 @@ public partial class NightvisionViewModel : ObservableObject
         }
     }
 
-    public void BuildNavigation()
+    internal void BuildNavigation()
     {
         var Configure = HudViewModel.Instance.Configure;
 

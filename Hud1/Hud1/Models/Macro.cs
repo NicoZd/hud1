@@ -6,7 +6,7 @@ using MoonSharp.Interpreter;
 
 namespace Hud1.Models;
 
-public partial class Macro : ObservableObject
+internal partial class Macro : ObservableObject
 {
     [ObservableProperty]
     private string _label = "";
@@ -35,7 +35,7 @@ public partial class Macro : ObservableObject
     private MacroScript? macroScript;
     private readonly MacrosViewModel macros;
 
-    public Macro(string path, MacrosViewModel macros)
+    internal Macro(string path, MacrosViewModel macros)
     {
         Path = path;
         Label = System.IO.Path.GetFileName(Path);
@@ -121,26 +121,26 @@ public partial class Macro : ObservableObject
         });
     }
 
-    public class ScriptHooks : IDisposable
+    internal class ScriptHooks : IDisposable
     {
         private readonly MacroScript _macroScript;
 
-        public ScriptHooks(MacroScript macroScript)
+        internal ScriptHooks(MacroScript macroScript)
         {
             _macroScript = macroScript;
             GlobalMouseHook.MouseDown += OnMouseDown;
-        }
-
-        private void OnMouseDown()
-        {
-            Console.WriteLine("OnMouseDown");
-            _macroScript.OnMouseDown();
         }
 
         public void Dispose()
         {
             Console.WriteLine("MACROHOOK Dispose");
             GlobalMouseHook.MouseDown -= OnMouseDown;
+        }
+
+        private void OnMouseDown()
+        {
+            Console.WriteLine("OnMouseDown");
+            _macroScript.OnMouseDown();
         }
     }
 }

@@ -9,7 +9,7 @@ using System.Windows.Media;
 
 namespace Hud1.ViewModels;
 
-public partial class CrosshairViewModel : ObservableObject
+internal partial class CrosshairViewModel : ObservableObject
 {
     public static readonly CrosshairViewModel Instance = new();
 
@@ -21,7 +21,7 @@ public partial class CrosshairViewModel : ObservableObject
 
     private CrosshairViewModel() { }
 
-    public void BuildNavigation()
+    internal void BuildNavigation()
     {
         var Configure = HudViewModel.Instance.Configure;
 
@@ -125,7 +125,7 @@ public partial class CrosshairViewModel : ObservableObject
         Redraw();
     }
 
-    public Action ChangeDisplay(int dir)
+    internal Action ChangeDisplay(int dir)
     {
         return () =>
         {
@@ -146,7 +146,7 @@ public partial class CrosshairViewModel : ObservableObject
         };
     }
 
-    public void Redraw()
+    internal void Redraw()
     {
         Debug.Print("Enabled {0}", NavigationStates.CROSSHAIR_ENABLED.SelectionBoolean);
         Debug.Print("Form {0}", NavigationStates.CROSSHAIR_FORM.SelectionLabel);

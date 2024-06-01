@@ -7,11 +7,11 @@ using System.Windows.Media;
 
 namespace Hud1.ViewModels;
 
-public partial class MoreViewModel : ObservableObject
+internal partial class MoreViewModel : ObservableObject
 {
     private readonly string[] Styles = ["Green", "Red"];
 
-    public static readonly MoreViewModel Instance = new();
+    internal static readonly MoreViewModel Instance = new();
 
     [ObservableProperty]
     private string _hudPosition = "0:Right";
@@ -22,7 +22,7 @@ public partial class MoreViewModel : ObservableObject
         ComputeNextHudPosition(0);
     }
 
-    public void BuildNavigation()
+    internal void BuildNavigation()
     {
         var Configure = HudViewModel.Instance.Configure;
 
@@ -85,7 +85,7 @@ public partial class MoreViewModel : ObservableObject
         };
     }
 
-    public void ComputeNextHudPosition(int dir)
+    internal void ComputeNextHudPosition(int dir)
     {
         Console.WriteLine("Compute Hud Pos {0}", dir);
         var monitors = Monitors.All;
@@ -130,7 +130,7 @@ public partial class MoreViewModel : ObservableObject
         SelectStyle(-1);
     }
 
-    public void SelectStyle(int dir)
+    internal void SelectStyle(int dir)
     {
         var currentStyleIndex = Array.IndexOf(Styles, NavigationStates.STYLE.SelectionLabel);
         if (currentStyleIndex == -1)
@@ -175,7 +175,7 @@ public partial class MoreViewModel : ObservableObject
         SelectFont(-1);
     }
 
-    public void SelectFont(int dir)
+    internal void SelectFont(int dir)
     {
         var Fonts = FontList();
         if (Fonts.Length == 0) return;

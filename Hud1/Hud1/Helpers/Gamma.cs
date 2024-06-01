@@ -2,19 +2,19 @@
 
 namespace Hud1.Helpers;
 
-public static class Gamma
+internal static class Gamma
 {
     [DllImport("gdi32.dll")]
     private static extern unsafe bool SetDeviceGammaRamp(int hdc, void* ramp);
 
     [DllImport("gdi32.dll")]
-    public static extern IntPtr CreateDC(string lpszDriver, string? lpszDevice, string? lpszOutput, IntPtr lpInitData);
+    internal static extern IntPtr CreateDC(string lpszDriver, string? lpszDevice, string? lpszOutput, IntPtr lpInitData);
 
     [DllImport("gdi32.dll", SetLastError = true)]
     [return: MarshalAs(UnmanagedType.Bool)]
-    public static extern bool DeleteDC(IntPtr hdc);
+    internal static extern bool DeleteDC(IntPtr hdc);
 
-    public static unsafe bool SetGamma(double gamma)
+    internal static unsafe bool SetGamma(double gamma)
     {
         var gArray = stackalloc short[3 * 256];
 

@@ -2,9 +2,9 @@
 
 internal class TopMostHelper
 {
-    public static readonly TopMostHelper Instance = new();
+    internal static readonly TopMostHelper Instance = new();
 
-    public List<nint> TopWindows = [];
+    internal List<nint> TopWindows = [];
 
     private TopMostHelper()
     {

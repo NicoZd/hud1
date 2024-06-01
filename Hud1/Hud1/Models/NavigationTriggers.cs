@@ -1,12 +1,12 @@
 ﻿namespace Hud1.Models;
 
-public class NavigationTriggers
+internal class NavigationTriggers
 {
-    public static NavigationTrigger LEFT = new();
-    public static NavigationTrigger RIGHT = new();
-    public static NavigationTrigger UP = new();
-    public static NavigationTrigger DOWN = new();
-    public static NavigationTrigger RETURN_UP = new();
-    public static NavigationTrigger RETURN_DOWN = new();
-    public static NavigationTrigger DIRECT = new();
+    internal static NavigationTrigger LEFT = new();
+    internal static NavigationTrigger RIGHT = new();
+    internal static NavigationTrigger UP = new();
+    internal static NavigationTrigger DOWN = new();
+    internal static NavigationTrigger RETURN_UP = new();
+    internal static NavigationTrigger RETURN_DOWN = new();
+    internal static NavigationTrigger DIRECT = new();
 }

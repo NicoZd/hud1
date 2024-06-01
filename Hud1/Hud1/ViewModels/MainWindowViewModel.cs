@@ -3,18 +3,18 @@ using System.Windows;
 
 namespace Hud1.ViewModels;
 
-public partial class MainWindowViewModel : ObservableObject
+internal partial class MainWindowViewModel : ObservableObject
 {
     public static readonly MainWindowViewModel Instance = new();
 
     [ObservableProperty]
-    public bool _active = true;
+    private bool _active = true;
 
     [ObservableProperty]
-    public bool _isForeground = false;
+    private bool _isForeground = false;
 
     [ObservableProperty]
-    public Visibility _hudVisibility = Visibility.Visible;
+    private Visibility _hudVisibility = Visibility.Visible;
 
     private MainWindowViewModel()
     {

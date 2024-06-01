@@ -12,7 +12,7 @@ internal class CloseWindowBehavior : Behavior<Window>
         set => SetValue(IsCloseActivatedProperty, value);
     }
 
-    public static readonly DependencyProperty IsCloseActivatedProperty =
+    internal static readonly DependencyProperty IsCloseActivatedProperty =
         DependencyProperty.Register("IsCloseActivated", typeof(bool), typeof(CloseWindowBehavior), new PropertyMetadata(false, OnIsCloseActivatedChanged));
 
     private static void OnIsCloseActivatedChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -28,5 +28,4 @@ internal class CloseWindowBehavior : Behavior<Window>
             };
         }
     }
-
 }

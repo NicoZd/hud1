@@ -2,9 +2,9 @@
 
 namespace Hud1.Helpers;
 
-public static class StoryboardExtensions
+internal static class StoryboardExtensions
 {
-    public static Task BeginAsync(this Storyboard storyboard)
+    internal static Task BeginAsync(this Storyboard storyboard)
     {
         var tcs = new TaskCompletionSource<bool>();
 

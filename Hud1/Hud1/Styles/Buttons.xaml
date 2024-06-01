@@ -242,13 +242,13 @@
                 </LinearGradientBrush>
             </Setter.Value>
         </Setter>
-        <Setter Property="controls:BringIntoView.BringIntoView" Value="False"/>
+        <Setter Property="controls:BringIntoView.Active" Value="False"/>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Background" Value="{DynamicResource BrushColorMedLow}"/>
             </Trigger>
             <DataTrigger Binding="{Binding Path=Selected}" Value="True">
-                <Setter Property="controls:BringIntoView.BringIntoView" Value="True"/>
+                <Setter Property="controls:BringIntoView.Active" Value="True"/>
                 <Setter Property="Background">
                     <Setter.Value>
                         <LinearGradientBrush StartPoint="0,0" EndPoint="0,0">

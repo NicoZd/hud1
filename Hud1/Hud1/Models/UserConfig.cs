@@ -2,7 +2,7 @@
 
 public class UserConfig
 {
-    public static readonly UserConfig Current = new();
+    internal static readonly UserConfig Current = new();
 
     // Nightvision
     public int GammaIndex { get; set; }

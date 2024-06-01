@@ -5,7 +5,7 @@ using System.Windows;
 
 namespace Hud1.Helpers;
 
-public enum GlobalKey : int
+internal enum GlobalKey : int
 {
     VK_LMENU = 0xA4,
 
@@ -22,69 +22,69 @@ public enum GlobalKey : int
     VK_S = 0x53
 }
 
-public static class WindowsAPI
+internal static class WindowsAPI
 {
-    public static readonly nint HWND_TOP = new(0);
-    public static uint GW_HWNDNEXT = 2;
+    internal static readonly nint HWND_TOP = new(0);
+    internal static uint GW_HWNDNEXT = 2;
 
-    public const int WH_KEYBOARD_LL = 13;
-    public const int WH_MOUSE_LL = 14;
+    internal const int WH_KEYBOARD_LL = 13;
+    internal const int WH_MOUSE_LL = 14;
 
-    public const int WM_KEYDOWN = 0x100;
-    public const int WM_KEYUP = 0x101;
-    public const int WM_SYSKEYDOWN = 0x0104;
-    public const int WM_SYSKEYUP = 0x0105;
+    internal const int WM_KEYDOWN = 0x100;
+    internal const int WM_KEYUP = 0x101;
+    internal const int WM_SYSKEYDOWN = 0x0104;
+    internal const int WM_SYSKEYUP = 0x0105;
 
-    public const int WH_MOUSE = 7;
-    public const int WH_KEYBOARD = 2;
-    public const int WM_MOUSEMOVE = 0x200;
-    public const int WM_LBUTTONDOWN = 0x201;
-    public const int WM_RBUTTONDOWN = 0x204;
-    public const int WM_MBUTTONDOWN = 0x207;
-    public const int WM_LBUTTONUP = 0x202;
-    public const int WM_RBUTTONUP = 0x205;
-    public const int WM_MBUTTONUP = 0x208;
-    public const int WM_LBUTTONDBLCLK = 0x203;
-    public const int WM_RBUTTONDBLCLK = 0x206;
-    public const int WM_MBUTTONDBLCLK = 0x209;
-    public const int WM_MOUSEWHEEL = 0x020A;
+    internal const int WH_MOUSE = 7;
+    internal const int WH_KEYBOARD = 2;
+    internal const int WM_MOUSEMOVE = 0x200;
+    internal const int WM_LBUTTONDOWN = 0x201;
+    internal const int WM_RBUTTONDOWN = 0x204;
+    internal const int WM_MBUTTONDOWN = 0x207;
+    internal const int WM_LBUTTONUP = 0x202;
+    internal const int WM_RBUTTONUP = 0x205;
+    internal const int WM_MBUTTONUP = 0x208;
+    internal const int WM_LBUTTONDBLCLK = 0x203;
+    internal const int WM_RBUTTONDBLCLK = 0x206;
+    internal const int WM_MBUTTONDBLCLK = 0x209;
+    internal const int WM_MOUSEWHEEL = 0x020A;
 
-    public const int WS_EX_TRANSPARENT = 0x00000020;
-    public const int WS_EX_TOOLWINDOW = 0x00000080;
-    public const int WS_EX_NOACTIVATE = 0x08000000;
-    public const int GWL_EXSTYLE = -20;
+    internal const int WS_EX_TRANSPARENT = 0x00000020;
+    internal const int WS_EX_TOOLWINDOW = 0x00000080;
+    internal const int WS_EX_NOACTIVATE = 0x08000000;
+    internal const int GWL_EXSTYLE = -20;
 
     // Hooks
 
-    public delegate IntPtr HookProc(int nCode, IntPtr wParam, IntPtr lParam);
+    internal delegate IntPtr HookProc(int nCode, IntPtr wParam, IntPtr lParam);
 
     [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-    public static extern IntPtr SetWindowsHookEx(int idHook, HookProc lpfn, IntPtr hmod, uint dwThreadId);
+    internal static extern IntPtr SetWindowsHookEx(int idHook, HookProc lpfn, IntPtr hmod, uint dwThreadId);
 
     [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
     [return: MarshalAs(UnmanagedType.Bool)]
-    public static extern bool UnhookWindowsHookEx(IntPtr hhk);
+    internal static extern bool UnhookWindowsHookEx(IntPtr hhk);
 
     [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-    public static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode, IntPtr wParam, IntPtr lParam);
+    internal static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode, IntPtr wParam, IntPtr lParam);
 
-    public const uint EVENT_SYSTEM_FOREGROUND = 3;
-    public const int WINEVENT_OUTOFCONTEXT = 0;
+    internal const uint EVENT_SYSTEM_FOREGROUND = 3;
+    internal const int WINEVENT_OUTOFCONTEXT = 0;
 
-    public delegate void WinEventDelegate(IntPtr hWinEventHook, uint eventType, IntPtr hwnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime);
+    internal delegate void WinEventDelegate(IntPtr hWinEventHook, uint eventType, IntPtr hwnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime);
 
     [DllImport("user32.dll")]
-    public static extern IntPtr SetWinEventHook(uint eventMin, uint eventMax, IntPtr hmodWinEventProc, WinEventDelegate lpfnWinEventProc, uint idProcess, uint idThread, uint dwFlags);
+    internal static extern IntPtr SetWinEventHook(uint eventMin, uint eventMax, IntPtr hmodWinEventProc, WinEventDelegate lpfnWinEventProc, uint idProcess, uint idThread, uint dwFlags);
 
     // Modules
 
     [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-    public static extern IntPtr GetModuleHandle(string lpModuleName);
+    internal static extern IntPtr GetModuleHandle(string lpModuleName);
 
     // Windows
 
     [Flags]
-    public enum SetWindowPosFlags : uint
+    internal enum SetWindowPosFlags : uint
     {
         SWP_NOACTIVATE = 0x0010,
         SWP_NOMOVE = 0x0002,
@@ -93,31 +93,31 @@ public static class WindowsAPI
     }
     [DllImport("user32.dll", ExactSpelling = true, SetLastError = true)]
     [return: MarshalAs(UnmanagedType.Bool)]
-    public static extern bool SetWindowPos(nint hWnd, nint hWndInsertAfter, int X, int Y, int cx, int cy, SetWindowPosFlags uFlags);
+    internal static extern bool SetWindowPos(nint hWnd, nint hWndInsertAfter, int X, int Y, int cx, int cy, SetWindowPosFlags uFlags);
 
     [DllImport("user32.dll")]
-    public static extern IntPtr GetForegroundWindow();
+    internal static extern IntPtr GetForegroundWindow();
 
     [DllImport("user32.dll", SetLastError = true)]
-    public static extern IntPtr SetForegroundWindow(IntPtr hWnd);
+    internal static extern IntPtr SetForegroundWindow(IntPtr hWnd);
 
     [DllImport("user32.dll")]
-    public static extern uint GetWindowThreadProcessId(IntPtr hWnd, IntPtr ProcessId);
+    internal static extern uint GetWindowThreadProcessId(IntPtr hWnd, IntPtr ProcessId);
 
     [DllImport("user32.dll")]
-    public static extern bool AttachThreadInput(uint idAttach, uint idAttachTo, bool fAttach);
+    internal static extern bool AttachThreadInput(uint idAttach, uint idAttachTo, bool fAttach);
 
     [DllImport("user32.dll")]
-    public static extern nint GetDesktopWindow();
+    internal static extern nint GetDesktopWindow();
 
     [DllImport("user32.dll")]
-    public static extern nint GetTopWindow(nint hwnd);
+    internal static extern nint GetTopWindow(nint hwnd);
 
     [DllImport("user32.dll")]
-    public static extern nint GetWindow(nint hwnd, uint uCmd);
+    internal static extern nint GetWindow(nint hwnd, uint uCmd);
 
     [DllImport("user32.dll")]
-    public static extern bool IsWindowVisible(nint hwnd);
+    internal static extern bool IsWindowVisible(nint hwnd);
 
     [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
     private static extern int GetWindowText(IntPtr hWnd, StringBuilder lpString, int nMaxCount);
@@ -125,7 +125,7 @@ public static class WindowsAPI
     [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
     private static extern int GetWindowTextLength(IntPtr hWnd);
 
-    public static string GetWindowTitle(IntPtr hWnd)
+    internal static string GetWindowTitle(IntPtr hWnd)
     {
         var length = GetWindowTextLength(hWnd) + 1;
         var title = new StringBuilder(length);
@@ -137,44 +137,44 @@ public static class WindowsAPI
     // Window Style
 
     [DllImport("user32.dll")]
-    public static extern int GetWindowLong(IntPtr hwnd, int index);
+    internal static extern int GetWindowLong(IntPtr hwnd, int index);
 
     [DllImport("user32.dll")]
-    public static extern int SetWindowLong(IntPtr hwnd, int index, int newStyle);
+    internal static extern int SetWindowLong(IntPtr hwnd, int index, int newStyle);
 
     // message
 
-    public const int HWND_BROADCAST = 0xffff;
+    internal const int HWND_BROADCAST = 0xffff;
 
     [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
-    public static extern uint RegisterWindowMessage(string message);
+    internal static extern uint RegisterWindowMessage(string message);
 
     [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
-    public static extern bool SendNotifyMessage(IntPtr hWnd, uint msg, int wParam, int lParam);
+    internal static extern bool SendNotifyMessage(IntPtr hWnd, uint msg, int wParam, int lParam);
 
     // cursor
 
     [StructLayout(LayoutKind.Sequential)]
-    public struct CURSORINFO
+    internal struct CURSORINFO
     {
-        public int cbSize;
-        public int flags;
-        public IntPtr hCursor;
-        public POINTAPI ptScreenPos;
+        internal int cbSize;
+        internal int flags;
+        internal IntPtr hCursor;
+        internal POINTAPI ptScreenPos;
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    public struct POINTAPI
+    internal struct POINTAPI
     {
-        public int x;
-        public int y;
+        internal int x;
+        internal int y;
     }
 
-    public const int CURSOR_SHOWING = 0x00000001;
+    internal const int CURSOR_SHOWING = 0x00000001;
     [DllImport("user32.dll")]
-    public static extern bool GetCursorInfo(out CURSORINFO pci);
+    internal static extern bool GetCursorInfo(out CURSORINFO pci);
 
-    public static bool IsMouseHidden()
+    internal static bool IsMouseHidden()
     {
         CURSORINFO pci;
         pci.cbSize = Marshal.SizeOf(typeof(CURSORINFO));
@@ -191,9 +191,9 @@ public static class WindowsAPI
     // Monitors
 
     [DllImport("user32.dll", SetLastError = true)]
-    public static extern bool MoveWindow(nint hWnd, int X, int Y, int nWidth, int nHeight, bool bRepaint);
+    internal static extern bool MoveWindow(nint hWnd, int X, int Y, int nWidth, int nHeight, bool bRepaint);
 
-    public enum DpiType
+    internal enum DpiType
     {
         EFFECTIVE = 0,
         ANGULAR = 1,
@@ -202,21 +202,21 @@ public static class WindowsAPI
 
     [DllImport("shcore.dll", CharSet = CharSet.Auto)]
     [ResourceExposure(ResourceScope.None)]
-    public static extern nint GetDpiForMonitor([In] nint hmonitor, [In] DpiType dpiType, [Out] out uint dpiX, [Out] out uint dpiY);
+    internal static extern nint GetDpiForMonitor([In] nint hmonitor, [In] DpiType dpiType, [Out] out uint dpiX, [Out] out uint dpiY);
 
     [DllImport("user32.dll", CharSet = CharSet.Auto)]
     [ResourceExposure(ResourceScope.None)]
-    public static extern bool GetMonitorInfo(HandleRef hmonitor, [In][Out] MONITORINFOEX info);
+    internal static extern bool GetMonitorInfo(HandleRef hmonitor, [In][Out] MONITORINFOEX info);
 
     [StructLayout(LayoutKind.Sequential)]
-    public struct RECT
+    internal struct RECT
     {
-        public int left;
-        public int top;
-        public int right;
-        public int bottom;
+        internal int left;
+        internal int top;
+        internal int right;
+        internal int bottom;
 
-        public RECT(int left, int top, int right, int bottom)
+        internal RECT(int left, int top, int right, int bottom)
         {
             this.left = left;
             this.top = top;
@@ -224,7 +224,7 @@ public static class WindowsAPI
             this.bottom = bottom;
         }
 
-        public RECT(Rect r)
+        internal RECT(Rect r)
         {
             left = (int)r.Left;
             top = (int)r.Top;
@@ -232,16 +232,16 @@ public static class WindowsAPI
             bottom = (int)r.Bottom;
         }
 
-        public static RECT FromXYWH(int x, int y, int width, int height)
+        internal static RECT FromXYWH(int x, int y, int width, int height)
         {
             return new RECT(x, y, x + width, y + height);
         }
 
-        public Size Size => new(right - left, bottom - top);
+        internal Size Size => new(right - left, bottom - top);
     }
 
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto, Pack = 4)]
-    public class MONITORINFOEX
+    internal class MONITORINFOEX
     {
         internal int cbSize = Marshal.SizeOf(typeof(MONITORINFOEX));
 
@@ -253,27 +253,27 @@ public static class WindowsAPI
         internal char[] szDevice = new char[32];
     }
 
-    public delegate bool MonitorEnumProc(nint monitor, nint hdc, nint lprcMonitor, nint lParam);
+    internal delegate bool MonitorEnumProc(nint monitor, nint hdc, nint lprcMonitor, nint lParam);
 
     [DllImport("user32.dll", ExactSpelling = true)]
     [ResourceExposure(ResourceScope.None)]
-    public static extern bool EnumDisplayMonitors(HandleRef hdc, COMRECT? rcClip, MonitorEnumProc lpfnEnum, nint dwData);
+    internal static extern bool EnumDisplayMonitors(HandleRef hdc, COMRECT? rcClip, MonitorEnumProc lpfnEnum, nint dwData);
 
-    public static readonly HandleRef NullHandleRef = new(null, nint.Zero);
+    internal static readonly HandleRef NullHandleRef = new(null, nint.Zero);
 
     [StructLayout(LayoutKind.Sequential)]
-    public class COMRECT
+    internal class COMRECT
     {
-        public int bottom;
-        public int left;
-        public int right;
-        public int top;
+        internal int bottom;
+        internal int left;
+        internal int right;
+        internal int top;
 
-        public COMRECT()
+        internal COMRECT()
         {
         }
 
-        public COMRECT(Rect r)
+        internal COMRECT(Rect r)
         {
             left = (int)r.X;
             top = (int)r.Y;
@@ -281,7 +281,7 @@ public static class WindowsAPI
             bottom = (int)r.Bottom;
         }
 
-        public COMRECT(int left, int top, int right, int bottom)
+        internal COMRECT(int left, int top, int right, int bottom)
         {
             this.left = left;
             this.top = top;
@@ -289,7 +289,7 @@ public static class WindowsAPI
             this.bottom = bottom;
         }
 
-        public static COMRECT FromXYWH(int x, int y, int width, int height)
+        internal static COMRECT FromXYWH(int x, int y, int width, int height)
         {
             return new COMRECT(x, y, x + width, y + height);
         }

@@ -2,11 +2,11 @@
 
 namespace Hud1.Models;
 
-public class NavigationTrigger
+internal class NavigationTrigger
 {
-    public string Label { get; set; }
+    internal string Label { get; set; }
 
-    public NavigationTrigger([CallerMemberName] string label = "")
+    internal NavigationTrigger([CallerMemberName] string label = "")
     {
         Label = label;
     }

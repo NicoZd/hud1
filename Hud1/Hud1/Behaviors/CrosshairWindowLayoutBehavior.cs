@@ -11,7 +11,7 @@ using System.Windows.Media.Animation;
 namespace Hud1.Behaviors;
 
 
-public class CrosshairWindowLayoutBehavior : Behavior<CrosshairWindow>
+internal class CrosshairWindowLayoutBehavior : Behavior<CrosshairWindow>
 {
     protected override void OnAttached()
     {

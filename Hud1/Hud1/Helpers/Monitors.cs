@@ -7,9 +7,9 @@ namespace Hud1.Helpers;
 
 internal class MonitorEnumCallback
 {
-    public readonly List<Monitor> Monitors = [];
+    internal readonly List<Monitor> Monitors = [];
 
-    public bool Callback(nint monitor, nint hdc, nint lprcMonitor, nint lparam)
+    internal bool Callback(nint monitor, nint hdc, nint lprcMonitor, nint lparam)
     {
         Monitors.Add(new Monitor(monitor, hdc));
         return true;
@@ -20,12 +20,12 @@ internal class Monitor
 {
     private const int MONITORINFOF_PRIMARY = 0x00000001;
 
-    public readonly double ScaleFactor;
-    public readonly Rect Bounds;
-    public readonly bool IsPrimary;
-    public readonly string DeviceName;
+    internal readonly double ScaleFactor;
+    internal readonly Rect Bounds;
+    internal readonly bool IsPrimary;
+    internal readonly string DeviceName;
 
-    public Monitor()
+    internal Monitor()
     {
         Debug.Print("DEFAULT MONITOR");
         ScaleFactor = 1.0;
@@ -34,7 +34,7 @@ internal class Monitor
         DeviceName = "DISPLAY";
     }
 
-    public Monitor(nint monitor, nint hdc)
+    internal Monitor(nint monitor, nint hdc)
     {
         WindowsAPI.GetDpiForMonitor(monitor, WindowsAPI.DpiType.EFFECTIVE, out var dpiX, out _);
         ScaleFactor = dpiX / 96.0;
@@ -53,7 +53,7 @@ internal class Monitor
 
 internal class Monitors
 {
-    public static List<Monitor> All
+    internal static List<Monitor> All
     {
         get
         {
@@ -64,9 +64,9 @@ internal class Monitors
         }
     }
 
-    public static Monitor Primary => All.FirstOrDefault(t => t.IsPrimary) ?? new Monitor();
+    internal static Monitor Primary => All.FirstOrDefault(t => t.IsPrimary) ?? new Monitor();
 
-    public static Action RegisterMonitorsChange(Window window, Action OnMonitorsChange)
+    internal static Action RegisterMonitorsChange(Window window, Action OnMonitorsChange)
     {
         var hwnd = new WindowInteropHelper(window).Handle;
         var source = HwndSource.FromHwnd(hwnd);

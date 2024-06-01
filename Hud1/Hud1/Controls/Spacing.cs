@@ -2,14 +2,32 @@
 
 namespace Hud1.Controls;
 
-public class Spacing
+internal class Spacing
 {
-    public static double GetHorizontal(DependencyObject obj)
+    internal static readonly DependencyProperty VerticalProperty =
+        DependencyProperty.RegisterAttached("Vertical", typeof(double), typeof(Spacing),
+            new UIPropertyMetadata(0d, VerticalChangedCallback));
+
+    internal static readonly DependencyProperty HorizontalProperty =
+        DependencyProperty.RegisterAttached("Horizontal", typeof(double), typeof(Spacing),
+            new UIPropertyMetadata(0d, HorizontalChangedCallback));
+
+    internal static void SetHorizontal(DependencyObject obj, double space)
+    {
+        obj.SetValue(HorizontalProperty, space);
+    }
+
+    internal static double GetHorizontal(DependencyObject obj)
     {
         return (double)obj.GetValue(HorizontalProperty);
     }
 
-    public static double GetVertical(DependencyObject obj)
+    internal static void SetVertical(DependencyObject obj, double value)
+    {
+        obj.SetValue(VerticalProperty, value);
+    }
+
+    internal static double GetVertical(DependencyObject obj)
     {
         return (double)obj.GetValue(VerticalProperty);
     }
@@ -23,16 +41,6 @@ public class Spacing
         MarginSetter.SetLastItemMargin(obj, new Thickness(0));
     }
 
-    public static void SetHorizontal(DependencyObject obj, double space)
-    {
-        obj.SetValue(HorizontalProperty, space);
-    }
-
-    public static void SetVertical(DependencyObject obj, double value)
-    {
-        obj.SetValue(VerticalProperty, value);
-    }
-
     private static void VerticalChangedCallback(object sender, DependencyPropertyChangedEventArgs e)
     {
         var space = (double)e.NewValue;
@@ -40,13 +48,5 @@ public class Spacing
         MarginSetter.SetMargin(obj, new Thickness(0, 0, 0, space));
         MarginSetter.SetLastItemMargin(obj, new Thickness(0));
     }
-
-    public static readonly DependencyProperty VerticalProperty =
-        DependencyProperty.RegisterAttached("Vertical", typeof(double), typeof(Spacing),
-            new UIPropertyMetadata(0d, VerticalChangedCallback));
-
-    public static readonly DependencyProperty HorizontalProperty =
-        DependencyProperty.RegisterAttached("Horizontal", typeof(double), typeof(Spacing),
-            new UIPropertyMetadata(0d, HorizontalChangedCallback));
 }
 

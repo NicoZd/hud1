@@ -3,38 +3,38 @@ using System.Runtime.InteropServices;
 
 namespace Hud1.Helpers;
 
-public class KeyEvent
+internal class KeyEvent
 {
-    public bool alt = false;
-    public bool block = false;
-    public bool repeated = false;
+    internal bool alt = false;
+    internal bool block = false;
+    internal bool repeated = false;
 
-    public GlobalKey key;
+    internal GlobalKey key;
 
-    public KeyEvent(GlobalKey key)
+    internal KeyEvent(GlobalKey key)
     {
         this.key = key;
     }
 }
 
-public static class GlobalKeyboardHook
+internal static class GlobalKeyboardHook
 {
-    public delegate void KeyDownHandler(KeyEvent keyEvent);
-    public static event KeyDownHandler? KeyDown;
+    internal delegate void KeyDownHandler(KeyEvent keyEvent);
+    internal static event KeyDownHandler? KeyDown;
 
     private static IntPtr HookID = IntPtr.Zero;
 
     private static readonly Dictionary<GlobalKey, bool> IsDown = [];
     private static GlobalKey? _lastPressedKey;
 
-    public static void SystemHook()
+    internal static void SystemHook()
     {
         using var curProcess = Process.GetCurrentProcess();
         using var curModule = curProcess.MainModule!;
         HookID = WindowsAPI.SetWindowsHookEx(WindowsAPI.WH_KEYBOARD_LL, HookCallback, WindowsAPI.GetModuleHandle(curModule.ModuleName), 0);
     }
 
-    public static void SystemUnhook()
+    internal static void SystemUnhook()
     {
         WindowsAPI.UnhookWindowsHookEx(HookID);
     }

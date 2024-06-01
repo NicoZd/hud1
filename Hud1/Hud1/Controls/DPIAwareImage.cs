@@ -6,13 +6,13 @@ using System.Windows.Media;
 
 namespace Hud1.Controls;
 
-public class DPIAwareImage : Image
+internal class DPIAwareImage : Image
 {
     private Window? parentWindow;
     private Action? unsubscribeMonitorsChange;
     private readonly Guid debugGuid;
 
-    public DPIAwareImage()
+    internal DPIAwareImage()
     {
         debugGuid = Guid.NewGuid();
         Loaded += OnLoaded;

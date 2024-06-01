@@ -5,7 +5,7 @@ namespace Hud1.Helpers;
 
 internal class CrosshairForms
 {
-    public static Drawing RenderDot(int size, Brush brush, bool outline)
+    internal static Drawing RenderDot(int size, Brush brush, bool outline)
     {
         var geoms = new Dictionary<int, Geometry>
         {
@@ -34,13 +34,13 @@ internal class CrosshairForms
         return group;
     }
 
-    public struct RingStruct
+    internal struct RingStruct
     {
-        public double radiusOuter;
-        public double radiusInner;
+        internal double radiusOuter;
+        internal double radiusInner;
     }
 
-    public static Drawing RenderRing(int size, Brush brush, bool outline)
+    internal static Drawing RenderRing(int size, Brush brush, bool outline)
     {
         var circleSizes = new Dictionary<int, RingStruct>
         {
@@ -76,15 +76,15 @@ internal class CrosshairForms
         return group;
     }
 
-    public struct CrossStruct
+    internal struct CrossStruct
     {
-        public double offs;
-        public double length;
-        public double thickness;
-        public double centerSpace;
-        public double extraOffset;
+        internal double offs;
+        internal double length;
+        internal double thickness;
+        internal double centerSpace;
+        internal double extraOffset;
     }
-    public static Drawing RenderCross(int size, Brush brush, bool outline)
+    internal static Drawing RenderCross(int size, Brush brush, bool outline)
     {
 
         var crosses = new Dictionary<int, CrossStruct>
@@ -129,7 +129,7 @@ internal class CrosshairForms
         return group;
     }
 
-    public static Drawing RenderDiagonal(int size, Brush brush, bool outline)
+    internal static Drawing RenderDiagonal(int size, Brush brush, bool outline)
     {
         GeometryGroup geometryGroup = new();
 
@@ -176,7 +176,7 @@ internal class CrosshairForms
         return group;
     }
 
-    public static Drawing ThreeDots(int size, Brush brush, bool outline)
+    internal static Drawing ThreeDots(int size, Brush brush, bool outline)
     {
         GeometryGroup geometryGroup = new();
 

@@ -10,7 +10,7 @@ using System.Windows.Media.Animation;
 namespace Hud1.Behaviors;
 
 
-public class MainWindowLayoutBehavior : Behavior<MainWindow>
+internal class MainWindowLayoutBehavior : Behavior<MainWindow>
 {
     protected override void OnAttached()
     {
@@ -89,5 +89,4 @@ public class MainWindowLayoutBehavior : Behavior<MainWindow>
 
         await ((Storyboard)window.FindResource("FadeIn")).BeginAsync();
     }
-
 }

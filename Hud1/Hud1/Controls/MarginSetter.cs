@@ -3,14 +3,32 @@ using System.Windows.Controls;
 
 namespace Hud1.Controls;
 
-public class MarginSetter
+internal class MarginSetter
 {
-    private static Thickness GetLastItemMargin(Panel obj)
+    internal static readonly DependencyProperty MarginProperty =
+    DependencyProperty.RegisterAttached("Margin", typeof(Thickness), typeof(MarginSetter),
+        new UIPropertyMetadata(new Thickness(), MarginChangedCallback));
+
+    internal static readonly DependencyProperty LastItemMarginProperty =
+        DependencyProperty.RegisterAttached("LastItemMargin", typeof(Thickness), typeof(MarginSetter),
+            new UIPropertyMetadata(new Thickness(), MarginChangedCallback));
+
+    internal static void SetLastItemMargin(DependencyObject obj, Thickness value)
+    {
+        obj.SetValue(LastItemMarginProperty, value);
+    }
+
+    internal static Thickness GetLastItemMargin(Panel obj)
     {
         return (Thickness)obj.GetValue(LastItemMarginProperty);
     }
 
-    public static Thickness GetMargin(DependencyObject obj)
+    internal static void SetMargin(DependencyObject obj, Thickness value)
+    {
+        obj.SetValue(MarginProperty, value);
+    }
+
+    internal static Thickness GetMargin(DependencyObject obj)
     {
         return (Thickness)obj.GetValue(MarginProperty);
     }
@@ -42,26 +60,5 @@ public class MarginSetter
             fe.Margin = isLastItem ? GetLastItemMargin(panel) : GetMargin(panel);
         }
     }
-
-
-    public static void SetLastItemMargin(DependencyObject obj, Thickness value)
-    {
-        obj.SetValue(LastItemMarginProperty, value);
-    }
-
-
-    public static void SetMargin(DependencyObject obj, Thickness value)
-    {
-        obj.SetValue(MarginProperty, value);
-    }
-
-    // Using a DependencyProperty as the backing store for Margin.  This enables animation, styling, binding, etc...
-    public static readonly DependencyProperty MarginProperty =
-        DependencyProperty.RegisterAttached("Margin", typeof(Thickness), typeof(MarginSetter),
-            new UIPropertyMetadata(new Thickness(), MarginChangedCallback));
-
-    public static readonly DependencyProperty LastItemMarginProperty =
-        DependencyProperty.RegisterAttached("LastItemMargin", typeof(Thickness), typeof(MarginSetter),
-            new UIPropertyMetadata(new Thickness(), MarginChangedCallback));
 }
 

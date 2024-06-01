@@ -8,7 +8,7 @@ internal class MainWindowForegroundRestorer
 {
     private readonly bool wasForeground;
 
-    public MainWindowForegroundRestorer()
+    internal MainWindowForegroundRestorer()
     {
         var foreground = WindowsAPI.GetForegroundWindow();
         var hwndMain = MainWindow.Instance != null ? new WindowInteropHelper(MainWindow.Instance).Handle : 0;

@@ -7,15 +7,15 @@ using System.Windows;
 
 namespace Hud1.ViewModels;
 
-public partial class HudViewModel : ObservableObject
+internal partial class HudViewModel : ObservableObject
 {
     public static readonly HudViewModel Instance = new();
 
     [ObservableProperty]
-    public NavigationState? _state;
+    private NavigationState? _state;
 
     [ObservableProperty]
-    public Dictionary<string, NavigationState> _states = [];
+    private Dictionary<string, NavigationState> _states = [];
 
     private readonly Stateless.StateMachine<NavigationState, NavigationTrigger> Navigation;
     private NavigationState? directNavigationStateTarget = null;
@@ -25,7 +25,7 @@ public partial class HudViewModel : ObservableObject
         Navigation = new(NavigationStates.MENU_NIGHTVISION);
     }
 
-    public void BuildNavigation()
+    internal void BuildNavigation()
     {
         Debug.Print("HudViewModel BuildNavigation");
 
@@ -64,12 +64,12 @@ public partial class HudViewModel : ObservableObject
         UpdateModelFromMavigation();
     }
 
-    public Stateless.StateMachine<NavigationState, NavigationTrigger>.StateConfiguration Configure(NavigationState state)
+    internal Stateless.StateMachine<NavigationState, NavigationTrigger>.StateConfiguration Configure(NavigationState state)
     {
         return Navigation.Configure(state);
     }
 
-    public void SelectNavigationState(NavigationState navigationState)
+    internal void SelectNavigationState(NavigationState navigationState)
     {
         if (!Navigation.IsInState(navigationState))
         {
@@ -78,7 +78,7 @@ public partial class HudViewModel : ObservableObject
         }
     }
 
-    public void Fire(NavigationTrigger trigger)
+    internal void Fire(NavigationTrigger trigger)
     {
         Navigation.Fire(trigger);
     }
@@ -90,7 +90,7 @@ public partial class HudViewModel : ObservableObject
         SelectNavigationState(navigationState);
     }
 
-    //public void OnKeyPressed(KeyEvent keyEvent)
+    //internal void OnKeyPressed(KeyEvent keyEvent)
     //{
     //    var key = keyEvent.key;
 
@@ -126,7 +126,7 @@ public partial class HudViewModel : ObservableObject
     //    }
     //}
 
-    public void MakeNav(NavigationState menu, NavigationState visible, NavigationState[] list)
+    internal void MakeNav(NavigationState menu, NavigationState visible, NavigationState[] list)
     {
         if (list.Length < 2)
             throw new Exception("List Length mist be at least 2.");
@@ -168,7 +168,7 @@ public partial class HudViewModel : ObservableObject
         }
     }
 
-    public void ShowGraph()
+    internal void ShowGraph()
     {
         var graph = UmlDotGraph.Format(Navigation.GetInfo());
         Console.WriteLine(graph);

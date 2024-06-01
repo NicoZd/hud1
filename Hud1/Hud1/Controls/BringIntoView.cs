@@ -2,11 +2,17 @@
 
 namespace Hud1.Controls;
 
-public class BringIntoView : UIElement
+internal class BringIntoView : UIElement
 {
-    public static readonly DependencyProperty BringIntoViewProperty =
+    internal bool Active
+    {
+        get => (bool)GetValue(ActiveProperty);
+        set => SetValue(ActiveProperty, value);
+    }
+
+    internal static readonly DependencyProperty ActiveProperty =
         DependencyProperty.RegisterAttached(
-            "BringIntoView",
+            "Active",
             typeof(bool),
             typeof(BringIntoView),
             new FrameworkPropertyMetadata(defaultValue: false,
@@ -19,15 +25,5 @@ public class BringIntoView : UIElement
     {
         if ((bool)e.NewValue == true)
             ((FrameworkElement)d).BringIntoView(new Rect(0, -100, 0, 200));
-    }
-
-    public static bool GetBringIntoView(UIElement target)
-    {
-        return (bool)target.GetValue(BringIntoViewProperty);
-    }
-
-    public static void SetBringIntoView(UIElement target, bool value)
-    {
-        target.SetValue(BringIntoViewProperty, value);
     }
 }

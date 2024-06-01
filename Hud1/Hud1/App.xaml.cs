@@ -8,20 +8,20 @@ namespace Hud1;
 
 public partial class App : Application
 {
-    public App()
+    internal App()
     {
         Debug.Print("App {0} {1} {2}", Entry.Millis(), ShutdownMode, MainWindow);
-        // PresentationTraceSources.DataBindingSource.Switch.Level = SourceLevels.All;
+        //PresentationTraceSources.DataBindingSource.Switch.Level = SourceLevels.All;
         InitializeComponent();
     }
 
-    public static void ReplaceResource(int index, ResourceDictionary dictionary)
+    internal static void ReplaceResource(int index, ResourceDictionary dictionary)
     {
         Application.Current.Resources.MergedDictionaries.Insert(index, dictionary);
         Application.Current.Resources.MergedDictionaries.RemoveAt(index + 1);
     }
 
-    public static void SelectStyle(string style, string font)
+    internal static void SelectStyle(string style, string font)
     {
 #if HOT
         // dont touch Application.Current.Resources.MergedDictionaries otherwise Hot Reload wount work 

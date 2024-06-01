@@ -3,7 +3,7 @@ using System.Windows.Controls;
 
 namespace Hud1.Controls;
 
-public class IgnoreWidthControl : ContentControl
+internal class IgnoreWidthControl : ContentControl
 {
     protected override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)
     {

@@ -12,16 +12,17 @@ using Windows.Storage;
 
 namespace Hud1;
 
-public class Setup
+internal class Setup
 {
-    public static readonly uint WM_GAME_DIRECT_SHOWME = WindowsAPI.RegisterWindowMessage("WM_GAME_DIRECT_SHOWME");
+    internal static readonly uint WM_GAME_DIRECT_SHOWME = WindowsAPI.RegisterWindowMessage("WM_GAME_DIRECT_SHOWME");
+
     private static readonly Mutex mutex = new(true, "GAME_DIRECT");
 
-    public static string RootPath = "";
-    public static string VersionPath = "";
-    public static string UserConfigFile = "";
+    internal static string RootPath = "";
+    internal static string VersionPath = "";
+    internal static string UserConfigFile = "";
 
-    public static async Task Run()
+    internal static async Task Run()
     {
         await ShowSplash("Compute Paths");
         ComputePaths();

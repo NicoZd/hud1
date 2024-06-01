@@ -2,21 +2,21 @@
 
 namespace Hud1.Helpers;
 
-public static class GlobalMouseHook
+internal static class GlobalMouseHook
 {
-    public delegate void MouseDownHandler();
-    public static event MouseDownHandler? MouseDown;
+    internal delegate void MouseDownHandler();
+    internal static event MouseDownHandler? MouseDown;
 
     private static IntPtr HookID = IntPtr.Zero;
 
-    public static void SystemHook()
+    internal static void SystemHook()
     {
         using var curProcess = Process.GetCurrentProcess();
         using var curModule = curProcess.MainModule!;
         HookID = WindowsAPI.SetWindowsHookEx(WindowsAPI.WH_MOUSE_LL, HookCallback, WindowsAPI.GetModuleHandle(curModule.ModuleName), 0);
     }
 
-    public static void SystemUnhook()
+    internal static void SystemUnhook()
     {
         WindowsAPI.UnhookWindowsHookEx(HookID);
     }

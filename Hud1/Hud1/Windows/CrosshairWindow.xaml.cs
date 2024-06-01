@@ -10,7 +10,7 @@ namespace Hud1.Windows;
 
 public partial class CrosshairWindow : Window
 {
-    public static CrosshairWindow? Instance;
+    internal static CrosshairWindow? Instance;
 
     internal static void Create()
     {

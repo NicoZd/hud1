@@ -5,14 +5,14 @@ using System.Windows;
 
 namespace Hud1.Models;
 
-public class MacroScript
+internal class MacroScript
 {
     private readonly Macro macro;
     private readonly Script script;
 
     private readonly Queue<SystemEvent> systemEvents = [];
 
-    public MacroScript(Macro macro)
+    internal MacroScript(Macro macro)
     {
         this.macro = macro;
         script = new Script(CoreModules.None | CoreModules.GlobalConsts);
@@ -100,12 +100,12 @@ public class MacroScript
         script.DoString(scriptCode);
     }
 
-    public object GetGlobal(string name)
+    internal object GetGlobal(string name)
     {
         return script.Globals[name];
     }
 
-    public void SetGlobal(string name, object value)
+    internal void SetGlobal(string name, object value)
     {
         script.Globals[name] = value;
     }

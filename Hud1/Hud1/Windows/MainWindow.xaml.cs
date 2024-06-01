@@ -6,7 +6,7 @@ namespace Hud1.Windows;
 
 public partial class MainWindow : Window
 {
-    public static MainWindow? Instance;
+    internal static MainWindow? Instance;
 
     internal static void Create()
     {
@@ -21,7 +21,7 @@ public partial class MainWindow : Window
         CrosshairWindow.Create();
     }
 
-    public void ActivateWindow()
+    internal void ActivateWindow()
     {
         var hwnd = new WindowInteropHelper(this).Handle;
 

@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace Hud1.ViewModels;
 
-public partial class MacrosViewModel : ObservableObject
+internal partial class MacrosViewModel : ObservableObject
 {
     public static readonly MacrosViewModel Instance = new();
 
@@ -22,7 +22,7 @@ public partial class MacrosViewModel : ObservableObject
 
     private readonly FileSystemWatcher fileWatcher;
 
-    public string macrosPath = "";
+    internal string macrosPath = "";
 
     private MacrosViewModel()
     {
@@ -49,7 +49,7 @@ public partial class MacrosViewModel : ObservableObject
         UpdateFiles();
     }
 
-    public void BuildNavigation()
+    internal void BuildNavigation()
     {
         var Configure = HudViewModel.Instance.Configure;
 
@@ -122,7 +122,7 @@ public partial class MacrosViewModel : ObservableObject
         }
     }
 
-    public void OnEntry()
+    internal void OnEntry()
     {
         Console.WriteLine("OnEntry");
         Selected = true;
@@ -133,26 +133,26 @@ public partial class MacrosViewModel : ObservableObject
         }
     }
 
-    public void OnExit()
+    internal void OnExit()
     {
         Console.WriteLine("OnExit");
         Selected = false;
         SelectedIndex = -1;
     }
 
-    public void OnEntryFromTop()
+    internal void OnEntryFromTop()
     {
         Console.WriteLine("OnEntryFromTop");
         SelectedIndex = 0;
     }
 
-    public void OnEntryFromBottom()
+    internal void OnEntryFromBottom()
     {
         Console.WriteLine("OnEntryFromBottom");
         SelectedIndex = Macros.Count - 1;
     }
 
-    public void OnUp()
+    internal void OnUp()
     {
         Console.WriteLine("OnUp {0}", SelectedIndex);
         if (SelectedIndex <= 0)
@@ -163,7 +163,7 @@ public partial class MacrosViewModel : ObservableObject
         SelectedIndex--;
     }
 
-    public void OnDown()
+    internal void OnDown()
     {
         Console.WriteLine("OnDown {0}", SelectedIndex);
         if (SelectedIndex >= Macros.Count - 1)
@@ -174,12 +174,12 @@ public partial class MacrosViewModel : ObservableObject
         SelectedIndex++;
     }
 
-    public void OnLeft()
+    internal void OnLeft()
     {
         Console.WriteLine("OnLeft");
         Macros[SelectedIndex].OnLeft();
     }
-    public void OnRight()
+    internal void OnRight()
     {
         Console.WriteLine("OnRight");
         Macros[SelectedIndex].OnRight();

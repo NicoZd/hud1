@@ -10,7 +10,7 @@ using System.Windows.Controls;
 
 namespace Hud1.Models;
 
-public partial class Option : ObservableObject
+internal partial class Option : ObservableObject
 {
     [ObservableProperty]
     private string _value = "";
@@ -19,54 +19,58 @@ public partial class Option : ObservableObject
     private Image? _image = null;
 
     [ObservableProperty]
-    public bool _selected = false;
+    internal bool _selected = false;
 
-    public Option(string value)
+    internal Option(string value)
     {
         Value = value;
     }
 }
 
-public partial class NavigationState : ObservableObject
+internal partial class NavigationState : ObservableObject
 {
-    public static bool Repeat = false;
-    public bool AllowRepeat { get; set; } = false;
+    internal static bool Repeat = false;
+    internal bool AllowRepeat { get; set; } = false;
 
 
     [ObservableProperty]
-    public bool selectRight;
+    internal bool selectRight;
     private int _selectRightCounter = 0;
 
     [ObservableProperty]
-    public bool selectLeft;
+    internal bool selectLeft;
     private int _selectLeftCounter = 0;
 
     [ObservableProperty]
     private bool selected;
 
-    public Visibility Visibility { get; set; }
-
-    public string Name { get; set; }
-    public string Label { get; set; } = "";
+    [ObservableProperty]
+    private Visibility _visibility;
 
     [ObservableProperty]
-    public string _hint = "";
+    private string _name;
 
     [ObservableProperty]
-    public string selectionLabel = "";
+    private string _label = "";
 
     [ObservableProperty]
-    public bool selectionBoolean = true;
+    private string _hint = "";
 
     [ObservableProperty]
-    public string selectionLeftLabel = "<";
+    private string selectionLabel = "";
 
     [ObservableProperty]
-    public string selectionRightLabel = ">";
+    private bool selectionBoolean = true;
 
-    public Action? LeftAction { get; set; }
+    [ObservableProperty]
+    private string selectionLeftLabel = "<";
 
-    public Action? RightAction { get; set; }
+    [ObservableProperty]
+    private string selectionRightLabel = ">";
+
+    internal Action? LeftAction { get; set; }
+
+    internal Action? RightAction { get; set; }
 
     [ObservableProperty]
     private ObservableCollection<Option> _options = [];
@@ -74,9 +78,14 @@ public partial class NavigationState : ObservableObject
     [ObservableProperty]
     private int _spacing = 4;
 
-    public NavigationState([CallerMemberName] string Name = "")
+    internal NavigationState([CallerMemberName] string Name = "")
     {
         this.Name = Name;
+    }
+
+    public override string? ToString()
+    {
+        return Name;
     }
 
     [RelayCommand]
@@ -99,7 +108,7 @@ public partial class NavigationState : ObservableObject
         HudViewModel.Instance.SelectNavigationState(this);
     }
 
-    public async void ExecuteLeft()
+    internal async void ExecuteLeft()
     {
         Debug.Print("ExecuteLeft");
         SelectLeft = true;
@@ -113,7 +122,7 @@ public partial class NavigationState : ObservableObject
             SelectLeft = false;
     }
 
-    public async void ExecuteRight()
+    internal async void ExecuteRight()
     {
         Debug.Print("ExecuteRight");
         SelectRight = true;
@@ -127,22 +136,17 @@ public partial class NavigationState : ObservableObject
             SelectRight = false;
     }
 
-    public override string? ToString()
-    {
-        return Name;
-    }
-
-    public void OptionLeft()
+    internal void OptionLeft()
     {
         OptionSelect(-1);
     }
 
-    public void OptionRight()
+    internal void OptionRight()
     {
         OptionSelect(1);
     }
 
-    public void OptionSelect(int dir)
+    internal void OptionSelect(int dir)
     {
         var currentIndex = -1;
 

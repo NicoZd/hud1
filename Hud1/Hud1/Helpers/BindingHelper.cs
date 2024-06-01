@@ -3,9 +3,9 @@ using System.Windows.Controls;
 
 namespace Hud1.Helpers;
 
-public class BindingHelper
+internal class BindingHelper
 {
-    public static DependencyProperty CreateProperty<TControl, TValue>(string name, TValue? defaultValue, Action<TControl, TValue>? propertyChangedAction = null)
+    internal static DependencyProperty CreateProperty<TControl, TValue>(string name, TValue? defaultValue, Action<TControl, TValue>? propertyChangedAction = null)
     where TControl : UserControl
     {
         return DependencyProperty.Register(name, typeof(TValue), typeof(TControl),

@@ -8,7 +8,7 @@ internal class DebugWriter : TextWriter
 {
     private readonly string Path;
 
-    public DebugWriter(string path)
+    internal DebugWriter(string path)
     {
         Path = path;
         if (File.Exists(Path))

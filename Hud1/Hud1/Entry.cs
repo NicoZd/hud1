@@ -12,15 +12,15 @@ internal class Entry
         RunApp();
     }
 
+    internal static long Millis()
+    {
+        return DateTimeOffset.Now.ToUnixTimeMilliseconds() - startMs;
+    }
+
     private static void RunApp()
     {
         Debug.Print("Entry RunApp {0}", Entry.Millis());
         App app = new();
         app.Run();
-    }
-
-    public static long Millis()
-    {
-        return DateTimeOffset.Now.ToUnixTimeMilliseconds() - startMs;
     }
 }

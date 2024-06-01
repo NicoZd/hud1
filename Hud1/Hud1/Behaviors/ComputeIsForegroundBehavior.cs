@@ -47,7 +47,7 @@ internal class ComputeIsForegroundBehavior : Behavior<Window>
         ComputeIsForeground();
     }
 
-    public void WinEventProc(IntPtr hWinEventHook, uint eventType, IntPtr hwnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime)
+    private void WinEventProc(IntPtr hWinEventHook, uint eventType, IntPtr hwnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime)
     {
         ComputeIsForeground();
     }

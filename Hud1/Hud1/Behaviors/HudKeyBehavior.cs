@@ -9,9 +9,8 @@ using System.Windows.Controls;
 namespace Hud1.Behaviors;
 
 
-public class HudKeyBehavior : Behavior<UserControl>
+internal class HudKeyBehavior : Behavior<UserControl>
 {
-
     protected override void OnAttached()
     {
         base.OnAttached();

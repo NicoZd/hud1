@@ -9,7 +9,7 @@ using System.Windows.Interop;
 namespace Hud1.Behaviors;
 
 
-public class MainWindowTouchModeBehavior : Behavior<Window>
+internal class MainWindowTouchModeBehavior : Behavior<Window>
 {
 
     protected override void OnAttached()
@@ -55,5 +55,4 @@ public class MainWindowTouchModeBehavior : Behavior<Window>
             MainWindow.Instance!.ActivateWindow();
         }
     }
-
 }

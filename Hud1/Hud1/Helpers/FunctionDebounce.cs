@@ -7,12 +7,12 @@ internal class FunctionDebounce
     private string next = string.Empty;
     private bool running = false;
 
-    public FunctionDebounce(Func<string, Task> function)
+    internal FunctionDebounce(Func<string, Task> function)
     {
         this.function = function;
     }
 
-    public async Task Run(string value)
+    internal async Task Run(string value)
     {
         Debug.Print($"FunctionDebounce Run {value}");
         if (running)

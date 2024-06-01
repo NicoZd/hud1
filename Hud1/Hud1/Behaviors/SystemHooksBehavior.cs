@@ -5,7 +5,7 @@ using System.Windows;
 namespace Hud1.Behaviors;
 
 
-public class SystemHooksBehavior : Behavior<Window>
+internal class SystemHooksBehavior : Behavior<Window>
 {
 
     protected override void OnAttached()
