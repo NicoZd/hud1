@@ -55,9 +55,6 @@ public partial class App : Application
             }
         }
 
-        foreach (var sp in ScrollPanel.Instances)
-            sp.SaveScrollPosition();
-
         if (fontFile != "")
         {
             ReplaceResource(0, new ResourceDictionary
@@ -85,10 +82,5 @@ public partial class App : Application
         {
             Source = new Uri("Styles/ScrollViewer.xaml", UriKind.RelativeOrAbsolute)
         });
-
-        foreach (var sp in ScrollPanel.Instances)
-            sp.RestoreScrollPosition();
-
     }
-
 }
