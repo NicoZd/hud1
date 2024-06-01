@@ -5,14 +5,6 @@ namespace Hud1.Controls;
 
 internal class MarginSetter
 {
-    internal static readonly DependencyProperty MarginProperty =
-    DependencyProperty.RegisterAttached("Margin", typeof(Thickness), typeof(MarginSetter),
-        new UIPropertyMetadata(new Thickness(), MarginChangedCallback));
-
-    internal static readonly DependencyProperty LastItemMarginProperty =
-        DependencyProperty.RegisterAttached("LastItemMargin", typeof(Thickness), typeof(MarginSetter),
-            new UIPropertyMetadata(new Thickness(), MarginChangedCallback));
-
     internal static void SetLastItemMargin(DependencyObject obj, Thickness value)
     {
         obj.SetValue(LastItemMarginProperty, value);
@@ -32,6 +24,14 @@ internal class MarginSetter
     {
         return (Thickness)obj.GetValue(MarginProperty);
     }
+
+    private static readonly DependencyProperty MarginProperty =
+        DependencyProperty.RegisterAttached("Margin", typeof(Thickness), typeof(MarginSetter),
+            new UIPropertyMetadata(new Thickness(), MarginChangedCallback));
+
+    private static readonly DependencyProperty LastItemMarginProperty =
+        DependencyProperty.RegisterAttached("LastItemMargin", typeof(Thickness), typeof(MarginSetter),
+            new UIPropertyMetadata(new Thickness(), MarginChangedCallback));
 
     private static void MarginChangedCallback(object sender, DependencyPropertyChangedEventArgs e)
     {

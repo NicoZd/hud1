@@ -8,7 +8,7 @@ namespace Hud1.Views;
 public partial class BooleanPanel : UserControl
 {
     private static readonly DependencyProperty NavigationStateProperty =
-         BindingHelper.CreateProperty<BooleanPanel, NavigationState>("NavigationState", null);
+        BindingHelper.CreateProperty<BooleanPanel, NavigationState>("NavigationState", null);
 
     internal NavigationState NavigationState
     {

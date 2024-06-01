@@ -10,7 +10,7 @@ internal class BringIntoView : UIElement
         set => SetValue(ActiveProperty, value);
     }
 
-    internal static readonly DependencyProperty ActiveProperty =
+    private static readonly DependencyProperty ActiveProperty =
         DependencyProperty.RegisterAttached(
             "Active",
             typeof(bool),

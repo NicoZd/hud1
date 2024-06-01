@@ -4,14 +4,6 @@ namespace Hud1.Controls;
 
 internal class Spacing
 {
-    internal static readonly DependencyProperty VerticalProperty =
-        DependencyProperty.RegisterAttached("Vertical", typeof(double), typeof(Spacing),
-            new UIPropertyMetadata(0d, VerticalChangedCallback));
-
-    internal static readonly DependencyProperty HorizontalProperty =
-        DependencyProperty.RegisterAttached("Horizontal", typeof(double), typeof(Spacing),
-            new UIPropertyMetadata(0d, HorizontalChangedCallback));
-
     internal static void SetHorizontal(DependencyObject obj, double space)
     {
         obj.SetValue(HorizontalProperty, space);
@@ -31,6 +23,14 @@ internal class Spacing
     {
         return (double)obj.GetValue(VerticalProperty);
     }
+
+    private static readonly DependencyProperty VerticalProperty =
+        DependencyProperty.RegisterAttached("Vertical", typeof(double), typeof(Spacing),
+            new UIPropertyMetadata(0d, VerticalChangedCallback));
+
+    private static readonly DependencyProperty HorizontalProperty =
+        DependencyProperty.RegisterAttached("Horizontal", typeof(double), typeof(Spacing),
+            new UIPropertyMetadata(0d, HorizontalChangedCallback));
 
     private static void HorizontalChangedCallback(object sender, DependencyPropertyChangedEventArgs e)
     {
