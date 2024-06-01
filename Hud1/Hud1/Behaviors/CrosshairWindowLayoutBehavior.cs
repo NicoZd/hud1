@@ -6,7 +6,6 @@ using Microsoft.Xaml.Behaviors;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows;
-using System.Windows.Interop;
 using System.Windows.Media.Animation;
 
 namespace Hud1.Behaviors;
@@ -31,7 +30,7 @@ public class CrosshairWindowLayoutBehavior : Behavior<CrosshairWindow>
         var window = AssociatedObject;
         window.Opacity = 0;
 
-        var updates = new FunctionQueue(UpdateWindowPosition);
+        var updates = new FunctionDebounce(UpdateWindowPosition);
         Monitors.RegisterMonitorsChange(window, () =>
         {
             _ = updates.Run(NavigationStates.CROSSHAIR_DISPLAY.SelectionLabel);
@@ -70,8 +69,8 @@ public class CrosshairWindowLayoutBehavior : Behavior<CrosshairWindow>
         // apply layout
         var width = 50 * monitor.ScaleFactor;
         var height = 50 * monitor.ScaleFactor;
-        var x = monitor.Bounds.X + (monitor.Bounds.Width - width) / 2;
-        var y = monitor.Bounds.Y + (monitor.Bounds.Height - height) / 2;
+        var x = monitor.Bounds.X + ((monitor.Bounds.Width - width) / 2);
+        var y = monitor.Bounds.Y + ((monitor.Bounds.Height - height) / 2);
         Monitors.MoveWindow(window, x, y, width, height);
 
         foregroundRestorer.Restore();

@@ -5,7 +5,6 @@ using Microsoft.Xaml.Behaviors;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows;
-using System.Windows.Interop;
 using System.Windows.Media.Animation;
 
 namespace Hud1.Behaviors;
@@ -30,7 +29,7 @@ public class MainWindowLayoutBehavior : Behavior<MainWindow>
         var window = AssociatedObject;
         window.Opacity = 0;
 
-        var updates = new FunctionQueue(UpdateWindowPosition);
+        var updates = new FunctionDebounce(UpdateWindowPosition);
         Monitors.RegisterMonitorsChange(window, () =>
         {
             _ = updates.Run(MoreViewModel.Instance.HudPosition);
