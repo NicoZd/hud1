@@ -4,6 +4,7 @@ using Hud1.ViewModels;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
+using System.Reflection;
 using System.Text.Json;
 using System.Windows;
 using Windows.ApplicationModel;
@@ -32,7 +33,7 @@ internal class Setup
 
         await ShowSplash("Setup Logging");
         SetupLogging();
-        Console.WriteLine("Startup Log starts at {0} {1}", DateTime.Now, Entry.Millis());
+        Console.WriteLine($"Startup Logfile starts {DateTime.Now} {Entry.Millis()}");
 
         await ShowSplash("Single Instance");
         await EnforceSingleInstance();
@@ -44,32 +45,32 @@ internal class Setup
         LazyCreateVersion();
 
         await ShowSplash("Apply Config");
-        await ApplyConfig();
+        ApplyConfig();
 
         await ShowSplash("Complete");
     }
 
-    private static async Task ApplyConfig()
+    private static void ApplyConfig()
     {
-        await Task.Delay(0);
         try
         {
             if (File.Exists(UserConfigFile))
             {
                 var userConfigString = File.ReadAllText(UserConfigFile);
+                // Console.WriteLine("UserConfigString {0}", userConfigString);
                 var loaded = JsonSerializer.Deserialize<UserConfig>(userConfigString);
 
                 var config = UserConfig.Current;
+                Console.Write("Apply User Config:");
                 foreach (var prop in config.GetType().GetProperties())
                 {
                     var value = prop.GetValue(loaded, null);
                     if (value != null)
                     {
-                        Debug.Print("Set {0} to {1}", prop.Name, value);
+                        Console.WriteLine("\t{0} = {1},", prop.Name, value);
                         prop.SetValue(config, value);
                     }
                 }
-                Console.WriteLine("UserConfigString {0}", userConfigString);
             }
             else
                 Console.WriteLine("No UserConfig File {0}", UserConfigFile);
@@ -160,7 +161,7 @@ internal class Setup
 
     private static async Task ShowSplash(string text)
     {
-        Console.WriteLine($"Startup ShowSplash: {text} {Entry.Millis()}");
+        Console.WriteLine($"Startup ShowSplash '{text}' {Entry.Millis()}");
         SplashWindowViewModel.Instance.SplashText = text;
         await Task.Delay(TimeSpan.FromMilliseconds(20));
     }
@@ -194,7 +195,7 @@ internal class Setup
     private static void SetupLogging()
     {
         // configure logging
-        var writer = new DebugWriter(Path.Combine(RootPath, "log.txt"));
+        var writer = new DebugAndFileWriter(Path.Combine(RootPath, "log.txt"));
         Console.SetOut(writer);
         Console.SetError(writer);
     }
@@ -254,7 +255,6 @@ internal class Setup
             var Version = string.Format("{0}.{1}.{2}.{3}", version.Major, version.Minor, version.Build, version.Revision);
             VersionPath = Path.Combine(RootPath, Version);
             UserConfigFile = Path.Combine(VersionPath, "UserConfig.json");
-
         }
         catch (Exception)
         {
@@ -273,9 +273,7 @@ internal class Setup
         var context = StoreContext.GetDefault();
         var appLicense = await context.GetAppLicenseAsync();
 
-        Console.WriteLine("Startup Check License... IsActive {0} IsTrial {0} ExpirationDate {0}", appLicense.IsActive, appLicense.IsTrial, appLicense.ExpirationDate);
-
-        Console.WriteLine("Startup Check License Complete {0}", Entry.Millis());
+        Console.WriteLine($"Startup License IsActive={appLicense.IsActive} IsTrial={appLicense.IsTrial} ExpirationDate={appLicense.ExpirationDate}");
 
         if (!appLicense.IsActive)
         {

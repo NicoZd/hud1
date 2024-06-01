@@ -20,6 +20,7 @@ public partial class CrosshairWindow : Window
 
     private CrosshairWindow()
     {
+        Opacity = 0;
         InitializeComponent();
     }
 

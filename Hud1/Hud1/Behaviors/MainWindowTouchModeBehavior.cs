@@ -11,7 +11,6 @@ namespace Hud1.Behaviors;
 
 internal class MainWindowTouchModeBehavior : Behavior<Window>
 {
-
     protected override void OnAttached()
     {
         base.OnAttached();
@@ -46,7 +45,7 @@ internal class MainWindowTouchModeBehavior : Behavior<Window>
             extendedStyle | WindowsAPI.WS_EX_NOACTIVATE :
             extendedStyle & ~WindowsAPI.WS_EX_NOACTIVATE;
 
-        Debug.Print("UpdateTouchMode {0} {1} {2}", NavigationStates.TOUCH_MODE.SelectionBoolean, extendedStyle, newStyle);
+        // Debug.Print("UpdateTouchMode {0} {1} {2}", NavigationStates.TOUCH_MODE.SelectionBoolean, extendedStyle, newStyle);
 
         WindowsAPI.SetWindowLong(hwnd, WindowsAPI.GWL_EXSTYLE, newStyle);
 

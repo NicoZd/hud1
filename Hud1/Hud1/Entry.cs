@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using Hud1.Helpers;
+using System.Diagnostics;
 
 namespace Hud1;
 
@@ -9,6 +10,10 @@ internal class Entry
     [STAThread]
     public static void Main(string[] args)
     {
+        var writer = new DebugWriter();
+        Console.SetOut(writer);
+        Console.SetError(writer);
+
         RunApp();
     }
 

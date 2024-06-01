@@ -28,7 +28,6 @@ internal class CrosshairWindowLayoutBehavior : Behavior<CrosshairWindow>
     private void OnLoaded(object sender, RoutedEventArgs e)
     {
         var window = AssociatedObject;
-        window.Opacity = 0;
 
         var updates = new FunctionDebounce(UpdateWindowPosition);
         Monitors.RegisterMonitorsChange(window, () =>
@@ -62,7 +61,7 @@ internal class CrosshairWindowLayoutBehavior : Behavior<CrosshairWindow>
         var monitor = monitors.ElementAt(monitorIndex);
         var foregroundRestorer = new MainWindowForegroundRestorer();
 
-        Debug.Print($"CrosshairWindowLayoutBehavior OnMonitorsChangeAsync {monitorIndex} {monitor.DeviceName} {monitor.Bounds}  selectionLabel: {selectionLabel}");
+        Debug.Print($"CrosshairWindowLayoutBehavior UpdateWindowPosition {monitorIndex} {monitor.DeviceName} {monitor.Bounds}  selectionLabel: {selectionLabel}");
 
         await ((Storyboard)window.FindResource("FadeOut")).BeginAsync();
 

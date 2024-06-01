@@ -33,7 +33,7 @@ internal class DPIAwareImage : Image
 
     private void OnUnloaded(object? sender, RoutedEventArgs e)
     {
-        Debug.Print($"Unload {unsubscribeMonitorsChange} {parentWindow} {debugGuid}");
+        // Debug.Print($"Unload {unsubscribeMonitorsChange} {parentWindow} {debugGuid}");
         unsubscribeMonitorsChange!();
         parentWindow!.LocationChanged -= OnParentWindowLocationChanged;
         parentWindow!.SizeChanged -= OnParentWindowSizeChanged;
@@ -68,6 +68,6 @@ internal class DPIAwareImage : Image
 
         RenderTransform = new ScaleTransform(dpiScale, dpiScale, Source.Width / 2, Source.Height / 2);
 
-        Debug.Print($"DPI scale updated to: {dpiScale} {debugGuid}");
+        // Debug.Print($"DPI scale updated to: {dpiScale} {debugGuid}");
     }
 }

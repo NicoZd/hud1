@@ -17,13 +17,12 @@ internal class CloseWindowBehavior : Behavior<Window>
 
     private static void OnIsCloseActivatedChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
-        Debug.Print($"OnIsCloseActivatedChanged: {(bool)e.NewValue}");
+        //Debug.Print($"OnIsCloseActivatedChanged: {(bool)e.NewValue}");
         if (d is CloseWindowBehavior behavior && behavior.AssociatedObject != null)
         {
             if ((bool)e.NewValue)
             {
-                Debug.Print($"Call close on: {behavior.AssociatedObject}");
-
+                Debug.Print($"CloseWindowBehavior Close {behavior.AssociatedObject} {Entry.Millis()}");
                 behavior.AssociatedObject.Close();
             };
         }

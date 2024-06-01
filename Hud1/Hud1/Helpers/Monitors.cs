@@ -90,7 +90,7 @@ internal class Monitors
 
     internal static void MoveWindow(Window window, double x, double y, double width, double height)
     {
-        Debug.Print($"MoveWindow {x}, {y}, {width}, {height}");
+        // Debug.Print($"MoveWindow {x}, {y}, {width}, {height}");
         var hwnd = new WindowInteropHelper(window).Handle;
         WindowsAPI.MoveWindow(hwnd, (int)(x + 1), (int)(y + 1), (int)(width - 2), (int)(height - 2), false);
         WindowsAPI.MoveWindow(hwnd, (int)x, (int)y, (int)width, (int)height, true);

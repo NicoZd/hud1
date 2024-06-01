@@ -131,7 +131,7 @@ internal partial class CrosshairViewModel : ObservableObject
         {
             var current = int.Parse(NavigationStates.CROSSHAIR_DISPLAY.SelectionLabel);
             var next = Math.Min(Math.Max(current + dir, 0), Monitors.All.Count - 1);
-            Debug.Print($"ChangeDisplay NavigationStates.CROSSHAIR_DISPLAY.SelectionLabel {next}");
+            Debug.Print($"CrosshairViewModel ChangeDisplay {current} => {next}");
             NavigationStates.CROSSHAIR_DISPLAY.SelectionLabel = "" + next;
         };
     }
@@ -148,11 +148,11 @@ internal partial class CrosshairViewModel : ObservableObject
 
     internal void Redraw()
     {
-        Debug.Print("Enabled {0}", NavigationStates.CROSSHAIR_ENABLED.SelectionBoolean);
-        Debug.Print("Form {0}", NavigationStates.CROSSHAIR_FORM.SelectionLabel);
-        Debug.Print("Size {0}", NavigationStates.CROSSHAIR_SIZE.SelectionLabel);
-        Debug.Print("Color {0}", NavigationStates.CROSSHAIR_COLOR.SelectionLabel);
-        Debug.Print("Outline {0}", NavigationStates.CROSSHAIR_OUTLINE.SelectionBoolean);
+        // Debug.Print("Enabled {0}", NavigationStates.CROSSHAIR_ENABLED.SelectionBoolean);
+        // Debug.Print("Form {0}", NavigationStates.CROSSHAIR_FORM.SelectionLabel);
+        // Debug.Print("Size {0}", NavigationStates.CROSSHAIR_SIZE.SelectionLabel);
+        // Debug.Print("Color {0}", NavigationStates.CROSSHAIR_COLOR.SelectionLabel);
+        // Debug.Print("Outline {0}", NavigationStates.CROSSHAIR_OUTLINE.SelectionBoolean);
 
         var scale = int.Parse(NavigationStates.CROSSHAIR_SIZE.SelectionLabel);
         var color = ColorOptions[NavigationStates.CROSSHAIR_COLOR.SelectionLabel];

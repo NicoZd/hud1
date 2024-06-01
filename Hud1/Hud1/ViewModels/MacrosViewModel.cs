@@ -85,7 +85,7 @@ internal partial class MacrosViewModel : ObservableObject
 
     private void UpdateFiles()
     {
-        Console.WriteLine("UpdateFiles");
+        Console.WriteLine("MacrosViewModel UpdateFiles");
         foreach (var macro in Macros)
             macro.Running = false;
 

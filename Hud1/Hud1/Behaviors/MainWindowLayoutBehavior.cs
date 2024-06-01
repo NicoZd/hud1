@@ -24,10 +24,9 @@ internal class MainWindowLayoutBehavior : Behavior<MainWindow>
         AssociatedObject.Loaded -= OnLoaded;
     }
 
-    private void OnLoaded(object sender, RoutedEventArgs e)
+    private async void OnLoaded(object sender, RoutedEventArgs e)
     {
         var window = AssociatedObject;
-        window.Opacity = 0;
 
         var updates = new FunctionDebounce(UpdateWindowPosition);
         Monitors.RegisterMonitorsChange(window, () =>
@@ -41,7 +40,8 @@ internal class MainWindowLayoutBehavior : Behavior<MainWindow>
                 _ = updates.Run(MoreViewModel.Instance.HudPosition);
             }
         };
-        _ = updates.Run(MoreViewModel.Instance.HudPosition);
+        await updates.Run(MoreViewModel.Instance.HudPosition);
+        Debug.Print($"MainWindowLayoutBehavior Show {Entry.Millis()}");
     }
 
     private async Task UpdateWindowPosition(string hudPosition)
@@ -55,14 +55,14 @@ internal class MainWindowLayoutBehavior : Behavior<MainWindow>
         if (monitors.Count - 1 < monitorIndex)
         {
             await Task.Delay(100);
-            MoreViewModel.Instance.ComputeNextHudPosition(0);
+            MoreViewModel.Instance.AssignNextHudPosition(0);
             return;
         }
 
         var monitor = monitors.ElementAt(monitorIndex);
         var foregroundRestorer = new MainWindowForegroundRestorer();
 
-        Debug.Print($"OnMonitorsChangeAsync {monitorIndex} {monitor.Bounds} {hudPosition}");
+        Debug.Print($"MainWindowLayoutBehavior UpdateWindowPosition {monitorIndex} {monitor.Bounds} {hudPosition}");
 
         await ((Storyboard)window.FindResource("FadeOut")).BeginAsync();
 

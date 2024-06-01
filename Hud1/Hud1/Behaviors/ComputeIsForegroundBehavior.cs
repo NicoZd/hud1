@@ -60,7 +60,7 @@ internal class ComputeIsForegroundBehavior : Behavior<Window>
         var newIsForeground = isForeground || isMouseHidden;
         if (newIsForeground != MainWindowViewModel.Instance.IsForeground)
         {
-            Debug.Print($"ComputeIsForeground isForeground:{isForeground} isMouseHidden:{isMouseHidden} newIsForeground:{newIsForeground}");
+            // Debug.Print($"ComputeIsForeground isForeground:{isForeground} isMouseHidden:{isMouseHidden} newIsForeground:{newIsForeground}");
             MainWindowViewModel.Instance.IsForeground = newIsForeground;
         }
     }

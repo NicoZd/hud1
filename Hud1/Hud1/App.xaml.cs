@@ -10,8 +10,7 @@ public partial class App : Application
 {
     internal App()
     {
-        Debug.Print("App {0} {1} {2}", Entry.Millis(), ShutdownMode, MainWindow);
-        //PresentationTraceSources.DataBindingSource.Switch.Level = SourceLevels.All;
+        Debug.Print($"App {ShutdownMode} {Entry.Millis()}");
         InitializeComponent();
     }
 
@@ -45,7 +44,7 @@ public partial class App : Application
                     var y = ff.First();
                     var k = y.Source.Split("#");
                     var v = k[^1];
-                    Console.WriteLine("fontCol.Families[0].Name {0}", v);
+                    // Console.WriteLine("fontCol.Families[0].Name {0}", v);
                     if (v.Equals(font))
                     {
                         fontFile = fileEntries[i];

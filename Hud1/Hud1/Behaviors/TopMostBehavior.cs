@@ -23,7 +23,7 @@ internal class TopMostBehavior : Behavior<Window>
     private void OnLoaded(object sender, RoutedEventArgs e)
     {
         var window = AssociatedObject;
-        Debug.Print($"TopMostBehavior Loaded {window}");
+        // Debug.Print($"TopMostBehavior Loaded {window}");
         TopMostHelper.Instance.TopWindows.Add(new WindowInteropHelper(window).Handle);
     }
 }

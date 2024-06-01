@@ -19,7 +19,7 @@ internal partial class MoreViewModel : ObservableObject
     private MoreViewModel()
     {
         _hudPosition = UserConfig.Current.HudPosition;
-        ComputeNextHudPosition(0);
+        AssignNextHudPosition(0);
     }
 
     internal void BuildNavigation()
@@ -81,13 +81,12 @@ internal partial class MoreViewModel : ObservableObject
     {
         return () =>
         {
-            ComputeNextHudPosition(dir);
+            AssignNextHudPosition(dir);
         };
     }
 
-    internal void ComputeNextHudPosition(int dir)
+    internal void AssignNextHudPosition(int dir)
     {
-        Console.WriteLine("Compute Hud Pos {0}", dir);
         var monitors = Monitors.All;
         var monitorCount = monitors.Count;
         string[] positions = ["Left", "Right"];
@@ -99,12 +98,10 @@ internal partial class MoreViewModel : ObservableObject
             {
                 var name = screenIndex + ":" + positions[positionIndex];
                 options.Add(name);
-                Console.WriteLine("perm {0}", name);
             }
         }
 
         var currentOptionIndex = options.IndexOf(HudPosition);
-        Console.WriteLine($"current {HudPosition} {currentOptionIndex}");
         if (currentOptionIndex == -1)
         {
             currentOptionIndex = 0;
@@ -115,6 +112,8 @@ internal partial class MoreViewModel : ObservableObject
         }
         var newIndex = Math.Min(Math.Max(currentOptionIndex, 0), options.Count - 1);
         var newHudPosition = options[newIndex];
+
+        Console.WriteLine($"AssignNextHudPosition dir = {dir}, {HudPosition} => {options[newIndex]}");
         HudPosition = options[newIndex];
 
         NavigationStates.HUD_POSITION.SelectionLabel = "Display " + HudPosition.Split(":")[0] + ", " + HudPosition.Split(":")[1];
@@ -158,7 +157,7 @@ internal partial class MoreViewModel : ObservableObject
                 var y = ff.First();
                 var k = y.Source.Split("#");
                 var v = k[^1];
-                Console.WriteLine("fontCol.Families[0].Name {0}", v);
+                // Console.WriteLine("fontCol.Families[0].Name {0}", v);
                 fonts.Add(v);
             }
         }

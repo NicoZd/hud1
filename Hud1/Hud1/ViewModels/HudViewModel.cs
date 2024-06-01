@@ -27,8 +27,6 @@ internal partial class HudViewModel : ObservableObject
 
     internal void BuildNavigation()
     {
-        Debug.Print("HudViewModel BuildNavigation");
-
         Navigation.Configure(NavigationStates.ALL)
                     .PermitDynamic(NavigationTriggers.DIRECT, () => { return directNavigationStateTarget!; });
 
@@ -89,42 +87,6 @@ internal partial class HudViewModel : ObservableObject
         // Console.WriteLine("Select {0}", navigationState);
         SelectNavigationState(navigationState);
     }
-
-    //internal void OnKeyPressed(KeyEvent keyEvent)
-    //{
-    //    var key = keyEvent.key;
-
-    //    NavigationState.Repeat = keyEvent.repeated;
-    //    var isVerticalNavigation = key is GlobalKey.VK_UP or GlobalKey.VK_DOWN;
-
-    //    if (NavigationState.Repeat && (!State!.AllowRepeat || isVerticalNavigation))
-    //    {
-    //        //Console.WriteLine("Skip {0}", keyEvent.key);
-    //        return;
-    //    }
-
-    //    Console.WriteLine("Execute {0} {1} {2}", State!.Name, State.AllowRepeat, keyEvent.key);
-
-    //    if (key == GlobalKey.VK_LEFT)
-    //    {
-    //        Navigation.Fire(NavigationTriggers.LEFT);
-    //    }
-
-    //    if (key == GlobalKey.VK_RIGHT)
-    //    {
-    //        Navigation.Fire(NavigationTriggers.RIGHT);
-    //    }
-
-    //    if (key == GlobalKey.VK_UP)
-    //    {
-    //        Navigation.Fire(NavigationTriggers.UP);
-    //    }
-
-    //    if (key == GlobalKey.VK_DOWN)
-    //    {
-    //        Navigation.Fire(NavigationTriggers.DOWN);
-    //    }
-    //}
 
     internal void MakeNav(NavigationState menu, NavigationState visible, NavigationState[] list)
     {

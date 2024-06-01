@@ -37,7 +37,7 @@ internal class HudKeyBehavior : Behavior<UserControl>
 
     private void HandleKeyDown(KeyEvent keyEvent)
     {
-        Debug.Print("Hud HandleKeyDown");
+        // Debug.Print("Hud HandleKeyDown");
         if (!keyEvent.alt)
         {
             if (MainWindowViewModel.Instance.Active && MainWindowViewModel.Instance.IsForeground)
@@ -62,7 +62,7 @@ internal class HudKeyBehavior : Behavior<UserControl>
             return;
         }
 
-        Console.WriteLine("Execute {0} {1} {2}", State.Name, State.AllowRepeat, keyEvent.key);
+        Console.WriteLine("HudKeyBehavior Execute {0} {1} {2}", State.Name, State.AllowRepeat, keyEvent.key);
 
         if (key == GlobalKey.VK_LEFT)
         {

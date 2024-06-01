@@ -41,7 +41,7 @@ internal static class GlobalKeyboardHook
 
     private static IntPtr HookCallback(int code, IntPtr wParam, IntPtr lParam)
     {
-        Console.WriteLine("nCode {0} {1} {2}", code, wParam, lParam);
+        // Console.WriteLine("nCode {0} {1} {2}", code, wParam, lParam);
 
         if (code >= 0)
         {

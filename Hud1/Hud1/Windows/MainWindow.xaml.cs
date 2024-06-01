@@ -17,8 +17,8 @@ public partial class MainWindow : Window
 
     private MainWindow()
     {
+        Opacity = 0;
         InitializeComponent();
-        CrosshairWindow.Create();
     }
 
     internal void ActivateWindow()

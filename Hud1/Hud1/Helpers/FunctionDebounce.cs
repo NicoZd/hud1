@@ -14,10 +14,10 @@ internal class FunctionDebounce
 
     internal async Task Run(string value)
     {
-        Debug.Print($"FunctionDebounce Run {value}");
+        // Debug.Print($"FunctionDebounce Run {value}");
         if (running)
         {
-            Debug.Print($"FunctionDebounce set next: {value}");
+            // Debug.Print($"FunctionDebounce set next: {value}");
             next = value;
             return;
         }
@@ -39,7 +39,7 @@ internal class FunctionDebounce
         {
             var next = this.next;
             this.next = string.Empty;
-            Debug.Print($"FunctionDebounce Run next: {next}");
+            // Debug.Print($"FunctionDebounce Run next: {next}");
             await Run(next);
         }
     }

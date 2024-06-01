@@ -34,7 +34,7 @@
     <Window.Resources>
         <Storyboard x:Key="FadeIn">
             <DoubleAnimation 
-             Duration="0:0:0.050"
+             Duration="0:0:0.100"
              To="1" 
              Storyboard.TargetProperty="(FrameworkElement.Opacity)"
              Storyboard.TargetName="Self"

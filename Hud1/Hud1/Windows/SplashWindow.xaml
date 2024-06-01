@@ -35,7 +35,6 @@
         <Storyboard x:Key="FadeIn">
             <DoubleAnimation 
                 Duration="0:0:0.150" 
-                From="0" 
                 To="1" 
                 Storyboard.TargetProperty="(FrameworkElement.Opacity)"
                 Storyboard.TargetName="Self"
@@ -45,7 +44,6 @@
         <Storyboard x:Key="FadeOut">
             <DoubleAnimation 
                  Duration="0:0:0.150" 
-                 From="1" 
                  To="0" 
                  Storyboard.TargetProperty="(FrameworkElement.Opacity)"
                  Storyboard.TargetName="Self"
@@ -54,21 +52,10 @@
         </Storyboard>
     </Window.Resources>
 
-    <b:Interaction.Triggers>
-        <b:EventTrigger EventName="Loaded">
-            <b:InvokeCommandAction Command="{Binding LoadCommand}" CommandParameter="{Binding ElementName=Self}"/>
-        </b:EventTrigger >
-        <b:DataTrigger Binding="{Binding FadeIn}" Value="True">
-            <b:ControlStoryboardAction Storyboard="{StaticResource FadeIn}" ControlStoryboardOption="Play"/>
-        </b:DataTrigger>
-        <b:DataTrigger Binding="{Binding FadeIn}" Value="False">
-            <b:ControlStoryboardAction Storyboard="{StaticResource FadeOut}" ControlStoryboardOption="Play"/>
-        </b:DataTrigger>
-    </b:Interaction.Triggers>
-
     <b:Interaction.Behaviors>
         <behaviors:SplashWindowLayoutBehavior />
         <behaviors:CloseWindowBehavior IsCloseActivated="{Binding IsCloseActivated}" />
+        <behaviors:RunSetupBehavior />
     </b:Interaction.Behaviors>
 
     <Grid >
