@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Media;
 
-namespace Hud1.ViewModels;
+namespace Hud1.Helpers;
 
 internal class CrosshairForms
 {
@@ -108,11 +108,11 @@ internal class CrosshairForms
         //geometryGroup.Children.Add(new RectangleGeometry(new Rect(-1, -1, 2, 2)));
         //geometryGroup.Children.Add(new RectangleGeometry(new Rect(0, 0, 1, 1)));
 
-        geometryGroup.Children.Add(new RectangleGeometry(new Rect((-thickness / 2) + offs, -(length + centerSpace) + extraOffset, thickness, length)));
-        geometryGroup.Children.Add(new RectangleGeometry(new Rect((-thickness / 2) + offs, centerSpace, thickness, length)));
+        geometryGroup.Children.Add(new RectangleGeometry(new Rect(-thickness / 2 + offs, -(length + centerSpace) + extraOffset, thickness, length)));
+        geometryGroup.Children.Add(new RectangleGeometry(new Rect(-thickness / 2 + offs, centerSpace, thickness, length)));
 
-        geometryGroup.Children.Add(new RectangleGeometry(new Rect(centerSpace, (-thickness / 2) + offs, length, thickness)));
-        geometryGroup.Children.Add(new RectangleGeometry(new Rect(-(length + centerSpace) + extraOffset, (-thickness / 2) + offs, length, thickness)));
+        geometryGroup.Children.Add(new RectangleGeometry(new Rect(centerSpace, -thickness / 2 + offs, length, thickness)));
+        geometryGroup.Children.Add(new RectangleGeometry(new Rect(-(length + centerSpace) + extraOffset, -thickness / 2 + offs, length, thickness)));
 
         GeometryDrawing outlineDrawing = new()
         {

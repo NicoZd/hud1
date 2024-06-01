@@ -7,43 +7,43 @@ namespace Hud1.Models;
 
 public class MacroScript
 {
-    private readonly Macro _macro;
-    private readonly Script _script;
+    private readonly Macro macro;
+    private readonly Script script;
 
-    private readonly Queue<SystemEvent> _systemEvents = [];
+    private readonly Queue<SystemEvent> systemEvents = [];
 
     public MacroScript(Macro macro)
     {
-        _macro = macro;
-        _script = new Script(CoreModules.None | CoreModules.GlobalConsts);
+        this.macro = macro;
+        script = new Script(CoreModules.None | CoreModules.GlobalConsts);
 
-        _script.Globals["Label"] = _macro.Label;
-        _script.Globals["Description"] = _macro.Description;
+        script.Globals["Label"] = this.macro.Label;
+        script.Globals["Description"] = this.macro.Description;
 
-        _script.Globals["Running"] = true;
+        script.Globals["Running"] = true;
 
-        _script.Globals["OnMouseDown"] = (int button) => { };
-        _script.Globals["OnMouseUp"] = (int button) => { };
+        script.Globals["OnMouseDown"] = (int button) => { };
+        script.Globals["OnMouseUp"] = (int button) => { };
 
-        _script.Globals["OnKeyDown"] = (int code) => { };
-        _script.Globals["OnKeyUp"] = (int code) => { };
+        script.Globals["OnKeyDown"] = (int code) => { };
+        script.Globals["OnKeyUp"] = (int code) => { };
 
-        _script.Globals["Setup"] = () => { };
-        _script.Globals["Run"] = () => { };
-        _script.Globals["Cleanup"] = () => { };
+        script.Globals["Setup"] = () => { };
+        script.Globals["Run"] = () => { };
+        script.Globals["Cleanup"] = () => { };
 
-        _script.Globals["Stop"] = () =>
+        script.Globals["Stop"] = () =>
         {
-            _script.Globals["Running"] = false;
+            script.Globals["Running"] = false;
         };
 
-        _script.Globals["Sleep"] = (int a) =>
+        script.Globals["Sleep"] = (int a) =>
         {
             Thread.Sleep(a);
             DequeueEvents();
         };
 
-        _script.Globals["Millis"] = () =>
+        script.Globals["Millis"] = () =>
         {
             return DateTimeOffset.Now.ToUnixTimeMilliseconds();
         };
@@ -58,7 +58,7 @@ public class MacroScript
             {
                 if (debouncedLog != null)
                 {
-                    _macro.Log = debouncedLog;
+                    this.macro.Log = debouncedLog;
                     debouncedLog = null;
                 }
             }));
@@ -70,7 +70,7 @@ public class MacroScript
         timer.Elapsed += (sender, e) => update();
         timer.AutoReset = false;
 
-        _script.Globals["Print"] = (string a) =>
+        script.Globals["Print"] = (string a) =>
         {
             debouncedLog = a;
             if (!timer.Enabled)
@@ -86,61 +86,61 @@ public class MacroScript
 
         };
 
-        _script.Globals["MouseDown"] = () =>
+        script.Globals["MouseDown"] = () =>
         {
             MouseService.MouseDown(MouseService.MouseButton.Left);
         };
 
-        _script.Globals["MouseUp"] = () =>
+        script.Globals["MouseUp"] = () =>
         {
             MouseService.MouseUp(MouseService.MouseButton.Left);
         };
 
-        var scriptCode = File.ReadAllText(_macro.Path);
-        _script.DoString(scriptCode);
+        var scriptCode = File.ReadAllText(this.macro.Path);
+        script.DoString(scriptCode);
     }
 
     public object GetGlobal(string name)
     {
-        return _script.Globals[name];
+        return script.Globals[name];
     }
 
     public void SetGlobal(string name, object value)
     {
-        _script.Globals[name] = value;
+        script.Globals[name] = value;
     }
 
     internal void OnMouseDown()
     {
         Console.WriteLine("OnMouseDown");
-        _systemEvents.Enqueue(new SystemEvent());
+        systemEvents.Enqueue(new SystemEvent());
     }
 
     private class SystemEvent { }
 
     internal void DequeueEvents()
     {
-        while (_systemEvents.Count > 0)
+        while (systemEvents.Count > 0)
         {
-            var systemEvent = _systemEvents.Dequeue();
-            _script.Call(_script.Globals["OnMouseDown"], 0);
+            var systemEvent = systemEvents.Dequeue();
+            script.Call(script.Globals["OnMouseDown"], 0);
         }
     }
 
     internal void Run()
     {
-        _systemEvents.Clear();
-        _script.Call(_script.Globals["Setup"]);
+        systemEvents.Clear();
+        script.Call(script.Globals["Setup"]);
         Thread.Sleep(25);
         DequeueEvents();
-        while ((bool)_script.Globals["Running"])
+        while ((bool)script.Globals["Running"])
         {
-            _script.Call(_script.Globals["Run"]);
+            script.Call(script.Globals["Run"]);
             DequeueEvents();
 
             Thread.Sleep(25);
             DequeueEvents();
         };
-        _script.Call(_script.Globals["Cleanup"]);
+        script.Call(script.Globals["Cleanup"]);
     }
 }

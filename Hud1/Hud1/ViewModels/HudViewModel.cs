@@ -13,13 +13,13 @@ public partial class HudViewModel : ObservableObject
     public static readonly HudViewModel Instance = new();
 
     [ObservableProperty]
-    public NavigationState? state;
+    public NavigationState? _state;
 
     [ObservableProperty]
-    public Dictionary<string, NavigationState> states = [];
+    public Dictionary<string, NavigationState> _states = [];
 
     private readonly Stateless.StateMachine<NavigationState, NavigationTrigger> Navigation;
-    private NavigationState? _directNavigationStateTarget = null;
+    private NavigationState? directNavigationStateTarget = null;
 
     private HudViewModel()
     {
@@ -31,7 +31,7 @@ public partial class HudViewModel : ObservableObject
         Debug.Print("HudViewModel BuildNavigation");
 
         Navigation.Configure(NavigationStates.ALL)
-                    .PermitDynamic(NavigationTriggers.DIRECT, () => { return _directNavigationStateTarget!; });
+                    .PermitDynamic(NavigationTriggers.DIRECT, () => { return directNavigationStateTarget!; });
 
         Navigation.Configure(NavigationStates.NIGHTVISION_VISIBLE).SubstateOf(NavigationStates.ALL);
         Navigation.Configure(NavigationStates.MACRO_VISIBLE).SubstateOf(NavigationStates.ALL);
@@ -74,7 +74,7 @@ public partial class HudViewModel : ObservableObject
     {
         if (!Navigation.IsInState(navigationState))
         {
-            _directNavigationStateTarget = navigationState;
+            directNavigationStateTarget = navigationState;
             Navigation.Fire(NavigationTriggers.DIRECT);
         }
     }

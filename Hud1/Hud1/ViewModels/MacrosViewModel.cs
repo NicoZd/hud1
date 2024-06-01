@@ -20,31 +20,31 @@ public partial class MacrosViewModel : ObservableObject
     [ObservableProperty]
     private bool _selected = false;
 
-    private readonly FileSystemWatcher _watcher;
+    private readonly FileSystemWatcher fileWatcher;
 
-    public string _path = "";
+    public string macrosPath = "";
 
     private MacrosViewModel()
     {
         Macros = [];
 
-        _path = Path.Combine(Setup.VersionPath, "Macros");
+        macrosPath = Path.Combine(Setup.VersionPath, "Macros");
 
         // fallback for vs studio xaml viewer;
-        if (!Directory.Exists(_path))
+        if (!Directory.Exists(macrosPath))
         {
-            _path = ".";
+            macrosPath = ".";
         }
 
-        _watcher = new FileSystemWatcher(_path)
+        fileWatcher = new FileSystemWatcher(macrosPath)
         {
             NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.CreationTime | NotifyFilters.FileName
         };
-        _watcher.Changed += OnDirectoryChanged;
-        _watcher.Created += OnDirectoryChanged;
-        _watcher.Deleted += OnDirectoryChanged;
-        _watcher.Renamed += OnDirectoryChanged;
-        _watcher.EnableRaisingEvents = true;
+        fileWatcher.Changed += OnDirectoryChanged;
+        fileWatcher.Created += OnDirectoryChanged;
+        fileWatcher.Deleted += OnDirectoryChanged;
+        fileWatcher.Renamed += OnDirectoryChanged;
+        fileWatcher.EnableRaisingEvents = true;
 
         UpdateFiles();
     }
@@ -67,8 +67,8 @@ public partial class MacrosViewModel : ObservableObject
 
         NavigationStates.MACROS_FOLDER.RightAction = () =>
         {
-            Console.WriteLine("OPEN {0}", _path);
-            Process.Start("explorer.exe", _path);
+            Console.WriteLine("OPEN {0}", macrosPath);
+            Process.Start("explorer.exe", macrosPath);
         };
 
         Configure(NavigationStates.MACROS_FOLDER)
@@ -89,7 +89,7 @@ public partial class MacrosViewModel : ObservableObject
         foreach (var macro in Macros)
             macro.Running = false;
 
-        var fileEntries = Directory.GetFiles(_path, "*.lua");
+        var fileEntries = Directory.GetFiles(macrosPath, "*.lua");
         var temp = new ObservableCollection<Macro>();
         foreach (var fileEntry in fileEntries)
         {

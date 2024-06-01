@@ -6,7 +6,8 @@ public partial class ScrollPanel : UserControl
 {
     public static List<ScrollPanel> Instances = [];
 
-    private double _storedPosition;
+    private double storedPosition;
+
     public ScrollPanel()
     {
         InitializeComponent();
@@ -19,11 +20,11 @@ public partial class ScrollPanel : UserControl
         if (VisualChildrenCount > 0)
         {
             var c = (ScrollViewer)GetVisualChild(0);
-            _storedPosition = c.VerticalOffset;
+            storedPosition = c.VerticalOffset;
         }
         else
         {
-            _storedPosition = 0;
+            storedPosition = 0;
         }
     }
 
@@ -32,7 +33,7 @@ public partial class ScrollPanel : UserControl
         if (VisualChildrenCount > 0)
         {
             var c = (ScrollViewer)GetVisualChild(0);
-            c.ScrollToVerticalOffset(_storedPosition);
+            c.ScrollToVerticalOffset(storedPosition);
         }
     }
 

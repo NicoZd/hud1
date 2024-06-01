@@ -15,35 +15,35 @@ namespace Hud1.Controls;
 
 public class DPIAwareImage : Image
 {
-    private Window? _parentWindow;
-    private Action? _unsubscribeMonitorsChange;
-    private readonly Guid _id;
+    private Window? parentWindow;
+    private Action? unsubscribeMonitorsChange;
+    private readonly Guid debugGuid;
 
     public DPIAwareImage()
     {
-        _id = Guid.NewGuid();
+        debugGuid = Guid.NewGuid();
         Loaded += OnLoaded;
         Unloaded += OnUnloaded;
     }
 
     private void OnLoaded(object? sender, RoutedEventArgs e)
     {
-        _parentWindow = Window.GetWindow(this);
+        parentWindow = Window.GetWindow(this);
 
-        _unsubscribeMonitorsChange = Monitors.RegisterMonitorsChange(_parentWindow, OnMonitorsChange);
+        unsubscribeMonitorsChange = Monitors.RegisterMonitorsChange(parentWindow, OnMonitorsChange);
 
-        _parentWindow.LocationChanged += OnParentWindowLocationChanged;
-        _parentWindow.SizeChanged += OnParentWindowSizeChanged;
+        parentWindow.LocationChanged += OnParentWindowLocationChanged;
+        parentWindow.SizeChanged += OnParentWindowSizeChanged;
 
         UpdateDpiScale();
     }
 
     private void OnUnloaded(object? sender, RoutedEventArgs e)
     {
-        Debug.Print($"Unload {_unsubscribeMonitorsChange} {_parentWindow} {_id}");
-        _unsubscribeMonitorsChange!();
-        _parentWindow!.LocationChanged -= OnParentWindowLocationChanged;
-        _parentWindow!.SizeChanged -= OnParentWindowSizeChanged;
+        Debug.Print($"Unload {unsubscribeMonitorsChange} {parentWindow} {debugGuid}");
+        unsubscribeMonitorsChange!();
+        parentWindow!.LocationChanged -= OnParentWindowLocationChanged;
+        parentWindow!.SizeChanged -= OnParentWindowSizeChanged;
     }
 
     private void OnParentWindowLocationChanged(object? sender, EventArgs e)
@@ -75,6 +75,6 @@ public class DPIAwareImage : Image
 
         RenderTransform = new ScaleTransform(dpiScale, dpiScale, Source.Width / 2, Source.Height / 2);
 
-        Debug.Print($"DPI scale updated to: {dpiScale} {_id}");
+        Debug.Print($"DPI scale updated to: {dpiScale} {debugGuid}");
     }
 }

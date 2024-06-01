@@ -32,8 +32,8 @@ public partial class Macro : ObservableObject
     [ObservableProperty]
     private string _path = "";
 
-    private MacroScript? _macroScript;
-    private readonly MacrosViewModel _macros;
+    private MacroScript? macroScript;
+    private readonly MacrosViewModel macros;
 
     public Macro(string path, MacrosViewModel macros)
     {
@@ -42,7 +42,7 @@ public partial class Macro : ObservableObject
         Description = "";
         RightLabel = "Start >";
 
-        _macros = macros;
+        this.macros = macros;
 
         FetchProgramMetaData();
     }
@@ -51,14 +51,14 @@ public partial class Macro : ObservableObject
     private void PanelClick()
     {
         Console.WriteLine("PanelClick");
-        _macros.SelectMacro(this);
+        macros.SelectMacro(this);
     }
 
     [RelayCommand]
     private void StartStopClick()
     {
         Console.WriteLine("StartStopClick");
-        _macros.SelectMacro(this);
+        macros.SelectMacro(this);
         OnRight();
     }
 
@@ -87,10 +87,10 @@ public partial class Macro : ObservableObject
     internal void OnRight()
     {
         Console.WriteLine("OnRight");
-        if (Running && _macroScript != null)
+        if (Running && macroScript != null)
         {
             RightLabel = "Stopping";
-            _macroScript.SetGlobal("Running", false);
+            macroScript.SetGlobal("Running", false);
             return;
         }
 
@@ -102,9 +102,9 @@ public partial class Macro : ObservableObject
         {
             try
             {
-                _macroScript = new MacroScript(this);
-                using var hooks = new ScriptHooks(_macroScript);
-                _macroScript.Run();
+                macroScript = new MacroScript(this);
+                using var hooks = new ScriptHooks(macroScript);
+                macroScript.Run();
             }
             catch (InterpreterException ex)
             {
