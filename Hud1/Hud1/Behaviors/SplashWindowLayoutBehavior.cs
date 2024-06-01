@@ -39,8 +39,6 @@ public class SplashWindowLayoutBehavior : Behavior<Window>
     private void OnMonitorsChange()
     {
         var window = AssociatedObject;
-
-        var hwnd = new WindowInteropHelper(window).Handle;
         var monitor = Monitors.Primary;
 
         var width = window.Width * monitor.ScaleFactor;
@@ -48,6 +46,6 @@ public class SplashWindowLayoutBehavior : Behavior<Window>
         var x = monitor.Bounds.X + ((monitor.Bounds.Width - width) / 2);
         var y = monitor.Bounds.Y + ((monitor.Bounds.Height - height) / 2);
 
-        Monitors.MoveWindow(hwnd, x, y, width, height);
+        Monitors.MoveWindow(window, x, y, width, height);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Hud1.Controls;
 using Hud1.Helpers;
 using Hud1.Models;
 using System.Diagnostics;
@@ -14,10 +15,6 @@ public partial class CrosshairViewModel : ObservableObject
 
     [ObservableProperty]
     private Image _crosshairImage = new Image();
-
-    // dpi scales for main and crosshair Window Monitors
-    public double dpiScaleMain = 1.0;
-    public double dpiScaleCrosshair = 1.0;
 
     private Dictionary<string, Func<int, Brush, bool, Drawing>> FormRenderFunctions = [];
     private readonly Dictionary<string, Brush> ColorOptions = [];
@@ -124,6 +121,8 @@ public partial class CrosshairViewModel : ObservableObject
             NavigationStates.CROSSHAIR_SIZE,
             NavigationStates.CROSSHAIR_OUTLINE,
             ]);
+
+        Redraw();
     }
 
     public Action ChangeDisplay(int dir)
@@ -132,6 +131,7 @@ public partial class CrosshairViewModel : ObservableObject
         {
             var current = int.Parse(NavigationStates.CROSSHAIR_DISPLAY.SelectionLabel);
             var next = Math.Min(Math.Max(current + dir, 0), Monitors.All.Count - 1);
+            Debug.Print($"ChangeDisplay NavigationStates.CROSSHAIR_DISPLAY.SelectionLabel {next}");
             NavigationStates.CROSSHAIR_DISPLAY.SelectionLabel = "" + next;
         };
     }
@@ -169,11 +169,10 @@ public partial class CrosshairViewModel : ObservableObject
         DrawingImage drawingImage = new(geometryDrawing);
         drawingImage.Freeze();
 
-        Image image = new()
+        DPIAwareImage image = new()
         {
             Source = drawingImage,
             Stretch = Stretch.None,
-            RenderTransform = new ScaleTransform(dpiScaleCrosshair, dpiScaleCrosshair, drawingImage.Width / 2, drawingImage.Height / 2),
         };
 
         CrosshairImage = image;
@@ -192,11 +191,10 @@ public partial class CrosshairViewModel : ObservableObject
             DrawingImage drawingImage = new(geometryDrawing);
             drawingImage.Freeze();
 
-            Image image = new()
+            DPIAwareImage image = new()
             {
                 Source = drawingImage,
                 Stretch = Stretch.None,
-                RenderTransform = new ScaleTransform(dpiScaleMain, dpiScaleMain, drawingImage.Width / 2, drawingImage.Height / 2),
                 Margin = new Thickness(4, 0, 4, 0)
             };
 
@@ -206,8 +204,6 @@ public partial class CrosshairViewModel : ObservableObject
         foreach (var option in NavigationStates.CROSSHAIR_COLOR.Options)
         {
             var colorOption = ColorOptions[option.Value];
-            //var geometryDrawing = GetGeometryDrawing(5, colorOption, formFunction);
-
 
             GeometryGroup areaGroup = new();
             areaGroup.Children.Add(new RectangleGeometry(new Rect(-10, -10, 20, 20)));
@@ -224,7 +220,6 @@ public partial class CrosshairViewModel : ObservableObject
                 Margin = new Thickness(0, 2, 0, 0)
             };
 
-
             option.Image = image;
         }
 
@@ -236,14 +231,12 @@ public partial class CrosshairViewModel : ObservableObject
             DrawingImage drawingImage = new(geometryDrawing);
             drawingImage.Freeze();
 
-            Image image = new()
+            DPIAwareImage image = new()
             {
                 Source = drawingImage,
                 Stretch = Stretch.None,
-                RenderTransform = new ScaleTransform(dpiScaleMain, dpiScaleMain, drawingImage.Width / 2, drawingImage.Height / 2),
                 Margin = new Thickness(4, 0, 4, 0)
             };
-
 
             option.Image = image;
         }

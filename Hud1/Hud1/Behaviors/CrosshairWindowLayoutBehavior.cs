@@ -14,9 +14,6 @@ namespace Hud1.Behaviors;
 
 public class CrosshairWindowLayoutBehavior : Behavior<CrosshairWindow>
 {
-    private bool _running = false;
-    private readonly Queue<string> _runningUpdates = [];
-
     protected override void OnAttached()
     {
         base.OnAttached();
@@ -34,47 +31,19 @@ public class CrosshairWindowLayoutBehavior : Behavior<CrosshairWindow>
         var window = AssociatedObject;
         window.Opacity = 0;
 
+        var updates = new FunctionQueue(UpdateWindowPosition);
         Monitors.RegisterMonitorsChange(window, () =>
         {
-            _ = OnMonitorsChangeAsync(NavigationStates.CROSSHAIR_DISPLAY.SelectionLabel);
+            _ = updates.Run(NavigationStates.CROSSHAIR_DISPLAY.SelectionLabel);
         });
         NavigationStates.CROSSHAIR_DISPLAY.PropertyChanged += (object? sender, PropertyChangedEventArgs e) =>
         {
             if (e.PropertyName == nameof(NavigationStates.CROSSHAIR_DISPLAY.SelectionLabel))
             {
-                _ = OnMonitorsChangeAsync(NavigationStates.CROSSHAIR_DISPLAY.SelectionLabel);
+                _ = updates.Run(NavigationStates.CROSSHAIR_DISPLAY.SelectionLabel);
             }
         };
-        _ = OnMonitorsChangeAsync(NavigationStates.CROSSHAIR_DISPLAY.SelectionLabel);
-    }
-
-    private async Task OnMonitorsChangeAsync(string selectionLabel)
-    {
-        if (_running)
-        {
-            Debug.Print("CrosshairWindowLayoutBehavior IsRunning...");
-            _runningUpdates.Enqueue(selectionLabel);
-            return;
-        }
-
-        _running = true;
-
-        try
-        {
-            await UpdateWindowPosition(selectionLabel);
-        }
-        catch (Exception ex)
-        {
-            Debug.Print(ex.ToString());
-        }
-
-        _running = false;
-
-        if (_runningUpdates.Count > 0)
-        {
-            Debug.Print("CrosshairWindowLayoutBehavior Run from queue...");
-            _ = OnMonitorsChangeAsync(_runningUpdates.Dequeue());
-        }
+        _ = updates.Run(NavigationStates.CROSSHAIR_DISPLAY.SelectionLabel);
     }
 
     private async Task UpdateWindowPosition(string selectionLabel)
@@ -92,7 +61,6 @@ public class CrosshairWindowLayoutBehavior : Behavior<CrosshairWindow>
         }
 
         var monitor = monitors.ElementAt(monitorIndex);
-        var hwnd = new WindowInteropHelper(window).Handle;
         var foregroundRestorer = new MainWindowForegroundRestorer();
 
         Debug.Print($"CrosshairWindowLayoutBehavior OnMonitorsChangeAsync {monitorIndex} {monitor.DeviceName} {monitor.Bounds}  selectionLabel: {selectionLabel}");
@@ -104,10 +72,7 @@ public class CrosshairWindowLayoutBehavior : Behavior<CrosshairWindow>
         var height = 50 * monitor.ScaleFactor;
         var x = monitor.Bounds.X + (monitor.Bounds.Width - width) / 2;
         var y = monitor.Bounds.Y + (monitor.Bounds.Height - height) / 2;
-        Monitors.MoveWindow(hwnd, x, y, width, height);
-
-        CrosshairViewModel.Instance.dpiScaleCrosshair = 1 / monitor.ScaleFactor;
-        CrosshairViewModel.Instance.Redraw();
+        Monitors.MoveWindow(window, x, y, width, height);
 
         foregroundRestorer.Restore();
 

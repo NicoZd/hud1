@@ -2,6 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
+using Windows.UI;
 
 namespace Hud1.Helpers;
 
@@ -66,7 +67,7 @@ internal class Monitors
 
     public static Monitor Primary => All.FirstOrDefault(t => t.IsPrimary) ?? new Monitor();
 
-    public static void RegisterMonitorsChange(Window window, Action OnMonitorsChange)
+    public static Action RegisterMonitorsChange(Window window, Action OnMonitorsChange)
     {
         var hwnd = new WindowInteropHelper(window).Handle;
         var source = HwndSource.FromHwnd(hwnd);
@@ -84,11 +85,14 @@ internal class Monitors
         }
 
         source.AddHook(WndProc);
+
+        return () => { source.RemoveHook(WndProc); };
     }
 
-    internal static void MoveWindow(nint hwnd, double x, double y, double width, double height)
+    internal static void MoveWindow(Window window, double x, double y, double width, double height)
     {
         Debug.Print($"MoveWindow {x}, {y}, {width}, {height}");
+        var hwnd = new WindowInteropHelper(window).Handle;
         WindowsAPI.MoveWindow(hwnd, (int)(x + 1), (int)(y + 1), (int)(width - 2), (int)(height - 2), false);
         WindowsAPI.MoveWindow(hwnd, (int)x, (int)y, (int)width, (int)height, true);
     }
