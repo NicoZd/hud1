@@ -1,4 +1,10 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <FontFamily x:Key="FontFamily">pack://application:,,,/Version/Fonts/#Fira Code</FontFamily>
+﻿<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <FontFamily x:Key="FontFamily"/>
+    <FontStyle x:Key="FontStyle"/>
+    <FontWeight x:Key="FontWeight"/>
+    <FontStretch x:Key="FontStretch"/>
+
 </ResourceDictionary>

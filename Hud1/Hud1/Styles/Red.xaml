@@ -1,5 +1,6 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+﻿<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Color x:Key="ColorSuperBright">#dd6666</Color>
     <Color x:Key="ColorBright">#b74545</Color>
@@ -12,5 +13,5 @@
     <Color x:Key="ColorBackgroundDarkTrans">#9905050d</Color>
     <Color x:Key="ColorInfo">#51e8fe</Color>
     <Color x:Key="ColorInfoSecondary">#9951e8fe</Color>
-    
+
 </ResourceDictionary>

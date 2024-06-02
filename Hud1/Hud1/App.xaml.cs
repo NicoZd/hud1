@@ -1,8 +1,12 @@
-﻿using Hud1.Views;
+﻿using Hud1.Helpers;
+using Hud1.Views;
+using System.Collections;
 using System.Diagnostics;
 using System.IO;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Media;
+using Windows.Networking;
 
 namespace Hud1;
 
@@ -12,74 +16,5 @@ public partial class App : Application
     {
         Debug.Print($"App {ShutdownMode} {Entry.Millis()}");
         InitializeComponent();
-    }
-
-    internal static void ReplaceResource(int index, ResourceDictionary dictionary)
-    {
-        Application.Current.Resources.MergedDictionaries.Insert(index, dictionary);
-        Application.Current.Resources.MergedDictionaries.RemoveAt(index + 1);
-    }
-
-    internal static void SelectStyle(string style, string font)
-    {
-#if HOT
-        // dont touch Application.Current.Resources.MergedDictionaries otherwise Hot Reload wount work 
-        return;
-#endif
-
-        // for testing
-        if (Application.Current == null) return;
-
-        var fontFile = "";
-
-        var fontsFolder = Path.Combine(Setup.VersionPath, "Fonts");
-        if (Directory.Exists(fontsFolder))
-        {
-            var fileEntries = Directory.GetFiles(fontsFolder, "*.*").Where(s => s.ToLower().EndsWith(".ttf") || s.ToLower().EndsWith(".otf")).ToArray();
-            for (var i = 0; i < fileEntries.Length; i++)
-            {
-                var ff = Fonts.GetFontFamilies(fileEntries[i]);
-                if (ff.Count > 0)
-                {
-                    var y = ff.First();
-                    var k = y.Source.Split("#");
-                    var v = k[^1];
-                    // Console.WriteLine("fontCol.Families[0].Name {0}", v);
-                    if (v.Equals(font))
-                    {
-                        fontFile = fileEntries[i];
-                        break;
-                    }
-                }
-            }
-        }
-
-        if (fontFile != "")
-        {
-            ReplaceResource(0, new ResourceDictionary
-            {
-                { "FontFamily", new FontFamily(new Uri(fontFile, UriKind.Absolute), "./#" + font) }
-            });
-        }
-
-        ReplaceResource(1, new ResourceDictionary
-        {
-            Source = new Uri("Styles/" + style + ".xaml", UriKind.RelativeOrAbsolute)
-        });
-
-        ReplaceResource(2, new ResourceDictionary
-        {
-            Source = new Uri("Styles/Standard.xaml", UriKind.RelativeOrAbsolute)
-        });
-
-        ReplaceResource(3, new ResourceDictionary
-        {
-            Source = new Uri("Styles/Buttons.xaml", UriKind.RelativeOrAbsolute)
-        });
-
-        ReplaceResource(4, new ResourceDictionary
-        {
-            Source = new Uri("Styles/ScrollViewer.xaml", UriKind.RelativeOrAbsolute)
-        });
     }
 }

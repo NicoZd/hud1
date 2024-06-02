@@ -139,29 +139,7 @@ internal partial class MoreViewModel : ObservableObject
         }
         var prevStyleIndex = (currentStyleIndex + dir + Styles.Length) % Styles.Length;
         NavigationStates.STYLE.SelectionLabel = Styles[prevStyleIndex];
-        App.SelectStyle(NavigationStates.STYLE.SelectionLabel, NavigationStates.FONT.SelectionLabel);
-    }
-
-    private string[] FontList()
-    {
-        var fontsFolder = Path.Combine(Setup.VersionPath, "Fonts");
-        if (!Directory.Exists(fontsFolder))
-            return [];
-        var fileEntries = Directory.GetFiles(fontsFolder, "*.*").Where(s => s.ToLower().EndsWith(".ttf") || s.ToLower().EndsWith(".otf")).ToArray();
-        List<string> fonts = [];
-        for (var i = 0; i < fileEntries.Length; i++)
-        {
-            var ff = Fonts.GetFontFamilies(fileEntries[i]);
-            if (ff.Count > 0)
-            {
-                var y = ff.First();
-                var k = y.Source.Split("#");
-                var v = k[^1];
-                // Console.WriteLine("fontCol.Families[0].Name {0}", v);
-                fonts.Add(v);
-            }
-        }
-        return [.. fonts];
+        AppStyle.SelectStyle(NavigationStates.STYLE.SelectionLabel, NavigationStates.FONT.SelectionLabel);
     }
 
     private void NextFont()
@@ -176,16 +154,22 @@ internal partial class MoreViewModel : ObservableObject
 
     internal void SelectFont(int dir)
     {
-        var Fonts = FontList();
-        if (Fonts.Length == 0) return;
-        var currentStyleIndex = Array.IndexOf(Fonts, NavigationStates.FONT.SelectionLabel);
+        var fonts = HudFonts.GetFonts();
+        if (fonts.Count == 0)
+        {
+            NavigationStates.FONT.SelectionLabel = "No Font";
+            return;
+        }
+
+        var currentStyleIndex = fonts.FindIndex(x => x.Name == NavigationStates.FONT.SelectionLabel);
         if (currentStyleIndex == -1)
         {
             currentStyleIndex = 0;
             dir = 0;
         }
-        var prevStyleIndex = (currentStyleIndex + dir + Fonts.Length) % Fonts.Length;
-        NavigationStates.FONT.SelectionLabel = Fonts[prevStyleIndex];
-        App.SelectStyle(NavigationStates.STYLE.SelectionLabel, NavigationStates.FONT.SelectionLabel);
+
+        var nextStyleIndex = (currentStyleIndex + dir + fonts.Count) % fonts.Count;
+        NavigationStates.FONT.SelectionLabel = fonts[nextStyleIndex].Name;
+        AppStyle.SelectStyle(NavigationStates.STYLE.SelectionLabel, NavigationStates.FONT.SelectionLabel);
     }
 }

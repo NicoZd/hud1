@@ -15,6 +15,7 @@
 		<Platforms>x86</Platforms>
 		<AssemblyName>Game Direct</AssemblyName>
 		<ApplicationIcon>Assets\icon.ico</ApplicationIcon>
+		<UseWindowsForms>False</UseWindowsForms>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Hot|x86'">
@@ -36,10 +37,13 @@
 		<None Remove="Assets\frosted-texture-tile.jpg" />
 		<None Remove="Assets\logo.png" />
 		<None Remove="Assets\splash.png" />
-		<None Remove="Version\Fonts\ARIAL.TTF" />
-		<None Remove="Version\Fonts\CALIBRI.TTF" />
+		<None Remove="Version\Fonts\Calibri.ttf" />
 		<None Remove="Version\Fonts\FiraCode.ttf" />
-		<None Remove="Version\Fonts\HitmarkerText.ttf" />
+		<None Remove="Version\Fonts\Gill-Sans-Condensed.ttf" />
+		<None Remove="Version\Fonts\Gill-Sans.ttf" />
+		<None Remove="Version\Fonts\HitmarkerText-Italic.ttf" />
+		<None Remove="Version\Fonts\HitmarkerText-Medium.ttf" />
+		<None Remove="Version\Fonts\HitmarkerText-Regular.ttf" />
 		<None Remove="Version\Fonts\Neuropolitical.otf" />
 		<None Remove="Version\Macros\press-left-mouse.lua" />
 		<None Remove="Version\Macros\repeat-left-mouse-click.lua" />
@@ -66,17 +70,26 @@
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Resource>
 		<Resource Include="Assets\icon.ico" />
+		<Content Include="Assets\icon.ico" />
 		<Content Include="Version\Fonts\Calibri.ttf">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Version\Fonts\FiraCode.ttf">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
-		<Content Include="Version\Fonts\Arial.ttf">
+		<Content Include="Version\Fonts\Gill-Sans-Condensed.ttf">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
-		<Content Include="Assets\icon.ico" />
-		<Content Include="Version\Fonts\HitmarkerText.ttf">
+		<Content Include="Version\Fonts\Gill-Sans.ttf">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Version\Fonts\HitmarkerText-Italic.ttf">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Version\Fonts\HitmarkerText-Medium.ttf">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Version\Fonts\HitmarkerText-Regular.ttf">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Version\Fonts\Neuropolitical.otf">

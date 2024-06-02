@@ -12,7 +12,8 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Styles/Font.xaml"/>
                 <ResourceDictionary Source="Styles/Green.xaml"/>
-                <ResourceDictionary Source="Styles/Standard.xaml"/>
+                <ResourceDictionary Source="Styles/Colors.xaml"/>
+                <ResourceDictionary Source="Styles/Labels.xaml"/>
                 <ResourceDictionary Source="Styles/Buttons.xaml"/>
                 <ResourceDictionary Source="Styles/ScrollViewer.xaml"/>
             </ResourceDictionary.MergedDictionaries>

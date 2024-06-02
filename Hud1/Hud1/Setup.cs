@@ -33,7 +33,7 @@ internal class Setup
 
         await ShowSplash("Setup Logging");
         SetupLogging();
-        Console.WriteLine($"Startup Logfile starts {DateTime.Now} {Entry.Millis()}");
+        Console.WriteLine($"Setup Logfile starts {DateTime.Now} {Entry.Millis()}");
 
         await ShowSplash("Single Instance");
         await EnforceSingleInstance();
@@ -161,7 +161,7 @@ internal class Setup
 
     private static async Task ShowSplash(string text)
     {
-        Console.WriteLine($"Startup ShowSplash '{text}' {Entry.Millis()}");
+        Console.WriteLine($"Setup ShowSplash '{text}' {Entry.Millis()}");
         SplashWindowViewModel.Instance.SplashText = text;
         await Task.Delay(TimeSpan.FromMilliseconds(20));
     }
@@ -173,7 +173,7 @@ internal class Setup
             var startRount = 0;
             while (!mutex.WaitOne(TimeSpan.Zero, true) && startRount <= 10)
             {
-                Console.WriteLine("Startup Shutdown existing window (attempt: " + startRount + "/10)");
+                Console.WriteLine("Setup Shutdown existing window (attempt: " + startRount + "/10)");
                 WindowsAPI.SendNotifyMessage(new nint(-1), WM_GAME_DIRECT_SHOWME, 0, 0);
                 await Task.Delay(500);
                 startRount++;
@@ -212,7 +212,7 @@ internal class Setup
         {
             if (!Directory.Exists(VersionPath))
             {
-                Console.WriteLine("=== Creating New Version");
+                Console.WriteLine("Setup Creating New Version");
                 Directory.CreateDirectory(VersionPath);
                 CopyFilesRecursively(
                     Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Version"),
@@ -222,22 +222,22 @@ internal class Setup
         }
         catch (Exception e)
         {
-            Console.WriteLine("Error creating version");
+            Console.WriteLine("Setup Error creating version");
             Console.WriteLine(e);
             Directory.Delete(VersionPath, true);
 
-            throw new Exception("Could not create version", e);
+            throw new Exception("Setup Could not create version", e);
         }
     }
 
     private static void CopyFilesRecursively(string sourcePath, string targetPath)
     {
-        Console.WriteLine("Copy {0}, {1}", sourcePath, targetPath);
-        //Now Create all of the directories
+        // Console.WriteLine("Copy {0}, {1}", sourcePath, targetPath);
+        // Now Create all of the directories
         foreach (var dirPath in Directory.GetDirectories(sourcePath, "*", SearchOption.AllDirectories))
             Directory.CreateDirectory(dirPath.Replace(sourcePath, targetPath));
 
-        //Copy all the files & Replaces any files with the same name
+        // Copy all the files & Replaces any files with the same name
         foreach (var newPath in Directory.GetFiles(sourcePath, "*.*", SearchOption.AllDirectories))
             File.Copy(newPath, newPath.Replace(sourcePath, targetPath), true);
     }
@@ -266,6 +266,8 @@ internal class Setup
 #endif
             UserConfigFile = Path.Combine(VersionPath, "UserConfig.json");
         }
+
+        Debug.Print($"Setup VersionPath={VersionPath}");
     }
 
     private static async Task CheckLicense()
@@ -273,7 +275,7 @@ internal class Setup
         var context = StoreContext.GetDefault();
         var appLicense = await context.GetAppLicenseAsync();
 
-        Console.WriteLine($"Startup License IsActive={appLicense.IsActive} IsTrial={appLicense.IsTrial} ExpirationDate={appLicense.ExpirationDate}");
+        Console.WriteLine($"Setup License IsActive={appLicense.IsActive} IsTrial={appLicense.IsTrial} ExpirationDate={appLicense.ExpirationDate}");
 
         if (!appLicense.IsActive)
         {

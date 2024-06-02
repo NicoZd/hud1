@@ -1,0 +1,17 @@
+﻿<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <SolidColorBrush x:Key="BrushSeparator" Color="{DynamicResource ColorMed}" />
+
+    <SolidColorBrush x:Key="BrushSolidSuperBright" Color="{DynamicResource ColorSuperBright}" />
+    <SolidColorBrush x:Key="BrushSolidBright" Color="{DynamicResource ColorBright}" />
+    <SolidColorBrush x:Key="BrushTitle" Color="{DynamicResource ColorSuperBright}" />
+    <SolidColorBrush x:Key="BrushLabel" Color="{DynamicResource ColorSuperBright}" />
+    <SolidColorBrush x:Key="BrushInfoSecondary" Color="{DynamicResource ColorInfoSecondary}" />
+    <SolidColorBrush x:Key="BrushInfo" Color="{DynamicResource ColorInfo}" />
+    <SolidColorBrush x:Key="BrushColorMedLow" Color="{DynamicResource ColorMedLow}" />
+    <SolidColorBrush x:Key="BrushColorMed" Color="{DynamicResource ColorMed}" />
+
+</ResourceDictionary>
