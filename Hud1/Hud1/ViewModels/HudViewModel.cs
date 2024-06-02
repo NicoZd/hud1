@@ -2,7 +2,6 @@
 using CommunityToolkit.Mvvm.Input;
 using Hud1.Models;
 using Stateless.Graph;
-using System.Diagnostics;
 using System.Windows;
 
 namespace Hud1.ViewModels;

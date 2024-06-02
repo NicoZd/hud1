@@ -1,6 +1,5 @@
 ﻿using Hud1.Helpers;
 using Microsoft.Xaml.Behaviors;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Interop;
 

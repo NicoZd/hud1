@@ -2,7 +2,6 @@
 using Hud1.Models;
 using Hud1.Windows;
 using Microsoft.Xaml.Behaviors;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Interop;
 

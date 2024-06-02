@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 using System.Windows;
 using System.Windows.Media;
 
@@ -18,8 +12,8 @@ internal class HudFont
 
     internal HudFont(string name, Typeface typeface)
     {
-        this.Name = name;
-        this.Typeface = typeface;
+        Name = name;
+        Typeface = typeface;
     }
 }
 
@@ -64,7 +58,7 @@ internal class HudFonts
                     if (typeface.Stretch != FontStretches.Normal)
                         elements.Add(typeface.Stretch.ToString());
 
-                    string friendlyName = string.Join(" ", elements);
+                    var friendlyName = string.Join(" ", elements);
                     if (perms.Contains(friendlyName))
                     {
                         continue;

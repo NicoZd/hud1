@@ -2,14 +2,8 @@
 using Hud1.ViewModels;
 using Hud1.Windows;
 using Microsoft.Xaml.Behaviors;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Interop;
 using System.Windows.Media.Animation;
 
 namespace Hud1.Behaviors;
