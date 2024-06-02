@@ -1,6 +1,4 @@
-﻿using System.Runtime.InteropServices;
-
-namespace Hud1.Helpers;
+﻿namespace Hud1.Helpers;
 
 internal static class Gamma
 {

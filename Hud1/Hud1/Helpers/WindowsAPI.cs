@@ -1,7 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 using System.Runtime.Versioning;
 using System.Text;
-using System.Windows;
 
 namespace Hud1.Helpers;
 
@@ -217,6 +216,8 @@ internal static class WindowsAPI
         }
         return false;
     }
+
+    // mouse
 
     [DllImport("user32.dll")]
     internal static extern void mouse_event(int flags, int dX, int dY, int buttons, int extraInfo);
