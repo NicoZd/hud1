@@ -4,6 +4,7 @@ using Hud1.ViewModels;
 using Microsoft.Xaml.Behaviors;
 using System.Windows;
 using System.Windows.Controls;
+using Windows.System;
 
 namespace Hud1.Behaviors;
 
@@ -26,12 +27,12 @@ internal class HudKeyBehavior : Behavior<UserControl>
 
     private void OnLoaded(object sender, RoutedEventArgs e)
     {
-        GlobalKeyboardHook.KeyDown += HandleKeyDown;
+        VirtualKeyboardHook.KeyDown += HandleKeyDown;
     }
 
     private void OnUnloaded(object sender, RoutedEventArgs e)
     {
-        GlobalKeyboardHook.KeyDown -= HandleKeyDown;
+        VirtualKeyboardHook.KeyDown -= HandleKeyDown;
     }
 
     private void HandleKeyDown(KeyEvent keyEvent)
@@ -53,7 +54,7 @@ internal class HudKeyBehavior : Behavior<UserControl>
         var State = HudViewModel.Instance.State!;
 
         NavigationState.Repeat = keyEvent.repeated;
-        var isVerticalNavigation = key is GlobalKey.VK_UP or GlobalKey.VK_DOWN;
+        var isVerticalNavigation = key is VirtualKey.Up or VirtualKey.Down;
 
         if (NavigationState.Repeat && (!State.AllowRepeat || isVerticalNavigation))
         {
@@ -63,22 +64,22 @@ internal class HudKeyBehavior : Behavior<UserControl>
 
         Console.WriteLine("HudKeyBehavior Execute {0} {1} {2}", State.Name, State.AllowRepeat, keyEvent.key);
 
-        if (key == GlobalKey.VK_LEFT)
+        if (key == VirtualKey.Left)
         {
             HudViewModel.Instance.Fire(NavigationTriggers.LEFT);
         }
 
-        if (key == GlobalKey.VK_RIGHT)
+        if (key == VirtualKey.Right)
         {
             HudViewModel.Instance.Fire(NavigationTriggers.RIGHT);
         }
 
-        if (key == GlobalKey.VK_UP)
+        if (key == VirtualKey.Up)
         {
             HudViewModel.Instance.Fire(NavigationTriggers.UP);
         }
 
-        if (key == GlobalKey.VK_DOWN)
+        if (key == VirtualKey.Down)
         {
             HudViewModel.Instance.Fire(NavigationTriggers.DOWN);
         }

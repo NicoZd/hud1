@@ -28,11 +28,11 @@ public partial class CrosshairWindow : Window
     {
         var hwnd = new WindowInteropHelper(this).Handle;
 
-        var extendedStyle = WindowsAPI.GetWindowLong(hwnd, WindowsAPI.GWL_EXSTYLE);
-        WindowsAPI.SetWindowLong(hwnd, WindowsAPI.GWL_EXSTYLE,
+        var extendedStyle = WindowsAPI.GetWindowLong(hwnd, WindowConstants.GWL_EXSTYLE);
+        WindowsAPI.SetWindowLong(hwnd, WindowConstants.GWL_EXSTYLE,
             extendedStyle
-            | WindowsAPI.WS_EX_NOACTIVATE
-            | WindowsAPI.WS_EX_TRANSPARENT
+            | WindowConstants.WS_EX_NOACTIVATE
+            | WindowConstants.WS_EX_TRANSPARENT
             );
 
         NavigationStates.CROSSHAIR_ENABLED.PropertyChanged += UpdateCrosshair;

@@ -25,11 +25,11 @@ internal class SplashWindowLayoutBehavior : Behavior<Window>
         var window = AssociatedObject;
 
         var hwnd = new WindowInteropHelper(window).Handle;
-        var extendedStyle = WindowsAPI.GetWindowLong(hwnd, WindowsAPI.GWL_EXSTYLE);
-        WindowsAPI.SetWindowLong(hwnd, WindowsAPI.GWL_EXSTYLE,
+        var extendedStyle = WindowsAPI.GetWindowLong(hwnd, WindowConstants.GWL_EXSTYLE);
+        WindowsAPI.SetWindowLong(hwnd, WindowConstants.GWL_EXSTYLE,
             extendedStyle
-            | WindowsAPI.WS_EX_NOACTIVATE
-            | WindowsAPI.WS_EX_TRANSPARENT
+            | WindowConstants.WS_EX_NOACTIVATE
+            | WindowConstants.WS_EX_TRANSPARENT
             );
 
         Monitors.RegisterMonitorsChange(window, OnMonitorsChange);

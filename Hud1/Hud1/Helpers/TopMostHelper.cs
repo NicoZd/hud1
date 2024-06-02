@@ -23,7 +23,7 @@ internal class TopMostHelper
         TopWindows.ForEach(hwnd =>
         {
             //Debug.Print($"MakeTopMost {hwnd}");
-            WindowsAPI.SetWindowPos(hwnd, WindowsAPI.HWND_TOP, 0, 0, 0, 0, SetWindowPosFlags.SWP_NOMOVE | SetWindowPosFlags.SWP_NOSIZE | SetWindowPosFlags.SWP_NOACTIVATE);
+            WindowsAPI.SetWindowPos(hwnd, WindowConstants.HWND_TOP, 0, 0, 0, 0, SetWindowPosFlags.SWP_NOMOVE | SetWindowPosFlags.SWP_NOSIZE | SetWindowPosFlags.SWP_NOACTIVATE);
         });
     }
 

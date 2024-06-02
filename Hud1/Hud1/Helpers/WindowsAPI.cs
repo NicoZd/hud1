@@ -5,25 +5,53 @@ using System.Windows;
 
 namespace Hud1.Helpers;
 
-internal enum GlobalKey : int
+internal static class WindowMessage
 {
-    VK_LMENU = 0xA4,
+    internal const int WM_KEYDOWN = 0x100;
+    internal const int WM_KEYUP = 0x101;
+    internal const int WM_SYSKEYDOWN = 0x0104;
+    internal const int WM_SYSKEYUP = 0x0105;
+    internal const int WM_MOUSEMOVE = 0x200;
+    internal const int WM_LBUTTONDOWN = 0x201;
+    internal const int WM_RBUTTONDOWN = 0x204;
+    internal const int WM_MBUTTONDOWN = 0x207;
+    internal const int WM_LBUTTONUP = 0x202;
+    internal const int WM_RBUTTONUP = 0x205;
+    internal const int WM_MBUTTONUP = 0x208;
+    internal const int WM_LBUTTONDBLCLK = 0x203;
+    internal const int WM_RBUTTONDBLCLK = 0x206;
+    internal const int WM_MBUTTONDBLCLK = 0x209;
+    internal const int WM_MOUSEWHEEL = 0x020A;
+}
 
-    VK_LEFT = 0x25,
-    VK_UP = 0x26,
-    VK_RIGHT = 0x27,
-    VK_DOWN = 0x28,
+internal static class HookType
+{
+    internal const int WH_KEYBOARD_LL = 13;
+    internal const int WH_MOUSE_LL = 14;
+    internal const int WH_MOUSE = 7;
+    internal const int WH_KEYBOARD = 2;
+}
 
-    VK_F2 = 0x71,
-    VK_F3 = 0x72,
+internal static class WindowConstants
+{
+    internal const int HWND_TOP = 0;
+    internal const int HWND_BROADCAST = 0xffff;
 
-    VK_F = 0x46,
-    VK_L = 0x4C,
-    VK_S = 0x53
+    internal const int WS_EX_TRANSPARENT = 0x00000020;
+    internal const int WS_EX_TOOLWINDOW = 0x00000080;
+    internal const int WS_EX_NOACTIVATE = 0x08000000;
+    internal const int GWL_EXSTYLE = -20;
+
+    internal const int EVENT_SYSTEM_FOREGROUND = 3;
+    internal const int WINEVENT_OUTOFCONTEXT = 0;
+
+    internal const int GW_HWNDNEXT = 2;
+
+    internal const int CURSOR_SHOWING = 0x00000001;
 }
 
 [Flags]
-internal enum SetWindowPosFlags : uint
+internal enum SetWindowPosFlags : int
 {
     SWP_NOACTIVATE = 0x0010,
     SWP_NOMOVE = 0x0002,
@@ -61,29 +89,6 @@ internal struct RECT
     internal int top;
     internal int right;
     internal int bottom;
-
-    internal RECT(int left, int top, int right, int bottom)
-    {
-        this.left = left;
-        this.top = top;
-        this.right = right;
-        this.bottom = bottom;
-    }
-
-    internal RECT(Rect r)
-    {
-        left = (int)r.Left;
-        top = (int)r.Top;
-        right = (int)r.Right;
-        bottom = (int)r.Bottom;
-    }
-
-    internal static RECT FromXYWH(int x, int y, int width, int height)
-    {
-        return new RECT(x, y, x + width, y + height);
-    }
-
-    internal Size Size => new(right - left, bottom - top);
 }
 
 [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto, Pack = 4)]
@@ -106,76 +111,10 @@ internal class COMRECT
     internal int left;
     internal int right;
     internal int top;
-
-    internal COMRECT()
-    {
-    }
-
-    internal COMRECT(Rect r)
-    {
-        left = (int)r.X;
-        top = (int)r.Y;
-        right = (int)r.Right;
-        bottom = (int)r.Bottom;
-    }
-
-    internal COMRECT(int left, int top, int right, int bottom)
-    {
-        this.left = left;
-        this.top = top;
-        this.right = right;
-        this.bottom = bottom;
-    }
-
-    internal static COMRECT FromXYWH(int x, int y, int width, int height)
-    {
-        return new COMRECT(x, y, x + width, y + height);
-    }
-
-    public override string ToString()
-    {
-        return "Left = " + left + " Top " + top + " Right = " + right + " Bottom = " + bottom;
-    }
 }
 
 internal static class WindowsAPI
 {
-    internal static readonly nint HWND_TOP = new(0);
-    internal static uint GW_HWNDNEXT = 2;
-
-    internal const int WH_KEYBOARD_LL = 13;
-    internal const int WH_MOUSE_LL = 14;
-
-    internal const int WM_KEYDOWN = 0x100;
-    internal const int WM_KEYUP = 0x101;
-    internal const int WM_SYSKEYDOWN = 0x0104;
-    internal const int WM_SYSKEYUP = 0x0105;
-
-    internal const int WH_MOUSE = 7;
-    internal const int WH_KEYBOARD = 2;
-    internal const int WM_MOUSEMOVE = 0x200;
-    internal const int WM_LBUTTONDOWN = 0x201;
-    internal const int WM_RBUTTONDOWN = 0x204;
-    internal const int WM_MBUTTONDOWN = 0x207;
-    internal const int WM_LBUTTONUP = 0x202;
-    internal const int WM_RBUTTONUP = 0x205;
-    internal const int WM_MBUTTONUP = 0x208;
-    internal const int WM_LBUTTONDBLCLK = 0x203;
-    internal const int WM_RBUTTONDBLCLK = 0x206;
-    internal const int WM_MBUTTONDBLCLK = 0x209;
-    internal const int WM_MOUSEWHEEL = 0x020A;
-
-    internal const int WS_EX_TRANSPARENT = 0x00000020;
-    internal const int WS_EX_TOOLWINDOW = 0x00000080;
-    internal const int WS_EX_NOACTIVATE = 0x08000000;
-    internal const int GWL_EXSTYLE = -20;
-
-    internal const uint EVENT_SYSTEM_FOREGROUND = 3;
-    internal const int WINEVENT_OUTOFCONTEXT = 0;
-
-    internal const int HWND_BROADCAST = 0xffff;
-    internal const int CURSOR_SHOWING = 0x00000001;
-
     // Hooks
 
     internal delegate IntPtr HookProc(int nCode, IntPtr wParam, IntPtr lParam);

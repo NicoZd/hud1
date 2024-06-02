@@ -2,6 +2,7 @@
 using Hud1.ViewModels;
 using Microsoft.Xaml.Behaviors;
 using System.Windows;
+using Windows.System;
 
 namespace Hud1.Behaviors;
 
@@ -26,12 +27,12 @@ internal class MainWindowActivationBehavior : Behavior<Window>
 
     private void OnLoaded(object sender, RoutedEventArgs e)
     {
-        GlobalKeyboardHook.KeyDown += HandleKeyDown;
+        VirtualKeyboardHook.KeyDown += HandleKeyDown;
     }
 
     private void OnUnloaded(object sender, RoutedEventArgs e)
     {
-        GlobalKeyboardHook.KeyDown -= HandleKeyDown;
+        VirtualKeyboardHook.KeyDown -= HandleKeyDown;
     }
 
     private void HandleKeyDown(KeyEvent keyEvent)
@@ -42,7 +43,7 @@ internal class MainWindowActivationBehavior : Behavior<Window>
         {
             if (keyEvent.alt)
             {
-                if (keyEvent.key is GlobalKey.VK_S or GlobalKey.VK_F or GlobalKey.VK_L)
+                if (keyEvent.key is VirtualKey.S or VirtualKey.F or VirtualKey.L)
                 {
                     HandleKeyActivator();
                     keyEvent.block = true;
@@ -50,7 +51,7 @@ internal class MainWindowActivationBehavior : Behavior<Window>
             }
             else
             {
-                if (keyEvent.key == GlobalKey.VK_F2)
+                if (keyEvent.key == VirtualKey.F2)
                 {
                     HandleKeyActivator();
                     keyEvent.block = true;

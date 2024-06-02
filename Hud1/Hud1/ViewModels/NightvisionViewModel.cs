@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Hud1.Helpers;
 using Hud1.Models;
+using Windows.System;
 
 namespace Hud1.ViewModels;
 
@@ -20,12 +21,12 @@ internal partial class NightvisionViewModel : ObservableObject
 
         NavigationStates.NIGHTVISION_ENABLED.SelectionBoolean = false;
 
-        GlobalKeyboardHook.KeyDown += HandleKeyDown;
+        VirtualKeyboardHook.KeyDown += HandleKeyDown;
     }
 
     private void HandleKeyDown(KeyEvent keyEvent)
     {
-        if (!keyEvent.alt && keyEvent.key == GlobalKey.VK_F3)
+        if (!keyEvent.alt && keyEvent.key == VirtualKey.F3)
         {
             keyEvent.block = true;
             EnableNightVision(

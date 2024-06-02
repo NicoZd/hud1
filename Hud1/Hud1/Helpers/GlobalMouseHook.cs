@@ -13,7 +13,7 @@ internal static class GlobalMouseHook
     {
         using var curProcess = Process.GetCurrentProcess();
         using var curModule = curProcess.MainModule!;
-        HookID = WindowsAPI.SetWindowsHookEx(WindowsAPI.WH_MOUSE_LL, HookCallback, WindowsAPI.GetModuleHandle(curModule.ModuleName), 0);
+        HookID = WindowsAPI.SetWindowsHookEx(HookType.WH_MOUSE_LL, HookCallback, WindowsAPI.GetModuleHandle(curModule.ModuleName), 0);
     }
 
     internal static void SystemUnhook()
@@ -27,7 +27,7 @@ internal static class GlobalMouseHook
         {
             switch (wParam)
             {
-                case WindowsAPI.WM_LBUTTONDOWN:
+                case WindowMessage.WM_LBUTTONDOWN:
                     {
                         MouseDown?.Invoke();
                         break;

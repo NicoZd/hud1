@@ -25,12 +25,12 @@ internal class SystemHooksBehavior : Behavior<Window>
     private void OnLoaded(object sender, RoutedEventArgs e)
     {
         GlobalMouseHook.SystemHook();
-        GlobalKeyboardHook.SystemHook();
+        VirtualKeyboardHook.SystemHook();
     }
 
     private void OnUnloaded(object sender, RoutedEventArgs e)
     {
         GlobalMouseHook.SystemUnhook();
-        GlobalKeyboardHook.SystemUnhook();
+        VirtualKeyboardHook.SystemUnhook();
     }
 }

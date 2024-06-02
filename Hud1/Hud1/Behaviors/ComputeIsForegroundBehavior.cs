@@ -33,7 +33,7 @@ internal class ComputeIsForegroundBehavior : Behavior<Window>
     private void OnLoaded(object sender, RoutedEventArgs e)
     {
         hwnd = new WindowInteropHelper(AssociatedObject).Handle;
-        WindowsAPI.SetWinEventHook(WindowsAPI.EVENT_SYSTEM_FOREGROUND, WindowsAPI.EVENT_SYSTEM_FOREGROUND, IntPtr.Zero, winEventDelegate, 0, 0, WindowsAPI.WINEVENT_OUTOFCONTEXT);
+        WindowsAPI.SetWinEventHook(WindowConstants.EVENT_SYSTEM_FOREGROUND, WindowConstants.EVENT_SYSTEM_FOREGROUND, IntPtr.Zero, winEventDelegate, 0, 0, WindowConstants.WINEVENT_OUTOFCONTEXT);
 
         var dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
         dispatcherTimer.Tick += new EventHandler((_, _) =>

@@ -38,15 +38,15 @@ internal class MainWindowTouchModeBehavior : Behavior<Window>
     {
         var hwnd = new WindowInteropHelper(AssociatedObject).Handle;
 
-        var extendedStyle = WindowsAPI.GetWindowLong(hwnd, WindowsAPI.GWL_EXSTYLE);
+        var extendedStyle = WindowsAPI.GetWindowLong(hwnd, WindowConstants.GWL_EXSTYLE);
 
         var newStyle = NavigationStates.TOUCH_MODE.SelectionBoolean ?
-            extendedStyle | WindowsAPI.WS_EX_NOACTIVATE :
-            extendedStyle & ~WindowsAPI.WS_EX_NOACTIVATE;
+            extendedStyle | WindowConstants.WS_EX_NOACTIVATE :
+            extendedStyle & ~WindowConstants.WS_EX_NOACTIVATE;
 
         // Debug.Print("UpdateTouchMode {0} {1} {2}", NavigationStates.TOUCH_MODE.SelectionBoolean, extendedStyle, newStyle);
 
-        WindowsAPI.SetWindowLong(hwnd, WindowsAPI.GWL_EXSTYLE, newStyle);
+        WindowsAPI.SetWindowLong(hwnd, WindowConstants.GWL_EXSTYLE, newStyle);
 
         if (!NavigationStates.TOUCH_MODE.SelectionBoolean)
         {
