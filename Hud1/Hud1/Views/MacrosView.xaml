@@ -52,7 +52,7 @@
                                             </Style>
                                         </Grid.Style>
                                         <TextBlock
-                                            FontFamily="{DynamicResource FontFamily}"
+                                            Style="{DynamicResource DefaultTextBlockFonts}"
                                             Foreground="{DynamicResource BrushInfo}"
                                             TextWrapping="Wrap"
                                             FontSize="12"
@@ -75,7 +75,7 @@
                                             </Style>
                                         </Grid.Style>
                                         <TextBlock 
-                                            FontFamily="{DynamicResource FontFamily}"
+                                            Style="{DynamicResource DefaultTextBlockFonts}"
                                             Foreground="{DynamicResource BrushSolidSuperBright}"
                                             TextWrapping="Wrap"
                                             FontSize="12"

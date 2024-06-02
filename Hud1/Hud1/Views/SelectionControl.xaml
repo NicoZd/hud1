@@ -45,16 +45,15 @@
                                 </Setter>
                             </Style>
                         </Grid.Style>
-                        <TextBlock 
+                        <TextBlock
                             MaxWidth="250"
                             TextTrimming="CharacterEllipsis"
-                            FontFamily="{DynamicResource FontFamily}"
                             FontSize="12" 
                             VerticalAlignment="Center"
                             TextAlignment="Center"
                             Text="{Binding Path=SelectionLabel}">
                             <TextBlock.Style>
-                                <Style TargetType="TextBlock">
+                                <Style TargetType="TextBlock" BasedOn="{StaticResource DefaultTextBlockFonts}">
                                     <Setter Property="Visibility" Value="Hidden"/>
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding Path=Selected}" Value="False">

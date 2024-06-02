@@ -86,13 +86,13 @@
                 >
                 <controls:IgnoreWidthControl Margin="0" Focusable="False">
                     <TextBlock   
+                        Style="{DynamicResource DefaultTextBlockFonts}"
                         Focusable="false"
                         Margin="5,3,5,2"
                         Padding="0"
                         VerticalAlignment="Top"
                         Height="33"
-                        TextWrapping="Wrap"
-                        FontFamily="{DynamicResource FontFamily}"
+                        TextWrapping="Wrap"                        
                         Foreground="{DynamicResource BrushInfoSecondary}" 
                         FontSize="12"
                         Text="{Binding State.Hint}"
@@ -162,13 +162,12 @@
                     <Label Content="Quickhelp" Style="{DynamicResource TitleContent}"/>
                     <controls:IgnoreWidthControl Margin="0"  Focusable="False">
                         <TextBlock   
-                            Focusable="false"
+                            Style="{DynamicResource DefaultTextBlockFonts}"
                             Margin="5,4,5,0"
                             Padding="0"
                             VerticalAlignment="Top"
                             HorizontalAlignment="Left"
                             TextWrapping="Wrap"
-                            FontFamily="{DynamicResource FontFamily}"
                             Foreground="{DynamicResource BrushInfoSecondary}" 
                             FontSize="12"
                             >
@@ -177,7 +176,6 @@
                             • Use cursor keys, mouse or touch to navigate and select.
                         </TextBlock>
                     </controls:IgnoreWidthControl>
-
                 </StackPanel>
             </views:ScrollPanel>
 

@@ -3,7 +3,16 @@
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <Style TargetType="{x:Type Label}" x:Key="DefaultFonts">
+    <Style TargetType="{x:Type Label}" x:Key="DefaultLabelFonts">
+        <Setter Property="FontFamily" Value="{DynamicResource FontFamily}"/>
+        <Setter Property="FontStyle" Value="{DynamicResource FontStyle}"/>
+        <Setter Property="FontWeight" Value="{DynamicResource FontWeight}"/>
+        <Setter Property="FontStretch" Value="{DynamicResource FontStretch}"/>
+
+        <Setter Property="Focusable" Value="False"/>
+    </Style>
+
+    <Style TargetType="{x:Type TextBlock}" x:Key="DefaultTextBlockFonts">
         <Setter Property="FontFamily" Value="{DynamicResource FontFamily}"/>
         <Setter Property="FontStyle" Value="{DynamicResource FontStyle}"/>
         <Setter Property="FontWeight" Value="{DynamicResource FontWeight}"/>
@@ -13,21 +22,21 @@
     </Style>
 
     <!-- Title -->
-    <Style TargetType="{x:Type Label}" x:Key="TitleLabel" BasedOn="{StaticResource DefaultFonts}">
+    <Style TargetType="{x:Type Label}" x:Key="TitleLabel" BasedOn="{StaticResource DefaultLabelFonts}">
         <Setter Property="Foreground" Value="{DynamicResource BrushTitle}"/>
         <Setter Property="FontSize" Value="22"/>
         <Setter Property="Padding" Value="0,10,0,10"/>
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
     </Style>
 
-    <Style TargetType="{x:Type Label}" x:Key="TitleContent" BasedOn="{StaticResource DefaultFonts}">
+    <Style TargetType="{x:Type Label}" x:Key="TitleContent" BasedOn="{StaticResource DefaultLabelFonts}">
         <Setter Property="Foreground" Value="{DynamicResource BrushTitle}"/>
         <Setter Property="FontSize" Value="18"/>
         <Setter Property="Padding" Value="0,20,0,0"/>
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
     </Style>
 
-    <Style TargetType="{x:Type Label}" x:Key="PanelTitleContent" BasedOn="{StaticResource DefaultFonts}">
+    <Style TargetType="{x:Type Label}" x:Key="PanelTitleContent" BasedOn="{StaticResource DefaultLabelFonts}">
         <Setter Property="Foreground" Value="{DynamicResource BrushTitle}"/>
         <Setter Property="Height" Value="28"/>
         <Setter Property="FontSize" Value="12"/>
@@ -37,7 +46,7 @@
     </Style>
 
     <!-- Button -->
-    <Style TargetType="{x:Type Label}" x:Key="ButtonLabel" BasedOn="{StaticResource DefaultFonts}">
+    <Style TargetType="{x:Type Label}" x:Key="ButtonLabel" BasedOn="{StaticResource DefaultLabelFonts}">
         <Setter Property="Foreground" Value="{DynamicResource BrushLabel}"/>
         <Setter Property="FontSize" Value="12"/>
         <Setter Property="Padding" Value="15,4,15,4"/>
@@ -45,7 +54,7 @@
     </Style>
 
     <!-- Info -->
-    <Style TargetType="{x:Type Label}" x:Key="InfoLabel" BasedOn="{StaticResource DefaultFonts}">
+    <Style TargetType="{x:Type Label}" x:Key="InfoLabel" BasedOn="{StaticResource DefaultLabelFonts}">
         <Setter Property="Foreground" Value="{DynamicResource BrushInfo}"/>
         <Setter Property="FontSize" Value="12"/>
         <Setter Property="Padding" Value="0,0,0,0"/>
@@ -53,7 +62,7 @@
     </Style>
 
     <!-- Info -->
-    <Style TargetType="{x:Type Label}" x:Key="InfoLabelSecondary" BasedOn="{StaticResource DefaultFonts}">
+    <Style TargetType="{x:Type Label}" x:Key="InfoLabelSecondary" BasedOn="{StaticResource DefaultLabelFonts}">
         <Setter Property="Foreground" Value="{DynamicResource BrushInfoSecondary}"/>
         <Setter Property="FontSize" Value="12"/>
         <Setter Property="Padding" Value="0,0,0,0"/>
