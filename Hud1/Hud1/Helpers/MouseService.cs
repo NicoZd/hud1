@@ -14,14 +14,11 @@ internal class MouseService
         Middle = 0x20
     }
 
-    [DllImport("user32.dll")]
-    private static extern void mouse_event(int flags, int dX, int dY, int buttons, int extraInfo);
-
     internal static void MouseDown(MouseButton button)
     {
         Console.WriteLine("MouseDown1");
         IgnoreNextEvent = true;
-        mouse_event((int)button, 0, 0, 0, 0);
+        WindowsAPI.mouse_event((int)button, 0, 0, 0, 0);
 
         ThreadPool.QueueUserWorkItem((_) =>
         {
@@ -38,7 +35,7 @@ internal class MouseService
     {
         Console.WriteLine("MouseUp1");
         IgnoreNextEvent = true;
-        mouse_event(((int)button) * 2, 0, 0, 0, 0);
+        WindowsAPI.mouse_event(((int)button) * 2, 0, 0, 0, 0);
 
         ThreadPool.QueueUserWorkItem((_) =>
         {

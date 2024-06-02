@@ -4,16 +4,6 @@ namespace Hud1.Helpers;
 
 internal static class Gamma
 {
-    [DllImport("gdi32.dll")]
-    private static extern unsafe bool SetDeviceGammaRamp(int hdc, void* ramp);
-
-    [DllImport("gdi32.dll")]
-    internal static extern IntPtr CreateDC(string lpszDriver, string? lpszDevice, string? lpszOutput, IntPtr lpInitData);
-
-    [DllImport("gdi32.dll", SetLastError = true)]
-    [return: MarshalAs(UnmanagedType.Bool)]
-    internal static extern bool DeleteDC(IntPtr hdc);
-
     internal static unsafe bool SetGamma(double gamma)
     {
         var gArray = stackalloc short[3 * 256];
@@ -23,7 +13,7 @@ internal static class Gamma
         {
             Console.WriteLine("Set Gamma for DeviceName {0}", monitor.DeviceName);
 
-            var hdc = CreateDC(monitor.DeviceName, null, null, IntPtr.Zero).ToInt32();
+            var hdc = WindowsAPI.CreateDC(monitor.DeviceName, null, null, IntPtr.Zero).ToInt32();
 
             var idx = gArray;
             double offset = 0;
@@ -48,8 +38,8 @@ internal static class Gamma
                 }
             }
 
-            var retVal = SetDeviceGammaRamp(hdc, gArray);
-            DeleteDC(hdc);
+            var retVal = WindowsAPI.SetDeviceGammaRamp(hdc, gArray);
+            WindowsAPI.DeleteDC(hdc);
         }
 
         return true;

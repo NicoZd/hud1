@@ -36,10 +36,10 @@ internal class Monitor
 
     internal Monitor(nint monitor, nint hdc)
     {
-        WindowsAPI.GetDpiForMonitor(monitor, WindowsAPI.DpiType.EFFECTIVE, out var dpiX, out _);
+        WindowsAPI.GetDpiForMonitor(monitor, DpiType.EFFECTIVE, out var dpiX, out _);
         ScaleFactor = dpiX / 96.0;
 
-        var info = new WindowsAPI.MONITORINFOEX();
+        var info = new MONITORINFOEX();
         WindowsAPI.GetMonitorInfo(new HandleRef(null, monitor), info);
         Bounds = new Rect(
             info.rcMonitor.left,
