@@ -64,20 +64,15 @@ internal partial class Macro : ObservableObject
 
     private void FetchProgramMetaData()
     {
-        try
+        ThreadPool.QueueUserWorkItem((_) =>
         {
-            var script = new MacroScript(this);
-            Label = (string)script.GetGlobal("Label");
-            Description = (string)script.GetGlobal("Description");
-        }
-        catch (InterpreterException ex)
-        {
-            Error = ex.DecoratedMessage;
-        }
-        catch (Exception ex)
-        {
-            Error = ex.Message;
-        }
+            RunScript(() =>
+            {
+                var script = new MacroScript(this);
+                Label = (string)script.GetGlobal("Label");
+                Description = (string)script.GetGlobal("Description");
+            });
+        });
     }
 
     internal void OnLeft()
@@ -87,10 +82,9 @@ internal partial class Macro : ObservableObject
     internal void OnRight()
     {
         Console.WriteLine("OnRight");
-        if (Running && macroScript != null)
+        if (Running)
         {
-            RightLabel = "Stopping";
-            macroScript.SetGlobal("Running", false);
+            Stop();
             return;
         }
 
@@ -100,25 +94,48 @@ internal partial class Macro : ObservableObject
 
         ThreadPool.QueueUserWorkItem((_) =>
         {
-            try
+            RunScript(() =>
             {
                 macroScript = new MacroScript(this);
                 using var hooks = new ScriptHooks(macroScript);
                 macroScript.Run();
-            }
-            catch (InterpreterException ex)
-            {
-                Console.WriteLine("ERROR {0}", ex.DecoratedMessage);
+            });
 
-                Error = ex.DecoratedMessage ?? "ERROR: " + ex.Message;
-            }
-            catch (Exception ex)
-            {
-                Error = ex.Message;
-            }
             Running = false;
             RightLabel = "Start >";
         });
+    }
+
+    private void RunScript(Action scriptAction)
+    {
+        try
+        {
+            scriptAction();
+        }
+        catch (TooManyInstructions ex)
+        {
+            Console.WriteLine("ERROR {0}", ex.Message);
+            Error = "Script aborted after waiting 3 seconds to finish by itself.";
+        }
+        catch (InterpreterException ex)
+        {
+            Console.WriteLine("ERROR {0}", ex.DecoratedMessage);
+
+            Error = ex.DecoratedMessage ?? "ERROR: " + ex.Message;
+        }
+        catch (Exception ex)
+        {
+            Error = ex.Message;
+        }
+    }
+
+    internal void Stop()
+    {
+        RightLabel = "Stopping";
+        if (macroScript != null)
+        {
+            macroScript.Stop();
+        }
     }
 
     internal class ScriptHooks : IDisposable

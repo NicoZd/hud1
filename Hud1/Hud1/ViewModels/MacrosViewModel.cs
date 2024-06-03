@@ -87,7 +87,9 @@ internal partial class MacrosViewModel : ObservableObject
     {
         Console.WriteLine("MacrosViewModel UpdateFiles");
         foreach (var macro in Macros)
-            macro.Running = false;
+        {
+            macro.Stop();
+        }
 
         var fileEntries = Directory.GetFiles(macrosPath, "*.lua");
         var temp = new ObservableCollection<Macro>();
