@@ -1,10 +1,5 @@
 using Hud1;
-using System.Diagnostics;
-using System.Reflection;
-using System.Text;
-using System.Windows;
 using Tests.Helpers;
-using Xunit;
 using Xunit.Abstractions;
 
 namespace Tests;

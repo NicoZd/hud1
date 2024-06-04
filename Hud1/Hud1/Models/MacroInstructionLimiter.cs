@@ -1,10 +1,5 @@
 ﻿using MoonSharp.Interpreter;
 using MoonSharp.Interpreter.Debugging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Hud1.Models;
 
@@ -20,7 +15,7 @@ internal class MacroInstructionLimiter : IDebugger
 {
     internal bool Abort = false;
 
-    internal DebuggerAction stepIn = new DebuggerAction()
+    internal DebuggerAction stepIn = new()
     {
         Action = DebuggerAction.ActionType.StepIn
     };
@@ -45,11 +40,7 @@ internal class MacroInstructionLimiter : IDebugger
 
     public DebuggerAction GetAction(int ip, SourceRef sourceref)
     {
-        if (Abort)
-        {
-            throw new TooManyInstructions();
-        }
-        return stepIn;
+        return Abort ? throw new TooManyInstructions() : stepIn;
     }
 
     public void SignalExecutionEnded()

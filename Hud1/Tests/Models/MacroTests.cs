@@ -1,13 +1,6 @@
 using Hud1.Models;
 using Hud1.ViewModels;
-using Hud1.Views;
-using Hud1.Windows;
-using System.Diagnostics;
-using System.Reflection;
-using System.Text;
-using System.Windows;
 using Tests.Helpers;
-using Xunit;
 using Xunit.Abstractions;
 
 namespace Tests.Models;
@@ -23,12 +16,12 @@ public class MacroTests
     [WpfFact]
     public async Task Macro_Loading()
     {
-        var luaFile = TempFile.CreateTempFile(@"
+        string luaFile = TempFile.CreateTempFile(@"
             Label = ""Foo""
             Description = ""Bar""
         ");
 
-        var macro = new Macro(luaFile, MacrosViewModel.Instance);
+        Macro macro = new(luaFile, MacrosViewModel.Instance);
         await Task.Delay(100);
 
         Assert.Equal("Foo", macro.Label);
@@ -38,9 +31,9 @@ public class MacroTests
     [WpfFact]
     public async Task Macro_EmptyLifecycle()
     {
-        var luaFile = TempFile.CreateTempFile(@"");
+        string luaFile = TempFile.CreateTempFile(@"");
 
-        var macro = new Macro(luaFile, MacrosViewModel.Instance);
+        Macro macro = new(luaFile, MacrosViewModel.Instance);
         Assert.Equal(1, macro.ThreadsRunning);
         Assert.False(macro.Running);
 
@@ -64,9 +57,9 @@ public class MacroTests
     [WpfFact]
     public async Task Macro_EmptyLifecycleShort()
     {
-        var luaFile = TempFile.CreateTempFile(@"");
+        string luaFile = TempFile.CreateTempFile(@"");
 
-        var macro = new Macro(luaFile, MacrosViewModel.Instance);
+        Macro macro = new(luaFile, MacrosViewModel.Instance);
         Assert.False(macro.Running);
 
         macro.OnRight();
@@ -82,14 +75,14 @@ public class MacroTests
     [WpfFact]
     public async Task Macro_RunAbort()
     {
-        var luaFile = TempFile.CreateTempFile(@"
+        string luaFile = TempFile.CreateTempFile(@"
             function Run()	
 	            while true do
 	            end
             end
         ");
 
-        var macro = new Macro(luaFile, MacrosViewModel.Instance);
+        Macro macro = new(luaFile, MacrosViewModel.Instance);
         Assert.False(macro.Running, "Before Start");
 
         macro.OnRight();
@@ -109,12 +102,12 @@ public class MacroTests
     [WpfFact]
     public async Task Macro_InitAbort()
     {
-        var luaFile = TempFile.CreateTempFile(@"
+        string luaFile = TempFile.CreateTempFile(@"
 	        while true do
 	        end
         ");
 
-        var macro = new Macro(luaFile, MacrosViewModel.Instance);
+        Macro macro = new(luaFile, MacrosViewModel.Instance);
 
         await Task.Delay(100);
         Assert.Equal(1, macro.ThreadsRunning);

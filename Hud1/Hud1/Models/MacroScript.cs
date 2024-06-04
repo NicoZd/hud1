@@ -1,7 +1,5 @@
 ﻿using Hud1.Helpers;
 using MoonSharp.Interpreter;
-using MoonSharp.Interpreter.Debugging;
-using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Threading;
@@ -22,7 +20,7 @@ internal class MacroScript
     {
         this.macro = macro;
 
-        this.debugger = new MacroInstructionLimiter();
+        debugger = new MacroInstructionLimiter();
         script = new Script(CoreModules.None | CoreModules.GlobalConsts);
 
         script.AttachDebugger(debugger);
@@ -109,7 +107,7 @@ internal class MacroScript
 
     internal void ApplyFile()
     {
-        var scriptCode = File.ReadAllText(this.macro.Path);
+        var scriptCode = File.ReadAllText(macro.Path);
         script.DoString(scriptCode);
     }
 

@@ -52,11 +52,11 @@ public partial class Macro : ObservableObject
     [ObservableProperty]
     private string _path = "";
 
-    public int ThreadsRunning { get { return ThreadPool.ThreadsRunning; } }
+    public int ThreadsRunning => ThreadPool.ThreadsRunning;
 
     private MacroScript macroScript;
     private readonly MacrosViewModel macros;
-    private MacroThreadPool ThreadPool = new();
+    private readonly MacroThreadPool ThreadPool = new();
 
     public Macro(string path, MacrosViewModel macros)
     {
@@ -161,10 +161,7 @@ public partial class Macro : ObservableObject
     public void Stop()
     {
         RightLabel = "Stopping";
-        if (macroScript != null)
-        {
-            macroScript.Stop();
-        }
+        macroScript?.Stop();
     }
 
     internal class ScriptHooks : IDisposable
