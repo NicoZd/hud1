@@ -103,6 +103,10 @@ public class Setup
             nameof(UserConfig.Current.GammaIndex));
 
         // Chrosshair
+        NavigationStates.CROSSHAIR_ENABLED.PropertyChanged += OnConfigChanged(
+            nameof(NavigationStates.CROSSHAIR_ENABLED.SelectionBoolean),
+            nameof(UserConfig.Current.CrosshairEnabled));
+
         NavigationStates.CROSSHAIR_DISPLAY.PropertyChanged += OnConfigChanged(
             nameof(NavigationStates.CROSSHAIR_DISPLAY.SelectionLabel),
             nameof(UserConfig.Current.CrosshairDisplay));
@@ -130,6 +134,7 @@ public class Setup
         return (sender, e) =>
         {
             if (propertyName == e.PropertyName)
+            {
                 ThreadPool.QueueUserWorkItem((_) =>
                 {
                     try
@@ -155,6 +160,7 @@ public class Setup
                         Console.WriteLine(ex.ToString());
                     }
                 });
+            }
         };
     }
 

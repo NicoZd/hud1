@@ -28,6 +28,7 @@ public partial class CrosshairViewModel : ObservableObject
 
         var Configure = HudViewModel.Instance.Configure;
 
+        NavigationStates.CROSSHAIR_ENABLED.SelectionBoolean = UserConfig.Current.CrosshairEnabled;
         NavigationStates.CROSSHAIR_ENABLED.LeftAction = NavigationStates.CROSSHAIR_ENABLED.BooleanLeft;
         NavigationStates.CROSSHAIR_ENABLED.RightAction = NavigationStates.CROSSHAIR_ENABLED.BooleanRight;
         Configure(NavigationStates.CROSSHAIR_ENABLED)
@@ -151,7 +152,7 @@ public partial class CrosshairViewModel : ObservableObject
 
     internal void Redraw()
     {
-        // Debug.Print("Enabled {0}", NavigationStates.CROSSHAIR_ENABLED.SelectionBoolean);
+        Debug.Print("Enabled {0}", NavigationStates.CROSSHAIR_ENABLED.SelectionBoolean);
         // Debug.Print("Form {0}", NavigationStates.CROSSHAIR_FORM.SelectionLabel);
         // Debug.Print("Size {0}", NavigationStates.CROSSHAIR_SIZE.SelectionLabel);
         // Debug.Print("Color {0}", NavigationStates.CROSSHAIR_COLOR.SelectionLabel);
@@ -174,6 +175,7 @@ public partial class CrosshairViewModel : ObservableObject
 
         DPIAwareImage image = new()
         {
+            Visibility = NavigationStates.CROSSHAIR_ENABLED.SelectionBoolean ? Visibility.Visible : Visibility.Hidden,
             Source = drawingImage,
             Stretch = Stretch.None,
         };
