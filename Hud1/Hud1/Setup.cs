@@ -111,6 +111,26 @@ public class Setup
             nameof(NavigationStates.CROSSHAIR_DISPLAY.SelectionLabel),
             nameof(UserConfig.Current.CrosshairDisplay));
 
+        NavigationStates.CROSSHAIR_FORM.PropertyChanged += OnConfigChanged(
+            nameof(NavigationStates.CROSSHAIR_FORM.SelectionLabel),
+            nameof(UserConfig.Current.CrosshairForm));
+
+        NavigationStates.CROSSHAIR_COLOR.PropertyChanged += OnConfigChanged(
+            nameof(NavigationStates.CROSSHAIR_COLOR.SelectionLabel),
+            nameof(UserConfig.Current.CrosshairColor));
+
+        NavigationStates.CROSSHAIR_OPACITY.PropertyChanged += OnConfigChanged(
+            nameof(NavigationStates.CROSSHAIR_OPACITY.SelectionLabel),
+            nameof(UserConfig.Current.CrosshairOpacity));
+
+        NavigationStates.CROSSHAIR_SIZE.PropertyChanged += OnConfigChanged(
+            nameof(NavigationStates.CROSSHAIR_SIZE.SelectionLabel),
+            nameof(UserConfig.Current.CrosshairSize));
+
+        NavigationStates.CROSSHAIR_OUTLINE.PropertyChanged += OnConfigChanged(
+            nameof(NavigationStates.CROSSHAIR_OUTLINE.SelectionBoolean),
+            nameof(UserConfig.Current.CrosshairOutline));
+
         // More
         NavigationStates.TOUCH_MODE.PropertyChanged += OnConfigChanged(
             nameof(NavigationStates.TOUCH_MODE.SelectionBoolean),

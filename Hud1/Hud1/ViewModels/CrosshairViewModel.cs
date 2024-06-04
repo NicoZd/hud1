@@ -43,7 +43,7 @@ public partial class CrosshairViewModel : ObservableObject
            .InternalTransition(NavigationTriggers.LEFT, NavigationStates.CROSSHAIR_DISPLAY.ExecuteLeft)
            .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.CROSSHAIR_DISPLAY.ExecuteRight);
 
-        NavigationStates.CROSSHAIR_FORM.SelectionLabel = "Cross";
+        NavigationStates.CROSSHAIR_FORM.SelectionLabel = UserConfig.Current.CrosshairForm;
         NavigationStates.CROSSHAIR_FORM.Options = [new Option("Dot"), new Option("Ring"), new Option("Cross"), new Option("Diagonal"), new Option("3 Dots")];
         NavigationStates.CROSSHAIR_FORM.SelectOption();
         NavigationStates.CROSSHAIR_FORM.LeftAction = NavigationStates.CROSSHAIR_FORM.OptionLeft;
@@ -60,7 +60,7 @@ public partial class CrosshairViewModel : ObservableObject
             { "3 Dots", CrosshairForms.ThreeDots },
         };
 
-        NavigationStates.CROSSHAIR_COLOR.SelectionLabel = "#FFFFFF";
+        NavigationStates.CROSSHAIR_COLOR.SelectionLabel = UserConfig.Current.CrosshairColor;
         NavigationStates.CROSSHAIR_COLOR.Spacing = 0;
         NavigationStates.CROSSHAIR_COLOR.Options = [
 
@@ -92,14 +92,14 @@ public partial class CrosshairViewModel : ObservableObject
             ColorOptions.Add(option.Value, (SolidColorBrush)new BrushConverter().ConvertFromString(option.Value)!);
         }
 
-        NavigationStates.CROSSHAIR_OPACITY.SelectionLabel = "1";
+        NavigationStates.CROSSHAIR_OPACITY.SelectionLabel = UserConfig.Current.CrosshairOpacity;
         NavigationStates.CROSSHAIR_OPACITY.LeftAction = ChangeOpacity(-0.1);
         NavigationStates.CROSSHAIR_OPACITY.RightAction = ChangeOpacity(0.1);
         Configure(NavigationStates.CROSSHAIR_OPACITY)
            .InternalTransition(NavigationTriggers.LEFT, NavigationStates.CROSSHAIR_OPACITY.ExecuteLeft)
            .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.CROSSHAIR_OPACITY.ExecuteRight);
 
-        NavigationStates.CROSSHAIR_SIZE.SelectionLabel = "3";
+        NavigationStates.CROSSHAIR_SIZE.SelectionLabel = UserConfig.Current.CrosshairSize;
         NavigationStates.CROSSHAIR_SIZE.Options = [new Option("1"), new Option("2"), new Option("3"), new Option("4"), new Option("5")];
         NavigationStates.CROSSHAIR_SIZE.SelectOption();
         NavigationStates.CROSSHAIR_SIZE.LeftAction = NavigationStates.CROSSHAIR_SIZE.OptionLeft;
@@ -108,7 +108,7 @@ public partial class CrosshairViewModel : ObservableObject
            .InternalTransition(NavigationTriggers.LEFT, NavigationStates.CROSSHAIR_SIZE.ExecuteLeft)
            .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.CROSSHAIR_SIZE.ExecuteRight);
 
-        NavigationStates.CROSSHAIR_OUTLINE.SelectionBoolean = true;
+        NavigationStates.CROSSHAIR_OUTLINE.SelectionBoolean = UserConfig.Current.CrosshairOutline;
         NavigationStates.CROSSHAIR_OUTLINE.LeftAction = NavigationStates.CROSSHAIR_OUTLINE.BooleanLeft;
         NavigationStates.CROSSHAIR_OUTLINE.RightAction = NavigationStates.CROSSHAIR_OUTLINE.BooleanRight;
         Configure(NavigationStates.CROSSHAIR_OUTLINE)

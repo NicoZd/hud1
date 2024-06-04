@@ -12,6 +12,16 @@ public class UserConfig
 
     public bool CrosshairEnabled { get; set; } = true;
 
+    public string CrosshairForm { get; set; } = "Cross";
+
+    public string CrosshairColor { get; set; } = "#FFFFFF";
+
+    public string CrosshairOpacity { get; set; } = "1";
+
+    public string CrosshairSize { get; set; } = "3";
+
+    public bool CrosshairOutline { get; set; } = true;
+
     // More
     public string HudPosition { get; set; } = "1:Left";
 
