@@ -3,12 +3,7 @@ using MoonSharp.Interpreter.Debugging;
 
 namespace Hud1.Models;
 
-internal class TooManyInstructions : Exception
-{
-    internal TooManyInstructions()
-    {
-    }
-}
+internal class TooManyInstructions : Exception { }
 
 
 internal class MacroInstructionLimiter : IDebugger
