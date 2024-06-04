@@ -15,9 +15,6 @@ internal class AppStyle
         return;
 #endif
 
-        // for testing
-        if (Application.Current == null) return;
-
         // font iterator
         var fontsFolder = Path.Combine(Path.Combine(Setup.VersionPath, "Fonts"), ".");
         var fonts = HudFonts.GetFonts();
@@ -38,27 +35,27 @@ internal class AppStyle
 
         ReplaceResource(1, new ResourceDictionary
         {
-            Source = new Uri("Styles/" + style + ".xaml", UriKind.RelativeOrAbsolute)
+            Source = new Uri("/Game Direct;Component/Styles/" + style + ".xaml", UriKind.RelativeOrAbsolute)
         });
 
         ReplaceResource(2, new ResourceDictionary
         {
-            Source = new Uri("Styles/Colors.xaml", UriKind.RelativeOrAbsolute)
+            Source = new Uri("/Game Direct;Component/Styles/Colors.xaml", UriKind.RelativeOrAbsolute)
         });
 
         ReplaceResource(3, new ResourceDictionary
         {
-            Source = new Uri("Styles/Labels.xaml", UriKind.RelativeOrAbsolute)
+            Source = new Uri("/Game Direct;Component/Styles/Labels.xaml", UriKind.RelativeOrAbsolute)
         });
 
         ReplaceResource(4, new ResourceDictionary
         {
-            Source = new Uri("Styles/Buttons.xaml", UriKind.RelativeOrAbsolute)
+            Source = new Uri("/Game Direct;Component/Styles/Buttons.xaml", UriKind.RelativeOrAbsolute)
         });
 
         ReplaceResource(5, new ResourceDictionary
         {
-            Source = new Uri("Styles/ScrollViewer.xaml", UriKind.RelativeOrAbsolute)
+            Source = new Uri("/Game Direct;Component/Styles/ScrollViewer.xaml", UriKind.RelativeOrAbsolute)
         });
     }
 

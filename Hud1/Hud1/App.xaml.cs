@@ -5,7 +5,9 @@ namespace Hud1;
 
 public partial class App : Application
 {
-    internal App()
+    public static bool Testing { get; set; } = false;
+
+    public App()
     {
         Debug.Print($"App {ShutdownMode} {Entry.Millis()}");
         InitializeComponent();

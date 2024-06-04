@@ -6,7 +6,27 @@ using MoonSharp.Interpreter;
 
 namespace Hud1.Models;
 
-internal partial class Macro : ObservableObject
+public class MacroErrors
+{
+    public static readonly string ABORT = "Script aborted after waiting 3 seconds to finish by itself.";
+}
+
+public class MacroThreadPool
+{
+    public int ThreadsRunning { get; set; } = 0;
+
+    public void Run(Action action)
+    {
+        ThreadsRunning++;
+        ThreadPool.QueueUserWorkItem((_) =>
+        {
+            action();
+            ThreadsRunning--;
+        });
+    }
+}
+
+public partial class Macro : ObservableObject
 {
     [ObservableProperty]
     private string _label = "";
@@ -32,18 +52,22 @@ internal partial class Macro : ObservableObject
     [ObservableProperty]
     private string _path = "";
 
-    private MacroScript? macroScript;
-    private readonly MacrosViewModel macros;
+    public int ThreadsRunning { get { return ThreadPool.ThreadsRunning; } }
 
-    internal Macro(string path, MacrosViewModel macros)
+    private MacroScript macroScript;
+    private readonly MacrosViewModel macros;
+    private MacroThreadPool ThreadPool = new();
+
+    public Macro(string path, MacrosViewModel macros)
     {
         Path = path;
+        this.macros = macros;
+
         Label = System.IO.Path.GetFileName(Path);
         Description = "";
         RightLabel = "Start >";
 
-        this.macros = macros;
-
+        macroScript = new MacroScript(this);
         FetchProgramMetaData();
     }
 
@@ -64,13 +88,14 @@ internal partial class Macro : ObservableObject
 
     private void FetchProgramMetaData()
     {
-        ThreadPool.QueueUserWorkItem((_) =>
+        var local = macroScript;
+        ThreadPool.Run(() =>
         {
             RunScript(() =>
             {
-                var script = new MacroScript(this);
-                Label = (string)script.GetGlobal("Label");
-                Description = (string)script.GetGlobal("Description");
+                local.ApplyFile();
+                Label = (string)macroScript.GetGlobal("Label");
+                Description = (string)macroScript.GetGlobal("Description");
             });
         });
     }
@@ -79,9 +104,9 @@ internal partial class Macro : ObservableObject
     {
     }
 
-    internal void OnRight()
+    public void OnRight()
     {
-        Console.WriteLine("OnRight");
+        Console.WriteLine($"OnRight Running: {Running}");
         if (Running)
         {
             Stop();
@@ -92,15 +117,19 @@ internal partial class Macro : ObservableObject
         Running = true;
         RightLabel = "Stop >";
 
-        ThreadPool.QueueUserWorkItem((_) =>
+        macroScript.Stop();
+        var local = macroScript = new MacroScript(this);
+
+        ThreadPool.Run(() =>
         {
             RunScript(() =>
             {
-                macroScript = new MacroScript(this);
-                using var hooks = new ScriptHooks(macroScript);
-                macroScript.Run();
+                local.ApplyFile();
+                using var _ = new ScriptHooks(local);
+                local.Run();
             });
 
+            Console.WriteLine("Run Complete...");
             Running = false;
             RightLabel = "Start >";
         });
@@ -115,21 +144,21 @@ internal partial class Macro : ObservableObject
         catch (TooManyInstructions ex)
         {
             Console.WriteLine("ERROR {0}", ex.Message);
-            Error = "Script aborted after waiting 3 seconds to finish by itself.";
+            Error = MacroErrors.ABORT;
         }
         catch (InterpreterException ex)
         {
             Console.WriteLine("ERROR {0}", ex.DecoratedMessage);
-
             Error = ex.DecoratedMessage ?? "ERROR: " + ex.Message;
         }
         catch (Exception ex)
         {
+            Console.WriteLine("ERROR {0}", ex.Message);
             Error = ex.Message;
         }
     }
 
-    internal void Stop()
+    public void Stop()
     {
         RightLabel = "Stopping";
         if (macroScript != null)

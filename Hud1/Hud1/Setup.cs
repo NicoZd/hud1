@@ -12,17 +12,17 @@ using Windows.Storage;
 
 namespace Hud1;
 
-internal class Setup
+public class Setup
 {
     internal static readonly uint WM_GAME_DIRECT_SHOWME = WindowsAPI.RegisterWindowMessage("WM_GAME_DIRECT_SHOWME");
 
-    private static readonly Mutex mutex = new(true, "GAME_DIRECT");
+    private static readonly Mutex? Mutex = new(true, "GAME_DIRECT");
 
-    internal static string RootPath = "";
-    internal static string VersionPath = "";
-    internal static string UserConfigFile = "";
+    public static string RootPath = "";
+    public static string VersionPath = "";
+    public static string UserConfigFile = "";
 
-    internal static async Task Run()
+    public static async Task Run()
     {
         await ShowSplash("Compute Paths");
         ComputePaths();
@@ -160,17 +160,23 @@ internal class Setup
 
     private static async Task ShowSplash(string text)
     {
-        Console.WriteLine($"Setup ShowSplash '{text}' {Entry.Millis()}");
+        Console.WriteLine($"Setup ShowSplash2 '{text}' {Entry.Millis()}");
         SplashWindowViewModel.Instance.SplashText = text;
         await Task.Delay(TimeSpan.FromMilliseconds(20));
     }
 
     private static async Task EnforceSingleInstance()
     {
+        if (Mutex == null)
+        {
+            Console.WriteLine("Setup Mutex Ignore");
+            return;
+        }
+
         try
         {
             var startRount = 0;
-            while (!mutex.WaitOne(TimeSpan.Zero, true) && startRount <= 10)
+            while (!Mutex.WaitOne(TimeSpan.Zero, true) && startRount <= 10)
             {
                 Console.WriteLine("Setup Shutdown existing window (attempt: " + startRount + "/10)");
                 WindowsAPI.SendNotifyMessage(new nint(-1), WM_GAME_DIRECT_SHOWME, 0, 0);
@@ -183,7 +189,7 @@ internal class Setup
         }
 
         // never every start second time
-        if (!mutex.WaitOne(TimeSpan.Zero, true))
+        if (!Mutex.WaitOne(TimeSpan.Zero, true))
         {
             await ShowSplash("Could not stop existing window - shutting down.. :(");
             await Task.Delay(1000);
@@ -193,6 +199,9 @@ internal class Setup
 
     private static void SetupLogging()
     {
+        if (App.Testing)
+            return;
+
         // configure logging
         var writer = new DebugAndFileWriter(Path.Combine(RootPath, "log.txt"));
         Console.SetOut(writer);

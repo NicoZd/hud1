@@ -7,9 +7,10 @@ using System.Windows;
 
 namespace Hud1.ViewModels;
 
-internal partial class MacrosViewModel : ObservableObject
+public partial class MacrosViewModel : ObservableObject
 {
     public static readonly MacrosViewModel Instance = new();
+    public string MacrosPath = "";
 
     [ObservableProperty]
     private ObservableCollection<Macro> _macros = [];
@@ -22,21 +23,18 @@ internal partial class MacrosViewModel : ObservableObject
 
     private readonly FileSystemWatcher fileWatcher;
 
-    internal string macrosPath = "";
-
     private MacrosViewModel()
     {
         Macros = [];
-
-        macrosPath = Path.Combine(Setup.VersionPath, "Macros");
+        MacrosPath = Path.Combine(Setup.VersionPath, "Macros");
 
         // fallback for vs studio xaml viewer;
-        if (!Directory.Exists(macrosPath))
+        if (!Directory.Exists(MacrosPath))
         {
-            macrosPath = ".";
+            MacrosPath = ".";
         }
 
-        fileWatcher = new FileSystemWatcher(macrosPath)
+        fileWatcher = new FileSystemWatcher(MacrosPath)
         {
             NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.CreationTime | NotifyFilters.FileName
         };
@@ -67,8 +65,8 @@ internal partial class MacrosViewModel : ObservableObject
 
         NavigationStates.MACROS_FOLDER.RightAction = () =>
         {
-            Console.WriteLine("OPEN {0}", macrosPath);
-            Process.Start("explorer.exe", macrosPath);
+            Console.WriteLine("OPEN {0}", MacrosPath);
+            Process.Start("explorer.exe", MacrosPath);
         };
 
         Configure(NavigationStates.MACROS_FOLDER)
@@ -91,7 +89,7 @@ internal partial class MacrosViewModel : ObservableObject
             macro.Stop();
         }
 
-        var fileEntries = Directory.GetFiles(macrosPath, "*.lua");
+        var fileEntries = Directory.GetFiles(MacrosPath, "*.lua");
         var temp = new ObservableCollection<Macro>();
         foreach (var fileEntry in fileEntries)
         {

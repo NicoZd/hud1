@@ -9,7 +9,7 @@ using System.Windows.Media;
 
 namespace Hud1.ViewModels;
 
-internal partial class CrosshairViewModel : ObservableObject
+public partial class CrosshairViewModel : ObservableObject
 {
     public static readonly CrosshairViewModel Instance = new();
 
@@ -17,12 +17,15 @@ internal partial class CrosshairViewModel : ObservableObject
     private Image _crosshairImage = new();
 
     private Dictionary<string, Func<int, Brush, bool, Drawing>> FormRenderFunctions = [];
-    private readonly Dictionary<string, Brush> ColorOptions = [];
+    private Dictionary<string, Brush> ColorOptions = [];
 
     private CrosshairViewModel() { }
 
     internal void BuildNavigation()
     {
+        FormRenderFunctions = [];
+        ColorOptions = [];
+
         var Configure = HudViewModel.Instance.Configure;
 
         NavigationStates.CROSSHAIR_ENABLED.LeftAction = NavigationStates.CROSSHAIR_ENABLED.BooleanLeft;
@@ -185,7 +188,7 @@ internal partial class CrosshairViewModel : ObservableObject
         foreach (var option in NavigationStates.CROSSHAIR_FORM.Options)
         {
             var optionFormFunction = FormRenderFunctions[option.Value];
-            var brush = new SolidColorBrush(((SolidColorBrush)App.Current.FindResource("BrushSolidSuperBright")).Color);
+            var brush = new SolidColorBrush(((SolidColorBrush)Application.Current.FindResource("BrushSolidSuperBright")).Color);
             var geometryDrawing = GetGeometryDrawing(5, brush, optionFormFunction);
 
             DrawingImage drawingImage = new(geometryDrawing);

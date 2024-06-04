@@ -105,7 +105,10 @@ internal class MacroScript
         {
             MouseService.MouseUp(MouseService.MouseButton.Left);
         };
+    }
 
+    internal void ApplyFile()
+    {
         var scriptCode = File.ReadAllText(this.macro.Path);
         script.DoString(scriptCode);
     }
@@ -156,12 +159,13 @@ internal class MacroScript
 
     internal void Stop()
     {
-        Running = false;
+        Console.WriteLine("MacroScript Stop");
 
+        Running = false;
         var dispatcherTimer = new DispatcherTimer();
         dispatcherTimer.Tick += new EventHandler((_, _) =>
         {
-            Debug.Print("Marking Abort in Debugger");
+            Console.WriteLine("MacroScript Marking Abort in Debugger");
             dispatcherTimer.Stop();
             debugger.Abort = true;
         });

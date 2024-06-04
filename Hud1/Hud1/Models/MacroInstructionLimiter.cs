@@ -15,9 +15,15 @@ internal class TooManyInstructions : Exception
     }
 }
 
+
 internal class MacroInstructionLimiter : IDebugger
 {
     internal bool Abort = false;
+
+    internal DebuggerAction stepIn = new DebuggerAction()
+    {
+        Action = DebuggerAction.ActionType.StepIn
+    };
 
     public void SetSourceCode(SourceCode sourceCode)
     {
@@ -39,19 +45,11 @@ internal class MacroInstructionLimiter : IDebugger
 
     public DebuggerAction GetAction(int ip, SourceRef sourceref)
     {
-        if (new Random().NextDouble() < 0.1)
-        {
-            Console.Write(".");
-        }
         if (Abort)
         {
             throw new TooManyInstructions();
         }
-
-        return new DebuggerAction()
-        {
-            Action = DebuggerAction.ActionType.StepIn,
-        };
+        return stepIn;
     }
 
     public void SignalExecutionEnded()

@@ -45,7 +45,6 @@
 		<None Remove="Version\Fonts\HitmarkerText-Medium.ttf" />
 		<None Remove="Version\Fonts\HitmarkerText-Regular.ttf" />
 		<None Remove="Version\Fonts\Neuropolitical.otf" />
-		<None Remove="Version\Macros\limit-instructions.lua" />
 		<None Remove="Version\Macros\press-left-mouse.lua" />
 		<None Remove="Version\Macros\repeat-left-mouse-click.lua" />
 		<None Remove="Version\Macros\test.lua" />
@@ -95,9 +94,6 @@
 		</Content>
 		<Content Include="Version\Fonts\Neuropolitical.otf">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</Content>
-		<Content Include="Version\Macros\limit-instructions.lua">
-		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Version\Macros\test.lua">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
