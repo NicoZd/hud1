@@ -18,9 +18,9 @@ public class Setup
 
     private static readonly Mutex? Mutex = new(true, "GAME_DIRECT");
 
-    public static string RootPath = "";
-    public static string VersionPath = "";
-    public static string UserConfigFile = "";
+    public static string RootPath { get; set; } = "";
+    public static string VersionPath { get; set; } = "";
+    public static string UserConfigFile { get; set; } = "";
 
     public static async Task Run()
     {
