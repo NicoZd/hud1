@@ -25,6 +25,13 @@ internal partial class Option : ObservableObject
     {
         Value = value;
     }
+
+    [RelayCommand]
+    private void Click(NavigationState state)
+    {
+        Debug.Print($"Click {Value} {Selected} {state}");
+        state.SelectOption(this);
+    }
 }
 
 internal partial class NavigationState : ObservableObject
@@ -177,6 +184,26 @@ internal partial class NavigationState : ObservableObject
         }
         catch (Exception) { };
         Options[currentIndex].Selected = true;
+        SelectionLabel = Options[currentIndex].Value;
+
+    }
+
+    // when option is clicked
+    internal void SelectOption(Option option)
+    {
+        HudViewModel.Instance.SelectNavigationState(this);
+        foreach (var item in Options)
+        {
+            if (item == option)
+            {
+                item.Selected = true;
+                SelectionLabel = item.Value;
+            }
+            else
+            {
+                item.Selected = false;
+            }
+        }
     }
 
     internal void BooleanLeft()

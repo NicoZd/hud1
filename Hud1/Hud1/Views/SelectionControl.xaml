@@ -112,6 +112,8 @@
                                         Style="{StaticResource OptionButton}"                                    
                                         Focusable="False"
                                         Content="{Binding Image}"
+                                        Command="{Binding ClickCommand}"
+                                        CommandParameter="{Binding Path=DataContext, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                         >
                                     </Button>
                                 </DataTemplate>
