@@ -103,7 +103,7 @@
                                 <ItemsPanelTemplate>
                                     <StackPanel 
                                         Orientation="Horizontal" 
-                                        controls:Spacing.Horizontal="{Binding Spacing}"                                        />
+                                        controls:Spacing.Horizontal="{Binding Path=DataContext.Spacing, RelativeSource={RelativeSource AncestorType=ItemsControl}}"/>
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
@@ -112,8 +112,8 @@
                                         Style="{StaticResource OptionButton}"                                    
                                         Focusable="False"
                                         Content="{Binding Image}"
-                                        Command="{Binding ClickCommand}"
-                                        CommandParameter="{Binding Path=DataContext, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                        Command="{Binding Path=DataContext.OptionClickCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                        CommandParameter="{Binding Path=.}"
                                         >
                                     </Button>
                                 </DataTemplate>

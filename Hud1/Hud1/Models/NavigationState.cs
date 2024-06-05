@@ -25,13 +25,6 @@ internal partial class Option : ObservableObject
     {
         Value = value;
     }
-
-    [RelayCommand]
-    private void Click(NavigationState state)
-    {
-        Debug.Print($"Click {Value} {Selected} {state}");
-        state.SelectOption(this);
-    }
 }
 
 internal partial class NavigationState : ObservableObject
@@ -188,9 +181,10 @@ internal partial class NavigationState : ObservableObject
 
     }
 
-    // when option is clicked
-    internal void SelectOption(Option option)
+    [RelayCommand]
+    private void OptionClick(Option option)
     {
+        Debug.Print($"OptionClick {option}");
         HudViewModel.Instance.SelectNavigationState(this);
         foreach (var item in Options)
         {
