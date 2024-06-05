@@ -256,7 +256,7 @@ public partial class CrosshairViewModel : ObservableObject
         areaGroup.Children.Add(new RectangleGeometry(new Rect(-12, -12, 24, 24)));
 
         drawingWithFixedSize.Children.Insert(0, new GeometryDrawing() { Geometry = areaGroup, Brush = Brushes.Transparent });
-        // drawingWithFixedSize.Children.Insert(0, new GeometryDrawing() { Geometry = areaGroup, Brush = Brushes.Red });
+        //drawingWithFixedSize.Children.Insert(0, new GeometryDrawing() { Geometry = areaGroup, Brush = (Brush)new BrushConverter().ConvertFromString("#33ff0000") });
 
 
         drawingWithFixedSize.Opacity = double.Parse(NavigationStates.CROSSHAIR_OPACITY.SelectionLabel);

@@ -192,9 +192,9 @@ internal class CrosshairForms
         }
         else if (size == 2)
         {
-            geometryGroup.Children.Add(new RectangleGeometry(new Rect(-1, -3, 2, 2)));
-            geometryGroup.Children.Add(new RectangleGeometry(new Rect(-4, 3, 2, 2)));
-            geometryGroup.Children.Add(new RectangleGeometry(new Rect(2, 3, 2, 2)));
+            geometryGroup.Children.Add(new RectangleGeometry(new Rect(-1, -4, 2, 2)));
+            geometryGroup.Children.Add(new RectangleGeometry(new Rect(-4, 2, 2, 2)));
+            geometryGroup.Children.Add(new RectangleGeometry(new Rect(2, 2, 2, 2)));
         }
         else if (size == 3)
         {
