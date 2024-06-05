@@ -1,8 +1,16 @@
 ﻿using Hud1.Helpers;
 using MoonSharp.Interpreter;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Dynamic;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Threading;
+using Windows.System;
+using static Hud1.Helpers.WindowsAPI;
+using static System.Runtime.CompilerServices.RuntimeHelpers;
 
 namespace Hud1.Models;
 
@@ -16,6 +24,16 @@ internal class MacroScript
 
     private readonly Queue<SystemEvent> systemEvents = [];
 
+    internal class VKDynamicObject : DynamicObject
+    {
+        public override bool TryGetMember(GetMemberBinder binder, out object result)
+        {
+            string name = binder.Name;
+            var enumExists = Enum.TryParse(binder.Name, out VirtualKey key);
+            result = key;
+            return enumExists;
+        }
+    }
     internal MacroScript(Macro macro)
     {
         this.macro = macro;
@@ -24,6 +42,14 @@ internal class MacroScript
         script = new Script(CoreModules.None | CoreModules.GlobalConsts);
 
         script.AttachDebugger(debugger);
+
+        //dynamic vk = new VKDynamicObject();
+        //Debug.Print($"{vk.W}");
+        //S.Globals["MyFlags"] = typeof(MyFlags);
+        UserData.RegisterType<VirtualKey>();
+        script.Globals.Set("VK", UserData.CreateStatic<VirtualKey>());
+
+        //script.Globals["VK"] = typeof(VirtualKey);
 
         script.Globals["Label"] = this.macro.Label;
         script.Globals["Description"] = this.macro.Description;
@@ -102,6 +128,47 @@ internal class MacroScript
         script.Globals["MouseUp"] = () =>
         {
             MouseService.MouseUp(MouseService.MouseButton.Left);
+        };
+
+        script.Globals["FindWindow"] = (string name) =>
+        {
+            List<string> result = new List<string>();
+            Process[] processRunning = Process.GetProcesses();
+            foreach (Process pr in processRunning)
+            {
+                if (pr.MainWindowTitle != "")
+                {
+                    result.Add(pr.MainWindowTitle.ToLower());
+                }
+            }
+
+            var title = result.Find(s => s.Contains(name.ToLower()));
+            if (title != null)
+            {
+                return WindowsAPI.FindWindow(null, title);
+            }
+            return -1;
+        };
+
+        script.Globals["KeyDown"] = (int window, VirtualKey key) =>
+        {
+            int wParam = (int)key;
+            uint scanCode = WindowsAPI.MapVirtualKey((uint)wParam, 0);
+            Debug.Print($"scancode {scanCode}");
+
+            uint lParam = (0x00000001 | (scanCode << 16));
+            int r = WindowsAPI.PostMessage(window, WindowMessage.WM_KEYDOWN, wParam, lParam);
+            Debug.Print($"KeyDown: {window} {key} {wParam} {lParam} {r}");
+        };
+
+        script.Globals["KeyUp"] = (int window, VirtualKey key) =>
+        {
+            int wParam = (int)key;
+            uint scanCode = WindowsAPI.MapVirtualKey((uint)wParam, 0);
+            uint lParam = (0xC0000001 | (scanCode << 16));
+
+            int r = WindowsAPI.PostMessage(window, WindowMessage.WM_KEYUP, wParam, lParam);
+            Debug.Print($"KeyUp: {window} {key} {wParam} {lParam} {r}");
         };
     }
 

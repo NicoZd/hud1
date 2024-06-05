@@ -49,6 +49,59 @@ internal static class WindowConstants
     internal const int CURSOR_SHOWING = 0x00000001;
 }
 
+[StructLayout(LayoutKind.Sequential)]
+public struct KeyboardInput
+{
+    public ushort wVk;
+    public ushort wScan;
+    public uint dwFlags;
+    public uint time;
+    public IntPtr dwExtraInfo;
+}
+
+[StructLayout(LayoutKind.Sequential)]
+public struct MouseInput
+{
+    public int dx;
+    public int dy;
+    public uint mouseData;
+    public uint dwFlags;
+    public uint time;
+    public IntPtr dwExtraInfo;
+}
+
+[StructLayout(LayoutKind.Sequential)]
+public struct HardwareInput
+{
+    public uint uMsg;
+    public ushort wParamL;
+    public ushort wParamH;
+}
+
+[StructLayout(LayoutKind.Explicit)]
+public struct InputUnion
+{
+    [FieldOffset(0)] public MouseInput mi;
+    [FieldOffset(0)] public KeyboardInput ki;
+    [FieldOffset(0)] public HardwareInput hi;
+}
+
+public struct Input
+{
+    public int type;
+    public InputUnion u;
+}
+
+[Flags]
+public enum KeyEventF
+{
+    KeyDown = 0x0000,
+    ExtendedKey = 0x0001,
+    KeyUp = 0x0002,
+    Unicode = 0x0004,
+    Scancode = 0x0008
+}
+
 [Flags]
 internal enum SetWindowPosFlags : int
 {
@@ -221,6 +274,28 @@ internal static class WindowsAPI
 
     [DllImport("user32.dll")]
     internal static extern void mouse_event(int flags, int dX, int dY, int buttons, int extraInfo);
+
+    [DllImport("user32.dll", EntryPoint = "SendMessageW", CharSet = CharSet.Unicode)]
+    internal static extern int SendMessage(int hWnd, uint Msg, int wParam, int lParam);
+
+    [DllImport("User32.dll")]
+    public static extern int PostMessage(int hWnd, int Msg, int wParam, uint lParam);
+
+    [DllImport("User32.dll", CharSet = CharSet.Unicode)]
+    public static extern uint MapVirtualKey(uint uCode, uint uMapType);
+
+
+    [DllImport("user32.dll", SetLastError = true)]
+    public static extern uint SendInput(uint nInputs, Input[] pInputs, int cbSize);
+
+    [DllImport("user32.dll")]
+    internal static extern int FindWindow(string? lpClassName, string lpWindowName);
+
+    [DllImport("user32.dll", SetLastError = true)]
+    static extern void keybd_event(byte bVk, byte bScan, int dwFlags, int dwExtraInfo);
+
+    [DllImport("user32.dll")]
+    public static extern IntPtr GetMessageExtraInfo();
 
     // Monitors
 
