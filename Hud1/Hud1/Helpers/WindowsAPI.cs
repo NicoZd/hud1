@@ -292,7 +292,7 @@ internal static class WindowsAPI
     internal static extern int FindWindow(string? lpClassName, string lpWindowName);
 
     [DllImport("user32.dll", SetLastError = true)]
-    static extern void keybd_event(byte bVk, byte bScan, int dwFlags, int dwExtraInfo);
+    public static extern void keybd_event(byte bVk, byte bScan, int dwFlags, int dwExtraInfo);
 
     [DllImport("user32.dll")]
     public static extern IntPtr GetMessageExtraInfo();

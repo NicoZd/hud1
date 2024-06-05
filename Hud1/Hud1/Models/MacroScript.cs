@@ -9,8 +9,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
 using Windows.System;
-using static Hud1.Helpers.WindowsAPI;
-using static System.Runtime.CompilerServices.RuntimeHelpers;
+
 
 namespace Hud1.Models;
 
@@ -40,8 +39,6 @@ internal class MacroScript
 
         debugger = new MacroInstructionLimiter();
         script = new Script(CoreModules.None | CoreModules.GlobalConsts);
-
-        script.AttachDebugger(debugger);
 
         //dynamic vk = new VKDynamicObject();
         //Debug.Print($"{vk.W}");
@@ -150,31 +147,37 @@ internal class MacroScript
             return -1;
         };
 
-        script.Globals["KeyDown"] = (int window, VirtualKey key) =>
+        script.Globals["KeyDown"] = (VirtualKey key) =>
         {
             int wParam = (int)key;
             uint scanCode = WindowsAPI.MapVirtualKey((uint)wParam, 0);
             Debug.Print($"scancode {scanCode}");
 
-            uint lParam = (0x00000001 | (scanCode << 16));
-            int r = WindowsAPI.PostMessage(window, WindowMessage.WM_KEYDOWN, wParam, lParam);
-            Debug.Print($"KeyDown: {window} {key} {wParam} {lParam} {r}");
+            WindowsAPI.keybd_event((byte)key, (byte)scanCode, (byte)0, (byte)0);
+
+            //uint lParam = (0x00000001 | (scanCode << 16));
+            //int r = WindowsAPI.PostMessage(window, WindowMessage.WM_KEYDOWN, wParam, lParam);
+            // Debug.Print($"KeyDown: {window} {key} {wParam} {lParam} {r}");
         };
 
-        script.Globals["KeyUp"] = (int window, VirtualKey key) =>
+        script.Globals["KeyUp"] = (VirtualKey key) =>
         {
             int wParam = (int)key;
             uint scanCode = WindowsAPI.MapVirtualKey((uint)wParam, 0);
-            uint lParam = (0xC0000001 | (scanCode << 16));
 
-            int r = WindowsAPI.PostMessage(window, WindowMessage.WM_KEYUP, wParam, lParam);
-            Debug.Print($"KeyUp: {window} {key} {wParam} {lParam} {r}");
+            byte KEYEVENTF_KEYUP = 0x0002;
+            WindowsAPI.keybd_event((byte)key, (byte)scanCode, KEYEVENTF_KEYUP, (byte)0);
+
+            //uint lParam = (0xC0000001 | (scanCode << 16));
+            //int r = WindowsAPI.PostMessage(window, WindowMessage.WM_KEYUP, wParam, lParam);
+            //Debug.Print($"KeyUp: {window} {key} {wParam} {lParam} {r}");
         };
     }
 
     internal void ApplyFile()
     {
         var scriptCode = File.ReadAllText(macro.Path);
+        script.AttachDebugger(debugger);
         script.DoString(scriptCode);
     }
 
