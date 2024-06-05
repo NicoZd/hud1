@@ -66,8 +66,8 @@ internal class CrosshairWindowLayoutBehavior : Behavior<CrosshairWindow>
         await ((Storyboard)window.FindResource("FadeOut")).BeginAsync();
 
         // apply layout
-        var width = 50 * monitor.ScaleFactor;
-        var height = 50 * monitor.ScaleFactor;
+        var width = 26 * monitor.ScaleFactor;
+        var height = 26 * monitor.ScaleFactor;
         var x = monitor.Bounds.X + ((monitor.Bounds.Width - width) / 2);
         var y = monitor.Bounds.Y + ((monitor.Bounds.Height - height) / 2);
         Monitors.MoveWindow(window, x, y, width, height);

@@ -1,4 +1,5 @@
 ﻿using Hud1.Helpers;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -55,18 +56,13 @@ internal class DPIAwareImage : Image
 
     private void UpdateDpiScale()
     {
-        var source = PresentationSource.FromVisual(this);
+        var presentationSource = PresentationSource.FromVisual(this);
+        if (presentationSource == null || Source == null)
+            return;
 
-        double dpiX = 1;
-        if (source != null)
-        {
-            dpiX = source.CompositionTarget.TransformToDevice.M11;
-        }
+        var dpiScale = 1.0 / presentationSource.CompositionTarget.TransformToDevice.M11;
 
-        var dpiScale = 1.0 / dpiX;
-
+        //Debug.Print($"DPI scale updated to: {dpiScale} {debugGuid} {Source.Width} {Source.Height}");
         RenderTransform = new ScaleTransform(dpiScale, dpiScale, Source.Width / 2, Source.Height / 2);
-
-        // Debug.Print($"DPI scale updated to: {dpiScale} {debugGuid}");
     }
 }

@@ -30,8 +30,6 @@
     DataContext="{Binding Source={x:Static viewModels:CrosshairViewModel.Instance}}"   
     
     Loaded="OnWindowLoaded"
-    Width="50"
-    Height="50"    
     Background="#00000000"
     >
 
