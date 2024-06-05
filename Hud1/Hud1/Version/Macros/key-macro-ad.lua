@@ -1,5 +1,5 @@
 Label = "Key Macro"
-Description = "Repeat pressing and releasing A and D"
+Description = "Repeat pressing and releasing A and D. Stop on mouse down."
 
 -- https://learn.microsoft.com/en-us/uwp/api/windows.system.virtualkey
 
@@ -21,4 +21,8 @@ end
 
 function OnMouseDown()  
 	Stop()
+end
+
+function Cleanup()
+	Print("")
 end
