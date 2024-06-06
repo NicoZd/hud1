@@ -26,10 +26,22 @@
         <StackPanel DockPanel.Dock="Top">
             <Label Content="Game Direct" Style="{DynamicResource TitleLabel}" />
 
-            <StackPanel Orientation="Vertical" Margin="0,0,0,0">
-                <Label Content="Press Alt+Shift+G to open and close this window." Style="{DynamicResource InfoLabelSecondary}" />
-                <Label Content="Use cursor keys and mouse to navigate and select." Style="{DynamicResource InfoLabelSecondary}" />
-            </StackPanel>
+            <controls:IgnoreWidthControl Margin="0" Focusable="False">
+                <TextBlock   
+                    Style="{DynamicResource DefaultTextBlockFonts}"
+                    Margin="0,0,0,0"
+                    Padding="0"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Left"
+                    TextWrapping="Wrap"
+                    Foreground="{DynamicResource BrushInfoSecondary}" 
+                    LineHeight="12"
+                    FontSize="10"
+                    >
+                    Press <Label Style="{DynamicResource ShortcutLabel}">Alt + Shift + G</Label> to open and close this window.<LineBreak/>
+                    Use cursor keys and mouse to navigate and select.
+                </TextBlock>
+            </controls:IgnoreWidthControl>
 
             <DockPanel 
                 Margin="0,15,0,0"                       
@@ -91,10 +103,11 @@
                         Margin="5,3,5,2"
                         Padding="0"
                         VerticalAlignment="Top"
-                        Height="27"
+                        Height="26"
                         TextWrapping="Wrap"                        
                         Foreground="{DynamicResource BrushInfoSecondary}" 
                         FontSize="10"
+                        LineHeight="12"
                         Text="{Binding State.Hint}"
                         />
                 </controls:IgnoreWidthControl>
@@ -170,10 +183,11 @@
                             TextWrapping="Wrap"
                             Foreground="{DynamicResource BrushInfoSecondary}" 
                             FontSize="10"
+                            LineHeight="12"                            
                             >
-                            • Open and close this window: Alt+Shift+G<LineBreak/>
-                            • Toggle Nightvision: Alt+Shift+N<LineBreak/>
-                            • Toggle Crosshair: Alt+Shift+C<LineBreak/>
+                            • Open and close this window: <Label Style="{DynamicResource ShortcutLabel}">Alt + Shift + G</Label><LineBreak/>
+                            • Toggle Nightvision: <Label Style="{DynamicResource ShortcutLabel}">Alt + Shift + N</Label><LineBreak/>
+                            • Toggle Crosshair: <Label Style="{DynamicResource ShortcutLabel}">Alt + Shift + C</Label><LineBreak/>
                             • Use cursor keys to navigate and select.<LineBreak/>
                             • If mouse is hidden, keyboard will automatically activate.<LineBreak/>
                         </TextBlock>
