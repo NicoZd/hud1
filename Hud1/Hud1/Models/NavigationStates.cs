@@ -5,24 +5,24 @@ internal class NavigationStates
     internal static readonly NavigationState ALL = new();
 
     // MENU
-    internal static readonly NavigationState MENU_NIGHTVISION = new() { Hint = "Use F3 anytime to toogle Nightvision. Adjust Gamma Settings to select intensity." };
+    internal static readonly NavigationState MENU_NIGHTVISION = new() { Hint = "Use Alt+Shift+N anytime to toogle Nightvision. Adjust Gamma Settings to select intensity." };
     internal static readonly NavigationState NIGHTVISION_VISIBLE = new();
 
     internal static readonly NavigationState MENU_MACRO = new() { Hint = "Start Mouse & Keyboard Macros." };
     internal static readonly NavigationState MACRO_VISIBLE = new();
 
-    internal static readonly NavigationState MENU_CROSSHAIR = new() { Hint = "Enable and configure Crosshair." };
+    internal static readonly NavigationState MENU_CROSSHAIR = new() { Hint = "Toggle (Alt+Shift+C) and configure Crosshair." };
     internal static readonly NavigationState CROSSHAIR_VISIBLE = new();
 
     internal static readonly NavigationState MENU_MORE = new() { Hint = "Quit, Skin, Adjust, Info" };
     internal static readonly NavigationState MORE_VISIBLE = new();
 
     // NIGHTVISION
-    internal static readonly NavigationState NIGHTVISION_ENABLED = new() { Label = "Toggle", Hint = "Use F3 anytime to toogle Nightvision.", SelectionLeftLabel = "< Off", SelectionRightLabel = "On >" };
+    internal static readonly NavigationState NIGHTVISION_ENABLED = new() { Label = "Toggle", Hint = "Use Alt+Shift+N anytime to toogle Nightvision.", SelectionLeftLabel = "< Off", SelectionRightLabel = "On >" };
     internal static readonly NavigationState GAMMA = new() { Label = "Gamma", Hint = "Adjust Windows Desktop Gamma while Nightvision toggled on.", AllowRepeat = true };
 
     // CROSSHAIR
-    internal static readonly NavigationState CROSSHAIR_ENABLED = new() { Label = "Toggle", SelectionLeftLabel = "< Off", SelectionRightLabel = "On >", Hint = "Enable or disable Crosshair (Alt-Shift-C)" };
+    internal static readonly NavigationState CROSSHAIR_ENABLED = new() { Label = "Toggle", SelectionLeftLabel = "< Off", SelectionRightLabel = "On >", Hint = "Enable or disable Crosshair (Alt+Shift+C)" };
     internal static readonly NavigationState CROSSHAIR_DISPLAY = new() { Label = "Monitor", Hint = "Select Monitor where Crosshair is shown." };
     internal static readonly NavigationState CROSSHAIR_FORM = new() { Label = "Form", Hint = "Select Crosshair Form" };
     internal static readonly NavigationState CROSSHAIR_COLOR = new() { Label = "Color", Hint = "Select Crosshair Color" };

@@ -12,6 +12,6 @@
     <Color x:Key="ColorBackgroundDarkMedUp">#66005500</Color>
     <Color x:Key="ColorBackgroundDarkTrans">#bb001100</Color>
     <Color x:Key="ColorInfo">#ffff00</Color>
-    <Color x:Key="ColorInfoSecondary">#d0d000</Color>
+    <Color x:Key="ColorInfoSecondary">#ccd0d000</Color>
 
 </ResourceDictionary>

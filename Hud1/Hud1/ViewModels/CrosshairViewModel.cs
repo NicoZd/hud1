@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using Windows.System;
 
 namespace Hud1.ViewModels;
 
@@ -19,8 +20,21 @@ public partial class CrosshairViewModel : ObservableObject
     private Dictionary<string, Func<int, Brush, bool, Drawing>> FormRenderFunctions = [];
     private Dictionary<string, Brush> ColorOptions = [];
 
-    private CrosshairViewModel() { }
+    private CrosshairViewModel()
+    {
 
+
+        VirtualKeyboardHook.KeyDown += HandleKeyDown;
+    }
+
+    private void HandleKeyDown(KeyEvent keyEvent)
+    {
+        if (!keyEvent.repeated && keyEvent.alt && keyEvent.shift && keyEvent.key is VirtualKey.C)
+        {
+            keyEvent.block = true;
+            NavigationStates.CROSSHAIR_ENABLED.SelectionBoolean = !NavigationStates.CROSSHAIR_ENABLED.SelectionBoolean;
+        }
+    }
     internal void BuildNavigation()
     {
         FormRenderFunctions = [];
@@ -152,7 +166,7 @@ public partial class CrosshairViewModel : ObservableObject
 
     internal void Redraw()
     {
-        Debug.Print("Enabled {0}", NavigationStates.CROSSHAIR_ENABLED.SelectionBoolean);
+        // Debug.Print("Enabled {0}", NavigationStates.CROSSHAIR_ENABLED.SelectionBoolean);
         // Debug.Print("Form {0}", NavigationStates.CROSSHAIR_FORM.SelectionLabel);
         // Debug.Print("Size {0}", NavigationStates.CROSSHAIR_SIZE.SelectionLabel);
         // Debug.Print("Color {0}", NavigationStates.CROSSHAIR_COLOR.SelectionLabel);

@@ -7,6 +7,7 @@ namespace Hud1.Helpers;
 internal class KeyEvent
 {
     internal bool alt = false;
+    internal bool shift = false;
     internal bool block = false;
     internal bool repeated = false;
 
@@ -43,8 +44,6 @@ internal static class VirtualKeyboardHook
 
     private static IntPtr HookCallback(int code, IntPtr wParam, IntPtr lParam)
     {
-        // Console.WriteLine("nCode {0} {1} {2}", code, wParam, lParam);
-
         if (code >= 0)
         {
             switch (wParam)
@@ -52,11 +51,20 @@ internal static class VirtualKeyboardHook
                 case WindowMessage.WM_KEYDOWN:
                     {
                         var vkCode = Marshal.ReadInt32(lParam);
-                        var keyEvent = new KeyEvent((VirtualKey)vkCode);
+
+                        Console.WriteLine($"WM_KEYDOWN {vkCode}");
+
+                        if (vkCode == (int)VirtualKey.LeftShift) IsDown[VirtualKey.LeftShift] = true;
+                        if (vkCode == (int)VirtualKey.RightShift) IsDown[VirtualKey.RightShift] = true;
+
+                        var keyEvent = new KeyEvent((VirtualKey)vkCode)
+                        {
+                            shift = CheckIsDown(VirtualKey.LeftShift) || CheckIsDown(VirtualKey.RightShift)
+                        };
+
                         keyEvent.repeated = keyEvent.key.Equals(_lastPressedKey);
                         _lastPressedKey = keyEvent.key;
                         KeyDown?.Invoke(keyEvent);
-                        // Console.WriteLine("WM_KEYDOWN vkCode:{0} blocked:{1}", vkCode, blocked);
                         if (keyEvent.block)
                         {
                             return 1;
@@ -66,21 +74,27 @@ internal static class VirtualKeyboardHook
                 case WindowMessage.WM_KEYUP:
                     {
                         var vkCode = Marshal.ReadInt32(lParam);
-                        // Console.WriteLine("WM_KEYUP vkCode:{0}", vkCode);
+                        Console.WriteLine($"WM_KEYUP {vkCode}");
+
+                        if (vkCode == (int)VirtualKey.LeftShift) IsDown[VirtualKey.LeftShift] = false;
+                        if (vkCode == (int)VirtualKey.RightShift) IsDown[VirtualKey.RightShift] = false;
+
                         _lastPressedKey = null;
                         break;
                     }
                 case WindowMessage.WM_SYSKEYDOWN:
                     {
                         var vkCode = Marshal.ReadInt32(lParam);
-                        // Console.WriteLine("WM_SYSKEYDOWN vkCode:{0}", vkCode);
-                        if (vkCode == (int)VirtualKey.LeftMenu)
-                        {
-                            IsDown[VirtualKey.LeftMenu] = true;
-                        }
+                        Console.WriteLine($"WM_SYSKEYDOWN {vkCode}");
+                        if (vkCode == (int)VirtualKey.LeftMenu) IsDown[VirtualKey.LeftMenu] = true;
+                        if (vkCode == (int)VirtualKey.RightMenu) IsDown[VirtualKey.RightMenu] = true;
+                        if (vkCode == (int)VirtualKey.LeftShift) IsDown[VirtualKey.LeftShift] = true;
+                        if (vkCode == (int)VirtualKey.RightShift) IsDown[VirtualKey.RightShift] = true;
+
                         var keyEvent = new KeyEvent((VirtualKey)vkCode)
                         {
-                            alt = IsDown.ContainsKey(VirtualKey.LeftMenu) && IsDown[VirtualKey.LeftMenu]
+                            alt = CheckIsDown(VirtualKey.LeftMenu) || CheckIsDown(VirtualKey.RightMenu),
+                            shift = CheckIsDown(VirtualKey.LeftShift) || CheckIsDown(VirtualKey.RightShift)
                         };
                         KeyDown?.Invoke(keyEvent);
                         // Console.WriteLine("WM_KEYDOWN vkCode:{0} blocked:{1}", vkCode, blocked);
@@ -94,10 +108,12 @@ internal static class VirtualKeyboardHook
                     {
                         var vkCode = Marshal.ReadInt32(lParam);
                         // Console.WriteLine("WM_SYSKEYUP vkCode:{0}", vkCode);
-                        if (vkCode == (int)VirtualKey.LeftMenu)
-                        {
-                            IsDown[VirtualKey.LeftMenu] = false;
-                        }
+
+                        if (vkCode == (int)VirtualKey.LeftMenu) IsDown[VirtualKey.LeftMenu] = false;
+                        if (vkCode == (int)VirtualKey.RightMenu) IsDown[VirtualKey.RightMenu] = false;
+                        if (vkCode == (int)VirtualKey.LeftShift) IsDown[VirtualKey.LeftShift] = false;
+                        if (vkCode == (int)VirtualKey.RightShift) IsDown[VirtualKey.RightShift] = false;
+
                         break;
                     }
                 default:
@@ -109,5 +125,10 @@ internal static class VirtualKeyboardHook
         }
 
         return WindowsAPI.CallNextHookEx(HookID, code, wParam, lParam);
+    }
+
+    private static bool CheckIsDown(VirtualKey key)
+    {
+        return IsDown.ContainsKey(key) && IsDown[key];
     }
 }

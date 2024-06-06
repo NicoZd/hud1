@@ -27,8 +27,8 @@
             <Label Content="Game Direct" Style="{DynamicResource TitleLabel}" />
 
             <StackPanel Orientation="Vertical" Margin="0,0,0,0">
-                <Label Content="Press F2 to open and close this window." Style="{DynamicResource InfoLabelSecondary}" />
-                <Label Content="Use cursor keys to navigate and select." Style="{DynamicResource InfoLabelSecondary}" />
+                <Label Content="Press Alt+Shift+G to open and close this window." Style="{DynamicResource InfoLabelSecondary}" />
+                <Label Content="Use cursor keys and mouse to navigate and select." Style="{DynamicResource InfoLabelSecondary}" />
             </StackPanel>
 
             <DockPanel 
@@ -91,10 +91,10 @@
                         Margin="5,3,5,2"
                         Padding="0"
                         VerticalAlignment="Top"
-                        Height="33"
+                        Height="27"
                         TextWrapping="Wrap"                        
                         Foreground="{DynamicResource BrushInfoSecondary}" 
-                        FontSize="12"
+                        FontSize="10"
                         Text="{Binding State.Hint}"
                         />
                 </controls:IgnoreWidthControl>
@@ -160,20 +160,22 @@
                     <views:SelectionControl NavigationState="{Binding Path=States[FONT]}" />
 
                     <Label Content="Quickhelp" Style="{DynamicResource TitleContent}"/>
-                    <controls:IgnoreWidthControl Margin="0"  Focusable="False">
+                    <controls:IgnoreWidthControl Margin="0" Focusable="False">
                         <TextBlock   
                             Style="{DynamicResource DefaultTextBlockFonts}"
-                            Margin="5,4,5,0"
+                            Margin="0,0,0,0"
                             Padding="0"
                             VerticalAlignment="Top"
                             HorizontalAlignment="Left"
                             TextWrapping="Wrap"
                             Foreground="{DynamicResource BrushInfoSecondary}" 
-                            FontSize="12"
+                            FontSize="10"
                             >
-                            • Keys to open and close this window:<LineBreak/>
-                            &#160;&#160;&#160;• F2, ALT-S, ALT-F or ALT-L<LineBreak/>
-                            • Use cursor keys, mouse or touch to navigate and select.
+                            • Open and close this window: Alt+Shift+G<LineBreak/>
+                            • Toggle Nightvision: Alt+Shift+N<LineBreak/>
+                            • Toggle Crosshair: Alt+Shift+C<LineBreak/>
+                            • Use cursor keys to navigate and select.<LineBreak/>
+                            • If mouse is hidden, keyboard will automatically activate.<LineBreak/>
                         </TextBlock>
                     </controls:IgnoreWidthControl>
                 </StackPanel>

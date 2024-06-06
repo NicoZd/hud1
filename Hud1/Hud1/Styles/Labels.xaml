@@ -64,7 +64,7 @@
     <!-- Info -->
     <Style TargetType="{x:Type Label}" x:Key="InfoLabelSecondary" BasedOn="{StaticResource DefaultLabelFonts}">
         <Setter Property="Foreground" Value="{DynamicResource BrushInfoSecondary}"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontSize" Value="10"/>
         <Setter Property="Padding" Value="0,0,0,0"/>
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
     </Style>

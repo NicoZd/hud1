@@ -38,25 +38,10 @@ internal class MainWindowActivationBehavior : Behavior<Window>
     private void HandleKeyDown(KeyEvent keyEvent)
     {
         //Console.WriteLine("HandleKeyDown2 {0} {1}", keyEvent.key, keyEvent.alt);           
-
-        if (!keyEvent.repeated)
+        if (!keyEvent.repeated && keyEvent.alt && keyEvent.shift && keyEvent.key is VirtualKey.G)
         {
-            if (keyEvent.alt)
-            {
-                if (keyEvent.key is VirtualKey.S or VirtualKey.F or VirtualKey.L)
-                {
-                    HandleKeyActivator();
-                    keyEvent.block = true;
-                }
-            }
-            else
-            {
-                if (keyEvent.key == VirtualKey.F2)
-                {
-                    HandleKeyActivator();
-                    keyEvent.block = true;
-                }
-            }
+            HandleKeyActivator();
+            keyEvent.block = true;
         }
     }
 

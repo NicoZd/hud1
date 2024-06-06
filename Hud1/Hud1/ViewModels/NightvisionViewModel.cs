@@ -26,7 +26,7 @@ internal partial class NightvisionViewModel : ObservableObject
 
     private void HandleKeyDown(KeyEvent keyEvent)
     {
-        if (!keyEvent.alt && keyEvent.key == VirtualKey.F3)
+        if (!keyEvent.repeated && keyEvent.alt && keyEvent.shift && keyEvent.key is VirtualKey.N)
         {
             keyEvent.block = true;
             EnableNightVision(
