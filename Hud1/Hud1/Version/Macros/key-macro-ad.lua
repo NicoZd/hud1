@@ -1,4 +1,4 @@
-Label = "Key Macro"
+Label = "Repeat Pressing A & D Keys"
 Description = "Repeat pressing and releasing A and D. Stop on mouse down."
 
 -- https://learn.microsoft.com/en-us/uwp/api/windows.system.virtualkey

@@ -8,7 +8,7 @@ internal class NavigationStates
     internal static readonly NavigationState MENU_NIGHTVISION = new() { Hint = "Press Alt+Shift+N anytime to toggle Nightvision. Adjust Gamma to configure intensity." };
     internal static readonly NavigationState NIGHTVISION_VISIBLE = new();
 
-    internal static readonly NavigationState MENU_MACRO = new() { Hint = "Start Mouse & Keyboard Macros. Open Folder to edit and add new Macros." };
+    internal static readonly NavigationState MENU_MACRO = new() { Hint = "Start Mouse & Keyboard Macros. Open UserData folder to edit and add new Macros. This view will update automatically." };
     internal static readonly NavigationState MACRO_VISIBLE = new();
 
     internal static readonly NavigationState MENU_CROSSHAIR = new() { Hint = "Press Alt+Shift+C anytime to toggle crosshair. Ajdust Form, Color, Size here." };
@@ -32,7 +32,7 @@ internal class NavigationStates
 
     // MACRO
     internal static readonly NavigationState MACROS = new() { };
-    internal static readonly NavigationState MACROS_FOLDER = new() { Label = "Open Folder", Hint = "Open explorer.exe in Macros Folder." };
+    internal static readonly NavigationState MACROS_FOLDER = new() { Label = "Open Macro folder", Hint = "Open explorer.exe in Macros Folder." };
 
     // MORE
     internal static readonly NavigationState EXIT = new() { Label = "Exit", Hint = "Exit HUD and terminate process. Alt + F4 will do when window is active." };
