@@ -38,7 +38,7 @@ internal class NavigationStates
     internal static readonly NavigationState EXIT = new() { Label = "Exit", Hint = "Exit HUD and terminate process." };
 
     internal static readonly NavigationState HUD_POSITION = new() { Label = "HUD Position", Hint = "Select Position of the HUD" };
-    internal static readonly NavigationState TOUCH_MODE = new() { Label = "Touch Mode", Hint = "Don't activate this window on mouse or touch interaction.", SelectionLeftLabel = "< Off", SelectionRightLabel = "On >" };
+    internal static readonly NavigationState TOUCH_MODE = new() { Label = "Touch Mode", Hint = "If enabled this window will not be activated on mouse or touch interaction.", SelectionLeftLabel = "< Off", SelectionRightLabel = "On >" };
 
     internal static readonly NavigationState STYLE = new() { SelectionLabel = "Green", Label = "Colors", Hint = "Adjust colors of this window." };
     internal static readonly NavigationState FONT = new() { SelectionLabel = "Fira Code", Label = "Font", Hint = "Select Font" };

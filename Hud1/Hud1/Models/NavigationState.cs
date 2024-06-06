@@ -89,6 +89,16 @@ internal partial class NavigationState : ObservableObject
     }
 
     [RelayCommand]
+    private void Toggle()
+    {
+        HudViewModel.Instance.SelectNavigationState(this);
+        if (SelectionBoolean)
+            ExecuteLeft();
+        else
+            ExecuteRight();
+    }
+
+    [RelayCommand]
     private void Left()
     {
         HudViewModel.Instance.SelectNavigationState(this);

@@ -17,9 +17,9 @@
 
             <views:GlowBorderLabel     
                 Width="70"                
-                Margin="-1,0,0,0"
+                Margin="0,0,0,0"
                 DockPanel.Dock="Right"
-                Click="{Binding Path=RightCommand}"                    
+                Click="{Binding Path=ToggleCommand}"                    
                 Label="{Binding Path=SelectionRightLabel}"
                 Selected="{Binding Path=Selected}"
                 Pressed="{Binding Path=SelectRight}"
@@ -39,8 +39,8 @@
             <views:GlowBorderLabel     
                 Margin="0,0,0,0"
                 Width="70"
-                DockPanel.Dock="Right"
-                Click="{Binding Path=LeftCommand}"                    
+                DockPanel.Dock="Right"          
+                Click="{Binding Path=ToggleCommand}"                    
                 Label="{Binding Path=SelectionLeftLabel}"
                 Selected="{Binding Path=Selected}"
                 Pressed="{Binding Path=SelectLeft}"
