@@ -17,7 +17,7 @@ public class WPFIntegrationTests
     {
         await Setup.Run();
         Assert.True(Directory.Exists(Setup.RootPath));
-        Assert.True(Directory.Exists(Setup.VersionPath));
+        Assert.True(Directory.Exists(Setup.UserDataPath));
     }
 
     [WpfFact]
@@ -25,6 +25,6 @@ public class WPFIntegrationTests
     {
         await Setup.Run();
         Assert.True(Directory.Exists(Setup.RootPath));
-        Assert.True(Directory.Exists(Setup.VersionPath));
+        Assert.True(Directory.Exists(Setup.UserDataPath));
     }
 }

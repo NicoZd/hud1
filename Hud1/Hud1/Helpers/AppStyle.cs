@@ -16,7 +16,7 @@ internal class AppStyle
 #endif
 
         // font iterator
-        var fontsFolder = Path.Combine(Path.Combine(Setup.VersionPath, "Fonts"), ".");
+        var fontsFolder = Path.Combine(Path.Combine(Setup.UserDataPath, "Fonts"), ".");
         var fonts = HudFonts.GetFonts();
         fonts.ForEach((HudFont font) =>
         {

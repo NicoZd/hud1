@@ -19,8 +19,10 @@ public class Setup
     private static readonly Mutex? Mutex = new(true, "GAME_DIRECT");
 
     public static string RootPath { get; set; } = "";
-    public static string VersionPath { get; set; } = "";
+    public static string UserDataPath { get; set; } = "";
     public static string UserConfigFile { get; set; } = "";
+
+    public static string UserDataName { get; set; } = "UserData";
 
     public static async Task Run()
     {
@@ -244,13 +246,13 @@ public class Setup
     {
         try
         {
-            if (!Directory.Exists(VersionPath))
+            if (!Directory.Exists(UserDataPath))
             {
                 Console.WriteLine("Setup Creating New Version");
-                Directory.CreateDirectory(VersionPath);
+                Directory.CreateDirectory(UserDataPath);
                 CopyFilesRecursively(
                     Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Version"),
-                    Path.Combine(VersionPath)
+                    Path.Combine(UserDataPath)
                     );
             }
         }
@@ -258,7 +260,7 @@ public class Setup
         {
             Console.WriteLine("Setup Error creating version");
             Console.WriteLine(e);
-            Directory.Delete(VersionPath, true);
+            Directory.Delete(UserDataPath, true);
 
             throw new Exception("Setup Could not create version", e);
         }
@@ -282,26 +284,21 @@ public class Setup
         {
             var storageFolder = ApplicationData.Current.LocalFolder;
             RootPath = Path.Combine(storageFolder.Path, "Game Direct");
-
-            var package = Package.Current;
-            var packageId = package.Id;
-            var version = packageId.Version;
-            var Version = string.Format("{0}.{1}.{2}.{3}", version.Major, version.Minor, version.Build, version.Revision);
-            VersionPath = Path.Combine(RootPath, Version);
-            UserConfigFile = Path.Combine(VersionPath, "UserConfig.json");
         }
         catch (Exception)
         {
             RootPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Game Direct");
-#if HOT
-            VersionPath = Path.Combine(RootPath, "0.0.0." + (new Random().NextInt64() >> 48));
-#else
-            VersionPath = Path.Combine(RootPath, "0.0.0.0");
-#endif
-            UserConfigFile = Path.Combine(VersionPath, "UserConfig.json");
         }
 
-        Debug.Print($"Setup VersionPath={VersionPath}");
+#if HOT
+        UserDataPath = Path.Combine(RootPath, UserDataName + "_" + (new Random().NextInt64() >> 48));
+#else
+        UserDataPath = Path.Combine(RootPath, UserDataName);
+#endif
+        UserConfigFile = Path.Combine(UserDataPath, "UserConfig.json");
+        Debug.Print($"Setup RootPath={RootPath}");
+        Debug.Print($"Setup UserDataPath={UserDataPath}");
+        Debug.Print($"Setup UserConfigFile={UserConfigFile}");
     }
 
     private static async Task CheckLicense()

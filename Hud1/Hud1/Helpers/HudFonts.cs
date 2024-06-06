@@ -23,7 +23,7 @@ internal class HudFonts
     {
         var result = new List<HudFont>();
 
-        var fontsFolder = Path.Combine(Setup.VersionPath, "Fonts");
+        var fontsFolder = Path.Combine(Setup.UserDataPath, "Fonts");
         var fileEntries = Directory.GetFiles(fontsFolder, "*.*").Where(s => s.ToLower().EndsWith(".ttf") || s.ToLower().EndsWith(".otf")).ToArray();
         HashSet<string> perms = [];
         for (var i = 0; i < fileEntries.Length; i++)
