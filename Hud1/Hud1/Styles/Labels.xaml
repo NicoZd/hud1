@@ -27,7 +27,7 @@
                 <ControlTemplate TargetType="{x:Type Label}">
                     <Border 
                         Background="{DynamicResource BrushColorMed}" 
-                        Padding="5,1,5,0" 
+                        Padding="7,1,7,0" 
                         Margin="0,1,0,-2" 
                         SnapsToDevicePixels="true" 
                         CornerRadius="5">

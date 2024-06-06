@@ -97,7 +97,7 @@
                 Focusable="False"
                 >
                 <controls:IgnoreWidthControl Margin="0" Focusable="False">
-                    <TextBlock   
+                    <TextBlock
                         Style="{DynamicResource DefaultTextBlockFonts}"
                         Focusable="false"
                         Margin="5,3,5,2"
@@ -109,7 +109,8 @@
                         FontSize="10"
                         LineHeight="12"
                         Text="{Binding State.Hint}"
-                        />
+                        >
+                    </TextBlock>
                 </controls:IgnoreWidthControl>
             </Grid>
 
@@ -185,11 +186,11 @@
                             FontSize="10"
                             LineHeight="12"                            
                             >
-                            • Open and close this window: <Label Style="{DynamicResource ShortcutLabel}">Alt + Shift + G</Label><LineBreak/>
-                            • Toggle Nightvision: <Label Style="{DynamicResource ShortcutLabel}">Alt + Shift + N</Label><LineBreak/>
-                            • Toggle Crosshair: <Label Style="{DynamicResource ShortcutLabel}">Alt + Shift + C</Label><LineBreak/>
-                            • Use cursor keys to navigate and select.<LineBreak/>
-                            • If mouse is hidden, keyboard will automatically activate.<LineBreak/>
+                            <Label Style="{DynamicResource ShortcutLabel}">Alt + Shift + G</Label> to open and close this window<LineBreak/>
+                            <Label Style="{DynamicResource ShortcutLabel}">Alt + Shift + N</Label> to toggle Nightvision<LineBreak/>
+                            <Label Style="{DynamicResource ShortcutLabel}">Alt + Shift + C</Label> to Toggle Crosshair<LineBreak/>
+                            Use cursor keys to navigate and select.<LineBreak/>
+                            If mouse is hidden, keyboard will automatically activate.<LineBreak/>
                         </TextBlock>
                     </controls:IgnoreWidthControl>
                 </StackPanel>
