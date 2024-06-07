@@ -38,8 +38,7 @@
                     LineHeight="12"
                     FontSize="10"
                     >
-                    Press <Label Style="{DynamicResource ShortcutLabel}">Alt + Shift + G</Label> to open and close this window.<LineBreak/>
-                    Use cursor keys and mouse to navigate and select.
+                    <Label Style="{DynamicResource ShortcutLabel}">Alt + Shift + G</Label> to toggle this window. <Label Style="{DynamicResource ShortcutLabel}">Cursor Keys</Label> or <Label Style="{DynamicResource ShortcutLabel}">Mouse</Label> to navigate and select.
                 </TextBlock>
             </controls:IgnoreWidthControl>
 
@@ -183,20 +182,16 @@
                             HorizontalAlignment="Left"
                             TextWrapping="Wrap"
                             Foreground="{DynamicResource BrushInfoSecondary}" 
-                            FontSize="10"
-                            LineHeight="12"                            
                             >
                             <Label Style="{DynamicResource ShortcutLabel}">Alt + Shift + G</Label> to open and close this window<LineBreak/>
                             <Label Style="{DynamicResource ShortcutLabel}">Alt + Shift + N</Label> to toggle Nightvision<LineBreak/>
                             <Label Style="{DynamicResource ShortcutLabel}">Alt + Shift + C</Label> to toggle Crosshair<LineBreak/>
-                            Use cursor keys to navigate and select.<LineBreak/>
-                            If the mouse is hidden, this window and capturing the keyboard will automatically activate.
+                            <LineBreak/>
+                            https://www.jqxp.org/privacy.html
                         </TextBlock>
                     </controls:IgnoreWidthControl>
                 </StackPanel>
             </views:ScrollPanel>
-
         </Grid>
-
     </DockPanel>
 </UserControl>
