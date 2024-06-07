@@ -5,7 +5,7 @@ internal class NavigationStates
     internal static readonly NavigationState ALL = new();
 
     // MENU
-    internal static readonly NavigationState MENU_NIGHTVISION = new() { Hint = "Press Alt+Shift+N at any time to toggle Nightvision. Adjust the Gamma settings to configure the intensity." };
+    internal static readonly NavigationState MENU_NIGHTVISION = new() { Hint = "Press Alt+Shift+N at any time to toggle Nightvision. Adjust the Gamma settings to configure the brightness." };
     internal static readonly NavigationState NIGHTVISION_VISIBLE = new();
 
     internal static readonly NavigationState MENU_MACRO = new() { Hint = "Start Mouse & Keyboard Macros. Open the UserData folder to edit and add new macros. This view will update automatically." };

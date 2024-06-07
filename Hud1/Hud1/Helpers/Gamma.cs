@@ -14,20 +14,12 @@ internal static class Gamma
             var hdc = WindowsAPI.CreateDC(monitor.DeviceName, null, null, IntPtr.Zero).ToInt32();
 
             var idx = gArray;
-            double offset = 0;
-            double range2 = 255;
-
-            var gammas = new double[3];
-            gammas[0] = 1 + ((gamma - 1) * 1);
-            gammas[1] = 1 + ((gamma - 1) * 1);
-            gammas[2] = 1 + ((gamma - 1) * 1);
 
             for (var j = 0; j < 3; j++)
             {
                 for (var i = 0; i < 256; i++)
                 {
-                    var factor = (i + offset) / range2;
-                    factor = Math.Pow(factor, 1 / gammas[j]);
+                    var factor = Math.Pow(i / 255.0, 1.0 / gamma);
                     var arrayVal = (int)(factor * 0xffff);
                     if (arrayVal > 65535)
                         arrayVal = 65535;
