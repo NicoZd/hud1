@@ -132,7 +132,6 @@ public partial class CrosshairViewModel : ObservableObject
         HudViewModel.Instance.MakeNav(NavigationStates.MENU_CROSSHAIR, NavigationStates.CROSSHAIR_VISIBLE,
             [
             NavigationStates.CROSSHAIR_ENABLED,
-            NavigationStates.CROSSHAIR_MONITOR,
             NavigationStates.CROSSHAIR_FORM,
             NavigationStates.CROSSHAIR_COLOR,
             NavigationStates.CROSSHAIR_OPACITY,

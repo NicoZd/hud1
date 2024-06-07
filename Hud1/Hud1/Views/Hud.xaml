@@ -140,7 +140,6 @@
                 <StackPanel Margin="0,0,0,28" controls:Spacing.Vertical="8">
                     <Label Content="Crosshair" Style="{DynamicResource TitleContent}"/>
                     <views:BooleanPanel NavigationState="{Binding Path=States[CROSSHAIR_ENABLED]}" />
-                    <views:SelectionControl NavigationState="{Binding Path=States[CROSSHAIR_MONITOR]}" />
                     <views:SelectionControl NavigationState="{Binding Path=States[CROSSHAIR_FORM]}" />
                     <views:SelectionControl NavigationState="{Binding Path=States[CROSSHAIR_COLOR]}" />
                     <views:SelectionControl NavigationState="{Binding Path=States[CROSSHAIR_OPACITY]}" />
@@ -165,6 +164,7 @@
                     <!--<views:ButtonPanel NavigationState="{Binding Path=States[ACTIVATE]}"/>-->
 
                     <Label Content="Settings" Style="{DynamicResource TitleContent}"/>
+                    <views:SelectionControl NavigationState="{Binding Path=States[CROSSHAIR_MONITOR]}" />
                     <views:SelectionControl NavigationState="{Binding Path=States[HUD_POSITION]}" />
                     <views:BooleanPanel NavigationState="{Binding Path=States[TOUCH_MODE]}" />
 

@@ -23,7 +23,6 @@ internal class NavigationStates
 
     // CROSSHAIR
     internal static readonly NavigationState CROSSHAIR_ENABLED = new() { Label = "Toggle", SelectionLeftLabel = "< Off", SelectionRightLabel = "On >", Hint = "Enable or disable the crosshair with Alt+Shift+C." };
-    internal static readonly NavigationState CROSSHAIR_MONITOR = new() { Label = "Monitor", Hint = "Select the monitor where the crosshair is shown." };
     internal static readonly NavigationState CROSSHAIR_FORM = new() { Label = "Form", Hint = "Select Crosshair Form" };
     internal static readonly NavigationState CROSSHAIR_COLOR = new() { Label = "Color", Hint = "Select Crosshair Color" };
     internal static readonly NavigationState CROSSHAIR_OPACITY = new() { Label = "Opacity", Hint = "Select Crosshair Opacity" };
@@ -32,13 +31,14 @@ internal class NavigationStates
 
     // MACRO
     internal static readonly NavigationState MACROS = new() { };
-    internal static readonly NavigationState MACROS_FOLDER = new() { Label = "Open Macro folder", Hint = "Open explorer.exe in Macros Folder." };
+    internal static readonly NavigationState MACROS_FOLDER = new() { Label = "Open Macros folder", Hint = "Open explorer.exe in Macros Folder." };
 
     // MORE
     internal static readonly NavigationState EXIT = new() { Label = "Exit", Hint = "Exit the HUD and terminate the process. Use Alt + F4 when the window is active." };
 
-    internal static readonly NavigationState HUD_POSITION = new() { Label = "HUD Position", Hint = "Select Position of the HUD" };
-    internal static readonly NavigationState TOUCH_MODE = new() { Label = "Always Active", Hint = "If enabled, this window will behave as if it is the foreground window, remaining active even if a game is the active window. This window will function as if the user is playing a game with the mouse cursor hidden.", SelectionLeftLabel = "< Off", SelectionRightLabel = "On >" };
+    internal static readonly NavigationState CROSSHAIR_MONITOR = new() { Label = "Crosshair Display", Hint = "Select the display where the crosshair is shown." };
+    internal static readonly NavigationState HUD_POSITION = new() { Label = "Window Display Position", Hint = "Select position on desktop of the this window." };
+    internal static readonly NavigationState TOUCH_MODE = new() { Label = "Macro Developer Mode", Hint = "In Macro Developer Mode: Cursor Key navigation only if foreground window. Show as window in Alt-Tab. Basically normal window - not Head up Display", SelectionLeftLabel = "< Off ", SelectionRightLabel = "On >" };
 
     internal static readonly NavigationState STYLE = new() { SelectionLabel = "Green", Label = "Colors", Hint = "Adjust colors of this window." };
     internal static readonly NavigationState FONT = new() { SelectionLabel = "Fira Code", Label = "Font", Hint = "\r\nSelect Font. Open the UserData folder (see macros) to add or remove fonts." };

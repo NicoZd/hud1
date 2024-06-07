@@ -58,8 +58,14 @@ internal partial class MoreViewModel : ObservableObject
            .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.FONT.ExecuteRight);
 
         HudViewModel.Instance.MakeNav(NavigationStates.MENU_MORE, NavigationStates.MORE_VISIBLE,
-            [NavigationStates.EXIT, NavigationStates.HUD_POSITION,
-            NavigationStates.TOUCH_MODE, NavigationStates.STYLE, NavigationStates.FONT]);
+            [
+            NavigationStates.EXIT,
+            NavigationStates.CROSSHAIR_MONITOR,
+            NavigationStates.HUD_POSITION,
+            NavigationStates.TOUCH_MODE,
+            NavigationStates.STYLE,
+            NavigationStates.FONT
+            ]);
     }
 
     private void Shutdown()

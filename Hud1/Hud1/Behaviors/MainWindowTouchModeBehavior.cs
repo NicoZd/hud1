@@ -40,7 +40,7 @@ internal class MainWindowTouchModeBehavior : Behavior<Window>
 
         var extendedStyle = WindowsAPI.GetWindowLong(hwnd, WindowConstants.GWL_EXSTYLE);
 
-        var newStyle = NavigationStates.TOUCH_MODE.SelectionBoolean ?
+        var newStyle = !NavigationStates.TOUCH_MODE.SelectionBoolean ?
             extendedStyle | WindowConstants.WS_EX_NOACTIVATE :
             extendedStyle & ~WindowConstants.WS_EX_NOACTIVATE;
 
@@ -48,7 +48,7 @@ internal class MainWindowTouchModeBehavior : Behavior<Window>
 
         WindowsAPI.SetWindowLong(hwnd, WindowConstants.GWL_EXSTYLE, newStyle);
 
-        if (!NavigationStates.TOUCH_MODE.SelectionBoolean)
+        if (NavigationStates.TOUCH_MODE.SelectionBoolean)
         {
             MainWindow.Instance!.ActivateWindow();
         }
