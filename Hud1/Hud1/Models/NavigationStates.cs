@@ -37,8 +37,8 @@ internal class NavigationStates
     internal static readonly NavigationState EXIT = new() { Label = "Exit", Hint = "Exit the HUD and terminate the process. Use Alt + F4 when the window is active." };
 
     internal static readonly NavigationState CROSSHAIR_MONITOR = new() { Label = "Crosshair Display", Hint = "Select the display where the crosshair is shown." };
-    internal static readonly NavigationState HUD_POSITION = new() { Label = "Window Display Position", Hint = "Select position on desktop of the this window." };
-    internal static readonly NavigationState TOUCH_MODE = new() { Label = "Macro Developer Mode", Hint = "In Macro Developer Mode: Cursor Key navigation only if foreground window. Show as window in Alt-Tab. Basically normal window - not Head up Display", SelectionLeftLabel = "< Off ", SelectionRightLabel = "On >" };
+    internal static readonly NavigationState HUD_POSITION = new() { Label = "Window Display Position", Hint = "Select position on desktop of the this window. Select display and the side of hud." };
+    internal static readonly NavigationState DEVELOPER_MODE = new() { Label = "Macro Developer Mode", Hint = "In Macro Developer Mode: Cursor Key navigation only if this is the active window. Visible in Alt-Tab. Window is activated when hidden mouse is detected.", SelectionLeftLabel = "< Off ", SelectionRightLabel = "On >" };
 
     internal static readonly NavigationState STYLE = new() { SelectionLabel = "Green", Label = "Colors", Hint = "Adjust colors of this window." };
     internal static readonly NavigationState FONT = new() { SelectionLabel = "Fira Code", Label = "Font", Hint = "\r\nSelect Font. Open the UserData folder (see macros) to add or remove fonts." };

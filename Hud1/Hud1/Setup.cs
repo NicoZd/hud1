@@ -134,8 +134,8 @@ public class Setup
             nameof(UserConfig.Current.CrosshairOutline));
 
         // More
-        NavigationStates.TOUCH_MODE.PropertyChanged += OnConfigChanged(
-            nameof(NavigationStates.TOUCH_MODE.SelectionBoolean),
+        NavigationStates.DEVELOPER_MODE.PropertyChanged += OnConfigChanged(
+            nameof(NavigationStates.DEVELOPER_MODE.SelectionBoolean),
             nameof(UserConfig.Current.TouchModeEnabled));
 
         MoreViewModel.Instance.PropertyChanged += OnConfigChanged(

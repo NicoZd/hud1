@@ -34,12 +34,12 @@ internal partial class MoreViewModel : ObservableObject
            .InternalTransition(NavigationTriggers.LEFT, NavigationStates.HUD_POSITION.ExecuteLeft)
            .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.HUD_POSITION.ExecuteRight);
 
-        NavigationStates.TOUCH_MODE.SelectionBoolean = UserConfig.Current.TouchModeEnabled;
-        NavigationStates.TOUCH_MODE.LeftAction = EnableTouchMode(false);
-        NavigationStates.TOUCH_MODE.RightAction = EnableTouchMode(true);
-        Configure(NavigationStates.TOUCH_MODE)
-            .InternalTransition(NavigationTriggers.LEFT, NavigationStates.TOUCH_MODE.ExecuteLeft)
-            .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.TOUCH_MODE.ExecuteRight);
+        NavigationStates.DEVELOPER_MODE.SelectionBoolean = UserConfig.Current.TouchModeEnabled;
+        NavigationStates.DEVELOPER_MODE.LeftAction = EnableTouchMode(false);
+        NavigationStates.DEVELOPER_MODE.RightAction = EnableTouchMode(true);
+        Configure(NavigationStates.DEVELOPER_MODE)
+            .InternalTransition(NavigationTriggers.LEFT, NavigationStates.DEVELOPER_MODE.ExecuteLeft)
+            .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.DEVELOPER_MODE.ExecuteRight);
 
         NavigationStates.STYLE.SelectionLabel = UserConfig.Current.Style;
         SelectStyle(0);
@@ -62,7 +62,7 @@ internal partial class MoreViewModel : ObservableObject
             NavigationStates.EXIT,
             NavigationStates.CROSSHAIR_MONITOR,
             NavigationStates.HUD_POSITION,
-            NavigationStates.TOUCH_MODE,
+            NavigationStates.DEVELOPER_MODE,
             NavigationStates.STYLE,
             NavigationStates.FONT
             ]);
@@ -77,7 +77,7 @@ internal partial class MoreViewModel : ObservableObject
     {
         return () =>
         {
-            NavigationStates.TOUCH_MODE.SelectionBoolean = v;
+            NavigationStates.DEVELOPER_MODE.SelectionBoolean = v;
         };
     }
 

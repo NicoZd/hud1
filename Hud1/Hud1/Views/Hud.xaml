@@ -166,7 +166,7 @@
                     <Label Content="Settings" Style="{DynamicResource TitleContent}"/>
                     <views:SelectionControl NavigationState="{Binding Path=States[CROSSHAIR_MONITOR]}" />
                     <views:SelectionControl NavigationState="{Binding Path=States[HUD_POSITION]}" />
-                    <views:BooleanPanel NavigationState="{Binding Path=States[TOUCH_MODE]}" />
+                    <views:BooleanPanel NavigationState="{Binding Path=States[DEVELOPER_MODE]}" />
 
                     <Label Content="Style" Style="{DynamicResource TitleContent}"/>
                     <views:SelectionControl NavigationState="{Binding Path=States[STYLE]}" />
