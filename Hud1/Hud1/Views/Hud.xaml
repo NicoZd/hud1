@@ -141,7 +141,7 @@
                 <StackPanel Margin="0,0,0,28" controls:Spacing.Vertical="8">
                     <Label Content="Crosshair" Style="{DynamicResource TitleContent}"/>
                     <views:BooleanPanel NavigationState="{Binding Path=States[CROSSHAIR_ENABLED]}" />
-                    <views:SelectionControl NavigationState="{Binding Path=States[CROSSHAIR_DISPLAY]}" />
+                    <views:SelectionControl NavigationState="{Binding Path=States[CROSSHAIR_MONITOR]}" />
                     <views:SelectionControl NavigationState="{Binding Path=States[CROSSHAIR_FORM]}" />
                     <views:SelectionControl NavigationState="{Binding Path=States[CROSSHAIR_COLOR]}" />
                     <views:SelectionControl NavigationState="{Binding Path=States[CROSSHAIR_OPACITY]}" />
@@ -188,9 +188,9 @@
                             >
                             <Label Style="{DynamicResource ShortcutLabel}">Alt + Shift + G</Label> to open and close this window<LineBreak/>
                             <Label Style="{DynamicResource ShortcutLabel}">Alt + Shift + N</Label> to toggle Nightvision<LineBreak/>
-                            <Label Style="{DynamicResource ShortcutLabel}">Alt + Shift + C</Label> to Toggle Crosshair<LineBreak/>
+                            <Label Style="{DynamicResource ShortcutLabel}">Alt + Shift + C</Label> to toggle Crosshair<LineBreak/>
                             Use cursor keys to navigate and select.<LineBreak/>
-                            If mouse is hidden, keyboard will automatically activate.<LineBreak/>
+                            If the mouse is hidden, this window and capturing the keyboard will automatically activate.
                         </TextBlock>
                     </controls:IgnoreWidthControl>
                 </StackPanel>

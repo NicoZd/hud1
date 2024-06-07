@@ -23,7 +23,7 @@ public class UserConfig
     public bool CrosshairOutline { get; set; } = true;
 
     // More
-    public string HudPosition { get; set; } = "1:Left";
+    public string HudPosition { get; set; } = "0:Right";
 
     public bool TouchModeEnabled { get; set; } = false;
 

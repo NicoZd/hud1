@@ -39,8 +39,6 @@
 		<None Remove="Assets\splash.png" />
 		<None Remove="Version\Fonts\Calibri.ttf" />
 		<None Remove="Version\Fonts\FiraCode.ttf" />
-		<None Remove="Version\Fonts\Gill-Sans-Condensed.ttf" />
-		<None Remove="Version\Fonts\Gill-Sans.ttf" />
 		<None Remove="Version\Fonts\HitmarkerText-Italic.ttf" />
 		<None Remove="Version\Fonts\HitmarkerText-Medium.ttf" />
 		<None Remove="Version\Fonts\HitmarkerText-Regular.ttf" />
@@ -76,12 +74,6 @@
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Version\Fonts\FiraCode.ttf">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</Content>
-		<Content Include="Version\Fonts\Gill-Sans-Condensed.ttf">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</Content>
-		<Content Include="Version\Fonts\Gill-Sans.ttf">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Version\Fonts\HitmarkerText-Italic.ttf">

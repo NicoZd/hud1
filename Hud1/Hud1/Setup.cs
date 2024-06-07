@@ -109,8 +109,8 @@ public class Setup
             nameof(NavigationStates.CROSSHAIR_ENABLED.SelectionBoolean),
             nameof(UserConfig.Current.CrosshairEnabled));
 
-        NavigationStates.CROSSHAIR_DISPLAY.PropertyChanged += OnConfigChanged(
-            nameof(NavigationStates.CROSSHAIR_DISPLAY.SelectionLabel),
+        NavigationStates.CROSSHAIR_MONITOR.PropertyChanged += OnConfigChanged(
+            nameof(NavigationStates.CROSSHAIR_MONITOR.SelectionLabel),
             nameof(UserConfig.Current.CrosshairDisplay));
 
         NavigationStates.CROSSHAIR_FORM.PropertyChanged += OnConfigChanged(

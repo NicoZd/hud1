@@ -49,13 +49,13 @@ public partial class CrosshairViewModel : ObservableObject
            .InternalTransition(NavigationTriggers.LEFT, NavigationStates.CROSSHAIR_ENABLED.ExecuteLeft)
            .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.CROSSHAIR_ENABLED.ExecuteRight);
 
-        NavigationStates.CROSSHAIR_DISPLAY.SelectionLabel = UserConfig.Current.CrosshairDisplay;
+        NavigationStates.CROSSHAIR_MONITOR.SelectionLabel = UserConfig.Current.CrosshairDisplay;
         ChangeDisplay(0)();
-        NavigationStates.CROSSHAIR_DISPLAY.LeftAction = ChangeDisplay(-1);
-        NavigationStates.CROSSHAIR_DISPLAY.RightAction = ChangeDisplay(1);
-        Configure(NavigationStates.CROSSHAIR_DISPLAY)
-           .InternalTransition(NavigationTriggers.LEFT, NavigationStates.CROSSHAIR_DISPLAY.ExecuteLeft)
-           .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.CROSSHAIR_DISPLAY.ExecuteRight);
+        NavigationStates.CROSSHAIR_MONITOR.LeftAction = ChangeDisplay(-1);
+        NavigationStates.CROSSHAIR_MONITOR.RightAction = ChangeDisplay(1);
+        Configure(NavigationStates.CROSSHAIR_MONITOR)
+           .InternalTransition(NavigationTriggers.LEFT, NavigationStates.CROSSHAIR_MONITOR.ExecuteLeft)
+           .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.CROSSHAIR_MONITOR.ExecuteRight);
 
         NavigationStates.CROSSHAIR_FORM.SelectionLabel = UserConfig.Current.CrosshairForm;
         NavigationStates.CROSSHAIR_FORM.Options = [new Option("Dot"), new Option("Ring"), new Option("Cross"), new Option("Diagonal"), new Option("3 Dots")];
@@ -132,7 +132,7 @@ public partial class CrosshairViewModel : ObservableObject
         HudViewModel.Instance.MakeNav(NavigationStates.MENU_CROSSHAIR, NavigationStates.CROSSHAIR_VISIBLE,
             [
             NavigationStates.CROSSHAIR_ENABLED,
-            NavigationStates.CROSSHAIR_DISPLAY,
+            NavigationStates.CROSSHAIR_MONITOR,
             NavigationStates.CROSSHAIR_FORM,
             NavigationStates.CROSSHAIR_COLOR,
             NavigationStates.CROSSHAIR_OPACITY,
@@ -147,10 +147,10 @@ public partial class CrosshairViewModel : ObservableObject
     {
         return () =>
         {
-            var current = int.Parse(NavigationStates.CROSSHAIR_DISPLAY.SelectionLabel);
+            var current = int.Parse(NavigationStates.CROSSHAIR_MONITOR.SelectionLabel);
             var next = Math.Min(Math.Max(current + dir, 0), Monitors.All.Count - 1);
             Debug.Print($"CrosshairViewModel ChangeDisplay {current} => {next}");
-            NavigationStates.CROSSHAIR_DISPLAY.SelectionLabel = "" + next;
+            NavigationStates.CROSSHAIR_MONITOR.SelectionLabel = "" + next;
         };
     }
 

@@ -5,25 +5,25 @@ internal class NavigationStates
     internal static readonly NavigationState ALL = new();
 
     // MENU
-    internal static readonly NavigationState MENU_NIGHTVISION = new() { Hint = "Press Alt+Shift+N anytime to toggle Nightvision. Adjust Gamma to configure intensity." };
+    internal static readonly NavigationState MENU_NIGHTVISION = new() { Hint = "Press Alt+Shift+N at any time to toggle Nightvision. Adjust the Gamma settings to configure the intensity." };
     internal static readonly NavigationState NIGHTVISION_VISIBLE = new();
 
-    internal static readonly NavigationState MENU_MACRO = new() { Hint = "Start Mouse & Keyboard Macros. Open UserData folder to edit and add new Macros. This view will update automatically." };
+    internal static readonly NavigationState MENU_MACRO = new() { Hint = "Start Mouse & Keyboard Macros. Open the UserData folder to edit and add new macros. This view will update automatically." };
     internal static readonly NavigationState MACRO_VISIBLE = new();
 
-    internal static readonly NavigationState MENU_CROSSHAIR = new() { Hint = "Press Alt+Shift+C anytime to toggle crosshair. Ajdust Form, Color, Size here." };
+    internal static readonly NavigationState MENU_CROSSHAIR = new() { Hint = "Press Alt+Shift+C at any time to toggle the crosshair. Adjust its form, color, and size here." };
     internal static readonly NavigationState CROSSHAIR_VISIBLE = new();
 
-    internal static readonly NavigationState MENU_MORE = new() { Hint = "Quit Application, Configure HUD and Style." };
+    internal static readonly NavigationState MENU_MORE = new() { Hint = "Quit the application, configure the HUD, and adjust the style" };
     internal static readonly NavigationState MORE_VISIBLE = new();
 
     // NIGHTVISION
-    internal static readonly NavigationState NIGHTVISION_ENABLED = new() { Label = "Toggle", Hint = "Use Alt+Shift+N anytime to toogle Nightvision.", SelectionLeftLabel = "< Off", SelectionRightLabel = "On >" };
-    internal static readonly NavigationState GAMMA = new() { Label = "Gamma", Hint = "Adjust Windows Desktop Gamma while Nightvision toggled on.", AllowRepeat = true };
+    internal static readonly NavigationState NIGHTVISION_ENABLED = new() { Label = "Toggle", Hint = "Use Alt+Shift+N at any time to toggle Nightvision.", SelectionLeftLabel = "< Off", SelectionRightLabel = "On >" };
+    internal static readonly NavigationState GAMMA = new() { Label = "Gamma", Hint = "Adjust Windows Desktop Gamma while Nightvision is toggled on.", AllowRepeat = true };
 
     // CROSSHAIR
-    internal static readonly NavigationState CROSSHAIR_ENABLED = new() { Label = "Toggle", SelectionLeftLabel = "< Off", SelectionRightLabel = "On >", Hint = "Enable or disable Crosshair (Alt+Shift+C)" };
-    internal static readonly NavigationState CROSSHAIR_DISPLAY = new() { Label = "Monitor", Hint = "Select Monitor where Crosshair is shown." };
+    internal static readonly NavigationState CROSSHAIR_ENABLED = new() { Label = "Toggle", SelectionLeftLabel = "< Off", SelectionRightLabel = "On >", Hint = "Enable or disable the crosshair with Alt+Shift+C." };
+    internal static readonly NavigationState CROSSHAIR_MONITOR = new() { Label = "Monitor", Hint = "Select the monitor where the crosshair is shown." };
     internal static readonly NavigationState CROSSHAIR_FORM = new() { Label = "Form", Hint = "Select Crosshair Form" };
     internal static readonly NavigationState CROSSHAIR_COLOR = new() { Label = "Color", Hint = "Select Crosshair Color" };
     internal static readonly NavigationState CROSSHAIR_OPACITY = new() { Label = "Opacity", Hint = "Select Crosshair Opacity" };
@@ -35,11 +35,11 @@ internal class NavigationStates
     internal static readonly NavigationState MACROS_FOLDER = new() { Label = "Open Macro folder", Hint = "Open explorer.exe in Macros Folder." };
 
     // MORE
-    internal static readonly NavigationState EXIT = new() { Label = "Exit", Hint = "Exit HUD and terminate process. Alt + F4 will do when window is active." };
+    internal static readonly NavigationState EXIT = new() { Label = "Exit", Hint = "Exit the HUD and terminate the process. Use Alt + F4 when the window is active." };
 
     internal static readonly NavigationState HUD_POSITION = new() { Label = "HUD Position", Hint = "Select Position of the HUD" };
-    internal static readonly NavigationState TOUCH_MODE = new() { Label = "Touch Mode", Hint = "If enabled this window will not be activated on mouse or touch interaction.", SelectionLeftLabel = "< Off", SelectionRightLabel = "On >" };
+    internal static readonly NavigationState TOUCH_MODE = new() { Label = "Always Active", Hint = "If enabled, this window will behave as if it is the foreground window, remaining active even if a game is the active window. This window will function as if the user is playing a game with the mouse cursor hidden.", SelectionLeftLabel = "< Off", SelectionRightLabel = "On >" };
 
     internal static readonly NavigationState STYLE = new() { SelectionLabel = "Green", Label = "Colors", Hint = "Adjust colors of this window." };
-    internal static readonly NavigationState FONT = new() { SelectionLabel = "Fira Code", Label = "Font", Hint = "Select Font, open UserData folder (see macros) to add or remove fonts." };
+    internal static readonly NavigationState FONT = new() { SelectionLabel = "Fira Code", Label = "Font", Hint = "\r\nSelect Font. Open the UserData folder (see macros) to add or remove fonts." };
 }
