@@ -136,10 +136,10 @@ public class Setup
         // More
         NavigationStates.DEVELOPER_MODE.PropertyChanged += OnConfigChanged(
             nameof(NavigationStates.DEVELOPER_MODE.SelectionBoolean),
-            nameof(UserConfig.Current.TouchModeEnabled));
+            nameof(UserConfig.Current.DevModeEnabled));
 
         MoreViewModel.Instance.PropertyChanged += OnConfigChanged(
-            nameof(MoreViewModel.Instance.HudPosition),
+            nameof(NavigationStates.HUD_POSITION.SelectionLabel),
             nameof(UserConfig.Current.HudPosition));
 
         NavigationStates.STYLE.PropertyChanged += OnConfigChanged(

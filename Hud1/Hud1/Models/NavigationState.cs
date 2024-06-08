@@ -13,7 +13,7 @@ namespace Hud1.Models;
 internal partial class Option : ObservableObject
 {
     [ObservableProperty]
-    private string _value = "";
+    private object _value = "";
 
     [ObservableProperty]
     private Image? _image = null;
@@ -21,7 +21,7 @@ internal partial class Option : ObservableObject
     [ObservableProperty]
     internal bool _selected = false;
 
-    internal Option(string value)
+    internal Option(object value)
     {
         Value = value;
     }
@@ -57,7 +57,7 @@ internal partial class NavigationState : ObservableObject
     private string _hint = "";
 
     [ObservableProperty]
-    private string selectionLabel = "";
+    private object selectionLabel = "";
 
     [ObservableProperty]
     private bool selectionBoolean = true;
@@ -183,12 +183,11 @@ internal partial class NavigationState : ObservableObject
         var currentIndex = 0;
         try
         {
-            currentIndex = Options.Select((item, index) => new { Item = item, Index = index }).First(i => i.Item.Value == SelectionLabel).Index;
+            currentIndex = Options.Select((item, index) => new { Item = item, Index = index }).First(i => i.Item.Value.Equals(SelectionLabel)).Index;
         }
         catch (Exception) { };
         Options[currentIndex].Selected = true;
         SelectionLabel = Options[currentIndex].Value;
-
     }
 
     [RelayCommand]

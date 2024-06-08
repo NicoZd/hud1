@@ -1,4 +1,5 @@
 ﻿using Hud1.Helpers;
+using Hud1.Models;
 using Hud1.ViewModels;
 using Hud1.Windows;
 using Microsoft.Xaml.Behaviors;
@@ -28,19 +29,19 @@ internal class MainWindowLayoutBehavior : Behavior<MainWindow>
     {
         var window = AssociatedObject;
 
-        var updates = new FunctionDebounce(UpdateWindowPosition);
+        var updates = new FunctionDebounce<string>(UpdateWindowPosition);
         Monitors.RegisterMonitorsChange(window, () =>
         {
-            _ = updates.Run(MoreViewModel.Instance.HudPosition);
+            _ = updates.Run((string)NavigationStates.HUD_POSITION.SelectionLabel);
         });
-        MoreViewModel.Instance.PropertyChanged += (object? sender, PropertyChangedEventArgs e) =>
+        NavigationStates.HUD_POSITION.PropertyChanged += (object? sender, PropertyChangedEventArgs e) =>
         {
-            if (e.PropertyName == nameof(MoreViewModel.Instance.HudPosition))
+            if (e.PropertyName == nameof(NavigationStates.HUD_POSITION.SelectionLabel))
             {
-                _ = updates.Run(MoreViewModel.Instance.HudPosition);
+                _ = updates.Run((string)NavigationStates.HUD_POSITION.SelectionLabel);
             }
         };
-        await updates.Run(MoreViewModel.Instance.HudPosition);
+        await updates.Run((string)NavigationStates.HUD_POSITION.SelectionLabel);
         Debug.Print($"MainWindowLayoutBehavior Show {Entry.Millis()}");
     }
 

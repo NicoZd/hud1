@@ -8,7 +8,7 @@ public class UserConfig
     public int GammaIndex { get; set; } = 4;
 
     // Crosshair
-    public string CrosshairDisplay { get; set; } = "0";
+    public int CrosshairDisplay { get; set; } = 0;
 
     public bool CrosshairEnabled { get; set; } = true;
 
@@ -16,16 +16,16 @@ public class UserConfig
 
     public string CrosshairColor { get; set; } = "#FFFFFF";
 
-    public string CrosshairOpacity { get; set; } = "1";
+    public double CrosshairOpacity { get; set; } = 1;
 
-    public string CrosshairSize { get; set; } = "3";
+    public int CrosshairSize { get; set; } = 3;
 
     public bool CrosshairOutline { get; set; } = true;
 
     // More
     public string HudPosition { get; set; } = "0:Right";
 
-    public bool TouchModeEnabled { get; set; } = false;
+    public bool DevModeEnabled { get; set; } = false;
 
     public string Style { get; set; } = "Green";
 

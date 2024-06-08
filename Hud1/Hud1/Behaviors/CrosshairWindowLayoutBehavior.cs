@@ -29,27 +29,26 @@ internal class CrosshairWindowLayoutBehavior : Behavior<CrosshairWindow>
     {
         var window = AssociatedObject;
 
-        var updates = new FunctionDebounce(UpdateWindowPosition);
+        var updates = new FunctionDebounce<int>(UpdateWindowPosition);
         Monitors.RegisterMonitorsChange(window, () =>
         {
-            _ = updates.Run(NavigationStates.CROSSHAIR_MONITOR.SelectionLabel);
+            _ = updates.Run((int)NavigationStates.CROSSHAIR_MONITOR.SelectionLabel);
         });
         NavigationStates.CROSSHAIR_MONITOR.PropertyChanged += (object? sender, PropertyChangedEventArgs e) =>
         {
             if (e.PropertyName == nameof(NavigationStates.CROSSHAIR_MONITOR.SelectionLabel))
             {
-                _ = updates.Run(NavigationStates.CROSSHAIR_MONITOR.SelectionLabel);
+                _ = updates.Run((int)NavigationStates.CROSSHAIR_MONITOR.SelectionLabel);
             }
         };
-        _ = updates.Run(NavigationStates.CROSSHAIR_MONITOR.SelectionLabel);
+        _ = updates.Run((int)NavigationStates.CROSSHAIR_MONITOR.SelectionLabel);
     }
 
-    private async Task UpdateWindowPosition(string selectionLabel)
+    private async Task UpdateWindowPosition(int monitorIndex)
     {
         var window = AssociatedObject;
 
         var monitors = Monitors.All;
-        var monitorIndex = int.Parse(selectionLabel);
 
         if (monitors.Count - 1 < monitorIndex)
         {
@@ -61,7 +60,7 @@ internal class CrosshairWindowLayoutBehavior : Behavior<CrosshairWindow>
         var monitor = monitors.ElementAt(monitorIndex);
         var foregroundRestorer = new MainWindowForegroundRestorer();
 
-        Debug.Print($"CrosshairWindowLayoutBehavior UpdateWindowPosition {monitorIndex} {monitor.DeviceName} {monitor.Bounds}  selectionLabel: {selectionLabel}");
+        Debug.Print($"CrosshairWindowLayoutBehavior UpdateWindowPosition {monitorIndex} {monitor.DeviceName} {monitor.Bounds}");
 
         await ((Storyboard)window.FindResource("FadeOut")).BeginAsync();
 

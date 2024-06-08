@@ -1,24 +1,36 @@
 ﻿using System.Diagnostics;
 
 namespace Hud1.Helpers;
-internal class FunctionDebounce
+internal class FunctionDebounce<T>
 {
-    private readonly Func<string, Task> function;
-    private string next = string.Empty;
+    class NextValue
+    {
+        internal T Value;
+
+        internal NextValue(T value2)
+        {
+            Value = value2;
+        }
+    }
+
+    private readonly Func<T, Task> function;
+
+    private NextValue? next = null;
+
     private bool running = false;
 
-    internal FunctionDebounce(Func<string, Task> function)
+    internal FunctionDebounce(Func<T, Task> function)
     {
         this.function = function;
     }
 
-    internal async Task Run(string value)
+    internal async Task Run(T value)
     {
         // Debug.Print($"FunctionDebounce Run {value}");
         if (running)
         {
             // Debug.Print($"FunctionDebounce set next: {value}");
-            next = value;
+            next = new NextValue(value);
             return;
         }
 
@@ -35,12 +47,12 @@ internal class FunctionDebounce
 
         running = false;
 
-        if (!string.Empty.Equals(next))
+        if (next != null)
         {
-            var next = this.next;
-            this.next = string.Empty;
+            T nextValue = next.Value;
+            next = null;
             // Debug.Print($"FunctionDebounce Run next: {next}");
-            await Run(next);
+            await Run(nextValue);
         }
     }
 }

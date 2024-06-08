@@ -103,7 +103,7 @@ public partial class CrosshairViewModel : ObservableObject
 
         foreach (var option in NavigationStates.CROSSHAIR_COLOR.Options)
         {
-            ColorOptions.Add(option.Value, (SolidColorBrush)new BrushConverter().ConvertFromString(option.Value)!);
+            ColorOptions.Add((string)option.Value, (SolidColorBrush)new BrushConverter().ConvertFromString((string)option.Value)!);
         }
 
         NavigationStates.CROSSHAIR_OPACITY.SelectionLabel = UserConfig.Current.CrosshairOpacity;
@@ -114,7 +114,7 @@ public partial class CrosshairViewModel : ObservableObject
            .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.CROSSHAIR_OPACITY.ExecuteRight);
 
         NavigationStates.CROSSHAIR_SIZE.SelectionLabel = UserConfig.Current.CrosshairSize;
-        NavigationStates.CROSSHAIR_SIZE.Options = [new Option("1"), new Option("2"), new Option("3"), new Option("4"), new Option("5")];
+        NavigationStates.CROSSHAIR_SIZE.Options = [new Option(1), new Option(2), new Option(3), new Option(4), new Option(5)];
         NavigationStates.CROSSHAIR_SIZE.SelectOption();
         NavigationStates.CROSSHAIR_SIZE.LeftAction = NavigationStates.CROSSHAIR_SIZE.OptionLeft;
         NavigationStates.CROSSHAIR_SIZE.RightAction = NavigationStates.CROSSHAIR_SIZE.OptionRight;
@@ -146,10 +146,10 @@ public partial class CrosshairViewModel : ObservableObject
     {
         return () =>
         {
-            var current = int.Parse(NavigationStates.CROSSHAIR_MONITOR.SelectionLabel);
+            var current = (int)(NavigationStates.CROSSHAIR_MONITOR.SelectionLabel);
             var next = Math.Min(Math.Max(current + dir, 0), Monitors.All.Count - 1);
             Debug.Print($"CrosshairViewModel ChangeDisplay {current} => {next}");
-            NavigationStates.CROSSHAIR_MONITOR.SelectionLabel = "" + next;
+            NavigationStates.CROSSHAIR_MONITOR.SelectionLabel = next;
         };
     }
 
@@ -157,9 +157,9 @@ public partial class CrosshairViewModel : ObservableObject
     {
         return () =>
         {
-            var current = double.Parse(NavigationStates.CROSSHAIR_OPACITY.SelectionLabel);
+            var current = (double)(NavigationStates.CROSSHAIR_OPACITY.SelectionLabel);
             var next = Math.Min(Math.Max(current + dir, 0.1), 1);
-            NavigationStates.CROSSHAIR_OPACITY.SelectionLabel = "" + (Math.Round(next * 10) / 10);
+            NavigationStates.CROSSHAIR_OPACITY.SelectionLabel = next;
         };
     }
 
@@ -171,16 +171,16 @@ public partial class CrosshairViewModel : ObservableObject
         // Debug.Print("Color {0}", NavigationStates.CROSSHAIR_COLOR.SelectionLabel);
         // Debug.Print("Outline {0}", NavigationStates.CROSSHAIR_OUTLINE.SelectionBoolean);
 
-        var scale = int.Parse(NavigationStates.CROSSHAIR_SIZE.SelectionLabel);
-        var color = ColorOptions[NavigationStates.CROSSHAIR_COLOR.SelectionLabel];
+        var scale = (int)NavigationStates.CROSSHAIR_SIZE.SelectionLabel;
+        var color = ColorOptions[(string)NavigationStates.CROSSHAIR_COLOR.SelectionLabel];
 
-        if (!FormRenderFunctions.ContainsKey(NavigationStates.CROSSHAIR_FORM.SelectionLabel))
+        if (!FormRenderFunctions.ContainsKey((string)NavigationStates.CROSSHAIR_FORM.SelectionLabel))
         {
             Debug.Print("Form is null {0}", NavigationStates.CROSSHAIR_FORM.SelectionLabel);
             return;
         }
 
-        var formFunction = FormRenderFunctions[NavigationStates.CROSSHAIR_FORM.SelectionLabel];
+        var formFunction = FormRenderFunctions[(string)NavigationStates.CROSSHAIR_FORM.SelectionLabel];
         var geometryDrawing = GetGeometryDrawing(scale, color, formFunction);
 
         DrawingImage drawingImage = new(geometryDrawing);
@@ -202,7 +202,7 @@ public partial class CrosshairViewModel : ObservableObject
     {
         foreach (var option in NavigationStates.CROSSHAIR_FORM.Options)
         {
-            var optionFormFunction = FormRenderFunctions[option.Value];
+            var optionFormFunction = FormRenderFunctions[(string)option.Value];
             var brush = new SolidColorBrush(((SolidColorBrush)Application.Current.FindResource("BrushSolidSuperBright")).Color);
             var geometryDrawing = GetGeometryDrawing(5, brush, optionFormFunction);
 
@@ -221,7 +221,7 @@ public partial class CrosshairViewModel : ObservableObject
 
         foreach (var option in NavigationStates.CROSSHAIR_COLOR.Options)
         {
-            var colorOption = ColorOptions[option.Value];
+            var colorOption = ColorOptions[(string)option.Value];
 
             GeometryGroup areaGroup = new();
             areaGroup.Children.Add(new RectangleGeometry(new Rect(-10, -10, 20, 20)));
@@ -243,7 +243,7 @@ public partial class CrosshairViewModel : ObservableObject
 
         foreach (var option in NavigationStates.CROSSHAIR_SIZE.Options)
         {
-            var sizeOption = int.Parse(option.Value);
+            var sizeOption = (int)option.Value;
             var geometryDrawing = GetGeometryDrawing(sizeOption, color, formFunction);
 
             DrawingImage drawingImage = new(geometryDrawing);
@@ -272,7 +272,7 @@ public partial class CrosshairViewModel : ObservableObject
         //drawingWithFixedSize.Children.Insert(0, new GeometryDrawing() { Geometry = areaGroup, Brush = (Brush)new BrushConverter().ConvertFromString("#33ff0000") });
 
 
-        drawingWithFixedSize.Opacity = double.Parse(NavigationStates.CROSSHAIR_OPACITY.SelectionLabel);
+        drawingWithFixedSize.Opacity = (double)NavigationStates.CROSSHAIR_OPACITY.SelectionLabel;
 
         return drawingWithFixedSize;
     }

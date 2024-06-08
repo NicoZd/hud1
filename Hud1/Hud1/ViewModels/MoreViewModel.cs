@@ -11,13 +11,8 @@ internal partial class MoreViewModel : ObservableObject
 
     internal static readonly MoreViewModel Instance = new();
 
-    [ObservableProperty]
-    private string _hudPosition = "0:Right";
-
     private MoreViewModel()
     {
-        _hudPosition = UserConfig.Current.HudPosition;
-        AssignNextHudPosition(0);
     }
 
     internal void BuildNavigation()
@@ -28,13 +23,15 @@ internal partial class MoreViewModel : ObservableObject
         Configure(NavigationStates.EXIT)
             .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.EXIT.ExecuteRight);
 
+        NavigationStates.HUD_POSITION.SelectionLabel = UserConfig.Current.HudPosition;
+        AssignNextHudPosition(0);
         NavigationStates.HUD_POSITION.LeftAction = SelectHudPos(-1);
         NavigationStates.HUD_POSITION.RightAction = SelectHudPos(1);
         Configure(NavigationStates.HUD_POSITION)
            .InternalTransition(NavigationTriggers.LEFT, NavigationStates.HUD_POSITION.ExecuteLeft)
            .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.HUD_POSITION.ExecuteRight);
 
-        NavigationStates.DEVELOPER_MODE.SelectionBoolean = UserConfig.Current.TouchModeEnabled;
+        NavigationStates.DEVELOPER_MODE.SelectionBoolean = UserConfig.Current.DevModeEnabled;
         NavigationStates.DEVELOPER_MODE.LeftAction = EnableTouchMode(false);
         NavigationStates.DEVELOPER_MODE.RightAction = EnableTouchMode(true);
         Configure(NavigationStates.DEVELOPER_MODE)
@@ -105,7 +102,7 @@ internal partial class MoreViewModel : ObservableObject
             }
         }
 
-        var currentOptionIndex = options.IndexOf(HudPosition);
+        var currentOptionIndex = options.IndexOf((string)NavigationStates.HUD_POSITION.SelectionLabel);
         if (currentOptionIndex == -1)
         {
             currentOptionIndex = 0;
@@ -117,10 +114,9 @@ internal partial class MoreViewModel : ObservableObject
         var newIndex = Math.Min(Math.Max(currentOptionIndex, 0), options.Count - 1);
         var newHudPosition = options[newIndex];
 
-        Console.WriteLine($"AssignNextHudPosition dir = {dir}, {HudPosition} => {options[newIndex]}");
-        HudPosition = options[newIndex];
+        Console.WriteLine($"AssignNextHudPosition dir = {dir}, {NavigationStates.HUD_POSITION.SelectionLabel} => {options[newIndex]}");
 
-        NavigationStates.HUD_POSITION.SelectionLabel = "Display " + HudPosition.Split(":")[0] + ", " + HudPosition.Split(":")[1];
+        NavigationStates.HUD_POSITION.SelectionLabel = options[newIndex];
     }
 
     private void NextStyle()
@@ -143,7 +139,7 @@ internal partial class MoreViewModel : ObservableObject
         }
         var prevStyleIndex = (currentStyleIndex + dir + Styles.Length) % Styles.Length;
         NavigationStates.STYLE.SelectionLabel = Styles[prevStyleIndex];
-        AppStyle.SelectStyle(NavigationStates.STYLE.SelectionLabel, NavigationStates.FONT.SelectionLabel);
+        AppStyle.SelectStyle((string)NavigationStates.STYLE.SelectionLabel, (string)NavigationStates.FONT.SelectionLabel);
     }
 
     private void NextFont()
@@ -165,7 +161,7 @@ internal partial class MoreViewModel : ObservableObject
             return;
         }
 
-        var currentStyleIndex = fonts.FindIndex(x => x.Name == NavigationStates.FONT.SelectionLabel);
+        var currentStyleIndex = fonts.FindIndex(x => x.Name.Equals(NavigationStates.FONT.SelectionLabel));
         if (currentStyleIndex == -1)
         {
             currentStyleIndex = 0;
@@ -174,6 +170,6 @@ internal partial class MoreViewModel : ObservableObject
 
         var nextStyleIndex = (currentStyleIndex + dir + fonts.Count) % fonts.Count;
         NavigationStates.FONT.SelectionLabel = fonts[nextStyleIndex].Name;
-        AppStyle.SelectStyle(NavigationStates.STYLE.SelectionLabel, NavigationStates.FONT.SelectionLabel);
+        AppStyle.SelectStyle((string)NavigationStates.STYLE.SelectionLabel, (string)NavigationStates.FONT.SelectionLabel);
     }
 }
