@@ -256,7 +256,7 @@ public partial class CrosshairViewModel : ObservableObject
         foreach (var option in NavigationStates.CROSSHAIR_SIZE.Options)
         {
             var sizeOption = (int)option.Value;
-            var geometryDrawing = GetGeometryDrawing(sizeOption, defaultBrush, 1, formFunction);
+            var geometryDrawing = GetGeometryDrawing(sizeOption, color, 1, formFunction);
 
             DrawingImage drawingImage = new(geometryDrawing);
             drawingImage.Freeze();

@@ -149,34 +149,31 @@
                     <views:SelectionControl NavigationState="{Binding Path=States[CROSSHAIR_SIZE]}" />
                     <views:BooleanPanel NavigationState="{Binding Path=States[CROSSHAIR_OUTLINE]}" />
 
-                    <Border
-                        BorderThickness="1"
-                        BorderBrush="{DynamicResource BrushColorMed}"
-                        Padding="4,0,0,0"
-                        Background="{DynamicResource BrushColorMedLow}"
-                        >
-                        <Grid>
-                            <Label Style="{DynamicResource PanelTitleContent}">Preview</Label>
-                            <StackPanel Margin="3" Orientation="Horizontal" controls:Spacing.Horizontal="4" HorizontalAlignment="Center">
-                                <Border Background="#050505" BorderBrush="{DynamicResource BrushColorMed}" BorderThickness="1" Padding="1">
-                                    <Grid>
-                                        <Grid.LayoutTransform>
-                                            <ScaleTransform ScaleX="1" ScaleY="1"/>
-                                        </Grid.LayoutTransform>
-                                        <ContentPresenter Content="{Binding Path=CrosshairImagePreview1, Source={x:Static viewModels:CrosshairViewModel.Instance}}"/>
-                                    </Grid>
-                                </Border>
-                                <Border Background="#eeeeee" BorderBrush="{DynamicResource BrushColorMed}" BorderThickness="1" Padding="1">
-                                    <Grid>
-                                        <Grid.LayoutTransform>
-                                            <ScaleTransform ScaleX="1" ScaleY="1"/>
-                                        </Grid.LayoutTransform>
-                                        <ContentPresenter Content="{Binding Path=CrosshairImagePreview2, Source={x:Static viewModels:CrosshairViewModel.Instance}}"/>
-                                    </Grid>
-                                </Border>
-                            </StackPanel>
-                        </Grid>
-                    </Border>
+                    <Grid Background="{DynamicResource BrushColorMedLow}">
+                        <Label Style="{DynamicResource InfoLabelSecondary}" Margin="4,0,0,0" VerticalAlignment="Center">Preview</Label>
+                        <StackPanel                                
+                            Margin="3"
+                            Orientation="Horizontal"
+                            controls:Spacing.Horizontal="4"
+                            HorizontalAlignment="Center">
+                            <Border Background="#050505" BorderBrush="{DynamicResource BrushColorMedLow}" BorderThickness="1" Padding="1">
+                                <Grid>
+                                    <Grid.LayoutTransform>
+                                        <ScaleTransform ScaleX="1" ScaleY="1"/>
+                                    </Grid.LayoutTransform>
+                                    <ContentPresenter Content="{Binding Path=CrosshairImagePreview1, Source={x:Static viewModels:CrosshairViewModel.Instance}}"/>
+                                </Grid>
+                            </Border>
+                            <Border Background="#eeeeee" BorderBrush="{DynamicResource BrushColorMedLow}" BorderThickness="1" Padding="1">
+                                <Grid>
+                                    <Grid.LayoutTransform>
+                                        <ScaleTransform ScaleX="1" ScaleY="1"/>
+                                    </Grid.LayoutTransform>
+                                    <ContentPresenter Content="{Binding Path=CrosshairImagePreview2, Source={x:Static viewModels:CrosshairViewModel.Instance}}"/>
+                                </Grid>
+                            </Border>
+                        </StackPanel>
+                    </Grid>
 
                 </StackPanel>
             </views:ScrollPanel>
