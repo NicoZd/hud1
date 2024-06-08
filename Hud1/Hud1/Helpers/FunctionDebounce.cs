@@ -3,7 +3,7 @@
 namespace Hud1.Helpers;
 internal class FunctionDebounce<T>
 {
-    class NextValue
+    private class NextValue
     {
         internal T Value;
 
@@ -49,7 +49,7 @@ internal class FunctionDebounce<T>
 
         if (next != null)
         {
-            T nextValue = next.Value;
+            var nextValue = next.Value;
             next = null;
             // Debug.Print($"FunctionDebounce Run next: {next}");
             await Run(nextValue);

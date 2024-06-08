@@ -1,7 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Hud1.Helpers;
 using Hud1.Models;
-using System.Diagnostics;
 using Windows.System;
 
 namespace Hud1.ViewModels;

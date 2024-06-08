@@ -152,7 +152,7 @@ public partial class CrosshairViewModel : ObservableObject
     {
         return () =>
         {
-            var current = (int)(NavigationStates.CROSSHAIR_MONITOR.Value);
+            var current = (int)NavigationStates.CROSSHAIR_MONITOR.Value;
             var next = Math.Min(Math.Max(current + dir, 0), Monitors.All.Count - 1);
             Debug.Print($"CrosshairViewModel ChangeDisplay {current} => {next}");
             NavigationStates.CROSSHAIR_MONITOR.Value = next;
@@ -163,7 +163,7 @@ public partial class CrosshairViewModel : ObservableObject
     {
         return () =>
         {
-            var current = (double)(NavigationStates.CROSSHAIR_OPACITY.Value);
+            var current = (double)NavigationStates.CROSSHAIR_OPACITY.Value;
             var next = Math.Min(Math.Max(current + dir, 0.1), 1);
             NavigationStates.CROSSHAIR_OPACITY.Value = next;
         };

@@ -55,7 +55,7 @@ internal class DisplayConverter : IValueConverter
             var elems = stringValue.Split(':');
             if (elems.Length == 2)
             {
-                var display = Int32.Parse(elems[0]) + 1;
+                var display = int.Parse(elems[0]) + 1;
                 return "Display " + display + ", " + elems[1];
             }
 
@@ -73,12 +73,7 @@ internal class GammaConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (value is int intValue)
-        {
-            return "" + NightvisionViewModel.Gammas[intValue];
-        }
-
-        return "";
+        return value is int intValue ? "" + NightvisionViewModel.Gammas[intValue] : (object)"";
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -92,12 +87,7 @@ internal class DoubleConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (value is double doubleValue)
-        {
-            return "" + Math.Round(doubleValue * 10) / 10;
-        }
-
-        return "";
+        return value is double doubleValue ? "" + (Math.Round(doubleValue * 10) / 10) : (object)"";
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

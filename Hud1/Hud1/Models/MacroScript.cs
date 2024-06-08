@@ -1,12 +1,9 @@
 ﻿using Hud1.Helpers;
 using MoonSharp.Interpreter;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Dynamic;
 using System.IO;
-using System.Runtime.InteropServices;
 using System.Windows;
-using System.Windows.Input;
 using System.Windows.Threading;
 using Windows.System;
 
@@ -27,7 +24,7 @@ internal class MacroScript
     {
         public override bool TryGetMember(GetMemberBinder binder, out object result)
         {
-            string name = binder.Name;
+            var name = binder.Name;
             var enumExists = Enum.TryParse(binder.Name, out VirtualKey key);
             result = key;
             return enumExists;
@@ -129,9 +126,9 @@ internal class MacroScript
 
         script.Globals["FindWindow"] = (string name) =>
         {
-            List<string> result = new List<string>();
-            Process[] processRunning = Process.GetProcesses();
-            foreach (Process pr in processRunning)
+            List<string> result = [];
+            var processRunning = Process.GetProcesses();
+            foreach (var pr in processRunning)
             {
                 if (pr.MainWindowTitle != "")
                 {
@@ -140,20 +137,16 @@ internal class MacroScript
             }
 
             var title = result.Find(s => s.Contains(name.ToLower()));
-            if (title != null)
-            {
-                return WindowsAPI.FindWindow(null, title);
-            }
-            return -1;
+            return title != null ? WindowsAPI.FindWindow(null, title) : -1;
         };
 
         script.Globals["KeyDown"] = (VirtualKey key) =>
         {
-            int wParam = (int)key;
-            uint scanCode = WindowsAPI.MapVirtualKey((uint)wParam, 0);
+            var wParam = (int)key;
+            var scanCode = WindowsAPI.MapVirtualKey((uint)wParam, 0);
             Debug.Print($"scancode {scanCode}");
 
-            WindowsAPI.keybd_event((byte)key, (byte)scanCode, (byte)0, (byte)0);
+            WindowsAPI.keybd_event((byte)key, (byte)scanCode, 0, 0);
 
             //uint lParam = (0x00000001 | (scanCode << 16));
             //int r = WindowsAPI.PostMessage(window, WindowMessage.WM_KEYDOWN, wParam, lParam);
@@ -162,11 +155,11 @@ internal class MacroScript
 
         script.Globals["KeyUp"] = (VirtualKey key) =>
         {
-            int wParam = (int)key;
-            uint scanCode = WindowsAPI.MapVirtualKey((uint)wParam, 0);
+            var wParam = (int)key;
+            var scanCode = WindowsAPI.MapVirtualKey((uint)wParam, 0);
 
             byte KEYEVENTF_KEYUP = 0x0002;
-            WindowsAPI.keybd_event((byte)key, (byte)scanCode, KEYEVENTF_KEYUP, (byte)0);
+            WindowsAPI.keybd_event((byte)key, (byte)scanCode, KEYEVENTF_KEYUP, 0);
 
             //uint lParam = (0xC0000001 | (scanCode << 16));
             //int r = WindowsAPI.PostMessage(window, WindowMessage.WM_KEYUP, wParam, lParam);
