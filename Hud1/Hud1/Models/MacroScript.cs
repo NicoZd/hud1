@@ -15,12 +15,14 @@ internal class SystemEvent
     internal SystemEventType EventType;
     internal int Button;
     internal KeyEvent? KeyEvent;
+    internal POINT? Point;
 
-    internal SystemEvent(SystemEventType eventType, int button, KeyEvent? keyEvent)
+    internal SystemEvent(SystemEventType eventType, int button, KeyEvent? keyEvent, POINT? point)
     {
         EventType = eventType;
         Button = button;
         KeyEvent = keyEvent;
+        Point = point;
     }
 }
 
@@ -66,8 +68,9 @@ internal class MacroScript
         this.macro = macro;
 
         debugger = new MacroInstructionLimiter();
-        script = new Script(CoreModules.None | CoreModules.GlobalConsts);
+        script = new Script(CoreModules.None | CoreModules.GlobalConsts | CoreModules.Math);
 
+        UserData.RegisterType<POINT>();
         UserData.RegisterType<VirtualKey>();
         UserData.RegisterType<KeyEvent>();
         script.Globals.Set("VK", UserData.CreateStatic<VirtualKey>());
@@ -152,6 +155,19 @@ internal class MacroScript
             MouseService.MouseUp(MouseService.MouseButton.Left);
         };
 
+        script.Globals["MouseMove"] = (int x, int y) =>
+        {
+            int MOUSEEVENTF_MOVE = 0x0001;
+            int MOUSEEVENTF_ABSOLUTE = 0x8000;
+
+            var p = Monitors.Primary;
+
+            int absoluteX = (x * 65535) / (int)p.Bounds.Width;
+            int absoluteY = (y * 65535) / (int)p.Bounds.Height;
+
+            WindowsAPI.mouse_event(MOUSEEVENTF_MOVE | MOUSEEVENTF_ABSOLUTE, absoluteX, absoluteY, 0, 0);
+        };
+
         script.Globals["FindWindow"] = (string name) =>
         {
             List<string> result = [];
@@ -212,28 +228,28 @@ internal class MacroScript
         script.Globals[name] = value;
     }
 
-    internal void OnMouseDown(int button)
+    internal void OnMouseDown(int button, POINT point)
     {
         Console.WriteLine($"OnMouseDown button: {button}");
-        systemEvents.Enqueue(new SystemEvent(SystemEventType.MouseDown, button, null));
+        systemEvents.Enqueue(new SystemEvent(SystemEventType.MouseDown, button, null, point));
     }
 
-    internal void OnMouseUp(int button)
+    internal void OnMouseUp(int button, POINT point)
     {
         Console.WriteLine($"OnMouseUp button: {button}");
-        systemEvents.Enqueue(new SystemEvent(SystemEventType.MouseUp, button, null));
+        systemEvents.Enqueue(new SystemEvent(SystemEventType.MouseUp, button, null, point));
     }
 
     internal void OnKeyDown(KeyEvent keyEvent)
     {
         Console.WriteLine($"OnKeyDown key: {keyEvent}");
-        systemEvents.Enqueue(new SystemEvent(SystemEventType.KeyDown, 0, keyEvent));
+        systemEvents.Enqueue(new SystemEvent(SystemEventType.KeyDown, 0, keyEvent, null));
     }
 
     internal void OnKeyUp(KeyEvent keyEvent)
     {
         Console.WriteLine($"OnKeyUp key: {keyEvent}");
-        systemEvents.Enqueue(new SystemEvent(SystemEventType.KeyUp, 0, keyEvent));
+        systemEvents.Enqueue(new SystemEvent(SystemEventType.KeyUp, 0, keyEvent, null));
     }
 
     internal void Run()
@@ -263,12 +279,12 @@ internal class MacroScript
             {
                 case SystemEventType.MouseUp:
                     {
-                        script.Call(script.Globals["OnMouseUp"], systemEvent.Button);
+                        script.Call(script.Globals["OnMouseUp"], systemEvent.Button, systemEvent.Point);
                         break;
                     }
                 case SystemEventType.MouseDown:
                     {
-                        script.Call(script.Globals["OnMouseDown"], systemEvent.Button);
+                        script.Call(script.Globals["OnMouseDown"], systemEvent.Button, systemEvent.Point);
                         break;
                     }
                 case SystemEventType.KeyDown:

@@ -1,16 +1,40 @@
 ﻿using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 namespace Hud1.Helpers;
 
+[StructLayout(LayoutKind.Sequential)]
+internal struct POINT
+{
+    public int x;
+    public int y;
+}
+
+[StructLayout(LayoutKind.Sequential)]
+internal struct MSLLHOOKSTRUCT
+{
+    public POINT pt;
+    public uint mouseData;
+    public uint flags;
+    public uint time;
+    public IntPtr dwExtraInfo;
+
+}
+
 internal static class GlobalMouseHook
 {
-    internal delegate void MouseDownHandler(int button);
+    internal delegate void MouseDownHandler(int button, POINT point);
     internal static event MouseDownHandler? MouseDown;
 
-    internal delegate void MouseUpHandler(int button);
+    internal delegate void MouseUpHandler(int button, POINT point);
     internal static event MouseUpHandler? MouseUp;
 
     private static IntPtr HookID = IntPtr.Zero;
+
+    internal static int HIWORD(int n)
+    {
+        return (n >> 16) & 0xffff;
+    }
 
     internal static void SystemHook()
     {
@@ -28,6 +52,7 @@ internal static class GlobalMouseHook
     {
         if (code > -1 && !MouseService.IgnoreNextEvent)
         {
+            //Debug.Print($"code: {code} {wParam}");
             try
             {
 
@@ -35,33 +60,54 @@ internal static class GlobalMouseHook
                 {
                     case WindowMessage.WM_LBUTTONDOWN:
                         {
-                            MouseDown?.Invoke(1);
+                            MSLLHOOKSTRUCT hookStruct = Marshal.PtrToStructure<MSLLHOOKSTRUCT>(lParam);
+                            MouseDown?.Invoke(1, hookStruct.pt);
                             break;
                         }
                     case WindowMessage.WM_RBUTTONDOWN:
                         {
-                            MouseDown?.Invoke(2);
+                            MSLLHOOKSTRUCT hookStruct = Marshal.PtrToStructure<MSLLHOOKSTRUCT>(lParam);
+                            MouseDown?.Invoke(2, hookStruct.pt);
                             break;
                         }
                     case WindowMessage.WM_MBUTTONDOWN:
                         {
-                            MouseDown?.Invoke(3);
+                            MSLLHOOKSTRUCT hookStruct = Marshal.PtrToStructure<MSLLHOOKSTRUCT>(lParam);
+                            MouseDown?.Invoke(3, hookStruct.pt);
                             break;
                         }
 
                     case WindowMessage.WM_LBUTTONUP:
                         {
-                            MouseUp?.Invoke(1);
+                            MSLLHOOKSTRUCT hookStruct = Marshal.PtrToStructure<MSLLHOOKSTRUCT>(lParam);
+                            MouseUp?.Invoke(1, hookStruct.pt);
                             break;
                         }
                     case WindowMessage.WM_RBUTTONUP:
                         {
-                            MouseUp?.Invoke(2);
+                            MSLLHOOKSTRUCT hookStruct = Marshal.PtrToStructure<MSLLHOOKSTRUCT>(lParam);
+                            MouseUp?.Invoke(2, hookStruct.pt);
                             break;
                         }
                     case WindowMessage.WM_MBUTTONUP:
                         {
-                            MouseUp?.Invoke(3);
+                            MSLLHOOKSTRUCT hookStruct = Marshal.PtrToStructure<MSLLHOOKSTRUCT>(lParam);
+                            MouseUp?.Invoke(3, hookStruct.pt);
+                            break;
+                        }
+                    case WindowMessage.WM_XBUTTONDOWN:
+                        {
+                            MSLLHOOKSTRUCT hookStruct = Marshal.PtrToStructure<MSLLHOOKSTRUCT>(lParam);
+                            Debug.Print($"{hookStruct.pt.x}/{hookStruct.pt.y}");
+                            int buttonCode = HIWORD((int)hookStruct.mouseData);
+                            MouseDown?.Invoke(3 + buttonCode, hookStruct.pt);
+                            break;
+                        }
+                    case WindowMessage.WM_XBUTTONUP:
+                        {
+                            MSLLHOOKSTRUCT hookStruct = Marshal.PtrToStructure<MSLLHOOKSTRUCT>(lParam);
+                            int buttonCode = HIWORD((int)hookStruct.mouseData);
+                            MouseUp?.Invoke(3 + buttonCode, hookStruct.pt);
                             break;
                         }
                 }

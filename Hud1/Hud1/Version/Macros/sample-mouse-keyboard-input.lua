@@ -6,12 +6,12 @@ function Setup()
 	lastKeyAction = "None"
 end
 
-function OnMouseDown(button)
-	lastMouseAction = "Mouse Down " .. button;
+function OnMouseDown(button, point)
+	lastMouseAction = "Mouse Down " .. button .. " x=" .. point.x .. " y=" .. point.y;
 end
 
-function OnMouseUp(button)
-	lastMouseAction = "Mouse Up " .. button;
+function OnMouseUp(button, point)
+	lastMouseAction = "Mouse Up " .. button .. " x=" .. point.x .. " y=" .. point.y;
 end
 
 function OnKeyDown(keyEvent)

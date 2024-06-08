@@ -22,6 +22,9 @@ function Run()
 		.. "UI Debounce: 50ms \n"
 		.. "Version    : " .. _VERSION
 		)
+
+	rad = now * 0.003
+	MouseMove(math.cos(rad) * 200 + 1920 / 2, math.sin(rad) * 200 + 1080 / 2)
 end
 
 function Cleanup()

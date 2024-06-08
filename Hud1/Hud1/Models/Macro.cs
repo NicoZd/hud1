@@ -186,16 +186,16 @@ public partial class Macro : ObservableObject
             GlobalKeyboardHook.KeyUp -= OnKeyUp;
         }
 
-        private void OnMouseDown(int button)
+        private void OnMouseDown(int button, POINT point)
         {
             Console.WriteLine($"OnMouseDown button: {button}");
-            _macroScript.OnMouseDown(button);
+            _macroScript.OnMouseDown(button, point);
         }
 
-        private void OnMouseUp(int button)
+        private void OnMouseUp(int button, POINT point)
         {
             Console.WriteLine($"OnMouseUp button: {button}");
-            _macroScript.OnMouseUp(button);
+            _macroScript.OnMouseUp(button, point);
         }
 
         private void OnKeyDown(KeyEvent keyEvent)

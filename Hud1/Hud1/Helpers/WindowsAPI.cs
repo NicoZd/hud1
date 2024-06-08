@@ -20,6 +20,8 @@ internal static class WindowMessage
     internal const int WM_LBUTTONDBLCLK = 0x203;
     internal const int WM_RBUTTONDBLCLK = 0x206;
     internal const int WM_MBUTTONDBLCLK = 0x209;
+    internal const int WM_XBUTTONDOWN = 0x020B;
+    internal const int WM_XBUTTONUP = 0x020C;
     internal const int WM_MOUSEWHEEL = 0x020A;
 }
 
