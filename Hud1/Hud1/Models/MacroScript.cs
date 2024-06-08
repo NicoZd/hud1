@@ -10,6 +10,33 @@ using Windows.System;
 
 namespace Hud1.Models;
 
+internal class SystemEvent
+{
+    internal SystemEventType EventType;
+    internal int Button;
+
+    internal SystemEvent(SystemEventType eventType, int button)
+    {
+        EventType = eventType;
+        Button = button;
+    }
+}
+
+internal enum SystemEventType
+{
+    MouseDown = 0,
+    MouseUp = 1
+}
+
+internal class LogMessage
+{
+    internal String Message;
+    internal LogMessage(String message)
+    {
+        Message = message;
+    }
+}
+
 internal class MacroScript
 {
     public bool Running = true;
@@ -50,8 +77,8 @@ internal class MacroScript
 
         script.Globals["Running"] = true;
 
-        script.Globals["OnMouseDown"] = (int button) => { };
         script.Globals["OnMouseUp"] = (int button) => { };
+        script.Globals["OnMouseDown"] = (int button) => { };
 
         script.Globals["OnKeyDown"] = (int code) => { };
         script.Globals["OnKeyUp"] = (int code) => { };
@@ -76,8 +103,7 @@ internal class MacroScript
             return DateTimeOffset.Now.ToUnixTimeMilliseconds();
         };
 
-
-        var debouncedLog = "";
+        LogMessage? debouncedLog = null;
         var lastUpdateTimeMs = (long)0;
 
         void update()
@@ -86,7 +112,7 @@ internal class MacroScript
             {
                 if (debouncedLog != null)
                 {
-                    this.macro.Log = debouncedLog;
+                    this.macro.Log = debouncedLog.Message ?? "";
                     debouncedLog = null;
                 }
             }));
@@ -98,9 +124,9 @@ internal class MacroScript
         timer.Elapsed += (sender, e) => update();
         timer.AutoReset = false;
 
-        script.Globals["Print"] = (string a) =>
+        script.Globals["Print"] = (string message) =>
         {
-            debouncedLog = a;
+            debouncedLog = new LogMessage(message);
             if (!timer.Enabled)
             {
                 var now = DateTimeOffset.Now.ToUnixTimeMilliseconds();
@@ -184,10 +210,16 @@ internal class MacroScript
         script.Globals[name] = value;
     }
 
-    internal void OnMouseDown()
+    internal void OnMouseDown(int button)
     {
-        Console.WriteLine("OnMouseDown");
-        systemEvents.Enqueue(new SystemEvent());
+        Console.WriteLine($"OnMouseDown button: {button}");
+        systemEvents.Enqueue(new SystemEvent(SystemEventType.MouseDown, button));
+    }
+
+    internal void OnMouseUp(int button)
+    {
+        Console.WriteLine($"OnMouseUp button: {button}");
+        systemEvents.Enqueue(new SystemEvent(SystemEventType.MouseUp, button));
     }
 
     internal void Run()
@@ -207,14 +239,25 @@ internal class MacroScript
         script.Call(script.Globals["Cleanup"]);
     }
 
-    private class SystemEvent { }
-
     private void DequeueEvents()
     {
         while (systemEvents.Count > 0)
         {
             var systemEvent = systemEvents.Dequeue();
-            script.Call(script.Globals["OnMouseDown"], 0);
+
+            switch (systemEvent.EventType)
+            {
+                case SystemEventType.MouseUp:
+                    {
+                        script.Call(script.Globals["OnMouseUp"], systemEvent.Button);
+                        break;
+                    }
+                case SystemEventType.MouseDown:
+                    {
+                        script.Call(script.Globals["OnMouseDown"], systemEvent.Button);
+                        break;
+                    }
+            }
         }
     }
 

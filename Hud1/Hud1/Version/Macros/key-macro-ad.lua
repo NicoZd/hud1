@@ -1,5 +1,5 @@
 Label = "Repeat Pressing A & D Keys"
-Description = "Repeat pressing and releasing A and D. Stop on mouse down."
+Description = "Repeat pressing and releasing A and D. Stops if right mouse pressed."
 
 -- https://learn.microsoft.com/en-us/uwp/api/windows.system.virtualkey
 
@@ -19,10 +19,13 @@ function Run()
 	KeyUp(VK.D)
 end
 
-function OnMouseDown()  
-	Stop()
+function OnMouseDown(button)  
+	-- stop if right mouse down
+	if button == 2 then
+		Stop()
+	end
 end
 
 function Cleanup()
-	Print("")
+	Print()
 end

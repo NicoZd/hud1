@@ -172,18 +172,26 @@ public partial class Macro : ObservableObject
         {
             _macroScript = macroScript;
             GlobalMouseHook.MouseDown += OnMouseDown;
+            GlobalMouseHook.MouseUp += OnMouseUp;
         }
 
         public void Dispose()
         {
             Console.WriteLine("MACROHOOK Dispose");
             GlobalMouseHook.MouseDown -= OnMouseDown;
+            GlobalMouseHook.MouseUp -= OnMouseUp;
         }
 
-        private void OnMouseDown()
+        private void OnMouseDown(int button)
         {
-            Console.WriteLine("OnMouseDown");
-            _macroScript.OnMouseDown();
+            Console.WriteLine($"OnMouseDown button: {button}");
+            _macroScript.OnMouseDown(button);
+        }
+
+        private void OnMouseUp(int button)
+        {
+            Console.WriteLine($"OnMouseUp button: {button}");
+            _macroScript.OnMouseUp(button);
         }
     }
 }

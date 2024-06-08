@@ -33,5 +33,5 @@ function Cleanup()
 	Sleep(100)
 	Print("Cleanup")
 	Sleep(200)
-	Print("")
+	Print()
 end
