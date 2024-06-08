@@ -23,10 +23,10 @@ internal class NavigationStates
 
     // CROSSHAIR
     internal static readonly NavigationState CROSSHAIR_ENABLED = new() { Label = "Toggle", SelectionLeftLabel = "< Off", SelectionRightLabel = "On >", Hint = "Enable or disable the crosshair with Alt+Shift+C." };
-    internal static readonly NavigationState CROSSHAIR_FORM = new() { Label = "Form", Hint = "Select Crosshair Form" };
-    internal static readonly NavigationState CROSSHAIR_COLOR = new() { Label = "Color", Hint = "Select Crosshair Color" };
-    internal static readonly NavigationState CROSSHAIR_OPACITY = new() { Label = "Opacity", Hint = "Select Crosshair Opacity", ValueConverter = new DoubleConverter() };
-    internal static readonly NavigationState CROSSHAIR_SIZE = new() { Label = "Size", Hint = "Select Crosshair Size" };
+    internal static readonly NavigationState CROSSHAIR_FORM = new() { Label = "Form", Hint = "Select Crosshair Form", AllowRepeat = true };
+    internal static readonly NavigationState CROSSHAIR_COLOR = new() { Label = "Color", Hint = "Select Crosshair Color", AllowRepeat = true };
+    internal static readonly NavigationState CROSSHAIR_OPACITY = new() { Label = "Opacity", Hint = "Select Crosshair Opacity", ValueConverter = new DoubleConverter(), AllowRepeat = true };
+    internal static readonly NavigationState CROSSHAIR_SIZE = new() { Label = "Size", Hint = "Select Crosshair Size", AllowRepeat = true };
     internal static readonly NavigationState CROSSHAIR_OUTLINE = new() { Label = "Outline", SelectionLeftLabel = "< Off", SelectionRightLabel = "On >", Hint = "Enable or disable Crosshair black outline." };
 
     // MACRO

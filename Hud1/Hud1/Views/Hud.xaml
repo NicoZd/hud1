@@ -156,12 +156,12 @@
                         Background="{DynamicResource BrushColorMedLow}"
                         >
                         <Grid>
-                            <Label Style="{DynamicResource PanelTitleContent}">Preview x2</Label>
+                            <Label Style="{DynamicResource PanelTitleContent}">Preview</Label>
                             <StackPanel Margin="3" Orientation="Horizontal" controls:Spacing.Horizontal="4" HorizontalAlignment="Center">
                                 <Border Background="#050505" BorderBrush="{DynamicResource BrushColorMed}" BorderThickness="1" Padding="1">
                                     <Grid>
                                         <Grid.LayoutTransform>
-                                            <ScaleTransform ScaleX="2" ScaleY="2"/>
+                                            <ScaleTransform ScaleX="1" ScaleY="1"/>
                                         </Grid.LayoutTransform>
                                         <ContentPresenter Content="{Binding Path=CrosshairImagePreview1, Source={x:Static viewModels:CrosshairViewModel.Instance}}"/>
                                     </Grid>
@@ -169,7 +169,7 @@
                                 <Border Background="#eeeeee" BorderBrush="{DynamicResource BrushColorMed}" BorderThickness="1" Padding="1">
                                     <Grid>
                                         <Grid.LayoutTransform>
-                                            <ScaleTransform ScaleX="2" ScaleY="2"/>
+                                            <ScaleTransform ScaleX="1" ScaleY="1"/>
                                         </Grid.LayoutTransform>
                                         <ContentPresenter Content="{Binding Path=CrosshairImagePreview2, Source={x:Static viewModels:CrosshairViewModel.Instance}}"/>
                                     </Grid>

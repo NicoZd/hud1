@@ -187,7 +187,7 @@ public partial class CrosshairViewModel : ObservableObject
         }
 
         var formFunction = FormRenderFunctions[(string)NavigationStates.CROSSHAIR_FORM.Value];
-        var geometryDrawing = GetGeometryDrawing(scale, color, formFunction);
+        var geometryDrawing = GetGeometryDrawing(scale, color, (double)NavigationStates.CROSSHAIR_OPACITY.Value, formFunction);
 
         DrawingImage drawingImage = new(geometryDrawing);
         drawingImage.Freeze();
@@ -211,11 +211,12 @@ public partial class CrosshairViewModel : ObservableObject
 
     private void UpdateAllOptions(int scale, Brush color, Func<int, Brush, bool, Drawing> formFunction)
     {
+        var defaultBrush = new SolidColorBrush(((SolidColorBrush)Application.Current.FindResource("BrushSolidSuperBright")).Color);
+
         foreach (var option in NavigationStates.CROSSHAIR_FORM.Options)
         {
             var optionFormFunction = FormRenderFunctions[(string)option.Value];
-            var brush = new SolidColorBrush(((SolidColorBrush)Application.Current.FindResource("BrushSolidSuperBright")).Color);
-            var geometryDrawing = GetGeometryDrawing(5, brush, optionFormFunction);
+            var geometryDrawing = GetGeometryDrawing(5, defaultBrush, 1, optionFormFunction);
 
             DrawingImage drawingImage = new(geometryDrawing);
             drawingImage.Freeze();
@@ -255,7 +256,7 @@ public partial class CrosshairViewModel : ObservableObject
         foreach (var option in NavigationStates.CROSSHAIR_SIZE.Options)
         {
             var sizeOption = (int)option.Value;
-            var geometryDrawing = GetGeometryDrawing(sizeOption, color, formFunction);
+            var geometryDrawing = GetGeometryDrawing(sizeOption, defaultBrush, 1, formFunction);
 
             DrawingImage drawingImage = new(geometryDrawing);
             drawingImage.Freeze();
@@ -272,7 +273,7 @@ public partial class CrosshairViewModel : ObservableObject
 
     }
 
-    private static Drawing GetGeometryDrawing(int scale, Brush color, Func<int, Brush, bool, Drawing> optionFormFunction)
+    private static Drawing GetGeometryDrawing(int scale, Brush color, double opacity, Func<int, Brush, bool, Drawing> optionFormFunction)
     {
         var drawingWithFixedSize = (DrawingGroup)optionFormFunction(scale, color, (bool)NavigationStates.CROSSHAIR_OUTLINE.Value);
 
@@ -283,7 +284,7 @@ public partial class CrosshairViewModel : ObservableObject
         //drawingWithFixedSize.Children.Insert(0, new GeometryDrawing() { Geometry = areaGroup, Brush = (Brush)new BrushConverter().ConvertFromString("#33ff0000") });
 
 
-        drawingWithFixedSize.Opacity = (double)NavigationStates.CROSSHAIR_OPACITY.Value;
+        drawingWithFixedSize.Opacity = opacity;
 
         return drawingWithFixedSize;
     }
