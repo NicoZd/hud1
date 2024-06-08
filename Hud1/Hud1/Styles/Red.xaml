@@ -9,8 +9,8 @@
     <Color x:Key="ColorMedLow">#15ff0542</Color>
     <Color x:Key="ColorBackgroundDark">#ff0f060a</Color>
     <Color x:Key="ColorBackgroundDarkMed">#ee1f0f15</Color>
-    <Color x:Key="ColorBackgroundDarkMedUp">#66251217</Color>
-    <Color x:Key="ColorBackgroundDarkTrans">#9905050d</Color>
+    <Color x:Key="ColorBackgroundDarkMedUp">#99251217</Color>
+    <Color x:Key="ColorBackgroundDarkTrans">#cc05050d</Color>
     <Color x:Key="ColorInfo">#51e8fe</Color>
     <Color x:Key="ColorInfoSecondary">#9951e8fe</Color>
 

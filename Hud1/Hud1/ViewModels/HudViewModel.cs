@@ -87,6 +87,17 @@ internal partial class HudViewModel : ObservableObject
         SelectNavigationState(navigationState);
     }
 
+    [RelayCommand]
+    private void OpenLink(string url)
+    {
+        Console.WriteLine($"OpenLink {url}");
+        var sInfo = new System.Diagnostics.ProcessStartInfo(url)
+        {
+            UseShellExecute = true,
+        };
+        System.Diagnostics.Process.Start(sInfo);
+    }
+
     internal void MakeNav(NavigationState menu, NavigationState visible, NavigationState[] list)
     {
         if (list.Length < 2)

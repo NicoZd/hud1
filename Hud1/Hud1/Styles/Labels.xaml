@@ -3,6 +3,15 @@
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
+    <Style x:Key="Hyperlink" TargetType="Hyperlink">
+        <Setter Property="Foreground" Value="{DynamicResource BrushInfoSecondary}" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Foreground" Value="{DynamicResource BrushInfo}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
     <Style TargetType="{x:Type Label}" x:Key="DefaultLabelFonts">
         <Setter Property="FontFamily" Value="{DynamicResource FontFamily}"/>
         <Setter Property="FontStyle" Value="{DynamicResource FontStyle}"/>

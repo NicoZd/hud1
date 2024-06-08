@@ -194,14 +194,13 @@ public partial class CrosshairViewModel : ObservableObject
 
         DPIAwareImage makeImage()
         {
-            return new()
+            return new DPIAwareImage()
             {
                 Visibility = (bool)NavigationStates.CROSSHAIR_ENABLED.Value ? Visibility.Visible : Visibility.Hidden,
                 Source = drawingImage,
                 Stretch = Stretch.None,
             };
         }
-
 
         CrosshairImage = makeImage();
         CrosshairImagePreview1 = makeImage();
