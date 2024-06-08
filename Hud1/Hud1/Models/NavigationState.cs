@@ -3,9 +3,11 @@ using CommunityToolkit.Mvvm.Input;
 using Hud1.ViewModels;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 
 
 namespace Hud1.Models;
@@ -24,6 +26,83 @@ internal partial class Option : ObservableObject
     internal Option(object value)
     {
         Value = value;
+    }
+}
+
+internal class ToStringConverter : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        return "" + value;
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        return "";
+    }
+}
+
+internal class DisplayConverter : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        if (value is int intValue)
+        {
+            return "Display " + (intValue + 1);
+        }
+        else if (value is string stringValue)
+        {
+            var elems = stringValue.Split(':');
+            if (elems.Length == 2)
+            {
+                var display = Int32.Parse(elems[0]) + 1;
+                return "Display " + display + ", " + elems[1];
+            }
+
+        }
+        return value;
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        return "";
+    }
+}
+
+internal class GammaConverter : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        if (value is int intValue)
+        {
+            return "" + NightvisionViewModel.Gammas[intValue];
+        }
+
+        return "";
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        return "";
+    }
+}
+
+
+internal class DoubleConverter : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        if (value is double doubleValue)
+        {
+            return "" + Math.Round(doubleValue * 10) / 10;
+        }
+
+        return "";
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        return "";
     }
 }
 
@@ -58,6 +137,9 @@ internal partial class NavigationState : ObservableObject
 
     [ObservableProperty]
     private object value = "";
+
+    [ObservableProperty]
+    private IValueConverter valueConverter = new ToStringConverter();
 
     [ObservableProperty]
     private string selectionLeftLabel = "<";

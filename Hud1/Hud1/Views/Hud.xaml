@@ -9,6 +9,9 @@
     xmlns:controls="clr-namespace:Hud1.Controls"
     xmlns:views="clr-namespace:Hud1.Views"
     xmlns:viewModels="clr-namespace:Hud1.ViewModels"
+    
+    d:DataContext="{d:DesignInstance Type=viewModels:HudViewModel}"   
+    
     mc:Ignorable="d"
     d:DesignHeight="800"
     >
@@ -38,7 +41,7 @@
                     LineHeight="12"
                     FontSize="10"
                     >
-                    <Label Style="{DynamicResource ShortcutLabel}">Alt + Shift + G</Label> to toggle this window. <Label Style="{DynamicResource ShortcutLabel}">Cursor Keys</Label> or <Label Style="{DynamicResource ShortcutLabel}">Mouse</Label> to navigate and select.
+                    <Label Style="{DynamicResource ShortcutLabel}">Alt + Shift + G</Label> to toggle this window. <Label Style="{DynamicResource ShortcutLabel}">Arrow Keys</Label> or <Label Style="{DynamicResource ShortcutLabel}">Mouse</Label> to navigate and select.
                 </TextBlock>
             </controls:IgnoreWidthControl>
 
@@ -145,6 +148,36 @@
                     <views:SelectionControl NavigationState="{Binding Path=States[CROSSHAIR_OPACITY]}" />
                     <views:SelectionControl NavigationState="{Binding Path=States[CROSSHAIR_SIZE]}" />
                     <views:BooleanPanel NavigationState="{Binding Path=States[CROSSHAIR_OUTLINE]}" />
+
+                    <Border
+                        BorderThickness="1"
+                        BorderBrush="{DynamicResource BrushColorMed}"
+                        Padding="4,0,0,0"
+                        Background="{DynamicResource BrushColorMedLow}"
+                        >
+                        <Grid>
+                            <Label Style="{DynamicResource PanelTitleContent}">Preview x2</Label>
+                            <StackPanel Margin="3" Orientation="Horizontal" controls:Spacing.Horizontal="4" HorizontalAlignment="Center">
+                                <Border Background="#050505" BorderBrush="{DynamicResource BrushColorMed}" BorderThickness="1" Padding="1">
+                                    <Grid>
+                                        <Grid.LayoutTransform>
+                                            <ScaleTransform ScaleX="2" ScaleY="2"/>
+                                        </Grid.LayoutTransform>
+                                        <ContentPresenter Content="{Binding Path=CrosshairImagePreview1, Source={x:Static viewModels:CrosshairViewModel.Instance}}"/>
+                                    </Grid>
+                                </Border>
+                                <Border Background="#eeeeee" BorderBrush="{DynamicResource BrushColorMed}" BorderThickness="1" Padding="1">
+                                    <Grid>
+                                        <Grid.LayoutTransform>
+                                            <ScaleTransform ScaleX="2" ScaleY="2"/>
+                                        </Grid.LayoutTransform>
+                                        <ContentPresenter Content="{Binding Path=CrosshairImagePreview2, Source={x:Static viewModels:CrosshairViewModel.Instance}}"/>
+                                    </Grid>
+                                </Border>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+
                 </StackPanel>
             </views:ScrollPanel>
 
@@ -161,7 +194,6 @@
 
                     <Label Content="Functions" Style="{DynamicResource TitleContent}"/>
                     <views:ButtonPanel NavigationState="{Binding Path=States[EXIT]}"/>
-                    <!--<views:ButtonPanel NavigationState="{Binding Path=States[ACTIVATE]}"/>-->
 
                     <Label Content="Settings" Style="{DynamicResource TitleContent}"/>
                     <views:SelectionControl NavigationState="{Binding Path=States[CROSSHAIR_MONITOR]}" />
@@ -187,7 +219,8 @@
                             <Label Style="{DynamicResource ShortcutLabel}">Alt + Shift + N</Label> to toggle Nightvision<LineBreak/>
                             <Label Style="{DynamicResource ShortcutLabel}">Alt + Shift + C</Label> to toggle Crosshair<LineBreak/>
                             <LineBreak/>
-                            https://www.jqxp.org/privacy.html
+                            <Hyperlink>https://www.jqxp.org/game-direct.html</Hyperlink><LineBreak/>
+                            <Hyperlink>https://www.jqxp.org/privacy.html</Hyperlink>
                         </TextBlock>
                     </controls:IgnoreWidthControl>
                 </StackPanel>

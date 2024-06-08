@@ -17,6 +17,12 @@ public partial class CrosshairViewModel : ObservableObject
     [ObservableProperty]
     private Image _crosshairImage = new();
 
+    [ObservableProperty]
+    private Image _crosshairImagePreview1 = new();
+
+    [ObservableProperty]
+    private Image _crosshairImagePreview2 = new();
+
     private Dictionary<string, Func<int, Brush, bool, Drawing>> FormRenderFunctions = [];
     private Dictionary<string, Brush> ColorOptions = [];
 
@@ -186,14 +192,20 @@ public partial class CrosshairViewModel : ObservableObject
         DrawingImage drawingImage = new(geometryDrawing);
         drawingImage.Freeze();
 
-        DPIAwareImage image = new()
+        DPIAwareImage makeImage()
         {
-            Visibility = (bool)NavigationStates.CROSSHAIR_ENABLED.Value ? Visibility.Visible : Visibility.Hidden,
-            Source = drawingImage,
-            Stretch = Stretch.None,
-        };
+            return new()
+            {
+                Visibility = (bool)NavigationStates.CROSSHAIR_ENABLED.Value ? Visibility.Visible : Visibility.Hidden,
+                Source = drawingImage,
+                Stretch = Stretch.None,
+            };
+        }
 
-        CrosshairImage = image;
+
+        CrosshairImage = makeImage();
+        CrosshairImagePreview1 = makeImage();
+        CrosshairImagePreview2 = makeImage();
 
         UpdateAllOptions(scale, color, formFunction);
     }

@@ -3,11 +3,17 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:helpers="clr-namespace:Hud1.Helpers"
              xmlns:controls="clr-namespace:Hud1.Controls"
              xmlns:views="clr-namespace:Hud1.Views"
              xmlns:local="clr-namespace:Hud1.Views"
              mc:Ignorable="d"
              d:DesignHeight="50" d:DesignWidth="300">
+
+    <UserControl.Resources>
+        <helpers:DynamicConverter x:Key="DynamicConverter" />
+    </UserControl.Resources>
+
     <Button
         DataContext="{Binding Path=NavigationState, RelativeSource={RelativeSource AncestorType=local:SelectionControl}}"
         Style="{DynamicResource PanelButton}"
@@ -51,7 +57,13 @@
                             FontSize="12" 
                             VerticalAlignment="Center"
                             TextAlignment="Center"
-                            Text="{Binding Path=Value}">
+                            >
+                            <TextBlock.Text>
+                                <MultiBinding Converter="{StaticResource DynamicConverter}">
+                                    <Binding Path="Value" />
+                                    <Binding Path="ValueConverter" />
+                                </MultiBinding>
+                            </TextBlock.Text>
                             <TextBlock.Style>
                                 <Style TargetType="TextBlock" BasedOn="{StaticResource DefaultTextBlockFonts}">
                                     <Setter Property="Visibility" Value="Hidden"/>

@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Hud1.Helpers;
 using Hud1.Models;
+using System.Diagnostics;
 using Windows.System;
 
 namespace Hud1.ViewModels;
@@ -38,7 +39,7 @@ internal partial class NightvisionViewModel : ObservableObject
         .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.NIGHTVISION_ENABLED.ExecuteRight);
 
         NavigationStates.GAMMA.Value = UserConfig.Current.GammaIndex;
-        SelectIndex();
+        SelectIndex(0);
         NavigationStates.GAMMA.LeftAction = SelectPrevGama;
         NavigationStates.GAMMA.RightAction = SelectNextGamma;
         Configure(NavigationStates.GAMMA)
@@ -66,29 +67,27 @@ internal partial class NightvisionViewModel : ObservableObject
     }
     private void SelectPrevGama()
     {
-        Console.WriteLine("SelectPrevGama {0}", NavigationStates.GAMMA.Value);
-        NavigationStates.GAMMA.Value = (int)NavigationStates.GAMMA.Value - 1;
-        NavigationStates.NIGHTVISION_ENABLED.Value = true;
-        SelectIndex();
+        SelectIndex(-1);
         ApplyGamma();
     }
 
     private void SelectNextGamma()
     {
-        Console.WriteLine("SelectNextGamma {0}", NavigationStates.GAMMA.Value);
-        NavigationStates.GAMMA.Value = (int)NavigationStates.GAMMA.Value + 1;
-        NavigationStates.NIGHTVISION_ENABLED.Value = true;
-        SelectIndex();
+        SelectIndex(1);
         ApplyGamma();
     }
 
     private void ApplyGamma()
     {
+        NavigationStates.NIGHTVISION_ENABLED.Value = true;
         Gamma.SetGamma(Gammas[(int)NavigationStates.GAMMA.Value]);
     }
 
-    private void SelectIndex()
+    private void SelectIndex(int dir)
     {
-        NavigationStates.GAMMA.Value = Math.Min(Math.Max((int)NavigationStates.GAMMA.Value, 0), Gammas.Length - 1);
+        //Console.WriteLine("SelectNextGamma {0}", NavigationStates.GAMMA.Value);
+        var newValue = (int)NavigationStates.GAMMA.Value + dir;
+        newValue = Math.Min(Math.Max(newValue, 0), Gammas.Length - 1);
+        NavigationStates.GAMMA.Value = newValue;
     }
 }

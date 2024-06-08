@@ -41,6 +41,12 @@ public partial class CrosshairWindow : Window
         NavigationStates.CROSSHAIR_OPACITY.PropertyChanged += UpdateCrosshair;
         NavigationStates.CROSSHAIR_SIZE.PropertyChanged += UpdateCrosshair;
         NavigationStates.CROSSHAIR_OUTLINE.PropertyChanged += UpdateCrosshair;
+
+        // need to update resources first
+        NavigationStates.STYLE.PropertyChanged += (object? sender, PropertyChangedEventArgs e) =>
+        {
+            Application.Current.Dispatcher.InvokeAsync(() => { UpdateCrosshair(sender, e); });
+        };
     }
 
     private void UpdateCrosshair(object? sender, PropertyChangedEventArgs e)
