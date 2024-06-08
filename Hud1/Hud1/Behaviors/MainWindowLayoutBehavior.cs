@@ -32,16 +32,16 @@ internal class MainWindowLayoutBehavior : Behavior<MainWindow>
         var updates = new FunctionDebounce<string>(UpdateWindowPosition);
         Monitors.RegisterMonitorsChange(window, () =>
         {
-            _ = updates.Run((string)NavigationStates.HUD_POSITION.SelectionLabel);
+            _ = updates.Run((string)NavigationStates.HUD_POSITION.Value);
         });
         NavigationStates.HUD_POSITION.PropertyChanged += (object? sender, PropertyChangedEventArgs e) =>
         {
-            if (e.PropertyName == nameof(NavigationStates.HUD_POSITION.SelectionLabel))
+            if (e.PropertyName == nameof(NavigationStates.HUD_POSITION.Value))
             {
-                _ = updates.Run((string)NavigationStates.HUD_POSITION.SelectionLabel);
+                _ = updates.Run((string)NavigationStates.HUD_POSITION.Value);
             }
         };
-        await updates.Run((string)NavigationStates.HUD_POSITION.SelectionLabel);
+        await updates.Run((string)NavigationStates.HUD_POSITION.Value);
         Debug.Print($"MainWindowLayoutBehavior Show {Entry.Millis()}");
     }
 

@@ -100,72 +100,39 @@ public class Setup
         // add change listeners
 
         // Nightvision
-        NightvisionViewModel.Instance.PropertyChanged += OnConfigChanged(
-            nameof(NavigationStates.GAMMA.SelectionLabel),
-            nameof(UserConfig.Current.GammaIndex));
+        NavigationStates.GAMMA.PropertyChanged += OnConfigChanged(nameof(UserConfig.Current.GammaIndex));
 
         // Chrosshair
-        NavigationStates.CROSSHAIR_ENABLED.PropertyChanged += OnConfigChanged(
-            nameof(NavigationStates.CROSSHAIR_ENABLED.SelectionLabel),
-            nameof(UserConfig.Current.CrosshairEnabled));
-
-        NavigationStates.CROSSHAIR_MONITOR.PropertyChanged += OnConfigChanged(
-            nameof(NavigationStates.CROSSHAIR_MONITOR.SelectionLabel),
-            nameof(UserConfig.Current.CrosshairDisplay));
-
-        NavigationStates.CROSSHAIR_FORM.PropertyChanged += OnConfigChanged(
-            nameof(NavigationStates.CROSSHAIR_FORM.SelectionLabel),
-            nameof(UserConfig.Current.CrosshairForm));
-
-        NavigationStates.CROSSHAIR_COLOR.PropertyChanged += OnConfigChanged(
-            nameof(NavigationStates.CROSSHAIR_COLOR.SelectionLabel),
-            nameof(UserConfig.Current.CrosshairColor));
-
-        NavigationStates.CROSSHAIR_OPACITY.PropertyChanged += OnConfigChanged(
-            nameof(NavigationStates.CROSSHAIR_OPACITY.SelectionLabel),
-            nameof(UserConfig.Current.CrosshairOpacity));
-
-        NavigationStates.CROSSHAIR_SIZE.PropertyChanged += OnConfigChanged(
-            nameof(NavigationStates.CROSSHAIR_SIZE.SelectionLabel),
-            nameof(UserConfig.Current.CrosshairSize));
-
-        NavigationStates.CROSSHAIR_OUTLINE.PropertyChanged += OnConfigChanged(
-            nameof(NavigationStates.CROSSHAIR_OUTLINE.SelectionLabel),
-            nameof(UserConfig.Current.CrosshairOutline));
+        NavigationStates.CROSSHAIR_ENABLED.PropertyChanged += OnConfigChanged(nameof(UserConfig.Current.CrosshairEnabled));
+        NavigationStates.CROSSHAIR_MONITOR.PropertyChanged += OnConfigChanged(nameof(UserConfig.Current.CrosshairDisplay));
+        NavigationStates.CROSSHAIR_FORM.PropertyChanged += OnConfigChanged(nameof(UserConfig.Current.CrosshairForm));
+        NavigationStates.CROSSHAIR_COLOR.PropertyChanged += OnConfigChanged(nameof(UserConfig.Current.CrosshairColor));
+        NavigationStates.CROSSHAIR_OPACITY.PropertyChanged += OnConfigChanged(nameof(UserConfig.Current.CrosshairOpacity));
+        NavigationStates.CROSSHAIR_SIZE.PropertyChanged += OnConfigChanged(nameof(UserConfig.Current.CrosshairSize));
+        NavigationStates.CROSSHAIR_OUTLINE.PropertyChanged += OnConfigChanged(nameof(UserConfig.Current.CrosshairOutline));
 
         // More
-        NavigationStates.DEVELOPER_MODE.PropertyChanged += OnConfigChanged(
-            nameof(NavigationStates.DEVELOPER_MODE.SelectionLabel),
-            nameof(UserConfig.Current.DevModeEnabled));
-
-        MoreViewModel.Instance.PropertyChanged += OnConfigChanged(
-            nameof(NavigationStates.HUD_POSITION.SelectionLabel),
-            nameof(UserConfig.Current.HudPosition));
-
-        NavigationStates.STYLE.PropertyChanged += OnConfigChanged(
-            nameof(NavigationStates.STYLE.SelectionLabel),
-            nameof(UserConfig.Current.Style));
-
-        NavigationStates.FONT.PropertyChanged += OnConfigChanged(
-            nameof(NavigationStates.FONT.SelectionLabel),
-            nameof(UserConfig.Current.Font));
+        NavigationStates.DEVELOPER_MODE.PropertyChanged += OnConfigChanged(nameof(UserConfig.Current.DevModeEnabled));
+        MoreViewModel.Instance.PropertyChanged += OnConfigChanged(nameof(UserConfig.Current.HudPosition));
+        NavigationStates.STYLE.PropertyChanged += OnConfigChanged(nameof(UserConfig.Current.Style));
+        NavigationStates.FONT.PropertyChanged += OnConfigChanged(nameof(UserConfig.Current.Font));
     }
 
-    private static PropertyChangedEventHandler OnConfigChanged(string propertyName, string userConfigPropertyName)
+    private static PropertyChangedEventHandler OnConfigChanged(string userConfigPropertyName)
     {
         return (sender, e) =>
         {
-            if (propertyName == e.PropertyName)
+            if (nameof(NavigationStates.ALL.Value).Equals(e.PropertyName))
             {
                 ThreadPool.QueueUserWorkItem((_) =>
                 {
                     try
                     {
-                        //Debug.Print("Save OnConfigChanged {0} {1}", e.PropertyName, sender);
+                        // Debug.Print("Save OnConfigChanged {0} {1}", e.PropertyName, sender);
 
                         Thread.Sleep(100);
-                        var src = sender!;
-                        var value = src.GetType().GetProperty(propertyName)!.GetValue(src, null);
+                        var src = (NavigationState)sender!;
+                        var value = src.Value;
 
                         var dest = UserConfig.Current;
                         dest.GetType().GetProperty(userConfigPropertyName)!.SetValue(dest, value);

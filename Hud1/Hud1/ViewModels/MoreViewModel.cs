@@ -23,7 +23,7 @@ internal partial class MoreViewModel : ObservableObject
         Configure(NavigationStates.EXIT)
             .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.EXIT.ExecuteRight);
 
-        NavigationStates.HUD_POSITION.SelectionLabel = UserConfig.Current.HudPosition;
+        NavigationStates.HUD_POSITION.Value = UserConfig.Current.HudPosition;
         AssignNextHudPosition(0);
         NavigationStates.HUD_POSITION.LeftAction = SelectHudPos(-1);
         NavigationStates.HUD_POSITION.RightAction = SelectHudPos(1);
@@ -31,14 +31,14 @@ internal partial class MoreViewModel : ObservableObject
            .InternalTransition(NavigationTriggers.LEFT, NavigationStates.HUD_POSITION.ExecuteLeft)
            .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.HUD_POSITION.ExecuteRight);
 
-        NavigationStates.DEVELOPER_MODE.SelectionLabel = UserConfig.Current.DevModeEnabled;
+        NavigationStates.DEVELOPER_MODE.Value = UserConfig.Current.DevModeEnabled;
         NavigationStates.DEVELOPER_MODE.LeftAction = EnableTouchMode(false);
         NavigationStates.DEVELOPER_MODE.RightAction = EnableTouchMode(true);
         Configure(NavigationStates.DEVELOPER_MODE)
             .InternalTransition(NavigationTriggers.LEFT, NavigationStates.DEVELOPER_MODE.ExecuteLeft)
             .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.DEVELOPER_MODE.ExecuteRight);
 
-        NavigationStates.STYLE.SelectionLabel = UserConfig.Current.Style;
+        NavigationStates.STYLE.Value = UserConfig.Current.Style;
         SelectStyle(0);
         NavigationStates.STYLE.LeftAction = PrevStyle;
         NavigationStates.STYLE.RightAction = NextStyle;
@@ -46,7 +46,7 @@ internal partial class MoreViewModel : ObservableObject
            .InternalTransition(NavigationTriggers.LEFT, NavigationStates.STYLE.ExecuteLeft)
            .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.STYLE.ExecuteRight);
 
-        NavigationStates.FONT.SelectionLabel = UserConfig.Current.Font;
+        NavigationStates.FONT.Value = UserConfig.Current.Font;
         SelectFont(0);
         NavigationStates.FONT.LeftAction = PrevFont;
         NavigationStates.FONT.RightAction = NextFont;
@@ -74,7 +74,7 @@ internal partial class MoreViewModel : ObservableObject
     {
         return () =>
         {
-            NavigationStates.DEVELOPER_MODE.SelectionLabel = v;
+            NavigationStates.DEVELOPER_MODE.Value = v;
         };
     }
 
@@ -102,7 +102,7 @@ internal partial class MoreViewModel : ObservableObject
             }
         }
 
-        var currentOptionIndex = options.IndexOf((string)NavigationStates.HUD_POSITION.SelectionLabel);
+        var currentOptionIndex = options.IndexOf((string)NavigationStates.HUD_POSITION.Value);
         if (currentOptionIndex == -1)
         {
             currentOptionIndex = 0;
@@ -114,9 +114,9 @@ internal partial class MoreViewModel : ObservableObject
         var newIndex = Math.Min(Math.Max(currentOptionIndex, 0), options.Count - 1);
         var newHudPosition = options[newIndex];
 
-        Console.WriteLine($"AssignNextHudPosition dir = {dir}, {NavigationStates.HUD_POSITION.SelectionLabel} => {options[newIndex]}");
+        Console.WriteLine($"AssignNextHudPosition dir = {dir}, {NavigationStates.HUD_POSITION.Value} => {options[newIndex]}");
 
-        NavigationStates.HUD_POSITION.SelectionLabel = options[newIndex];
+        NavigationStates.HUD_POSITION.Value = options[newIndex];
     }
 
     private void NextStyle()
@@ -131,15 +131,15 @@ internal partial class MoreViewModel : ObservableObject
 
     internal void SelectStyle(int dir)
     {
-        var currentStyleIndex = Array.IndexOf(Styles, NavigationStates.STYLE.SelectionLabel);
+        var currentStyleIndex = Array.IndexOf(Styles, NavigationStates.STYLE.Value);
         if (currentStyleIndex == -1)
         {
             currentStyleIndex = 0;
             dir = 0;
         }
         var prevStyleIndex = (currentStyleIndex + dir + Styles.Length) % Styles.Length;
-        NavigationStates.STYLE.SelectionLabel = Styles[prevStyleIndex];
-        AppStyle.SelectStyle((string)NavigationStates.STYLE.SelectionLabel, (string)NavigationStates.FONT.SelectionLabel);
+        NavigationStates.STYLE.Value = Styles[prevStyleIndex];
+        AppStyle.SelectStyle((string)NavigationStates.STYLE.Value, (string)NavigationStates.FONT.Value);
     }
 
     private void NextFont()
@@ -157,11 +157,11 @@ internal partial class MoreViewModel : ObservableObject
         var fonts = HudFonts.GetFonts();
         if (fonts.Count == 0)
         {
-            NavigationStates.FONT.SelectionLabel = "No Font";
+            NavigationStates.FONT.Value = "No Font";
             return;
         }
 
-        var currentStyleIndex = fonts.FindIndex(x => x.Name.Equals(NavigationStates.FONT.SelectionLabel));
+        var currentStyleIndex = fonts.FindIndex(x => x.Name.Equals(NavigationStates.FONT.Value));
         if (currentStyleIndex == -1)
         {
             currentStyleIndex = 0;
@@ -169,7 +169,7 @@ internal partial class MoreViewModel : ObservableObject
         }
 
         var nextStyleIndex = (currentStyleIndex + dir + fonts.Count) % fonts.Count;
-        NavigationStates.FONT.SelectionLabel = fonts[nextStyleIndex].Name;
-        AppStyle.SelectStyle((string)NavigationStates.STYLE.SelectionLabel, (string)NavigationStates.FONT.SelectionLabel);
+        NavigationStates.FONT.Value = fonts[nextStyleIndex].Name;
+        AppStyle.SelectStyle((string)NavigationStates.STYLE.Value, (string)NavigationStates.FONT.Value);
     }
 }

@@ -32,16 +32,16 @@ internal class CrosshairWindowLayoutBehavior : Behavior<CrosshairWindow>
         var updates = new FunctionDebounce<int>(UpdateWindowPosition);
         Monitors.RegisterMonitorsChange(window, () =>
         {
-            _ = updates.Run((int)NavigationStates.CROSSHAIR_MONITOR.SelectionLabel);
+            _ = updates.Run((int)NavigationStates.CROSSHAIR_MONITOR.Value);
         });
         NavigationStates.CROSSHAIR_MONITOR.PropertyChanged += (object? sender, PropertyChangedEventArgs e) =>
         {
-            if (e.PropertyName == nameof(NavigationStates.CROSSHAIR_MONITOR.SelectionLabel))
+            if (e.PropertyName == nameof(NavigationStates.CROSSHAIR_MONITOR.Value))
             {
-                _ = updates.Run((int)NavigationStates.CROSSHAIR_MONITOR.SelectionLabel);
+                _ = updates.Run((int)NavigationStates.CROSSHAIR_MONITOR.Value);
             }
         };
-        _ = updates.Run((int)NavigationStates.CROSSHAIR_MONITOR.SelectionLabel);
+        _ = updates.Run((int)NavigationStates.CROSSHAIR_MONITOR.Value);
     }
 
     private async Task UpdateWindowPosition(int monitorIndex)

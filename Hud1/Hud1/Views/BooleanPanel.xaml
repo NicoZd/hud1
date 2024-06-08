@@ -28,7 +28,7 @@
                     <Style TargetType="views:GlowBorderLabel">
                         <Setter Property="Enabled" Value="False"/>
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding Path=SelectionBoolean}" Value="True">
+                            <DataTrigger Binding="{Binding Path=Value}" Value="True">
                                 <Setter Property="Enabled" Value="True"/>
                             </DataTrigger>
                         </Style.Triggers>
@@ -49,7 +49,7 @@
                     <Style TargetType="views:GlowBorderLabel">
                         <Setter Property="Enabled" Value="False"/>
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding Path=SelectionBoolean}" Value="False">
+                            <DataTrigger Binding="{Binding Path=Value}" Value="False">
                                 <Setter Property="Enabled" Value="True"/>
                             </DataTrigger>
                         </Style.Triggers>

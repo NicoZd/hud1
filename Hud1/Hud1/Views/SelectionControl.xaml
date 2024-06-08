@@ -51,7 +51,7 @@
                             FontSize="12" 
                             VerticalAlignment="Center"
                             TextAlignment="Center"
-                            Text="{Binding Path=SelectionLabel}">
+                            Text="{Binding Path=Value}">
                             <TextBlock.Style>
                                 <Style TargetType="TextBlock" BasedOn="{StaticResource DefaultTextBlockFonts}">
                                     <Setter Property="Visibility" Value="Hidden"/>

@@ -54,7 +54,7 @@ internal class ComputeIsForegroundBehavior : Behavior<Window>
     private void ComputeIsForeground()
     {
         var foreground = WindowsAPI.GetForegroundWindow();
-        var isForeground = (foreground == hwnd) || !(bool)NavigationStates.DEVELOPER_MODE.SelectionLabel;
+        var isForeground = (foreground == hwnd) || !(bool)NavigationStates.DEVELOPER_MODE.Value;
         var isMouseHidden = WindowsAPI.IsMouseHidden();
         var newIsForeground = isForeground || isMouseHidden;
         if (newIsForeground != MainWindowViewModel.Instance.IsForeground)

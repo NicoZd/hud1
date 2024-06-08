@@ -26,7 +26,7 @@ internal class MainWindowTouchModeBehavior : Behavior<Window>
     {
         NavigationStates.DEVELOPER_MODE.PropertyChanged += (_, e) =>
         {
-            if (e.PropertyName == nameof(NavigationStates.DEVELOPER_MODE.SelectionLabel))
+            if (e.PropertyName == nameof(NavigationStates.DEVELOPER_MODE.Value))
             {
                 UpdateTouchMode();
             }
@@ -40,13 +40,13 @@ internal class MainWindowTouchModeBehavior : Behavior<Window>
 
         var extendedStyle = WindowsAPI.GetWindowLong(hwnd, WindowConstants.GWL_EXSTYLE);
 
-        var newStyle = (bool)NavigationStates.DEVELOPER_MODE.SelectionLabel ?
+        var newStyle = (bool)NavigationStates.DEVELOPER_MODE.Value ?
             extendedStyle & ~WindowConstants.WS_EX_NOACTIVATE :
             extendedStyle | WindowConstants.WS_EX_NOACTIVATE;
 
         WindowsAPI.SetWindowLong(hwnd, WindowConstants.GWL_EXSTYLE, newStyle);
 
-        if ((bool)NavigationStates.DEVELOPER_MODE.SelectionLabel)
+        if ((bool)NavigationStates.DEVELOPER_MODE.Value)
         {
             MainWindow.Instance!.ActivateWindow();
         }

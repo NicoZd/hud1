@@ -32,7 +32,7 @@ public partial class CrosshairViewModel : ObservableObject
         if (!keyEvent.repeated && keyEvent.alt && keyEvent.shift && keyEvent.key is VirtualKey.C)
         {
             keyEvent.block = true;
-            NavigationStates.CROSSHAIR_ENABLED.SelectionLabel = !(bool)NavigationStates.CROSSHAIR_ENABLED.SelectionLabel;
+            NavigationStates.CROSSHAIR_ENABLED.Value = !(bool)NavigationStates.CROSSHAIR_ENABLED.Value;
         }
     }
     internal void BuildNavigation()
@@ -42,14 +42,14 @@ public partial class CrosshairViewModel : ObservableObject
 
         var Configure = HudViewModel.Instance.Configure;
 
-        NavigationStates.CROSSHAIR_ENABLED.SelectionLabel = UserConfig.Current.CrosshairEnabled;
+        NavigationStates.CROSSHAIR_ENABLED.Value = UserConfig.Current.CrosshairEnabled;
         NavigationStates.CROSSHAIR_ENABLED.LeftAction = NavigationStates.CROSSHAIR_ENABLED.BooleanLeft;
         NavigationStates.CROSSHAIR_ENABLED.RightAction = NavigationStates.CROSSHAIR_ENABLED.BooleanRight;
         Configure(NavigationStates.CROSSHAIR_ENABLED)
            .InternalTransition(NavigationTriggers.LEFT, NavigationStates.CROSSHAIR_ENABLED.ExecuteLeft)
            .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.CROSSHAIR_ENABLED.ExecuteRight);
 
-        NavigationStates.CROSSHAIR_MONITOR.SelectionLabel = UserConfig.Current.CrosshairDisplay;
+        NavigationStates.CROSSHAIR_MONITOR.Value = UserConfig.Current.CrosshairDisplay;
         ChangeDisplay(0)();
         NavigationStates.CROSSHAIR_MONITOR.LeftAction = ChangeDisplay(-1);
         NavigationStates.CROSSHAIR_MONITOR.RightAction = ChangeDisplay(1);
@@ -57,7 +57,7 @@ public partial class CrosshairViewModel : ObservableObject
            .InternalTransition(NavigationTriggers.LEFT, NavigationStates.CROSSHAIR_MONITOR.ExecuteLeft)
            .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.CROSSHAIR_MONITOR.ExecuteRight);
 
-        NavigationStates.CROSSHAIR_FORM.SelectionLabel = UserConfig.Current.CrosshairForm;
+        NavigationStates.CROSSHAIR_FORM.Value = UserConfig.Current.CrosshairForm;
         NavigationStates.CROSSHAIR_FORM.Options = [new Option("Dot"), new Option("Ring"), new Option("Cross"), new Option("Diagonal"), new Option("3 Dots")];
         NavigationStates.CROSSHAIR_FORM.SelectOption();
         NavigationStates.CROSSHAIR_FORM.LeftAction = NavigationStates.CROSSHAIR_FORM.OptionLeft;
@@ -74,7 +74,7 @@ public partial class CrosshairViewModel : ObservableObject
             { "3 Dots", CrosshairForms.ThreeDots },
         };
 
-        NavigationStates.CROSSHAIR_COLOR.SelectionLabel = UserConfig.Current.CrosshairColor;
+        NavigationStates.CROSSHAIR_COLOR.Value = UserConfig.Current.CrosshairColor;
         NavigationStates.CROSSHAIR_COLOR.Spacing = 0;
         NavigationStates.CROSSHAIR_COLOR.Options = [
 
@@ -106,14 +106,14 @@ public partial class CrosshairViewModel : ObservableObject
             ColorOptions.Add((string)option.Value, (SolidColorBrush)new BrushConverter().ConvertFromString((string)option.Value)!);
         }
 
-        NavigationStates.CROSSHAIR_OPACITY.SelectionLabel = UserConfig.Current.CrosshairOpacity;
+        NavigationStates.CROSSHAIR_OPACITY.Value = UserConfig.Current.CrosshairOpacity;
         NavigationStates.CROSSHAIR_OPACITY.LeftAction = ChangeOpacity(-0.1);
         NavigationStates.CROSSHAIR_OPACITY.RightAction = ChangeOpacity(0.1);
         Configure(NavigationStates.CROSSHAIR_OPACITY)
            .InternalTransition(NavigationTriggers.LEFT, NavigationStates.CROSSHAIR_OPACITY.ExecuteLeft)
            .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.CROSSHAIR_OPACITY.ExecuteRight);
 
-        NavigationStates.CROSSHAIR_SIZE.SelectionLabel = UserConfig.Current.CrosshairSize;
+        NavigationStates.CROSSHAIR_SIZE.Value = UserConfig.Current.CrosshairSize;
         NavigationStates.CROSSHAIR_SIZE.Options = [new Option(1), new Option(2), new Option(3), new Option(4), new Option(5)];
         NavigationStates.CROSSHAIR_SIZE.SelectOption();
         NavigationStates.CROSSHAIR_SIZE.LeftAction = NavigationStates.CROSSHAIR_SIZE.OptionLeft;
@@ -122,7 +122,7 @@ public partial class CrosshairViewModel : ObservableObject
            .InternalTransition(NavigationTriggers.LEFT, NavigationStates.CROSSHAIR_SIZE.ExecuteLeft)
            .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.CROSSHAIR_SIZE.ExecuteRight);
 
-        NavigationStates.CROSSHAIR_OUTLINE.SelectionLabel = UserConfig.Current.CrosshairOutline;
+        NavigationStates.CROSSHAIR_OUTLINE.Value = UserConfig.Current.CrosshairOutline;
         NavigationStates.CROSSHAIR_OUTLINE.LeftAction = NavigationStates.CROSSHAIR_OUTLINE.BooleanLeft;
         NavigationStates.CROSSHAIR_OUTLINE.RightAction = NavigationStates.CROSSHAIR_OUTLINE.BooleanRight;
         Configure(NavigationStates.CROSSHAIR_OUTLINE)
@@ -146,10 +146,10 @@ public partial class CrosshairViewModel : ObservableObject
     {
         return () =>
         {
-            var current = (int)(NavigationStates.CROSSHAIR_MONITOR.SelectionLabel);
+            var current = (int)(NavigationStates.CROSSHAIR_MONITOR.Value);
             var next = Math.Min(Math.Max(current + dir, 0), Monitors.All.Count - 1);
             Debug.Print($"CrosshairViewModel ChangeDisplay {current} => {next}");
-            NavigationStates.CROSSHAIR_MONITOR.SelectionLabel = next;
+            NavigationStates.CROSSHAIR_MONITOR.Value = next;
         };
     }
 
@@ -157,30 +157,30 @@ public partial class CrosshairViewModel : ObservableObject
     {
         return () =>
         {
-            var current = (double)(NavigationStates.CROSSHAIR_OPACITY.SelectionLabel);
+            var current = (double)(NavigationStates.CROSSHAIR_OPACITY.Value);
             var next = Math.Min(Math.Max(current + dir, 0.1), 1);
-            NavigationStates.CROSSHAIR_OPACITY.SelectionLabel = next;
+            NavigationStates.CROSSHAIR_OPACITY.Value = next;
         };
     }
 
     internal void Redraw()
     {
-        // Debug.Print("Enabled {0}", NavigationStates.CROSSHAIR_ENABLED.SelectionBoolean);
-        // Debug.Print("Form {0}", NavigationStates.CROSSHAIR_FORM.SelectionLabel);
-        // Debug.Print("Size {0}", NavigationStates.CROSSHAIR_SIZE.SelectionLabel);
-        // Debug.Print("Color {0}", NavigationStates.CROSSHAIR_COLOR.SelectionLabel);
-        // Debug.Print("Outline {0}", NavigationStates.CROSSHAIR_OUTLINE.SelectionBoolean);
+        // Debug.Print("Enabled {0}", NavigationStates.CROSSHAIR_ENABLED.Value);
+        // Debug.Print("Form {0}", NavigationStates.CROSSHAIR_FORM.Value);
+        // Debug.Print("Size {0}", NavigationStates.CROSSHAIR_SIZE.Value);
+        // Debug.Print("Color {0}", NavigationStates.CROSSHAIR_COLOR.Value);
+        // Debug.Print("Outline {0}", NavigationStates.CROSSHAIR_OUTLINE.Value);
 
-        var scale = (int)NavigationStates.CROSSHAIR_SIZE.SelectionLabel;
-        var color = ColorOptions[(string)NavigationStates.CROSSHAIR_COLOR.SelectionLabel];
+        var scale = (int)NavigationStates.CROSSHAIR_SIZE.Value;
+        var color = ColorOptions[(string)NavigationStates.CROSSHAIR_COLOR.Value];
 
-        if (!FormRenderFunctions.ContainsKey((string)NavigationStates.CROSSHAIR_FORM.SelectionLabel))
+        if (!FormRenderFunctions.ContainsKey((string)NavigationStates.CROSSHAIR_FORM.Value))
         {
-            Debug.Print("Form is null {0}", NavigationStates.CROSSHAIR_FORM.SelectionLabel);
+            Debug.Print("Form is null {0}", NavigationStates.CROSSHAIR_FORM.Value);
             return;
         }
 
-        var formFunction = FormRenderFunctions[(string)NavigationStates.CROSSHAIR_FORM.SelectionLabel];
+        var formFunction = FormRenderFunctions[(string)NavigationStates.CROSSHAIR_FORM.Value];
         var geometryDrawing = GetGeometryDrawing(scale, color, formFunction);
 
         DrawingImage drawingImage = new(geometryDrawing);
@@ -188,7 +188,7 @@ public partial class CrosshairViewModel : ObservableObject
 
         DPIAwareImage image = new()
         {
-            Visibility = (bool)NavigationStates.CROSSHAIR_ENABLED.SelectionLabel ? Visibility.Visible : Visibility.Hidden,
+            Visibility = (bool)NavigationStates.CROSSHAIR_ENABLED.Value ? Visibility.Visible : Visibility.Hidden,
             Source = drawingImage,
             Stretch = Stretch.None,
         };
@@ -263,7 +263,7 @@ public partial class CrosshairViewModel : ObservableObject
 
     private static Drawing GetGeometryDrawing(int scale, Brush color, Func<int, Brush, bool, Drawing> optionFormFunction)
     {
-        var drawingWithFixedSize = (DrawingGroup)optionFormFunction(scale, color, (bool)NavigationStates.CROSSHAIR_OUTLINE.SelectionLabel);
+        var drawingWithFixedSize = (DrawingGroup)optionFormFunction(scale, color, (bool)NavigationStates.CROSSHAIR_OUTLINE.Value);
 
         GeometryGroup areaGroup = new();
         areaGroup.Children.Add(new RectangleGeometry(new Rect(-12, -12, 24, 24)));
@@ -272,7 +272,7 @@ public partial class CrosshairViewModel : ObservableObject
         //drawingWithFixedSize.Children.Insert(0, new GeometryDrawing() { Geometry = areaGroup, Brush = (Brush)new BrushConverter().ConvertFromString("#33ff0000") });
 
 
-        drawingWithFixedSize.Opacity = (double)NavigationStates.CROSSHAIR_OPACITY.SelectionLabel;
+        drawingWithFixedSize.Opacity = (double)NavigationStates.CROSSHAIR_OPACITY.Value;
 
         return drawingWithFixedSize;
     }

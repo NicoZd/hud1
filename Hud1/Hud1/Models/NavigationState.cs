@@ -57,7 +57,7 @@ internal partial class NavigationState : ObservableObject
     private string _hint = "";
 
     [ObservableProperty]
-    private object selectionLabel = "";
+    private object value = "";
 
     [ObservableProperty]
     private string selectionLeftLabel = "<";
@@ -89,7 +89,7 @@ internal partial class NavigationState : ObservableObject
     private void Toggle()
     {
         HudViewModel.Instance.SelectNavigationState(this);
-        if ((bool)SelectionLabel)
+        if ((bool)Value)
             ExecuteLeft();
         else
             ExecuteRight();
@@ -172,7 +172,7 @@ internal partial class NavigationState : ObservableObject
         var nextIndex = Math.Min(Math.Max(currentIndex + dir, 0), Options.Count - 1);
         Options[currentIndex].Selected = false;
         Options[nextIndex].Selected = true;
-        SelectionLabel = Options[nextIndex].Value;
+        Value = Options[nextIndex].Value;
     }
 
     internal void SelectOption()
@@ -180,11 +180,11 @@ internal partial class NavigationState : ObservableObject
         var currentIndex = 0;
         try
         {
-            currentIndex = Options.Select((item, index) => new { Item = item, Index = index }).First(i => i.Item.Value.Equals(SelectionLabel)).Index;
+            currentIndex = Options.Select((item, index) => new { Item = item, Index = index }).First(i => i.Item.Value.Equals(Value)).Index;
         }
         catch (Exception) { };
         Options[currentIndex].Selected = true;
-        SelectionLabel = Options[currentIndex].Value;
+        Value = Options[currentIndex].Value;
     }
 
     [RelayCommand]
@@ -197,7 +197,7 @@ internal partial class NavigationState : ObservableObject
             if (item == option)
             {
                 item.Selected = true;
-                SelectionLabel = item.Value;
+                Value = item.Value;
             }
             else
             {
@@ -208,11 +208,11 @@ internal partial class NavigationState : ObservableObject
 
     internal void BooleanLeft()
     {
-        SelectionLabel = false;
+        Value = false;
     }
 
     internal void BooleanRight()
     {
-        SelectionLabel = true;
+        Value = true;
     }
 }
