@@ -41,7 +41,7 @@
                                 <Condition Binding="{Binding Path=Selected}" Value="True"/>
                             </MultiDataTrigger.Conditions>
                             <Setter Property="Foreground" Value="{DynamicResource BrushLabel}"/>
- adada d                      </MultiDataTrigger>
+                        </MultiDataTrigger>
                     </Style.Triggers>
                 </Style>
             </Label.Style>
