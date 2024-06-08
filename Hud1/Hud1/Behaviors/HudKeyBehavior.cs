@@ -27,12 +27,12 @@ internal class HudKeyBehavior : Behavior<UserControl>
 
     private void OnLoaded(object sender, RoutedEventArgs e)
     {
-        VirtualKeyboardHook.KeyDown += HandleKeyDown;
+        GlobalKeyboardHook.KeyDown += HandleKeyDown;
     }
 
     private void OnUnloaded(object sender, RoutedEventArgs e)
     {
-        VirtualKeyboardHook.KeyDown -= HandleKeyDown;
+        GlobalKeyboardHook.KeyDown -= HandleKeyDown;
     }
 
     private void HandleKeyDown(KeyEvent keyEvent)

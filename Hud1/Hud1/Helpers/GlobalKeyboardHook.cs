@@ -1,28 +1,32 @@
 ﻿using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Windows.Input;
 using Windows.System;
 
 namespace Hud1.Helpers;
 
-internal class KeyEvent
+public class KeyEvent
 {
-    internal bool alt = false;
-    internal bool shift = false;
-    internal bool block = false;
-    internal bool repeated = false;
+    public bool alt = false;
+    public bool shift = false;
+    public bool block = false;
+    public bool repeated = false;
 
-    internal VirtualKey key;
+    public VirtualKey key;
 
-    internal KeyEvent(VirtualKey key)
+    public KeyEvent(VirtualKey key)
     {
         this.key = key;
     }
 }
 
-internal static class VirtualKeyboardHook
+internal static class GlobalKeyboardHook
 {
     internal delegate void KeyDownHandler(KeyEvent keyEvent);
     internal static event KeyDownHandler? KeyDown;
+
+    internal delegate void KeyUpHandler(KeyEvent keyEvent);
+    internal static event KeyUpHandler? KeyUp;
 
     private static IntPtr HookID = IntPtr.Zero;
 
@@ -59,6 +63,7 @@ internal static class VirtualKeyboardHook
 
                         var keyEvent = new KeyEvent((VirtualKey)vkCode)
                         {
+                            alt = CheckIsDown(VirtualKey.LeftMenu) || CheckIsDown(VirtualKey.RightMenu),
                             shift = CheckIsDown(VirtualKey.LeftShift) || CheckIsDown(VirtualKey.RightShift)
                         };
 
@@ -79,7 +84,15 @@ internal static class VirtualKeyboardHook
                         if (vkCode == (int)VirtualKey.LeftShift) IsDown[VirtualKey.LeftShift] = false;
                         if (vkCode == (int)VirtualKey.RightShift) IsDown[VirtualKey.RightShift] = false;
 
+                        var keyEvent = new KeyEvent((VirtualKey)vkCode)
+                        {
+                            alt = CheckIsDown(VirtualKey.LeftMenu) || CheckIsDown(VirtualKey.RightMenu),
+                            shift = CheckIsDown(VirtualKey.LeftShift) || CheckIsDown(VirtualKey.RightShift)
+                        };
+                        keyEvent.repeated = keyEvent.key.Equals(_lastPressedKey);
+
                         _lastPressedKey = null;
+                        KeyUp?.Invoke(keyEvent);
                         break;
                     }
                 case WindowMessage.WM_SYSKEYDOWN:
@@ -114,6 +127,12 @@ internal static class VirtualKeyboardHook
                         if (vkCode == (int)VirtualKey.LeftShift) IsDown[VirtualKey.LeftShift] = false;
                         if (vkCode == (int)VirtualKey.RightShift) IsDown[VirtualKey.RightShift] = false;
 
+                        var keyEvent = new KeyEvent((VirtualKey)vkCode)
+                        {
+                            alt = CheckIsDown(VirtualKey.LeftMenu) || CheckIsDown(VirtualKey.RightMenu),
+                            shift = CheckIsDown(VirtualKey.LeftShift) || CheckIsDown(VirtualKey.RightShift)
+                        };
+                        KeyUp?.Invoke(keyEvent);
                         break;
                     }
                 default:

@@ -46,7 +46,8 @@
 		<None Remove="Version\Macros\key-macro-ad.lua" />
 		<None Remove="Version\Macros\press-left-mouse.lua" />
 		<None Remove="Version\Macros\repeat-left-mouse-click.lua" />
-		<None Remove="Version\Macros\test.lua" />
+		<None Remove="Version\Macros\sample-mouse-keyboard-input.lua" />
+		<None Remove="Version\Macros\sample-ui-update.lua" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -91,7 +92,10 @@
 		<Content Include="Version\Macros\key-macro-ad.lua">
 		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
-		<Content Include="Version\Macros\test.lua">
+		<Content Include="Version\Macros\sample-mouse-keyboard-input.lua">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Version\Macros\sample-ui-update.lua">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Version\Macros\press-left-mouse.lua">

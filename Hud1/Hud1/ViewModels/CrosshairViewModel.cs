@@ -30,7 +30,7 @@ public partial class CrosshairViewModel : ObservableObject
     {
 
 
-        VirtualKeyboardHook.KeyDown += HandleKeyDown;
+        GlobalKeyboardHook.KeyDown += HandleKeyDown;
     }
 
     private void HandleKeyDown(KeyEvent keyEvent)

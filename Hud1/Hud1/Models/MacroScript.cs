@@ -14,18 +14,22 @@ internal class SystemEvent
 {
     internal SystemEventType EventType;
     internal int Button;
+    internal KeyEvent? KeyEvent;
 
-    internal SystemEvent(SystemEventType eventType, int button)
+    internal SystemEvent(SystemEventType eventType, int button, KeyEvent? keyEvent)
     {
         EventType = eventType;
         Button = button;
+        KeyEvent = keyEvent;
     }
 }
 
 internal enum SystemEventType
 {
     MouseDown = 0,
-    MouseUp = 1
+    MouseUp = 1,
+    KeyDown = 2,
+    KeyUp = 3
 }
 
 internal class LogMessage
@@ -64,13 +68,11 @@ internal class MacroScript
         debugger = new MacroInstructionLimiter();
         script = new Script(CoreModules.None | CoreModules.GlobalConsts);
 
-        //dynamic vk = new VKDynamicObject();
-        //Debug.Print($"{vk.W}");
-        //S.Globals["MyFlags"] = typeof(MyFlags);
         UserData.RegisterType<VirtualKey>();
+        UserData.RegisterType<KeyEvent>();
         script.Globals.Set("VK", UserData.CreateStatic<VirtualKey>());
 
-        //script.Globals["VK"] = typeof(VirtualKey);
+        script.Globals["NameOf"] = (object x) => { return "" + x; };
 
         script.Globals["Label"] = this.macro.Label;
         script.Globals["Description"] = this.macro.Description;
@@ -80,8 +82,8 @@ internal class MacroScript
         script.Globals["OnMouseUp"] = (int button) => { };
         script.Globals["OnMouseDown"] = (int button) => { };
 
-        script.Globals["OnKeyDown"] = (int code) => { };
-        script.Globals["OnKeyUp"] = (int code) => { };
+        script.Globals["OnKeyDown"] = (KeyEvent keyEvent) => { };
+        script.Globals["OnKeyUp"] = (KeyEvent keyEvent) => { };
 
         script.Globals["Setup"] = () => { };
         script.Globals["Run"] = () => { };
@@ -213,13 +215,25 @@ internal class MacroScript
     internal void OnMouseDown(int button)
     {
         Console.WriteLine($"OnMouseDown button: {button}");
-        systemEvents.Enqueue(new SystemEvent(SystemEventType.MouseDown, button));
+        systemEvents.Enqueue(new SystemEvent(SystemEventType.MouseDown, button, null));
     }
 
     internal void OnMouseUp(int button)
     {
         Console.WriteLine($"OnMouseUp button: {button}");
-        systemEvents.Enqueue(new SystemEvent(SystemEventType.MouseUp, button));
+        systemEvents.Enqueue(new SystemEvent(SystemEventType.MouseUp, button, null));
+    }
+
+    internal void OnKeyDown(KeyEvent keyEvent)
+    {
+        Console.WriteLine($"OnKeyDown key: {keyEvent}");
+        systemEvents.Enqueue(new SystemEvent(SystemEventType.KeyDown, 0, keyEvent));
+    }
+
+    internal void OnKeyUp(KeyEvent keyEvent)
+    {
+        Console.WriteLine($"OnKeyUp key: {keyEvent}");
+        systemEvents.Enqueue(new SystemEvent(SystemEventType.KeyUp, 0, keyEvent));
     }
 
     internal void Run()
@@ -255,6 +269,16 @@ internal class MacroScript
                 case SystemEventType.MouseDown:
                     {
                         script.Call(script.Globals["OnMouseDown"], systemEvent.Button);
+                        break;
+                    }
+                case SystemEventType.KeyDown:
+                    {
+                        script.Call(script.Globals["OnKeyDown"], systemEvent.KeyEvent);
+                        break;
+                    }
+                case SystemEventType.KeyUp:
+                    {
+                        script.Call(script.Globals["OnKeyUp"], systemEvent.KeyEvent);
                         break;
                     }
             }

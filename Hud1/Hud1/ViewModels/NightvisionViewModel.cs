@@ -14,7 +14,7 @@ internal partial class NightvisionViewModel : ObservableObject
     private NightvisionViewModel()
     {
         NavigationStates.NIGHTVISION_ENABLED.Value = false;
-        VirtualKeyboardHook.KeyDown += HandleKeyDown;
+        GlobalKeyboardHook.KeyDown += HandleKeyDown;
     }
 
     private void HandleKeyDown(KeyEvent keyEvent)

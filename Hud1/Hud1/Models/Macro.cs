@@ -173,6 +173,8 @@ public partial class Macro : ObservableObject
             _macroScript = macroScript;
             GlobalMouseHook.MouseDown += OnMouseDown;
             GlobalMouseHook.MouseUp += OnMouseUp;
+            GlobalKeyboardHook.KeyDown += OnKeyDown;
+            GlobalKeyboardHook.KeyUp += OnKeyUp;
         }
 
         public void Dispose()
@@ -180,6 +182,8 @@ public partial class Macro : ObservableObject
             Console.WriteLine("MACROHOOK Dispose");
             GlobalMouseHook.MouseDown -= OnMouseDown;
             GlobalMouseHook.MouseUp -= OnMouseUp;
+            GlobalKeyboardHook.KeyDown -= OnKeyDown;
+            GlobalKeyboardHook.KeyUp -= OnKeyUp;
         }
 
         private void OnMouseDown(int button)
@@ -192,6 +196,18 @@ public partial class Macro : ObservableObject
         {
             Console.WriteLine($"OnMouseUp button: {button}");
             _macroScript.OnMouseUp(button);
+        }
+
+        private void OnKeyDown(KeyEvent keyEvent)
+        {
+            Console.WriteLine($"OnKeyDown keyEvent: {keyEvent.key} {keyEvent.shift} {keyEvent.alt} {keyEvent.repeated}");
+            _macroScript.OnKeyDown(keyEvent);
+        }
+
+        private void OnKeyUp(KeyEvent keyEvent)
+        {
+            Console.WriteLine($"OnKeyUp keyEvent: {keyEvent.key} {keyEvent.shift} {keyEvent.alt} {keyEvent.repeated}");
+            _macroScript.OnKeyUp(keyEvent);
         }
     }
 }
