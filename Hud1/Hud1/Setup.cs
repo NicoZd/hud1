@@ -101,12 +101,12 @@ public class Setup
 
         // Nightvision
         NightvisionViewModel.Instance.PropertyChanged += OnConfigChanged(
-            nameof(NightvisionViewModel.Instance.GammaIndex),
+            nameof(NavigationStates.GAMMA.SelectionLabel),
             nameof(UserConfig.Current.GammaIndex));
 
         // Chrosshair
         NavigationStates.CROSSHAIR_ENABLED.PropertyChanged += OnConfigChanged(
-            nameof(NavigationStates.CROSSHAIR_ENABLED.SelectionBoolean),
+            nameof(NavigationStates.CROSSHAIR_ENABLED.SelectionLabel),
             nameof(UserConfig.Current.CrosshairEnabled));
 
         NavigationStates.CROSSHAIR_MONITOR.PropertyChanged += OnConfigChanged(
@@ -130,12 +130,12 @@ public class Setup
             nameof(UserConfig.Current.CrosshairSize));
 
         NavigationStates.CROSSHAIR_OUTLINE.PropertyChanged += OnConfigChanged(
-            nameof(NavigationStates.CROSSHAIR_OUTLINE.SelectionBoolean),
+            nameof(NavigationStates.CROSSHAIR_OUTLINE.SelectionLabel),
             nameof(UserConfig.Current.CrosshairOutline));
 
         // More
         NavigationStates.DEVELOPER_MODE.PropertyChanged += OnConfigChanged(
-            nameof(NavigationStates.DEVELOPER_MODE.SelectionBoolean),
+            nameof(NavigationStates.DEVELOPER_MODE.SelectionLabel),
             nameof(UserConfig.Current.DevModeEnabled));
 
         MoreViewModel.Instance.PropertyChanged += OnConfigChanged(

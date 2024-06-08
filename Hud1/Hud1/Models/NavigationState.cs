@@ -60,9 +60,6 @@ internal partial class NavigationState : ObservableObject
     private object selectionLabel = "";
 
     [ObservableProperty]
-    private bool selectionBoolean = true;
-
-    [ObservableProperty]
     private string selectionLeftLabel = "<";
 
     [ObservableProperty]
@@ -92,7 +89,7 @@ internal partial class NavigationState : ObservableObject
     private void Toggle()
     {
         HudViewModel.Instance.SelectNavigationState(this);
-        if (SelectionBoolean)
+        if ((bool)SelectionLabel)
             ExecuteLeft();
         else
             ExecuteRight();
@@ -211,11 +208,11 @@ internal partial class NavigationState : ObservableObject
 
     internal void BooleanLeft()
     {
-        SelectionBoolean = false;
+        SelectionLabel = false;
     }
 
     internal void BooleanRight()
     {
-        SelectionBoolean = true;
+        SelectionLabel = true;
     }
 }

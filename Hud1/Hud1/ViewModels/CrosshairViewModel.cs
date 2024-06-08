@@ -32,7 +32,7 @@ public partial class CrosshairViewModel : ObservableObject
         if (!keyEvent.repeated && keyEvent.alt && keyEvent.shift && keyEvent.key is VirtualKey.C)
         {
             keyEvent.block = true;
-            NavigationStates.CROSSHAIR_ENABLED.SelectionBoolean = !NavigationStates.CROSSHAIR_ENABLED.SelectionBoolean;
+            NavigationStates.CROSSHAIR_ENABLED.SelectionLabel = !(bool)NavigationStates.CROSSHAIR_ENABLED.SelectionLabel;
         }
     }
     internal void BuildNavigation()
@@ -42,7 +42,7 @@ public partial class CrosshairViewModel : ObservableObject
 
         var Configure = HudViewModel.Instance.Configure;
 
-        NavigationStates.CROSSHAIR_ENABLED.SelectionBoolean = UserConfig.Current.CrosshairEnabled;
+        NavigationStates.CROSSHAIR_ENABLED.SelectionLabel = UserConfig.Current.CrosshairEnabled;
         NavigationStates.CROSSHAIR_ENABLED.LeftAction = NavigationStates.CROSSHAIR_ENABLED.BooleanLeft;
         NavigationStates.CROSSHAIR_ENABLED.RightAction = NavigationStates.CROSSHAIR_ENABLED.BooleanRight;
         Configure(NavigationStates.CROSSHAIR_ENABLED)
@@ -122,7 +122,7 @@ public partial class CrosshairViewModel : ObservableObject
            .InternalTransition(NavigationTriggers.LEFT, NavigationStates.CROSSHAIR_SIZE.ExecuteLeft)
            .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.CROSSHAIR_SIZE.ExecuteRight);
 
-        NavigationStates.CROSSHAIR_OUTLINE.SelectionBoolean = UserConfig.Current.CrosshairOutline;
+        NavigationStates.CROSSHAIR_OUTLINE.SelectionLabel = UserConfig.Current.CrosshairOutline;
         NavigationStates.CROSSHAIR_OUTLINE.LeftAction = NavigationStates.CROSSHAIR_OUTLINE.BooleanLeft;
         NavigationStates.CROSSHAIR_OUTLINE.RightAction = NavigationStates.CROSSHAIR_OUTLINE.BooleanRight;
         Configure(NavigationStates.CROSSHAIR_OUTLINE)
@@ -188,7 +188,7 @@ public partial class CrosshairViewModel : ObservableObject
 
         DPIAwareImage image = new()
         {
-            Visibility = NavigationStates.CROSSHAIR_ENABLED.SelectionBoolean ? Visibility.Visible : Visibility.Hidden,
+            Visibility = (bool)NavigationStates.CROSSHAIR_ENABLED.SelectionLabel ? Visibility.Visible : Visibility.Hidden,
             Source = drawingImage,
             Stretch = Stretch.None,
         };
@@ -263,7 +263,7 @@ public partial class CrosshairViewModel : ObservableObject
 
     private static Drawing GetGeometryDrawing(int scale, Brush color, Func<int, Brush, bool, Drawing> optionFormFunction)
     {
-        var drawingWithFixedSize = (DrawingGroup)optionFormFunction(scale, color, NavigationStates.CROSSHAIR_OUTLINE.SelectionBoolean);
+        var drawingWithFixedSize = (DrawingGroup)optionFormFunction(scale, color, (bool)NavigationStates.CROSSHAIR_OUTLINE.SelectionLabel);
 
         GeometryGroup areaGroup = new();
         areaGroup.Children.Add(new RectangleGeometry(new Rect(-12, -12, 24, 24)));

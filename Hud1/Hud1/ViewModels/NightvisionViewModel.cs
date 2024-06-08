@@ -11,16 +11,9 @@ internal partial class NightvisionViewModel : ObservableObject
 
     public static readonly NightvisionViewModel Instance = new();
 
-    [ObservableProperty]
-    private int _gammaIndex = 0;
-
     private NightvisionViewModel()
     {
-        GammaIndex = UserConfig.Current.GammaIndex;
-        SelectIndex();
-
-        NavigationStates.NIGHTVISION_ENABLED.SelectionBoolean = false;
-
+        NavigationStates.NIGHTVISION_ENABLED.SelectionLabel = false;
         VirtualKeyboardHook.KeyDown += HandleKeyDown;
     }
 
@@ -30,7 +23,7 @@ internal partial class NightvisionViewModel : ObservableObject
         {
             keyEvent.block = true;
             EnableNightVision(
-                !NavigationStates.NIGHTVISION_ENABLED.SelectionBoolean)();
+                !(bool)NavigationStates.NIGHTVISION_ENABLED.SelectionLabel)();
         }
     }
 
@@ -44,8 +37,10 @@ internal partial class NightvisionViewModel : ObservableObject
         .InternalTransition(NavigationTriggers.LEFT, NavigationStates.NIGHTVISION_ENABLED.ExecuteLeft)
         .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.NIGHTVISION_ENABLED.ExecuteRight);
 
+        NavigationStates.GAMMA.SelectionLabel = UserConfig.Current.GammaIndex;
+        SelectIndex();
         NavigationStates.GAMMA.LeftAction = SelectPrevGama;
-        NavigationStates.GAMMA.RightAction = SelectNextGama;
+        NavigationStates.GAMMA.RightAction = SelectNextGamma;
         Configure(NavigationStates.GAMMA)
            .InternalTransition(NavigationTriggers.LEFT, NavigationStates.GAMMA.ExecuteLeft)
            .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.GAMMA.ExecuteRight);
@@ -58,7 +53,7 @@ internal partial class NightvisionViewModel : ObservableObject
     {
         return () =>
         {
-            NavigationStates.NIGHTVISION_ENABLED.SelectionBoolean = enabled;
+            NavigationStates.NIGHTVISION_ENABLED.SelectionLabel = enabled;
             if (enabled)
             {
                 NightvisionViewModel.Instance.ApplyGamma();
@@ -71,30 +66,29 @@ internal partial class NightvisionViewModel : ObservableObject
     }
     private void SelectPrevGama()
     {
-        Console.WriteLine("SelectPrevGama {0}", GammaIndex);
-        GammaIndex--;
-        NavigationStates.NIGHTVISION_ENABLED.SelectionBoolean = true;
+        Console.WriteLine("SelectPrevGama {0}", NavigationStates.GAMMA.SelectionLabel);
+        NavigationStates.GAMMA.SelectionLabel = (int)NavigationStates.GAMMA.SelectionLabel - 1;
+        NavigationStates.NIGHTVISION_ENABLED.SelectionLabel = true;
         SelectIndex();
         ApplyGamma();
     }
 
-    private void SelectNextGama()
+    private void SelectNextGamma()
     {
-        Console.WriteLine("SelectPrevGama {0}", GammaIndex);
-        GammaIndex++;
-        NavigationStates.NIGHTVISION_ENABLED.SelectionBoolean = true;
+        Console.WriteLine("SelectNextGamma {0}", NavigationStates.GAMMA.SelectionLabel);
+        NavigationStates.GAMMA.SelectionLabel = (int)NavigationStates.GAMMA.SelectionLabel + 1;
+        NavigationStates.NIGHTVISION_ENABLED.SelectionLabel = true;
         SelectIndex();
         ApplyGamma();
     }
 
     private void ApplyGamma()
     {
-        Gamma.SetGamma(Gammas[GammaIndex]);
+        Gamma.SetGamma(Gammas[(int)NavigationStates.GAMMA.SelectionLabel]);
     }
 
     private void SelectIndex()
     {
-        GammaIndex = Math.Min(Math.Max(GammaIndex, 0), Gammas.Length - 1);
-        NavigationStates.GAMMA.SelectionLabel = "" + Gammas[GammaIndex];
+        NavigationStates.GAMMA.SelectionLabel = Math.Min(Math.Max((int)NavigationStates.GAMMA.SelectionLabel, 0), Gammas.Length - 1);
     }
 }

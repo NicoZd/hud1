@@ -45,8 +45,7 @@ public partial class CrosshairWindow : Window
 
     private void UpdateCrosshair(object? sender, PropertyChangedEventArgs e)
     {
-        string[] validProperties = [nameof(NavigationState.SelectionLabel), nameof(NavigationState.SelectionBoolean)];
-        if (validProperties.Contains(e.PropertyName))
+        if (nameof(NavigationState.SelectionLabel).Equals(e.PropertyName))
         {
             Debug.Print($"UpdateCrosshair based on Prop: {e.PropertyName}");
             CrosshairViewModel.Instance.Redraw();

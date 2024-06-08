@@ -31,7 +31,7 @@ internal partial class MoreViewModel : ObservableObject
            .InternalTransition(NavigationTriggers.LEFT, NavigationStates.HUD_POSITION.ExecuteLeft)
            .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.HUD_POSITION.ExecuteRight);
 
-        NavigationStates.DEVELOPER_MODE.SelectionBoolean = UserConfig.Current.DevModeEnabled;
+        NavigationStates.DEVELOPER_MODE.SelectionLabel = UserConfig.Current.DevModeEnabled;
         NavigationStates.DEVELOPER_MODE.LeftAction = EnableTouchMode(false);
         NavigationStates.DEVELOPER_MODE.RightAction = EnableTouchMode(true);
         Configure(NavigationStates.DEVELOPER_MODE)
@@ -74,7 +74,7 @@ internal partial class MoreViewModel : ObservableObject
     {
         return () =>
         {
-            NavigationStates.DEVELOPER_MODE.SelectionBoolean = v;
+            NavigationStates.DEVELOPER_MODE.SelectionLabel = v;
         };
     }
 
