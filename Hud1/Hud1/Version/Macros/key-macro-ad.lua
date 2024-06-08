@@ -1,4 +1,4 @@
-Label = "Repeat Pressing A & D Keys"
+Label = "Repeat pressing keys A & D"
 Description = "Repeat pressing and releasing A and D. Stops if right mouse pressed."
 
 -- https://learn.microsoft.com/en-us/uwp/api/windows.system.virtualkey

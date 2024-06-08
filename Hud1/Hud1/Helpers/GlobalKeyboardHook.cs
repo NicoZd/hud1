@@ -60,6 +60,8 @@ internal static class GlobalKeyboardHook
 
                         if (vkCode == (int)VirtualKey.LeftShift) IsDown[VirtualKey.LeftShift] = true;
                         if (vkCode == (int)VirtualKey.RightShift) IsDown[VirtualKey.RightShift] = true;
+                        if (vkCode == (int)VirtualKey.LeftMenu) IsDown[VirtualKey.LeftMenu] = true;
+                        if (vkCode == (int)VirtualKey.RightMenu) IsDown[VirtualKey.RightMenu] = true;
 
                         var keyEvent = new KeyEvent((VirtualKey)vkCode)
                         {
@@ -81,6 +83,8 @@ internal static class GlobalKeyboardHook
                         var vkCode = Marshal.ReadInt32(lParam);
                         Console.WriteLine($"WM_KEYUP {vkCode}");
 
+                        if (vkCode == (int)VirtualKey.LeftMenu) IsDown[VirtualKey.LeftMenu] = false;
+                        if (vkCode == (int)VirtualKey.RightMenu) IsDown[VirtualKey.RightMenu] = false;
                         if (vkCode == (int)VirtualKey.LeftShift) IsDown[VirtualKey.LeftShift] = false;
                         if (vkCode == (int)VirtualKey.RightShift) IsDown[VirtualKey.RightShift] = false;
 

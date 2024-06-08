@@ -1,5 +1,5 @@
 ﻿Label = "Sample Realtime Updates"
-Description = "Coding sample on how to do realtime updates."
+Description = "Coding sample on how to do realtime updates and move the mouse."
 
 function Setup()
 	Print("Setup")
