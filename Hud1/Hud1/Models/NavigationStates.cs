@@ -34,11 +34,11 @@ internal class NavigationStates
     internal static readonly NavigationState MACROS_FOLDER = new() { Label = "Open Macros folder", Hint = "Open explorer.exe in Macros Folder." };
 
     // MORE
-    internal static readonly NavigationState EXIT = new() { Label = "Exit", Hint = "Exit the HUD and terminate the process. Use Alt + F4 when the window is active." };
+    internal static readonly NavigationState EXIT = new() { Label = "Exit", Hint = "Exit the HUD and terminate the process." };
 
     internal static readonly NavigationState CROSSHAIR_MONITOR = new() { Label = "Crosshair Display", Hint = "Select the display where the crosshair is shown.", ValueConverter = new DisplayConverter() };
-    internal static readonly NavigationState HUD_POSITION = new() { Label = "Window Display and Position", Hint = "Select position on desktop of the this window. Select display and the side of hud.", ValueConverter = new DisplayConverter() };
-    internal static readonly NavigationState DEVELOPER_MODE = new() { Label = "Macro Developer Mode", Hint = "In Macro Developer Mode: Arrow Key navigation only if this is the active window. Visible in Alt-Tab. Window is activated when hidden mouse is detected.", SelectionLeftLabel = "< Off ", SelectionRightLabel = "On >" };
+    internal static readonly NavigationState HUD_POSITION = new() { Label = "Window Display and Position", Hint = "Select display and the side of this window.", ValueConverter = new DisplayConverter() };
+    internal static readonly NavigationState DEVELOPER_MODE = new() { Label = "Macro Developer Mode", Hint = "In Dev Mode: Arrow Key navigation only if this window is active. Visible in Alt-Tab. Window is activated when mouse is hidden.", SelectionLeftLabel = "< Off ", SelectionRightLabel = "On >" };
 
     internal static readonly NavigationState STYLE = new() { Value = "Green", Label = "Colors", Hint = "Adjust colors of this window." };
     internal static readonly NavigationState FONT = new() { Value = "Fira Code", Label = "Font", Hint = "Select Font. Open the UserData folder (see macros) to add or remove fonts." };
