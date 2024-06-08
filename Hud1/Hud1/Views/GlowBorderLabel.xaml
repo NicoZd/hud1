@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:viewModels="clr-namespace:Hud1.ViewModels"
              xmlns:views="clr-namespace:Hud1.Views"
              mc:Ignorable="d"            
              >
@@ -34,6 +35,13 @@
                         <DataTrigger Binding="{Binding Path=Selected}" Value="True">
                             <Setter Property="Foreground" Value="{DynamicResource BrushInfo}"/>
                         </DataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Source={x:Static viewModels:MainWindowViewModel.Instance}, Path=IsForeground}" Value="False"/>
+                                <Condition Binding="{Binding Path=Selected}" Value="True"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="Foreground" Value="{DynamicResource BrushLabel}"/>
+                        </MultiDataTrigger>
                     </Style.Triggers>
                 </Style>
             </Label.Style>

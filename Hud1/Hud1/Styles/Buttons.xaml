@@ -98,7 +98,11 @@
                                             <Setter Property="BorderThickness" Value="0"/>
                                         </DataTrigger>
 
-                                        <DataTrigger Binding="{Binding Path=Selected}" Value="True">
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Source={x:Static viewModels:MainWindowViewModel.Instance}, Path=IsForeground}" Value="True"/>
+                                                <Condition Binding="{Binding Path=Selected}" Value="True"/>
+                                            </MultiDataTrigger.Conditions>
                                             <Setter Property="Background" >
                                                 <Setter.Value>
                                                     <LinearGradientBrush StartPoint="0,0" EndPoint="0,0">
@@ -107,7 +111,22 @@
                                                 </Setter.Value>
                                             </Setter>
                                             <Setter Property="BorderBrush" Value="{DynamicResource BrushInfo}" />
-                                        </DataTrigger>
+                                        </MultiDataTrigger>
+
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Source={x:Static viewModels:MainWindowViewModel.Instance}, Path=IsForeground}" Value="False"/>
+                                                <Condition Binding="{Binding Path=Selected}" Value="True"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" >
+                                                <Setter.Value>
+                                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,0">
+                                                        <GradientStop Color="{DynamicResource ColorMed}" Offset="0.0"/>
+                                                    </LinearGradientBrush>
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Setter Property="BorderBrush" Value="{DynamicResource BrushLabel}" />
+                                        </MultiDataTrigger>
 
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
@@ -180,7 +199,7 @@
         </Setter>
         <Setter Property="BorderBrush">
             <Setter.Value>
-                <LinearGradientBrush  StartPoint="0,0" EndPoint="0,0">
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,0">
                     <GradientStop Color="{DynamicResource ColorMed}" Offset="0.0"/>
                 </LinearGradientBrush>
             </Setter.Value>
@@ -197,8 +216,16 @@
                 <Setter Property="Background" Value="{DynamicResource BrushColorMedLow}"/>
             </Trigger>
             <DataTrigger Binding="{Binding Path=Selected}" Value="True">
-                <Setter Property="BorderBrush" Value="{DynamicResource BrushInfo}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource BrushLabel}" />
             </DataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Source={x:Static viewModels:MainWindowViewModel.Instance}, Path=IsForeground}" Value="True"/>
+                    <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext.Selected}" Value="True"/>
+                    <Condition Binding="{Binding Path=Selected}" Value="True"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="BorderBrush" Value="{DynamicResource BrushInfo}" />
+            </MultiDataTrigger>
         </Style.Triggers>
     </Style>
 
