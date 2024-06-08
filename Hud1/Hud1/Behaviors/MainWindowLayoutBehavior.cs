@@ -48,6 +48,8 @@ internal class MainWindowLayoutBehavior : Behavior<MainWindow>
     {
         var window = AssociatedObject;
 
+        Debug.Print($"hudPosition {hudPosition}");
+
         var monitors = Monitors.All;
         var monitorIndex = int.Parse(hudPosition.Split(":")[0]);
         var hudAlignment = hudPosition.Split(":")[1];
