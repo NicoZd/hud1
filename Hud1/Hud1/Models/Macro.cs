@@ -47,10 +47,16 @@ public partial class Macro : ObservableObject
     private bool _running = false;
 
     [ObservableProperty]
-    private string _rightLabel = "";
+    private bool _rightEnabled = false;
+
+    [ObservableProperty]
+    private bool _leftEnabled = false;
 
     [ObservableProperty]
     private string _path = "";
+
+    [ObservableProperty]
+    private string _fileName = "";
 
     public int ThreadsRunning => ThreadPool.ThreadsRunning;
 
@@ -63,9 +69,11 @@ public partial class Macro : ObservableObject
         Path = path;
         this.macros = macros;
 
-        Label = System.IO.Path.GetFileName(Path);
+        FileName = System.IO.Path.GetFileName(Path);
+        Label = FileName;
         Description = "";
-        RightLabel = "Start >";
+        RightEnabled = true;
+        LeftEnabled = false;
 
         macroScript = new MacroScript(this);
         FetchProgramMetaData();
@@ -79,11 +87,11 @@ public partial class Macro : ObservableObject
     }
 
     [RelayCommand]
-    private void StartStopClick()
+    private void ToggleClick()
     {
-        Console.WriteLine("StartStopClick");
+        Console.WriteLine("StartClick");
         macros.SelectMacro(this);
-        OnRight();
+        Toggle();
     }
 
     private void FetchProgramMetaData()
@@ -102,37 +110,47 @@ public partial class Macro : ObservableObject
 
     internal void OnLeft()
     {
+        Toggle();
     }
 
     public void OnRight()
     {
         Console.WriteLine($"OnRight Running: {Running}");
+        Toggle();
+    }
+
+    private void Toggle()
+    {
         if (Running)
         {
             Stop();
-            return;
         }
-
-        Error = "";
-        Running = true;
-        RightLabel = "Stop >";
-
-        macroScript.Stop();
-        var local = macroScript = new MacroScript(this);
-
-        ThreadPool.Run(() =>
+        else
         {
-            RunScript(() =>
-            {
-                local.ApplyFile();
-                using var _ = new ScriptHooks(local);
-                local.Run();
-            });
 
-            Console.WriteLine("Run Complete...");
-            Running = false;
-            RightLabel = "Start >";
-        });
+            Error = "";
+            Running = true;
+            RightEnabled = false;
+            LeftEnabled = true;
+
+            macroScript.Stop();
+            var local = macroScript = new MacroScript(this);
+
+            ThreadPool.Run(() =>
+            {
+                RunScript(() =>
+                {
+                    local.ApplyFile();
+                    using var _ = new ScriptHooks(local);
+                    local.Run();
+                });
+
+                Console.WriteLine("Run Complete...");
+                Running = false;
+                RightEnabled = true;
+                LeftEnabled = false;
+            });
+        }
     }
 
     private void RunScript(Action scriptAction)
@@ -160,7 +178,9 @@ public partial class Macro : ObservableObject
 
     public void Stop()
     {
-        RightLabel = "Stopping";
+        RightEnabled = false;
+        LeftEnabled = false;
+
         macroScript?.Stop();
     }
 

@@ -81,7 +81,7 @@
     <Style TargetType="{x:Type Label}" x:Key="ButtonLabel" BasedOn="{StaticResource DefaultLabelFonts}">
         <Setter Property="Foreground" Value="{DynamicResource BrushLabel}"/>
         <Setter Property="FontSize" Value="12"/>
-        <Setter Property="Padding" Value="15,4,15,4"/>
+        <Setter Property="Padding" Value="10,4,10,4"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
     </Style>
 

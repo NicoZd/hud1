@@ -39,7 +39,7 @@
                     Selected="{Binding Path=Selected}"
                     Pressed="{Binding Path=SelectRight}"/>
                 <Grid>
-                    <Grid>
+                    <Grid Height="32">
                         <Grid.Style>
                             <Style TargetType="Grid">
                                 <Setter Property="Background">
@@ -91,7 +91,7 @@
                         </TextBlock>
                     </Grid>
                     <Grid 
-                        HorizontalAlignment="Center" 
+                        HorizontalAlignment="Center"                         
                         >
                         <Grid.Style>
                             <Style TargetType="Grid">

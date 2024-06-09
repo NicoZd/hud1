@@ -132,10 +132,10 @@ internal partial class NavigationState : ObservableObject
     private IValueConverter valueConverter = new ToStringConverter();
 
     [ObservableProperty]
-    private string selectionLeftLabel = "<";
+    private string selectionLeftLabel = "⏴";
 
     [ObservableProperty]
-    private string selectionRightLabel = ">";
+    private string selectionRightLabel = "⏵";
 
     internal Action? LeftAction { get; set; }
 

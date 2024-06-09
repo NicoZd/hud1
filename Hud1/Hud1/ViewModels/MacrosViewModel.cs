@@ -120,7 +120,7 @@ public partial class MacrosViewModel : ObservableObject
         }
 
         Macros.Clear();
-        foreach (var m in temp.OrderBy(m => m.Label))
+        foreach (var m in temp.OrderBy(m => m.Path))
         {
             Macros.Add(m);
         }
@@ -140,8 +140,7 @@ public partial class MacrosViewModel : ObservableObject
             macro.Selected = i == value;
             if (i == value)
             {
-                NavigationStates.MACROS.Hint = macro.Description;
-                NavigationStates.MACROS_DEV.Hint = macro.Description;
+                NavigationStates.MACROS_DEV.Hint = NavigationStates.MACROS.Hint = macro.Description;
             }
         }
     }

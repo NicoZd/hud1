@@ -1,5 +1,5 @@
-﻿Label = "Sample Realtime Updates"
-Description = "Coding sample on how to do realtime updates and move the mouse."
+﻿Label = "How-to update this Macro UI"
+Description = "Coding sample on how to do update / log to the Macro UI."
 
 function Setup()
 	Print("Setup")
@@ -22,9 +22,6 @@ function Run()
 		.. "UI Debounce: 50ms \n"
 		.. "Version    : " .. _VERSION
 		)
-
-	rad = now * 0.003
-	MouseMove(math.cos(rad) * 200 + 1920 / 2, math.sin(rad) * 200 + 1080 / 2)
 end
 
 function Cleanup()

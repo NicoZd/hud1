@@ -26,18 +26,99 @@
                             Focusable="False"
                             >
                             <StackPanel>
-                                <DockPanel Margin="0,4,4,4">
+                                <DockPanel Margin="0,4,0,4">
                                     <views:GlowBorderLabel
-                                        Click="{Binding StartStopClickCommand}"
-                                        Width="90"
+                                        Margin="0,0,4,0"
+                                        MinWidth="40"
+                                        Click="{Binding ToggleClickCommand}"
                                         DockPanel.Dock="Right"
-                                        Label="{Binding Path=RightLabel}"
-                                        Selected="{Binding Path=Selected}"/>
-                                    <views:PanelLabel
-                                        VerticalAlignment="Center"
-                                        HorizontalAlignment="Left" 
-                                        Content="{Binding Path=Label}" />
+                                        Label="▶"
+                                        Selected="{Binding Path=Selected}"
+                                        >
+                                        <views:GlowBorderLabel.Style>
+                                            <Style TargetType="views:GlowBorderLabel">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Path=RightEnabled}" Value="False">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </views:GlowBorderLabel.Style>
+                                    </views:GlowBorderLabel>
+
+                                    <views:GlowBorderLabel
+                                        Margin="0,0,4,0"
+                                        MinWidth="40"
+                                        Click="{Binding ToggleClickCommand}"
+                                        DockPanel.Dock="Right"
+                                        Label="⏹"
+                                        Selected="{Binding Path=Selected}"                                      
+                                        Highlighted="True"
+                                        >
+                                        <views:GlowBorderLabel.Style>
+                                            <Style TargetType="views:GlowBorderLabel">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Path=LeftEnabled}" Value="False">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </views:GlowBorderLabel.Style>
+                                    </views:GlowBorderLabel>
+
+                                    <views:GlowBorderLabel
+                                        Margin="0,0,4,0"
+                                        MinWidth="40"
+                                        Click="{Binding ToggleClickCommand}"
+                                        DockPanel.Dock="Right"
+                                        Label="⏪"
+                                        Selected="{Binding Path=Selected}"
+                                        >
+                                        <views:GlowBorderLabel.Style>
+                                            <Style TargetType="views:GlowBorderLabel">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Style.Triggers>
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{Binding Path=LeftEnabled}" Value="False"/>
+                                                            <Condition Binding="{Binding Path=RightEnabled}" Value="False"/>
+                                                        </MultiDataTrigger.Conditions>
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                    </MultiDataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </views:GlowBorderLabel.Style>
+                                    </views:GlowBorderLabel>
+                                    <Label Content="🖥️" Margin="3,0,-4,0" Foreground="{DynamicResource BrushColorMed}" />
+                                    <StackPanel>
+                                        <views:PanelLabel
+                                            Margin="0,-5,0,0"
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Left" 
+                                            Content="{Binding Path=Label}" />
+                                        <Border
+                                            DockPanel.Dock="Right"
+                                            Margin="1,-5,4,0"
+                                            Padding="4,0,0,0"
+                                            BorderThickness="0" 
+                                            BorderBrush="Transparent"
+                                            VerticalAlignment="Top"
+                                            Background="Transparent"
+                                            >
+                                            <TextBlock                                                                               
+                                                Style="{DynamicResource DefaultTextBlockFonts}"
+                                                Padding="0"
+                                                TextAlignment="Left"
+                                                TextWrapping="Wrap"
+                                                Foreground="{DynamicResource BrushColorMed}" 
+                                                FontSize="8"
+                                                Text="{Binding FileName}"
+                                                />
+                                        </Border>
+                                    </StackPanel>
+
                                 </DockPanel>
+
                                 <controls:IgnoreWidthControl>
                                     <Grid Background="{DynamicResource BrushColorMedLow}"
                                         Margin="4,0,4,4" >

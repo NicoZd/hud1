@@ -260,12 +260,21 @@ internal class MacroScript
         DequeueEvents();
         while (Running)
         {
+            var runStartMS = Entry.Millis();
             script.Call(script.Globals["Run"]);
             DequeueEvents();
 
-            Thread.Sleep(25);
-            DequeueEvents();
+            var runEndMS = Entry.Millis();
+            var dt = (int)(runEndMS - runEndMS);
+            var minLoopDelay = 25;
+            if (dt < minLoopDelay)
+            {
+                var sleepMs = minLoopDelay - dt;
+                Thread.Sleep(minLoopDelay - dt);
+                DequeueEvents();
+            }
         };
+        Thread.Sleep(20);
         script.Call(script.Globals["Cleanup"]);
     }
 
