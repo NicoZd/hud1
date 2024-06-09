@@ -116,7 +116,7 @@ internal partial class HudViewModel : ObservableObject
             var item = list[i];
             Navigation.Configure(item).SubstateOf(visible);
 
-            if (item == NavigationStates.MACROS)
+            if (item == NavigationStates.MACROS || item == NavigationStates.MACROS_DEV)
                 continue;
 
             if (item == first)

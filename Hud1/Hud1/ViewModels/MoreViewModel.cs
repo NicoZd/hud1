@@ -59,7 +59,6 @@ internal partial class MoreViewModel : ObservableObject
             NavigationStates.EXIT,
             NavigationStates.CROSSHAIR_MONITOR,
             NavigationStates.HUD_POSITION,
-            NavigationStates.DEVELOPER_MODE,
             NavigationStates.STYLE,
             NavigationStates.FONT
             ]);

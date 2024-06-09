@@ -31,6 +31,7 @@ internal class NavigationStates
 
     // MACRO
     internal static readonly NavigationState MACROS = new() { };
+    internal static readonly NavigationState MACROS_DEV = new() { };
     internal static readonly NavigationState MACROS_FOLDER = new() { Label = "Open Macros folder", Hint = "Open explorer.exe in Macros Folder." };
 
     // MORE

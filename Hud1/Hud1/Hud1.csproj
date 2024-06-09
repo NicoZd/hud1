@@ -43,12 +43,12 @@
 		<None Remove="Version\Fonts\HitmarkerText-Medium.ttf" />
 		<None Remove="Version\Fonts\HitmarkerText-Regular.ttf" />
 		<None Remove="Version\Fonts\Neuropolitical.otf" />
+		<None Remove="Version\Macros\howto-left-mouse-shortcut.lua" />
+		<None Remove="Version\Macros\howto-mouse-keyboard-input.lua" />
+		<None Remove="Version\Macros\howto-ui-update.lua" />
 		<None Remove="Version\Macros\key-macro-ad.lua" />
 		<None Remove="Version\Macros\press-left-mouse.lua" />
 		<None Remove="Version\Macros\repeat-left-mouse-click.lua" />
-		<None Remove="Version\Macros\sample-left-mouse-shortcut.lua" />
-		<None Remove="Version\Macros\sample-mouse-keyboard-input.lua" />
-		<None Remove="Version\Macros\sample-ui-update.lua" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -96,16 +96,16 @@
 		<Content Include="Version\Macros\repeat-left-mouse-click.lua">
 		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
-		<Content Include="Version\Macros\sample-mouse-keyboard-input.lua">
+		<Content Include="Version\Macros\howto-mouse-keyboard-input.lua">
 		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
-		<Content Include="Version\Macros\sample-ui-update.lua">
+		<Content Include="Version\Macros\howto-ui-update.lua">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Version\Macros\press-left-mouse.lua">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
-		<Content Include="Version\Macros\sample-left-mouse-shortcut.lua">
+		<Content Include="Version\Macros\howto-left-mouse-shortcut.lua">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 	</ItemGroup>

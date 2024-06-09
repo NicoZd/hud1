@@ -84,7 +84,7 @@ public class Setup
         // add to navgation
         MoreViewModel.Instance.BuildNavigation();
         NightvisionViewModel.Instance.BuildNavigation();
-        MacrosViewModel.Instance.BuildNavigation();
+        MacrosViewModel.BuildNavigation();
         CrosshairViewModel.Instance.BuildNavigation();
 
         // update

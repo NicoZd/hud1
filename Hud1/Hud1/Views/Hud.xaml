@@ -180,9 +180,13 @@
 
             <views:ScrollPanel Visibility="{Binding Path=States[MACRO_VISIBLE].Visibility}">
                 <StackPanel Margin="0,0,0,28" controls:Spacing.Vertical="8">
-                    <views:MacrosView />
-                    <Label Content="Functions" Style="{DynamicResource TitleContent}"/>
+                    <Label Content="Macros" Style="{DynamicResource TitleContent}"/>
+                    <views:MacrosView DataContext="{Binding Source={x:Static viewModels:MacrosViewModel.InstanceNormal}}" />
+                    <Label Content="Macro Development" Style="{DynamicResource TitleContent}"/>
                     <views:ButtonPanel NavigationState="{Binding Path=States[MACROS_FOLDER]}"/>
+                    <views:BooleanPanel NavigationState="{Binding Path=States[DEVELOPER_MODE]}" />
+                    <Label Content="How To Macros" Style="{DynamicResource TitleContent}"/>
+                    <views:MacrosView DataContext="{Binding Source={x:Static viewModels:MacrosViewModel.InstanceDev}}" />
                 </StackPanel>
             </views:ScrollPanel>
 
@@ -195,7 +199,6 @@
                     <Label Content="Settings" Style="{DynamicResource TitleContent}"/>
                     <views:SelectionControl NavigationState="{Binding Path=States[CROSSHAIR_MONITOR]}" />
                     <views:SelectionControl NavigationState="{Binding Path=States[HUD_POSITION]}" />
-                    <views:BooleanPanel NavigationState="{Binding Path=States[DEVELOPER_MODE]}" />
 
                     <Label Content="Style" Style="{DynamicResource TitleContent}"/>
                     <views:SelectionControl NavigationState="{Binding Path=States[STYLE]}" />

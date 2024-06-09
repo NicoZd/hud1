@@ -21,7 +21,7 @@ public class MacroTests
             Description = ""Bar""
         ");
 
-        Macro macro = new(luaFile, MacrosViewModel.Instance);
+        Macro macro = new(luaFile, MacrosViewModel.InstanceNormal);
         await Task.Delay(100);
 
         Assert.Equal("Foo", macro.Label);
@@ -33,7 +33,7 @@ public class MacroTests
     {
         string luaFile = TempFile.CreateTempFile(@"");
 
-        Macro macro = new(luaFile, MacrosViewModel.Instance);
+        Macro macro = new(luaFile, MacrosViewModel.InstanceNormal);
         Assert.Equal(1, macro.ThreadsRunning);
         Assert.False(macro.Running);
 
@@ -59,7 +59,7 @@ public class MacroTests
     {
         string luaFile = TempFile.CreateTempFile(@"");
 
-        Macro macro = new(luaFile, MacrosViewModel.Instance);
+        Macro macro = new(luaFile, MacrosViewModel.InstanceNormal);
         Assert.False(macro.Running);
 
         macro.OnRight();
@@ -82,7 +82,7 @@ public class MacroTests
             end
         ");
 
-        Macro macro = new(luaFile, MacrosViewModel.Instance);
+        Macro macro = new(luaFile, MacrosViewModel.InstanceNormal);
         Assert.False(macro.Running, "Before Start");
 
         macro.OnRight();
@@ -107,7 +107,7 @@ public class MacroTests
 	        end
         ");
 
-        Macro macro = new(luaFile, MacrosViewModel.Instance);
+        Macro macro = new(luaFile, MacrosViewModel.InstanceNormal);
 
         await Task.Delay(100);
         Assert.Equal(1, macro.ThreadsRunning);

@@ -9,7 +9,9 @@ namespace Hud1.ViewModels;
 
 public partial class MacrosViewModel : ObservableObject
 {
-    public static readonly MacrosViewModel Instance = new();
+    public static readonly MacrosViewModel InstanceNormal = new(false);
+    public static readonly MacrosViewModel InstanceDev = new(true);
+
     public string MacrosPath = "";
 
     [ObservableProperty]
@@ -21,10 +23,13 @@ public partial class MacrosViewModel : ObservableObject
     [ObservableProperty]
     private bool _selected = false;
 
+    private bool DevMode = false;
+
     private readonly FileSystemWatcher fileWatcher;
 
-    private MacrosViewModel()
+    private MacrosViewModel(bool devMode)
     {
+        DevMode = devMode;
         Macros = [];
         MacrosPath = Path.Combine(Setup.UserDataPath, "Macros");
 
@@ -47,33 +52,49 @@ public partial class MacrosViewModel : ObservableObject
         UpdateFiles();
     }
 
-    internal void BuildNavigation()
+    internal static void BuildNavigation()
     {
         var Configure = HudViewModel.Instance.Configure;
 
         Configure(NavigationStates.MACROS)
-            .OnEntryFrom(NavigationTriggers.UP, OnEntryFromBottom)
-            .OnEntryFrom(NavigationTriggers.DOWN, OnEntryFromTop)
-            .OnEntry(OnEntry)
-            .OnExit(OnExit)
-            .InternalTransition(NavigationTriggers.LEFT, OnLeft)
-            .InternalTransition(NavigationTriggers.RIGHT, OnRight)
-            .InternalTransition(NavigationTriggers.UP, OnUp)
-            .InternalTransition(NavigationTriggers.DOWN, OnDown)
+            .OnEntryFrom(NavigationTriggers.UP, InstanceNormal.OnEntryFromBottom)
+            .OnEntryFrom(NavigationTriggers.DOWN, InstanceNormal.OnEntryFromTop)
+            .OnEntry(InstanceNormal.OnEntry)
+            .OnExit(InstanceNormal.OnExit)
+            .InternalTransition(NavigationTriggers.LEFT, InstanceNormal.OnLeft)
+            .InternalTransition(NavigationTriggers.RIGHT, InstanceNormal.OnRight)
+            .InternalTransition(NavigationTriggers.UP, InstanceNormal.OnUp)
+            .InternalTransition(NavigationTriggers.DOWN, InstanceNormal.OnDown)
             .Permit(NavigationTriggers.RETURN_UP, NavigationStates.MENU_MACRO)
             .Permit(NavigationTriggers.RETURN_DOWN, NavigationStates.MACROS_FOLDER);
 
         NavigationStates.MACROS_FOLDER.RightAction = () =>
         {
-            Console.WriteLine("OPEN {0}", MacrosPath);
-            Process.Start("explorer.exe", MacrosPath);
+            Console.WriteLine("OPEN {0}", InstanceNormal.MacrosPath);
+            Process.Start("explorer.exe", InstanceNormal.MacrosPath);
         };
-
         Configure(NavigationStates.MACROS_FOLDER)
             .InternalTransition(NavigationTriggers.RIGHT, NavigationStates.MACROS_FOLDER.ExecuteRight);
 
+        Configure(NavigationStates.MACROS_DEV)
+            .OnEntryFrom(NavigationTriggers.UP, InstanceDev.OnEntryFromBottom)
+            .OnEntryFrom(NavigationTriggers.DOWN, InstanceDev.OnEntryFromTop)
+            .OnEntry(InstanceDev.OnEntry)
+            .OnExit(InstanceDev.OnExit)
+            .InternalTransition(NavigationTriggers.LEFT, InstanceDev.OnLeft)
+            .InternalTransition(NavigationTriggers.RIGHT, InstanceDev.OnRight)
+            .InternalTransition(NavigationTriggers.UP, InstanceDev.OnUp)
+            .InternalTransition(NavigationTriggers.DOWN, InstanceDev.OnDown)
+            .Permit(NavigationTriggers.RETURN_UP, NavigationStates.DEVELOPER_MODE)
+            .Permit(NavigationTriggers.RETURN_DOWN, NavigationStates.MENU_MACRO);
+
         HudViewModel.Instance.MakeNav(NavigationStates.MENU_MACRO, NavigationStates.MACRO_VISIBLE,
-            [NavigationStates.MACROS, NavigationStates.MACROS_FOLDER]);
+            [
+            NavigationStates.MACROS,
+            NavigationStates.MACROS_FOLDER,
+            NavigationStates.DEVELOPER_MODE,
+            NavigationStates.MACROS_DEV
+            ]);
     }
 
     private void OnDirectoryChanged(object sender, FileSystemEventArgs e)
@@ -93,7 +114,9 @@ public partial class MacrosViewModel : ObservableObject
         var temp = new ObservableCollection<Macro>();
         foreach (var fileEntry in fileEntries)
         {
-            temp.Add(new Macro(fileEntry, this));
+            var isHowTo = Path.GetFileName(fileEntry).StartsWith("howto");
+            if ((DevMode && isHowTo) || (!DevMode && !isHowTo))
+                temp.Add(new Macro(fileEntry, this));
         }
 
         Macros.Clear();
@@ -118,6 +141,7 @@ public partial class MacrosViewModel : ObservableObject
             if (i == value)
             {
                 NavigationStates.MACROS.Hint = macro.Description;
+                NavigationStates.MACROS_DEV.Hint = macro.Description;
             }
         }
     }
@@ -135,7 +159,7 @@ public partial class MacrosViewModel : ObservableObject
 
     internal void OnExit()
     {
-        Console.WriteLine("OnExit");
+        Console.WriteLine($"OnExit {DevMode}");
         Selected = false;
         SelectedIndex = -1;
     }
@@ -179,6 +203,7 @@ public partial class MacrosViewModel : ObservableObject
         Console.WriteLine("OnLeft");
         Macros[SelectedIndex].OnLeft();
     }
+
     internal void OnRight()
     {
         Console.WriteLine("OnRight");
@@ -187,7 +212,7 @@ public partial class MacrosViewModel : ObservableObject
 
     internal void SelectMacro(Macro macro)
     {
-        HudViewModel.Instance.SelectNavigationState(NavigationStates.MACROS);
+        HudViewModel.Instance.SelectNavigationState(DevMode ? NavigationStates.MACROS_DEV : NavigationStates.MACROS);
         var index = Macros.IndexOf(macro);
         if (index >= 0)
         {
