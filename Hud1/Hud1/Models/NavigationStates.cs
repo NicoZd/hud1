@@ -11,10 +11,10 @@ internal class NavigationStates
     internal static readonly NavigationState MENU_CROSSHAIR = new() { Hint = "Press Alt+Shift+C at any time to toggle the crosshair. Adjust its form, color, and size here." };
     internal static readonly NavigationState CROSSHAIR_VISIBLE = new();
 
-    internal static readonly NavigationState MENU_MACRO = new() { Hint = "Here you can start and stop your macros. Ensure the correct window is selected for macro execution. See below for further tips on macro development." };
+    internal static readonly NavigationState MENU_MACRO = new() { Hint = "Start and stop macros here. Ensure the correct window is selected. See below for macro development tips." };
     internal static readonly NavigationState MACRO_VISIBLE = new();
 
-    internal static readonly NavigationState MENU_MORE = new() { Hint = "Quit the application, configure the HUD, and adjust the style" };
+    internal static readonly NavigationState MENU_MORE = new() { Hint = "Exit the application, configure the HUD, and adjust the style." };
     internal static readonly NavigationState MORE_VISIBLE = new();
 
     // NIGHTVISION
@@ -32,7 +32,7 @@ internal class NavigationStates
     // MACRO
     internal static readonly NavigationState MACROS = new() { };
     internal static readonly NavigationState MACROS_DEV = new() { };
-    internal static readonly NavigationState DEVELOPER_MODE = new() { Label = "Macro Developer Mode", Hint = "In Dev Mode: Arrow Keys are only available if this window is active. The window is visible in Alt-Tab and automatically activated when the mouse is hidden.", SelectionLeftLabel = "⏴Off ", SelectionRightLabel = "On⏵" };
+    internal static readonly NavigationState DEVELOPER_MODE = new() { Label = "Macro Developer Mode", Hint = "In Dev Mode: Arrow Keys are only active if this window is active. This window is visible in Alt-Tab and activated when the mouse is hidden.", SelectionLeftLabel = "⏴Off ", SelectionRightLabel = "On⏵" };
     internal static readonly NavigationState MACROS_FOLDER = new() { Label = "Open Macros folder", Hint = "Start creating and editing Macros by adding new .lua files in the Macros folder. This view will update automatically as you make changes." };
 
     // MORE
