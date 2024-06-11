@@ -9,10 +9,10 @@
   <Identity
     Name="keo3qt.Hud1"
     Publisher="CN=84D61EB5-8F6C-4EDC-B427-EE134BC16367"
-    Version="1.2.110.0" />
+    Version="1.2.111.0" />
 
   <Properties>
-    <DisplayName>Game Direct</DisplayName>
+    <DisplayName>Game Director</DisplayName>
     <PublisherDisplayName>jqxp</PublisherDisplayName>
     <Logo>Images\StoreLogo.png</Logo>
   </Properties>
@@ -31,7 +31,7 @@
       Executable="$targetnametoken$.exe"
       EntryPoint="$targetentrypoint$">
       <uap:VisualElements
-        DisplayName="Game Direct"
+        DisplayName="Game Director"
         Description="Wap"
         BackgroundColor="transparent"
         Square150x150Logo="Images\Square150x150Logo.png"

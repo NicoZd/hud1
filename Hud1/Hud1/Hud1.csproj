@@ -8,12 +8,12 @@
 		<StartupObject>Hud1.Entry</StartupObject>
 		<ApplicationManifest>app.manifest</ApplicationManifest>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-		<Title>Game Direct</Title>
+		<Title>Game Director</Title>
 		<PackageIcon></PackageIcon>
 		<SatelliteResourceLanguages>en</SatelliteResourceLanguages>
 		<Configurations>Debug;Release;Hot</Configurations>
 		<Platforms>x86</Platforms>
-		<AssemblyName>Game Direct</AssemblyName>
+		<AssemblyName>Game Director</AssemblyName>
 		<ApplicationIcon>Assets\icon.ico</ApplicationIcon>
 		<UseWindowsForms>False</UseWindowsForms>
 	</PropertyGroup>

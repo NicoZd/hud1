@@ -27,7 +27,7 @@
         >
 
         <StackPanel DockPanel.Dock="Top">
-            <Label Content="Game Direct" Style="{DynamicResource TitleLabel}" />
+            <Label Content="Game Director" Style="{DynamicResource TitleLabel}" />
 
             <controls:IgnoreWidthControl Margin="0" Focusable="False">
                 <TextBlock   
@@ -219,7 +219,7 @@
                             <Label Style="{DynamicResource ShortcutLabel}">Alt + Shift + N</Label> to toggle Nightvision<LineBreak/>
                             <Label Style="{DynamicResource ShortcutLabel}">Alt + Shift + C</Label> to toggle Crosshair<LineBreak/>
                             <LineBreak/>
-                            <Hyperlink Command="{Binding OpenLinkCommand}" CommandParameter="https://www.jqxp.org/game-direct.html" Style="{DynamicResource Hyperlink}">https://www.jqxp.org/game-direct.html</Hyperlink><LineBreak/>
+                            <Hyperlink Command="{Binding OpenLinkCommand}" CommandParameter="https://www.jqxp.org/game-director.html" Style="{DynamicResource Hyperlink}">https://www.jqxp.org/game-direct.html</Hyperlink><LineBreak/>
                             <Hyperlink Command="{Binding OpenLinkCommand}" CommandParameter="https://www.jqxp.org/privacy.html" Style="{DynamicResource Hyperlink}">https://www.jqxp.org/privacy.html</Hyperlink>
                         </TextBlock>
                     </controls:IgnoreWidthControl>

@@ -12,7 +12,7 @@
     x:Class="Hud1.Windows.MainWindow"
     x:Name="Self"
 
-    Title="Game Direct"
+    Title="Game Director"
     AllowsTransparency="True"
     WindowStyle="None"
     Topmost="True"

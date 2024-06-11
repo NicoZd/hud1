@@ -249,11 +249,11 @@ public class Setup
         try
         {
             var storageFolder = ApplicationData.Current.LocalFolder;
-            RootPath = Path.Combine(storageFolder.Path, "Game Direct");
+            RootPath = Path.Combine(storageFolder.Path, "Game Director");
         }
         catch (Exception)
         {
-            RootPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Game Direct");
+            RootPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Game Director");
         }
 
 #if HOT
@@ -277,7 +277,7 @@ public class Setup
         if (!appLicense.IsActive)
         {
             SplashWindowViewModel.Instance.IsCloseActivated = true;
-            if (MessageBox.Show("App License is inactive. Unfortunately the application must shutdown. Do you want to open the App in the Microsoft Store?", "Game Direct", MessageBoxButton.YesNo, MessageBoxImage.Asterisk) == MessageBoxResult.Yes)
+            if (MessageBox.Show("App License is inactive. Unfortunately the application must shutdown. Do you want to open the App in the Microsoft Store?", "Game Director", MessageBoxButton.YesNo, MessageBoxImage.Asterisk) == MessageBoxResult.Yes)
             {
                 Process.Start(new ProcessStartInfo
                 {
