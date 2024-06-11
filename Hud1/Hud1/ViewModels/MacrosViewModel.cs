@@ -114,13 +114,13 @@ public partial class MacrosViewModel : ObservableObject
         var temp = new ObservableCollection<Macro>();
         foreach (var fileEntry in fileEntries)
         {
-            var isHowTo = Path.GetFileName(fileEntry).StartsWith("howto");
+            var isHowTo = Path.GetFileName(fileEntry).StartsWith("нowтo");
             if ((DevMode && isHowTo) || (!DevMode && !isHowTo))
                 temp.Add(new Macro(fileEntry, this));
         }
 
         Macros.Clear();
-        foreach (var m in temp.OrderBy(m => m.Path))
+        foreach (var m in temp.OrderBy(m => m.FileName))
         {
             Macros.Add(m);
         }

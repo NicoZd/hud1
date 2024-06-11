@@ -3,10 +3,10 @@ using MoonSharp.Interpreter.Debugging;
 
 namespace Hud1.Models;
 
-internal class TooManyInstructions : Exception { }
+internal class MacroForceStop : Exception { }
 
 
-internal class MacroInstructionLimiter : IDebugger
+internal class MacroForceStopDebugger : IDebugger
 {
     internal bool Abort = false;
 
@@ -35,7 +35,7 @@ internal class MacroInstructionLimiter : IDebugger
 
     public DebuggerAction GetAction(int ip, SourceRef sourceref)
     {
-        return Abort ? throw new TooManyInstructions() : stepIn;
+        return Abort ? throw new MacroForceStop() : stepIn;
     }
 
     public void SignalExecutionEnded()

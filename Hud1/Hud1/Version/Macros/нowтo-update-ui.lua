@@ -1,15 +1,15 @@
 ﻿Label = "How-to update this Macro UI"
 Description = "Coding sample on how to do update / log to the Macro UI."
 
-function Setup()
+function Setup()	
 	Print("Setup")
-	Sleep(200)
+	Wait(200)
 	Print("Setup ■  ")
-	Sleep(100)
+	Wait(100)
 	Print("Setup ■■ ")
-	Sleep(100)
+	Wait(100)
 	Print("Setup ■■■")
-	Sleep(200)
+	Wait(200)
 	startMs = Millis()
 end
 
@@ -26,12 +26,12 @@ end
 
 function Cleanup()
 	Print("Cleanup ■■■")
-	Sleep(200)
+	Wait(200)
 	Print("Cleanup ■■")
-	Sleep(100)
+	Wait(100)
 	Print("Cleanup ■")
-	Sleep(100)
+	Wait(100)
 	Print("Cleanup")
-	Sleep(200)
+	Wait(200)
 	Print()
 end

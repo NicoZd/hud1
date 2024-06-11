@@ -42,12 +42,12 @@
 		<None Remove="Version\Fonts\HitmarkerText-Medium.ttf" />
 		<None Remove="Version\Fonts\HitmarkerText-Regular.ttf" />
 		<None Remove="Version\Fonts\Neuropolitical.otf" />
-		<None Remove="Version\Macros\howto-mouse-keyboard-input.lua" />
-		<None Remove="Version\Macros\howto-move-mouse.lua" />
-		<None Remove="Version\Macros\howto-update-ui.lua" />
-		<None Remove="Version\Macros\key-macro-ad.lua" />
-		<None Remove="Version\Macros\press-left-mouse.lua" />
-		<None Remove="Version\Macros\repeat-left-mouse-click.lua" />
+		<None Remove="Version\Macros\hold-left-mouse-button.lua" />
+		<None Remove="Version\Macros\mouse-clicker.lua" />
+		<None Remove="Version\Macros\repeat-keys-wasd.lua" />
+		<None Remove="Version\Macros\нowтo-mouse-keyboard-input.lua" />
+		<None Remove="Version\Macros\нowтo-move-mouse.lua" />
+		<None Remove="Version\Macros\нowтo-update-ui.lua" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -86,22 +86,22 @@
 		<Content Include="Version\Fonts\Neuropolitical.otf">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
-		<Content Include="Version\Macros\howto-move-mouse.lua">
+		<Content Include="Version\Macros\нowтo-move-mouse.lua">
 		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
-		<Content Include="Version\Macros\key-macro-ad.lua">
+		<Content Include="Version\Macros\repeat-keys-wasd.lua">
 		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
-		<Content Include="Version\Macros\repeat-left-mouse-click.lua">
+		<Content Include="Version\Macros\mouse-clicker.lua">
 		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
-		<Content Include="Version\Macros\howto-mouse-keyboard-input.lua">
+		<Content Include="Version\Macros\нowтo-mouse-keyboard-input.lua">
 		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
-		<Content Include="Version\Macros\howto-update-ui.lua">
+		<Content Include="Version\Macros\нowтo-update-ui.lua">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
-		<Content Include="Version\Macros\press-left-mouse.lua">
+		<Content Include="Version\Macros\hold-left-mouse-button.lua">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 	</ItemGroup>

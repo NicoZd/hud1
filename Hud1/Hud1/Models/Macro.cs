@@ -159,7 +159,7 @@ public partial class Macro : ObservableObject
         {
             scriptAction();
         }
-        catch (TooManyInstructions ex)
+        catch (MacroForceStop ex)
         {
             Console.WriteLine("ERROR {0}", ex.Message);
             Error = MacroErrors.ABORT;

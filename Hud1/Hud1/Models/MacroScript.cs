@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Dynamic;
 using System.IO;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Threading;
 using Windows.System;
 
@@ -26,12 +27,11 @@ internal class SystemEvent
     }
 }
 
-internal enum SystemEventType
+public class MouseButton
 {
-    MouseDown = 0,
-    MouseUp = 1,
-    KeyDown = 2,
-    KeyUp = 3
+    public const int Left = 1;
+    public const int Right = 2;
+    public const int Middle = 3;
 }
 
 internal class LogMessage
@@ -43,12 +43,20 @@ internal class LogMessage
     }
 }
 
+internal enum SystemEventType
+{
+    MouseDown = 0,
+    MouseUp = 1,
+    KeyDown = 2,
+    KeyUp = 3
+}
+
 internal class MacroScript
 {
     public bool Running = true;
 
     private readonly Macro macro;
-    private readonly MacroInstructionLimiter debugger;
+    private readonly MacroForceStopDebugger debugger;
     private readonly Script script;
 
     private readonly Queue<SystemEvent> systemEvents = [];
@@ -67,13 +75,16 @@ internal class MacroScript
     {
         this.macro = macro;
 
-        debugger = new MacroInstructionLimiter();
-        script = new Script(CoreModules.None | CoreModules.GlobalConsts | CoreModules.Math);
+        debugger = new MacroForceStopDebugger();
+        script = new Script(CoreModules.None | CoreModules.GlobalConsts | CoreModules.Preset_HardSandbox);
 
+        UserData.RegisterType<MouseButton>();
         UserData.RegisterType<POINT>();
         UserData.RegisterType<VirtualKey>();
         UserData.RegisterType<KeyEvent>();
-        script.Globals.Set("VK", UserData.CreateStatic<VirtualKey>());
+
+        script.Globals.Set("MouseButton", UserData.CreateStatic<MouseButton>());
+        script.Globals.Set("Key", UserData.CreateStatic<VirtualKey>());
 
         script.Globals["NameOf"] = (object x) => { return "" + x; };
 
@@ -97,7 +108,7 @@ internal class MacroScript
             macro.Stop();
         };
 
-        script.Globals["Sleep"] = (int a) =>
+        script.Globals["Wait"] = (int a) =>
         {
             Thread.Sleep(a);
             DequeueEvents();
@@ -145,14 +156,24 @@ internal class MacroScript
 
         };
 
-        script.Globals["MouseDown"] = () =>
+        MouseService.MouseButton getButton(int button)
         {
-            MouseService.MouseDown(MouseService.MouseButton.Left);
+            return button switch
+            {
+                MouseButton.Right => MouseService.MouseButton.Right,
+                MouseButton.Middle => MouseService.MouseButton.Middle,
+                _ => MouseService.MouseButton.Left,
+            };
+        }
+
+        script.Globals["MouseDown"] = (int button) =>
+        {
+            MouseService.MouseDown(getButton(button));
         };
 
-        script.Globals["MouseUp"] = () =>
+        script.Globals["MouseUp"] = (int button) =>
         {
-            MouseService.MouseUp(MouseService.MouseButton.Left);
+            MouseService.MouseUp(getButton(button));
         };
 
         script.Globals["MouseMove"] = (int x, int y) =>
