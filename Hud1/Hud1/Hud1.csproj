@@ -8,12 +8,12 @@
 		<StartupObject>Hud1.Entry</StartupObject>
 		<ApplicationManifest>app.manifest</ApplicationManifest>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-		<Title>Game Director</Title>
+		<Title>Game Aid</Title>
 		<PackageIcon></PackageIcon>
 		<SatelliteResourceLanguages>en</SatelliteResourceLanguages>
 		<Configurations>Debug;Release;Hot</Configurations>
 		<Platforms>x86</Platforms>
-		<AssemblyName>Game Director</AssemblyName>
+		<AssemblyName>Game Aid</AssemblyName>
 		<ApplicationIcon>Assets\icon.ico</ApplicationIcon>
 		<UseWindowsForms>False</UseWindowsForms>
 	</PropertyGroup>
@@ -45,6 +45,7 @@
 		<None Remove="Version\Macros\hold-left-mouse-button.lua" />
 		<None Remove="Version\Macros\mouse-clicker.lua" />
 		<None Remove="Version\Macros\repeat-keys-wasd.lua" />
+		<None Remove="Version\Macros\scum-game.lua" />
 		<None Remove="Version\Macros\нowтo-mouse-keyboard-input.lua" />
 		<None Remove="Version\Macros\нowтo-move-mouse.lua" />
 		<None Remove="Version\Macros\нowтo-update-ui.lua" />
@@ -86,17 +87,20 @@
 		<Content Include="Version\Fonts\Neuropolitical.otf">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
+		<Content Include="Version\Macros\scum-game.lua">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
 		<Content Include="Version\Macros\нowтo-move-mouse.lua">
-		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Version\Macros\repeat-keys-wasd.lua">
-		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Version\Macros\mouse-clicker.lua">
-		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Version\Macros\нowтo-mouse-keyboard-input.lua">
-		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Version\Macros\нowтo-update-ui.lua">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

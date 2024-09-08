@@ -112,7 +112,7 @@ public class Setup
 
         // More
         NavigationStates.DEVELOPER_MODE.PropertyChanged += OnConfigChanged(nameof(UserConfig.Current.DevModeEnabled));
-        MoreViewModel.Instance.PropertyChanged += OnConfigChanged(nameof(UserConfig.Current.HudPosition));
+        NavigationStates.HUD_POSITION.PropertyChanged += OnConfigChanged(nameof(UserConfig.Current.HudPosition));
         NavigationStates.STYLE.PropertyChanged += OnConfigChanged(nameof(UserConfig.Current.Style));
         NavigationStates.FONT.PropertyChanged += OnConfigChanged(nameof(UserConfig.Current.Font));
     }
@@ -127,7 +127,7 @@ public class Setup
                 {
                     try
                     {
-                        // Debug.Print("Save OnConfigChanged {0} {1}", e.PropertyName, sender);
+                        Debug.Print("Save OnConfigChanged {0} {1}", e.PropertyName, sender);
 
                         Thread.Sleep(100);
                         var src = (NavigationState)sender!;
@@ -139,7 +139,8 @@ public class Setup
                         var options = new JsonSerializerOptions { WriteIndented = true };
                         var jsonString = JsonSerializer.Serialize(UserConfig.Current, options);
 
-                        //Debug.Print(jsonString);
+                        Debug.Print(jsonString);
+                        Debug.Print(UserConfigFile);
                         File.WriteAllText(UserConfigFile, jsonString);
                     }
                     catch (Exception ex)
@@ -249,11 +250,11 @@ public class Setup
         try
         {
             var storageFolder = ApplicationData.Current.LocalFolder;
-            RootPath = Path.Combine(storageFolder.Path, "Game Director");
+            RootPath = Path.Combine(storageFolder.Path, "Game Aid");
         }
         catch (Exception)
         {
-            RootPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Game Director");
+            RootPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Game Aid");
         }
 
 #if HOT
@@ -269,6 +270,7 @@ public class Setup
 
     private static async Task CheckLicense()
     {
+        return;
         var context = StoreContext.GetDefault();
         var appLicense = await context.GetAppLicenseAsync();
 
@@ -277,7 +279,7 @@ public class Setup
         if (!appLicense.IsActive)
         {
             SplashWindowViewModel.Instance.IsCloseActivated = true;
-            if (MessageBox.Show("App License is inactive. Unfortunately the application must shutdown. Do you want to open the App in the Microsoft Store?", "Game Director", MessageBoxButton.YesNo, MessageBoxImage.Asterisk) == MessageBoxResult.Yes)
+            if (MessageBox.Show("App License is inactive. Unfortunately the application must shutdown. Do you want to open the App in the Microsoft Store?", "Game Aid", MessageBoxButton.YesNo, MessageBoxImage.Asterisk) == MessageBoxResult.Yes)
             {
                 Process.Start(new ProcessStartInfo
                 {

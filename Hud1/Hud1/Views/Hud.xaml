@@ -27,7 +27,7 @@
         >
 
         <StackPanel DockPanel.Dock="Top">
-            <Label Content="Game Director" Style="{DynamicResource TitleLabel}" />
+            <Label Content="Game Aid" Style="{DynamicResource TitleLabel}" />
 
             <controls:IgnoreWidthControl Margin="0" Focusable="False">
                 <TextBlock   
@@ -38,14 +38,14 @@
                     HorizontalAlignment="Left"
                     TextWrapping="Wrap"
                     Foreground="{DynamicResource BrushInfoSecondary}" 
-                    FontSize="8"
+                    FontSize="10"
                     >
-                    <Label Style="{DynamicResource ShortcutLabel}">Alt + Shift + G</Label> to toggle this window. <Label Style="{DynamicResource ShortcutLabel}">Arrow Keys</Label> or <Label Style="{DynamicResource ShortcutLabel}">Mouse</Label> to navigate and select.
+                    <Label Style="{DynamicResource ShortcutLabel}">Alt + Shift + G</Label> to toggle this window.<LineBreak/> <Label Style="{DynamicResource ShortcutLabel}">Arrow Keys</Label> or <Label Style="{DynamicResource ShortcutLabel}">Mouse</Label> to navigate and select.
                 </TextBlock>
             </controls:IgnoreWidthControl>
 
             <DockPanel 
-                Margin="0,15,0,0"                       
+                Margin="0,20,0,0"                       
                 >
 
                 <views:GlowBorderLabel    
@@ -92,28 +92,6 @@
 
             <Separator Margin="0,10,0,10" Background="{DynamicResource BrushSeparator}"/>
 
-            <Grid
-                VerticalAlignment="Center"
-                Background="{DynamicResource BrushColorMedLow}"
-                Focusable="False"
-                >
-                <controls:IgnoreWidthControl Margin="0" Focusable="False">
-                    <TextBlock
-                        Style="{DynamicResource DefaultTextBlockFonts}"
-                        Focusable="false"
-                        Margin="5,4,5,2"
-                        Padding="0"
-                        VerticalAlignment="Top"
-                        Height="21"
-                        TextWrapping="Wrap"                        
-                        Foreground="{DynamicResource BrushInfoSecondary}" 
-                        FontSize="8"
-                        Text="{Binding State.Hint}"
-                        >
-                    </TextBlock>
-                </controls:IgnoreWidthControl>
-            </Grid>
-
         </StackPanel>
 
         <Grid Margin="0,10,-15,0">
@@ -132,6 +110,28 @@
             <views:ScrollPanel Visibility="{Binding Path=States[NIGHTVISION_VISIBLE].Visibility}">
                 <StackPanel Margin="0,0,0,28" controls:Spacing.Vertical="8">
                     <Label Content="Nightvision" Style="{DynamicResource TitleContent}"/>
+                    <Grid
+       VerticalAlignment="Center"
+       Focusable="False"
+       Height="25"
+       Background="Transparent"
+       >
+
+                        <controls:IgnoreWidthControl Margin="0" Focusable="False" Padding="3">
+                            <TextBlock   
+Style="{DynamicResource DefaultTextBlockFonts}"
+Margin="3"
+Padding="0"
+VerticalAlignment="Top"
+HorizontalAlignment="Left"
+TextWrapping="Wrap"
+Foreground="{DynamicResource BrushInfoSecondary}" 
+FontSize="10"
+>
+<Label Style="{DynamicResource ShortcutLabel}">Alt + Shift + N</Label> to toggle Nightvision.
+                            </TextBlock>
+                        </controls:IgnoreWidthControl>
+                    </Grid>
                     <views:BooleanPanel NavigationState="{Binding Path=States[NIGHTVISION_ENABLED]}" />
                     <views:SelectionControl NavigationState="{Binding Path=States[GAMMA]}" />
                 </StackPanel>
@@ -139,40 +139,35 @@
 
             <views:ScrollPanel Visibility="{Binding Path=States[CROSSHAIR_VISIBLE].Visibility}">
                 <StackPanel Margin="0,0,0,28" controls:Spacing.Vertical="8">
-                    <Label Content="Crosshair" Style="{DynamicResource TitleContent}"/>
+                    <Label Content="Crosshair" Style="{DynamicResource TitleContent}" />
+                    <Grid
+       VerticalAlignment="Center"
+       Focusable="False"
+       Height="25"
+       Background="Transparent"
+       >
+
+                        <controls:IgnoreWidthControl Margin="0" Focusable="False" Padding="3">
+                            <TextBlock   
+Style="{DynamicResource DefaultTextBlockFonts}"
+Margin="3"
+Padding="0"
+VerticalAlignment="Top"
+HorizontalAlignment="Left"
+TextWrapping="Wrap"
+Foreground="{DynamicResource BrushInfoSecondary}" 
+FontSize="10"
+>
+<Label Style="{DynamicResource ShortcutLabel}">Alt + Shift + C</Label> to toggle Crosshair.
+                            </TextBlock>
+                        </controls:IgnoreWidthControl>
+                    </Grid>
                     <views:BooleanPanel NavigationState="{Binding Path=States[CROSSHAIR_ENABLED]}" />
                     <views:SelectionControl NavigationState="{Binding Path=States[CROSSHAIR_FORM]}" />
                     <views:SelectionControl NavigationState="{Binding Path=States[CROSSHAIR_COLOR]}" />
-                    <views:SelectionControl NavigationState="{Binding Path=States[CROSSHAIR_OPACITY]}" />
                     <views:SelectionControl NavigationState="{Binding Path=States[CROSSHAIR_SIZE]}" />
+                    <views:SelectionControl NavigationState="{Binding Path=States[CROSSHAIR_OPACITY]}" />
                     <views:BooleanPanel NavigationState="{Binding Path=States[CROSSHAIR_OUTLINE]}" />
-
-                    <Grid Background="{DynamicResource BrushColorMedLow}">
-                        <Label Style="{DynamicResource InfoLabelSecondary}" Margin="4,0,0,0" VerticalAlignment="Center">Preview</Label>
-                        <StackPanel                                
-                            Margin="3"
-                            Orientation="Horizontal"
-                            controls:Spacing.Horizontal="4"
-                            HorizontalAlignment="Center">
-                            <Border Background="#050505" BorderBrush="{DynamicResource BrushColorMedLow}" BorderThickness="1" Padding="1">
-                                <Grid>
-                                    <Grid.LayoutTransform>
-                                        <ScaleTransform ScaleX="1" ScaleY="1"/>
-                                    </Grid.LayoutTransform>
-                                    <ContentPresenter Content="{Binding Path=CrosshairImagePreview1, Source={x:Static viewModels:CrosshairViewModel.Instance}}"/>
-                                </Grid>
-                            </Border>
-                            <Border Background="#eeeeee" BorderBrush="{DynamicResource BrushColorMedLow}" BorderThickness="1" Padding="1">
-                                <Grid>
-                                    <Grid.LayoutTransform>
-                                        <ScaleTransform ScaleX="1" ScaleY="1"/>
-                                    </Grid.LayoutTransform>
-                                    <ContentPresenter Content="{Binding Path=CrosshairImagePreview2, Source={x:Static viewModels:CrosshairViewModel.Instance}}"/>
-                                </Grid>
-                            </Border>
-                        </StackPanel>
-                    </Grid>
-
                 </StackPanel>
             </views:ScrollPanel>
 
@@ -181,6 +176,28 @@
                     <Label Content="Macros" Style="{DynamicResource TitleContent}"/>
                     <views:MacrosView DataContext="{Binding Source={x:Static viewModels:MacrosViewModel.InstanceNormal}}" />
                     <Label Content="Macro Development" Style="{DynamicResource TitleContent}"/>
+                    <Grid
+       VerticalAlignment="Center"
+       Focusable="False"
+       Height="25"
+       Background="Transparent"
+       >
+
+                        <controls:IgnoreWidthControl Margin="0" Focusable="False" Padding="3">
+                            <TextBlock   
+Style="{DynamicResource DefaultTextBlockFonts}"
+Margin="3"
+Padding="0"
+VerticalAlignment="Top"
+HorizontalAlignment="Left"
+TextWrapping="Wrap"
+Foreground="{DynamicResource BrushInfoSecondary}" 
+FontSize="10"
+>
+<Label Style="{DynamicResource ShortcutLabel}">Alt + Shift + C</Label> to toggle crosshair.
+                            </TextBlock>
+                        </controls:IgnoreWidthControl>
+                    </Grid>
                     <views:ButtonPanel NavigationState="{Binding Path=States[MACROS_FOLDER]}"/>
                     <views:BooleanPanel NavigationState="{Binding Path=States[DEVELOPER_MODE]}" />
                     <Label Content="How To Macros" Style="{DynamicResource TitleContent}"/>

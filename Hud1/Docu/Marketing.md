@@ -1,4 +1,4 @@
-﻿Game Director - A InGame Overlay for your games.
+﻿Game Aid - A InGame Overlay for your games.
 It acts as a Head-Up-Display and renders on top of all Games and Application Windows.
 
 It comes with the folling main gaming features:
@@ -15,11 +15,11 @@ How it works:
 - Marcos are written in LUA - UI is a fully interactive IDE, scripts will be loaded if you save them
 
 What's good?
-- Game Director is a simple App without any services
+- Game Aid is a simple App without any services
 - It's low on memory, gpu and gpu resources
 - It's easy to use and unobtrustive in different game environments
 - Pixel Perfect Crosshairs
 
 Style:
-- Game Director Style (red, green) can be selected
-- Game Director Font (some predefined, ttfs can be added) can be selected
+- Game Aid Style (red, green) can be selected
+- Game Aid Font (some predefined, ttfs can be added) can be selected

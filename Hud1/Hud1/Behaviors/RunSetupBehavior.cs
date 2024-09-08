@@ -47,7 +47,7 @@ internal class RunSetupBehavior : Behavior<SplashWindow>
         {
             Console.WriteLine(ex.ToString());
             window.Opacity = 0;
-            MessageBox.Show("Wooo - there was a fatal startup error:\n\n" + ex.ToString(), "Game Director", MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show("Wooo - there was a fatal startup error:\n\n" + ex.ToString(), "Game Aid", MessageBoxButton.OK, MessageBoxImage.Error);
             SplashWindowViewModel.Instance.IsCloseActivated = true;
         }
     }

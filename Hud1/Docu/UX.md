@@ -35,4 +35,4 @@ In-game overlay
 
 Game Weaver - Two Hands with Spider Web
 
-Game Director In-game Overlay
+Game Aid In-game Overlay

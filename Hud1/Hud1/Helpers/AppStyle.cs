@@ -35,27 +35,27 @@ internal class AppStyle
 
         ReplaceResource(1, new ResourceDictionary
         {
-            Source = new Uri("/Game Director;Component/Styles/" + style + ".xaml", UriKind.RelativeOrAbsolute)
+            Source = new Uri("/Game Aid;Component/Styles/" + style + ".xaml", UriKind.RelativeOrAbsolute)
         });
 
         ReplaceResource(2, new ResourceDictionary
         {
-            Source = new Uri("/Game Director;Component/Styles/Colors.xaml", UriKind.RelativeOrAbsolute)
+            Source = new Uri("/Game Aid;Component/Styles/Colors.xaml", UriKind.RelativeOrAbsolute)
         });
 
         ReplaceResource(3, new ResourceDictionary
         {
-            Source = new Uri("/Game Director;Component/Styles/Labels.xaml", UriKind.RelativeOrAbsolute)
+            Source = new Uri("/Game Aid;Component/Styles/Labels.xaml", UriKind.RelativeOrAbsolute)
         });
 
         ReplaceResource(4, new ResourceDictionary
         {
-            Source = new Uri("/Game Director;Component/Styles/Buttons.xaml", UriKind.RelativeOrAbsolute)
+            Source = new Uri("/Game Aid;Component/Styles/Buttons.xaml", UriKind.RelativeOrAbsolute)
         });
 
         ReplaceResource(5, new ResourceDictionary
         {
-            Source = new Uri("/Game Director;Component/Styles/ScrollViewer.xaml", UriKind.RelativeOrAbsolute)
+            Source = new Uri("/Game Aid;Component/Styles/ScrollViewer.xaml", UriKind.RelativeOrAbsolute)
         });
     }
 

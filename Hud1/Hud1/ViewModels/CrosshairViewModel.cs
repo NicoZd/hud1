@@ -140,8 +140,8 @@ public partial class CrosshairViewModel : ObservableObject
             NavigationStates.CROSSHAIR_ENABLED,
             NavigationStates.CROSSHAIR_FORM,
             NavigationStates.CROSSHAIR_COLOR,
-            NavigationStates.CROSSHAIR_OPACITY,
             NavigationStates.CROSSHAIR_SIZE,
+            NavigationStates.CROSSHAIR_OPACITY,
             NavigationStates.CROSSHAIR_OUTLINE,
             ]);
 
@@ -216,7 +216,7 @@ public partial class CrosshairViewModel : ObservableObject
         foreach (var option in NavigationStates.CROSSHAIR_FORM.Options)
         {
             var optionFormFunction = FormRenderFunctions[(string)option.Value];
-            var geometryDrawing = GetGeometryDrawing(5, defaultBrush, 1, optionFormFunction);
+            var geometryDrawing = GetGeometryDrawing(5, color, 1, optionFormFunction);
 
             DrawingImage drawingImage = new(geometryDrawing);
             drawingImage.Freeze();
